@@ -1,0 +1,30 @@
+require 'rails_helper'
+
+RSpec.describe "cohorts/new", type: :view do
+  before(:each) do
+    assign(:cohort, Cohort.new(
+      name: "MyString",
+      year: 1,
+      generation: 1,
+      number: 1,
+      piazza_course_number: "MyString"
+    ))
+  end
+
+  it "renders new cohort form" do
+    render
+
+    assert_select "form[action=?][method=?]", cohorts_path, "post" do
+
+      assert_select "input[name=?]", "cohort[name]"
+
+      assert_select "input[name=?]", "cohort[year]"
+
+      assert_select "input[name=?]", "cohort[generation]"
+
+      assert_select "input[name=?]", "cohort[number]"
+
+      assert_select "input[name=?]", "cohort[piazza_course_number]"
+    end
+  end
+end
