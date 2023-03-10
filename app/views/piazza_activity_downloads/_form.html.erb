@@ -11,22 +11,24 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :activity_from, style: "display: block" %>
-    <%= form.datetime_field :activity_from %>
+  <%= form.hidden_field :cohort_id, class: "form-control" %>
+
+  <div class="mb-3">
+    <%= form.label :activity_from, class: "form-label" %>
+    <%= form.date_field :activity_from, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :activity_until, class: "form-label" %>
+    <%= form.date_field :activity_until, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :csv_file, class: "form-label" %>
+    <%= form.file_field :csv_file %>
   </div>
 
   <div>
-    <%= form.label :activity_until, style: "display: block" %>
-    <%= form.datetime_field :activity_until %>
-  </div>
-
-  <div>
-    <%= form.label :cohort_id, style: "display: block" %>
-    <%= form.text_field :cohort_id %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+    <%= form.submit class: "btn btn-outline-primary" %>
   </div>
 <% end %>

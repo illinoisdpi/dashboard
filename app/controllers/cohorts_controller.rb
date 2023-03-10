@@ -3,7 +3,7 @@ class CohortsController < ApplicationController
 
   # GET /cohorts or /cohorts.json
   def index
-    @cohorts = Cohort.all
+    @cohorts = Cohort.all.default_order
   end
 
   # GET /cohorts/1 or /cohorts/1.json

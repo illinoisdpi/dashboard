@@ -66,6 +66,6 @@ class PiazzaActivityDownloadsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def piazza_activity_download_params
-    params.require(:piazza_activity_download).permit(:activity_from, :activity_until, :cohort_id)
+    params.require(:piazza_activity_download).permit(:activity_from, :activity_until, :cohort_id, :csv_file)
   end
 end

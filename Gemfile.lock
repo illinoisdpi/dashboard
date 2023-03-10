@@ -273,6 +273,7 @@ GEM
     simple_form (5.2.0)
       actionpack (>= 5.2)
       activemodel (>= 5.2)
+    smarter_csv (1.7.4)
     sprockets (4.2.0)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -339,6 +340,7 @@ DEPENDENCIES
   rspec-rails
   rubocop-rails
   rubocop-rspec
+  smarter_csv
   sprockets-rails
   standard
   stimulus-rails
