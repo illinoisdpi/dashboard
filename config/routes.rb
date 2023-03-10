@@ -1,11 +1,10 @@
 Rails.application.routes.draw do
+  devise_for :users
+  
+  root "cohorts#index"
+
   resources :piazza_activity_breakdowns
   resources :piazza_activity_downloads
   resources :enrollments
   resources :cohorts
-  devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
 end
