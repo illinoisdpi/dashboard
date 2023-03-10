@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe CohortsController, type: :routing do
+RSpec.describe CohortsController do
   describe "routing" do
     it "routes to #index" do
       expect(get: "/cohorts").to route_to("cohorts#index")
@@ -17,7 +17,6 @@ RSpec.describe CohortsController, type: :routing do
     it "routes to #edit" do
       expect(get: "/cohorts/1/edit").to route_to("cohorts#edit", id: "1")
     end
-
 
     it "routes to #create" do
       expect(post: "/cohorts").to route_to("cohorts#create")

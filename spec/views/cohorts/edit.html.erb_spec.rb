@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe "cohorts/edit", type: :view do
+RSpec.describe "cohorts/edit" do
   let(:cohort) {
     Cohort.create!(
       name: "MyString",
@@ -11,7 +11,7 @@ RSpec.describe "cohorts/edit", type: :view do
     )
   }
 
-  before(:each) do
+  before do
     assign(:cohort, cohort)
   end
 
@@ -19,7 +19,6 @@ RSpec.describe "cohorts/edit", type: :view do
     render
 
     assert_select "form[action=?][method=?]", cohort_path(cohort), "post" do
-
       assert_select "input[name=?]", "cohort[name]"
 
       assert_select "input[name=?]", "cohort[year]"

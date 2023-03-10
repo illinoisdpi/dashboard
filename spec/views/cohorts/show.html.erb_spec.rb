@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe "cohorts/show", type: :view do
-  before(:each) do
+RSpec.describe "cohorts/show" do
+  before do
     assign(:cohort, Cohort.create!(
       name: "Name",
       year: 2,

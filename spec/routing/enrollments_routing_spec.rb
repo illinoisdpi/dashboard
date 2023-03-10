@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe EnrollmentsController, type: :routing do
+RSpec.describe EnrollmentsController do
   describe "routing" do
     it "routes to #index" do
       expect(get: "/enrollments").to route_to("enrollments#index")
@@ -17,7 +17,6 @@ RSpec.describe EnrollmentsController, type: :routing do
     it "routes to #edit" do
       expect(get: "/enrollments/1/edit").to route_to("enrollments#edit", id: "1")
     end
-
 
     it "routes to #create" do
       expect(post: "/enrollments").to route_to("enrollments#create")

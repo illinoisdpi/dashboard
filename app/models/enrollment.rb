@@ -22,5 +22,5 @@
 class Enrollment < ApplicationRecord
   belongs_to :user
   belongs_to :cohort
-  has_many  :piazza_activity_breakdowns, dependent: :destroy
+  has_many :piazza_activity_breakdowns, dependent: :destroy
 end

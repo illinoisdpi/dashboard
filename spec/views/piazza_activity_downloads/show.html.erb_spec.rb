@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe "piazza_activity_downloads/show", type: :view do
-  before(:each) do
+RSpec.describe "piazza_activity_downloads/show" do
+  before do
     assign(:piazza_activity_download, PiazzaActivityDownload.create!(
       cohort: nil
     ))

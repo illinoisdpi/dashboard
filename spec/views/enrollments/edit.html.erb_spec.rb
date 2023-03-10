@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe "enrollments/edit", type: :view do
+RSpec.describe "enrollments/edit" do
   let(:enrollment) {
     Enrollment.create!(
       role: "MyString",
@@ -9,7 +9,7 @@ RSpec.describe "enrollments/edit", type: :view do
     )
   }
 
-  before(:each) do
+  before do
     assign(:enrollment, enrollment)
   end
 
@@ -17,7 +17,6 @@ RSpec.describe "enrollments/edit", type: :view do
     render
 
     assert_select "form[action=?][method=?]", enrollment_path(enrollment), "post" do
-
       assert_select "input[name=?]", "enrollment[role]"
 
       assert_select "input[name=?]", "enrollment[user_id]"

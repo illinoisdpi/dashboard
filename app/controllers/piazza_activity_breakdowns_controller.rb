@@ -1,5 +1,5 @@
 class PiazzaActivityBreakdownsController < ApplicationController
-  before_action :set_piazza_activity_breakdown, only: %i[ show edit update destroy ]
+  before_action :set_piazza_activity_breakdown, only: %i[show edit update destroy]
 
   # GET /piazza_activity_breakdowns or /piazza_activity_breakdowns.json
   def index
@@ -58,13 +58,14 @@ class PiazzaActivityBreakdownsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_piazza_activity_breakdown
-      @piazza_activity_breakdown = PiazzaActivityBreakdown.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def piazza_activity_breakdown_params
-      params.require(:piazza_activity_breakdown).permit(:enrollment_id, :emails, :role, :groups, :days_online, :posts, :edits_to_posts, :answers, :edits_to_answers, :followups, :replies_to_followups, :instructor_good_question, :instructor_good_answer, :instructor_good_comment, :student_good_question, :student_thanks_on_answer, :student_helpful_on_followups, :good_question_given, :thanks_on_answers_given, :helpful_on_followups_given, :post_views, :live_qa_upvotes, :piazza_activity_download_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_piazza_activity_breakdown
+    @piazza_activity_breakdown = PiazzaActivityBreakdown.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def piazza_activity_breakdown_params
+    params.require(:piazza_activity_breakdown).permit(:enrollment_id, :emails, :role, :groups, :days_online, :posts, :edits_to_posts, :answers, :edits_to_answers, :followups, :replies_to_followups, :instructor_good_question, :instructor_good_answer, :instructor_good_comment, :student_good_question, :student_thanks_on_answer, :student_helpful_on_followups, :good_question_given, :thanks_on_answers_given, :helpful_on_followups_given, :post_views, :live_qa_upvotes, :piazza_activity_download_id)
+  end
 end

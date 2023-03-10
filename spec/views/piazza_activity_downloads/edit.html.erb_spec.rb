@@ -1,13 +1,13 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe "piazza_activity_downloads/edit", type: :view do
+RSpec.describe "piazza_activity_downloads/edit" do
   let(:piazza_activity_download) {
     PiazzaActivityDownload.create!(
       cohort: nil
     )
   }
 
-  before(:each) do
+  before do
     assign(:piazza_activity_download, piazza_activity_download)
   end
 
@@ -15,7 +15,6 @@ RSpec.describe "piazza_activity_downloads/edit", type: :view do
     render
 
     assert_select "form[action=?][method=?]", piazza_activity_download_path(piazza_activity_download), "post" do
-
       assert_select "input[name=?]", "piazza_activity_download[cohort_id]"
     end
   end

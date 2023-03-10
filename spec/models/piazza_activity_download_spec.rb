@@ -17,8 +17,8 @@
 #
 #  fk_rails_...  (cohort_id => cohorts.id)
 #
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe PiazzaActivityDownload, type: :model do
+RSpec.describe PiazzaActivityDownload do
   pending "add some examples to (or delete) #{__FILE__}"
 end

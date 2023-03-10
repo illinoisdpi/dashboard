@@ -1,5 +1,5 @@
 class CohortsController < ApplicationController
-  before_action :set_cohort, only: %i[ show edit update destroy ]
+  before_action :set_cohort, only: %i[show edit update destroy]
 
   # GET /cohorts or /cohorts.json
   def index
@@ -58,13 +58,14 @@ class CohortsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_cohort
-      @cohort = Cohort.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def cohort_params
-      params.require(:cohort).permit(:name, :year, :generation, :number, :piazza_course_number)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_cohort
+    @cohort = Cohort.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def cohort_params
+    params.require(:cohort).permit(:name, :year, :generation, :number, :piazza_course_number)
+  end
 end

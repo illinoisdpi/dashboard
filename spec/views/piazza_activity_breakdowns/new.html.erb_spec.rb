@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe "piazza_activity_breakdowns/new", type: :view do
-  before(:each) do
+RSpec.describe "piazza_activity_breakdowns/new" do
+  before do
     assign(:piazza_activity_breakdown, PiazzaActivityBreakdown.new(
       enrollment: nil,
       emails: "MyString",
@@ -33,7 +33,6 @@ RSpec.describe "piazza_activity_breakdowns/new", type: :view do
     render
 
     assert_select "form[action=?][method=?]", piazza_activity_breakdowns_path, "post" do
-
       assert_select "input[name=?]", "piazza_activity_breakdown[enrollment_id]"
 
       assert_select "input[name=?]", "piazza_activity_breakdown[emails]"

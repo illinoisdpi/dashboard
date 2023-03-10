@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe "cohorts/new", type: :view do
-  before(:each) do
+RSpec.describe "cohorts/new" do
+  before do
     assign(:cohort, Cohort.new(
       name: "MyString",
       year: 1,
@@ -15,7 +15,6 @@ RSpec.describe "cohorts/new", type: :view do
     render
 
     assert_select "form[action=?][method=?]", cohorts_path, "post" do
-
       assert_select "input[name=?]", "cohort[name]"
 
       assert_select "input[name=?]", "cohort[year]"

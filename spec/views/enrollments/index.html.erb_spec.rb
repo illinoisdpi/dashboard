@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe "enrollments/index", type: :view do
-  before(:each) do
+RSpec.describe "enrollments/index" do
+  before do
     assign(:enrollments, [
       Enrollment.create!(
         role: "Role",
@@ -18,7 +18,7 @@ RSpec.describe "enrollments/index", type: :view do
 
   it "renders a list of enrollments" do
     render
-    cell_selector = Rails::VERSION::STRING >= '7' ? 'div>p' : 'tr>td'
+    cell_selector = (Rails::VERSION::STRING >= "7") ? "div>p" : "tr>td"
     assert_select cell_selector, text: Regexp.new("Role".to_s), count: 2
     assert_select cell_selector, text: Regexp.new(nil.to_s), count: 2
     assert_select cell_selector, text: Regexp.new(nil.to_s), count: 2

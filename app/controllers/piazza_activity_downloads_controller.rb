@@ -1,5 +1,5 @@
 class PiazzaActivityDownloadsController < ApplicationController
-  before_action :set_piazza_activity_download, only: %i[ show edit update destroy ]
+  before_action :set_piazza_activity_download, only: %i[show edit update destroy]
 
   # GET /piazza_activity_downloads or /piazza_activity_downloads.json
   def index
@@ -58,13 +58,14 @@ class PiazzaActivityDownloadsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_piazza_activity_download
-      @piazza_activity_download = PiazzaActivityDownload.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def piazza_activity_download_params
-      params.require(:piazza_activity_download).permit(:activity_from, :activity_until, :cohort_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_piazza_activity_download
+    @piazza_activity_download = PiazzaActivityDownload.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def piazza_activity_download_params
+    params.require(:piazza_activity_download).permit(:activity_from, :activity_until, :cohort_id)
+  end
 end

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe PiazzaActivityDownloadsController, type: :routing do
+RSpec.describe PiazzaActivityDownloadsController do
   describe "routing" do
     it "routes to #index" do
       expect(get: "/piazza_activity_downloads").to route_to("piazza_activity_downloads#index")
@@ -17,7 +17,6 @@ RSpec.describe PiazzaActivityDownloadsController, type: :routing do
     it "routes to #edit" do
       expect(get: "/piazza_activity_downloads/1/edit").to route_to("piazza_activity_downloads#edit", id: "1")
     end
-
 
     it "routes to #create" do
       expect(post: "/piazza_activity_downloads").to route_to("piazza_activity_downloads#create")

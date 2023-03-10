@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  
+
   root "cohorts#index"
 
   resources :piazza_activity_breakdowns

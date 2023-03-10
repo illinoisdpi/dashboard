@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe "piazza_activity_breakdowns/show", type: :view do
-  before(:each) do
+RSpec.describe "piazza_activity_breakdowns/show" do
+  before do
     assign(:piazza_activity_breakdown, PiazzaActivityBreakdown.create!(
       enrollment: nil,
       emails: "Emails",

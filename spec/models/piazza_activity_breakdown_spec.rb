@@ -39,8 +39,8 @@
 #  fk_rails_...  (enrollment_id => enrollments.id)
 #  fk_rails_...  (piazza_activity_download_id => piazza_activity_downloads.id)
 #
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe PiazzaActivityBreakdown, type: :model do
+RSpec.describe PiazzaActivityBreakdown do
   pending "add some examples to (or delete) #{__FILE__}"
 end

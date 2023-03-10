@@ -1,5 +1,5 @@
 class EnrollmentsController < ApplicationController
-  before_action :set_enrollment, only: %i[ show edit update destroy ]
+  before_action :set_enrollment, only: %i[show edit update destroy]
 
   # GET /enrollments or /enrollments.json
   def index
@@ -58,13 +58,14 @@ class EnrollmentsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_enrollment
-      @enrollment = Enrollment.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def enrollment_params
-      params.require(:enrollment).permit(:role, :user_id, :cohort_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_enrollment
+    @enrollment = Enrollment.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def enrollment_params
+    params.require(:enrollment).permit(:role, :user_id, :cohort_id)
+  end
 end
