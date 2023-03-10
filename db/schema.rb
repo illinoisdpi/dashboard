@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_10_174145) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_10_174343) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -36,6 +36,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_10_174145) do
     t.index ["user_id"], name: "index_enrollments_on_user_id"
   end
 
+  create_table "piazza_activity_downloads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "activity_from", null: false
+    t.datetime "activity_until", null: false
+    t.uuid "cohort_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cohort_id"], name: "index_piazza_activity_downloads_on_cohort_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.citext "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -51,4 +60,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_10_174145) do
 
   add_foreign_key "enrollments", "cohorts"
   add_foreign_key "enrollments", "users"
+  add_foreign_key "piazza_activity_downloads", "cohorts"
 end

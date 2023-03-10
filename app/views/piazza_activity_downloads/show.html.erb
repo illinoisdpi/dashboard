@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @piazza_activity_download %>
+
+<div>
+  <%= link_to "Edit this piazza activity download", edit_piazza_activity_download_path(@piazza_activity_download) %> |
+  <%= link_to "Back to piazza activity downloads", piazza_activity_downloads_path %>
+
+  <%= button_to "Destroy this piazza activity download", @piazza_activity_download, method: :delete %>
+</div>

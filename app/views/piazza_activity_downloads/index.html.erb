@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Piazza activity downloads</h1>
+
+<div id="piazza_activity_downloads">
+  <% @piazza_activity_downloads.each do |piazza_activity_download| %>
+    <%= render piazza_activity_download %>
+    <p>
+      <%= link_to "Show this piazza activity download", piazza_activity_download %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New piazza activity download", new_piazza_activity_download_path %>

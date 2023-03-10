@@ -1,0 +1,32 @@
+<%= form_with(model: piazza_activity_download) do |form| %>
+  <% if piazza_activity_download.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(piazza_activity_download.errors.count, "error") %> prohibited this piazza_activity_download from being saved:</h2>
+
+      <ul>
+        <% piazza_activity_download.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :activity_from, style: "display: block" %>
+    <%= form.datetime_field :activity_from %>
+  </div>
+
+  <div>
+    <%= form.label :activity_until, style: "display: block" %>
+    <%= form.datetime_field :activity_until %>
+  </div>
+
+  <div>
+    <%= form.label :cohort_id, style: "display: block" %>
+    <%= form.text_field :cohort_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
