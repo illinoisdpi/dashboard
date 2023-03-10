@@ -16,6 +16,7 @@
 #  instructor_good_comment      :integer          not null
 #  instructor_good_question     :integer          not null
 #  live_qa_upvotes              :integer          not null
+#  name                         :string
 #  post_views                   :integer          not null
 #  posts                        :integer          not null
 #  replies_to_followups         :integer          not null

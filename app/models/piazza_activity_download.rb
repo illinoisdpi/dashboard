@@ -23,5 +23,7 @@ class PiazzaActivityDownload < ApplicationRecord
   has_many :piazza_activity_breakdowns, dependent: :destroy
 
   validates :activity_from, presence: true
-  validates :activity_until, presence: true
+  validates :activity_until,
+    presence: true,
+    uniqueness: {scope: [:activity_from, :cohort]}
 end

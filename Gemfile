@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.2.1"
 
+gem "awesome_print"
 gem "bootsnap", require: false
 gem "devise"
 gem "importmap-rails"
@@ -11,6 +12,7 @@ gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
 gem "rails", "~> 7.0.4", ">= 7.0.4.2"
 gem "redis", "~> 4.0"
+gem "smarter_csv"
 gem "sprockets-rails"
 gem "stimulus-rails"
 gem "turbo-rails"
@@ -21,7 +23,6 @@ group :production do
 end
 
 group :development, :test do
-  gem "awesome_print"
   gem "better_errors"
   gem "binding_of_caller"
   gem "debug", platforms: %i[mri mingw x64_mingw]

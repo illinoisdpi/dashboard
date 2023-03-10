@@ -38,6 +38,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_10_174420) do
 
   create_table "piazza_activity_breakdowns", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "enrollment_id", null: false
+    t.string "name"
     t.string "emails", null: false
     t.string "role", null: false
     t.string "groups"
