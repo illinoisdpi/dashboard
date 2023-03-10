@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_14_185645) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_14_202312) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -38,6 +38,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_14_185645) do
 
   create_table "piazza_activity_breakdowns", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "enrollment_id", null: false
+    t.string "name"
     t.string "emails", null: false
     t.string "role", null: false
     t.string "groups"
@@ -72,6 +73,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_14_185645) do
     t.uuid "cohort_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "csv_filename"
     t.index ["cohort_id"], name: "index_piazza_activity_downloads_on_cohort_id"
   end
 

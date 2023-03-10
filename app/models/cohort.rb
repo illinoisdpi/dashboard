@@ -22,4 +22,14 @@ class Cohort < ApplicationRecord
   validates :number,
     presence: true,
     uniqueness: {scope: ["generation", "year"]}
+
+  scope :default_order, -> { order(:year, :generation, :number) }
+
+  def to_s
+    "[#{code}] #{name}"
+  end
+
+  def code
+    "#{year}-#{generation}.#{number}"
+  end
 end

@@ -2,6 +2,7 @@ class CreatePiazzaActivityBreakdowns < ActiveRecord::Migration[7.0]
   def change
     create_table :piazza_activity_breakdowns, id: :uuid do |t|
       t.references :enrollment, null: false, foreign_key: true, type: :uuid
+      t.string :name
       t.string :emails, null: false
       t.string :role, null: false
       t.string :groups

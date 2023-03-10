@@ -1,35 +1,53 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      dashboard
-    </a>
+<nav class="navbar navbar-expand-lg bg-light mb-3">
+  <div class="container-fluid">
+    <%= link_to root_path, class: "navbar-brand" do %>
+      <i class="fa-solid fa-chart-line"></i>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsible-nav-links" aria-controls="collapsible-nav-links" aria-expanded="false" aria-label="Toggle navigation">
+      Dashboard
+    <% end %>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
-    <div class="collapse navbar-collapse" id="collapsible-nav-links">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Resources
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a href="/piazza_activity_breakdowns" class="dropdown-item">
-              Piazza Activity Breakdowns
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <% if Rails.env.development? %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Debug
             </a>
-            <a href="/piazza_activity_downloads" class="dropdown-item">
-              Piazza Activity Downloads
-            </a>
-            <a href="/enrollments" class="dropdown-item">
-              Enrollments
-            </a>
-            <a href="/cohorts" class="dropdown-item">
-              Cohorts
-            </a>
-          </div>
-        </li>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="/piazza_activity_breakdowns" class="dropdown-item">
+                  Piazza Activity Breakdowns
+                </a>
+              </li>
+              <li>
+                <a href="/piazza_activity_downloads" class="dropdown-item">
+                  Piazza Activity Downloads
+                </a>
+              </li>
+              <li>
+                <a href="/enrollments" class="dropdown-item">
+                  Enrollments
+                </a>
+              </li>
+              <li>
+                <a href="/cohorts" class="dropdown-item">
+                  Cohorts
+                </a>
+              </li>
+            </ul>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+        <% end %>
       </ul>
+
       <ul class="navbar-nav">
         <% if current_user.blank? %>
           <li class="nav-item">
@@ -45,12 +63,10 @@
           </li>
 
           <li class="nav-item">
-            <a href="/users/sign_out" data-method="delete" class="nav-link">
-              Sign out
-            </a>
+            <%= link_to "Sign out", destroy_user_session_path, data: { "turbo-method": :delete }, class: "nav-link" %>
           </li>
         <% end %>
       </ul>
-    </div> <!-- .navbar-collapse -->
-  </div> <!-- .container -->
+    </div>
+  </div>
 </nav>

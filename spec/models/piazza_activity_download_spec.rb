@@ -5,6 +5,7 @@
 #  id             :uuid             not null, primary key
 #  activity_from  :datetime         not null
 #  activity_until :datetime         not null
+#  csv_filename   :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  cohort_id      :uuid             not null

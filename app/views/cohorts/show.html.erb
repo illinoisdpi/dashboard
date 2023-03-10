@@ -1,10 +1,13 @@
-<p style="color: green"><%= notice %></p>
+<%= render "cohorts/tabs" %>
 
-<%= render @cohort %>
+<div class="row mb-3">
+  <div class="col-lg-12 mb-3">
+    <div class="d-flex justify-content-end">
+      <%= link_to "Back to cohorts", cohorts_path, class: "btn btn-outline-secondary me-2" %>
 
-<div>
-  <%= link_to "Edit this cohort", edit_cohort_path(@cohort) %> |
-  <%= link_to "Back to cohorts", cohorts_path %>
+      <%= link_to "Edit this cohort", edit_cohort_path(@cohort), class: "btn btn-outline-secondary me-2" %>
 
-  <%= button_to "Destroy this cohort", @cohort, method: :delete %>
+      <%= link_to "Delete this cohort", @cohort, data: { "turbo-method": :delete }, class: "btn btn-outline-secondary" %>
+    </div>
+  </div>
 </div>

@@ -1,14 +1,36 @@
-<p style="color: green"><%= notice %></p>
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header d-flex align-items-center">
+        <h1 class="h6 mb-0 me-auto">Cohorts</h1>
 
-<h1>Cohorts</h1>
+        <div>
+          <%= link_to new_cohort_path do %>
+            <i class="fa-solid fa-plus fa-fw"></i>
+          <% end %>
+        </div>
+      </div>
 
-<div id="cohorts">
-  <% @cohorts.each do |cohort| %>
-    <%= render cohort %>
-    <p>
-      <%= link_to "Show this cohort", cohort %>
-    </p>
-  <% end %>
+      <div class="list-group list-group-flush">
+        <% @cohorts.each do |cohort| %>
+          <%= link_to cohort, class: "list-group-item" do %>
+            <div class="d-flex">
+              <div class="me-auto d-flex align-items-baseline">
+                <span class="badge bg-secondary font-monospace me-2">
+                  <%= cohort.code %>
+                </span>
+                
+                <%= cohort.name %>
+              </div>
+  
+              <div>
+                <i class="fa-solid fa-chevron-right fa-fw"></i>
+              </div>
+            </div>
+            
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
-
-<%= link_to "New cohort", new_cohort_path %>

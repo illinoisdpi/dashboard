@@ -1,10 +1,72 @@
-<p style="color: green"><%= notice %></p>
+<%= render "cohorts/tabs" %>
 
-<%= render @piazza_activity_download %>
+<div class="row mb-3">
+  <div class="col-lg-12 mb-3">
+    <div class="d-flex justify-content-end">
+      <%= link_to "Back to Piazza activity reports", cohort_piazza_activity_downloads_url(@cohort), class: "btn btn-outline-secondary me-2" %>
 
-<div>
-  <%= link_to "Edit this piazza activity download", edit_piazza_activity_download_path(@piazza_activity_download) %> |
-  <%= link_to "Back to piazza activity downloads", piazza_activity_downloads_path %>
+      <%= link_to "Delete this Piazza activity report", cohort_piazza_activity_download_url(@piazza_activity_download.cohort, @piazza_activity_download), data: { "turbo-method": :delete }, class: "btn btn-outline-secondary" %>
+    </div>
+  </div>
+</div>
 
-  <%= button_to "Destroy this piazza activity download", @piazza_activity_download, method: :delete %>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>User</th>
+            <th>Role</th>
+            <th>Post views</th>
+            <th>Posts</th>
+            <th>Answers</th>
+            <th>Followups</th>
+            <th>Replies to followups</th>
+            <th>Instructor good question</th>
+            <th>Instructor good comment</th>
+            <th>Instructor good answer</th>
+            <th>Student good question</th>
+            <th>Student helpful on followups</th>
+            <th>Helpful on followups given</th>
+            <th>Good question given</th>
+            <th>Thanks on answers given</th>
+            <th>Student thanks on answer</th>
+            <th>Days online</th>
+            <th>Live Q&A upvotes</th>
+            <th>Edits to answers</th>
+            <th>Edits to posts</th>
+          </tr>
+        </thead>
+
+        <tbody class="table-group-divider">  
+          <% @piazza_activity_download.piazza_activity_breakdowns.each do |piazza_activity_breakdown| %>
+            <tr>
+              <td><%= piazza_activity_breakdown.user.piazza_full %></td>
+              <td><%= piazza_activity_breakdown.enrollment.role %></td>
+              <td><%= piazza_activity_breakdown.post_views %></td>
+              <td><%= piazza_activity_breakdown.posts %></td>
+              <td><%= piazza_activity_breakdown.answers %></td>
+              <td><%= piazza_activity_breakdown.followups %></td>
+              <td><%= piazza_activity_breakdown.replies_to_followups %></td>
+              <td><%= piazza_activity_breakdown.instructor_good_question %></td>
+              <td><%= piazza_activity_breakdown.instructor_good_comment %></td>
+              <td><%= piazza_activity_breakdown.instructor_good_answer %></td>
+              <td><%= piazza_activity_breakdown.student_good_question %></td>
+              <td><%= piazza_activity_breakdown.student_helpful_on_followups %></td>
+              <td><%= piazza_activity_breakdown.helpful_on_followups_given %></td>
+              <td><%= piazza_activity_breakdown.good_question_given %></td>
+              <td><%= piazza_activity_breakdown.thanks_on_answers_given %></td>
+              <td><%= piazza_activity_breakdown.student_thanks_on_answer %></td>
+              <td><%= piazza_activity_breakdown.days_online %></td>
+              <td><%= piazza_activity_breakdown.live_qa_upvotes %></td>
+              <td><%= piazza_activity_breakdown.edits_to_answers %></td>
+              <td><%= piazza_activity_breakdown.edits_to_posts %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

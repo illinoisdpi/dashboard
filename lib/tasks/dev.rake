@@ -1,7 +1,7 @@
 namespace :dev do
   desc "Hydrate the database with sample data"
   task prime: :environment do
-    usernames = %w(alice bob carol)
+    usernames = %w[alice bob carol]
 
     usernames.each do |username|
       User.create(
@@ -10,5 +10,4 @@ namespace :dev do
       )
     end
   end
-
 end
