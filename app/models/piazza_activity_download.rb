@@ -19,4 +19,9 @@
 #
 class PiazzaActivityDownload < ApplicationRecord
   belongs_to :cohort
+  
+  has_many  :piazza_activity_breakdowns, dependent: :destroy
+
+  validates :activity_from, presence: true
+  validates :activity_until, presence: true
 end

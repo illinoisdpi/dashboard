@@ -12,4 +12,15 @@
 #  updated_at           :datetime         not null
 #
 class Cohort < ApplicationRecord
+  has_many  :enrollments, dependent: :destroy
+  has_many  :piazza_activity_downloads, dependent: :destroy
+
+  has_many :users, through: :enrollments, source: :user
+
+  validates :year, presence: true
+  validates :generation, presence: true
+  validates :number,
+    presence: true,
+    uniqueness: { scope: ["generation", "year"] }
+  
 end
