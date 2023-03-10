@@ -14,5 +14,4 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_10_003203) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
-
 end
