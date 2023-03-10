@@ -1,0 +1,132 @@
+<%= form_with(model: piazza_activity_breakdown) do |form| %>
+  <% if piazza_activity_breakdown.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(piazza_activity_breakdown.errors.count, "error") %> prohibited this piazza_activity_breakdown from being saved:</h2>
+
+      <ul>
+        <% piazza_activity_breakdown.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :enrollment_id, style: "display: block" %>
+    <%= form.text_field :enrollment_id %>
+  </div>
+
+  <div>
+    <%= form.label :emails, style: "display: block" %>
+    <%= form.text_field :emails %>
+  </div>
+
+  <div>
+    <%= form.label :role, style: "display: block" %>
+    <%= form.text_field :role %>
+  </div>
+
+  <div>
+    <%= form.label :groups, style: "display: block" %>
+    <%= form.text_field :groups %>
+  </div>
+
+  <div>
+    <%= form.label :days_online, style: "display: block" %>
+    <%= form.number_field :days_online %>
+  </div>
+
+  <div>
+    <%= form.label :posts, style: "display: block" %>
+    <%= form.number_field :posts %>
+  </div>
+
+  <div>
+    <%= form.label :edits_to_posts, style: "display: block" %>
+    <%= form.number_field :edits_to_posts %>
+  </div>
+
+  <div>
+    <%= form.label :answers, style: "display: block" %>
+    <%= form.number_field :answers %>
+  </div>
+
+  <div>
+    <%= form.label :edits_to_answers, style: "display: block" %>
+    <%= form.number_field :edits_to_answers %>
+  </div>
+
+  <div>
+    <%= form.label :followups, style: "display: block" %>
+    <%= form.number_field :followups %>
+  </div>
+
+  <div>
+    <%= form.label :replies_to_followups, style: "display: block" %>
+    <%= form.number_field :replies_to_followups %>
+  </div>
+
+  <div>
+    <%= form.label :instructor_good_question, style: "display: block" %>
+    <%= form.number_field :instructor_good_question %>
+  </div>
+
+  <div>
+    <%= form.label :instructor_good_answer, style: "display: block" %>
+    <%= form.number_field :instructor_good_answer %>
+  </div>
+
+  <div>
+    <%= form.label :instructor_good_comment, style: "display: block" %>
+    <%= form.number_field :instructor_good_comment %>
+  </div>
+
+  <div>
+    <%= form.label :student_good_question, style: "display: block" %>
+    <%= form.number_field :student_good_question %>
+  </div>
+
+  <div>
+    <%= form.label :student_thanks_on_answer, style: "display: block" %>
+    <%= form.number_field :student_thanks_on_answer %>
+  </div>
+
+  <div>
+    <%= form.label :student_helpful_on_followups, style: "display: block" %>
+    <%= form.number_field :student_helpful_on_followups %>
+  </div>
+
+  <div>
+    <%= form.label :good_question_given, style: "display: block" %>
+    <%= form.number_field :good_question_given %>
+  </div>
+
+  <div>
+    <%= form.label :thanks_on_answers_given, style: "display: block" %>
+    <%= form.number_field :thanks_on_answers_given %>
+  </div>
+
+  <div>
+    <%= form.label :helpful_on_followups_given, style: "display: block" %>
+    <%= form.number_field :helpful_on_followups_given %>
+  </div>
+
+  <div>
+    <%= form.label :post_views, style: "display: block" %>
+    <%= form.number_field :post_views %>
+  </div>
+
+  <div>
+    <%= form.label :live_qa_upvotes, style: "display: block" %>
+    <%= form.number_field :live_qa_upvotes %>
+  </div>
+
+  <div>
+    <%= form.label :piazza_activity_download_id, style: "display: block" %>
+    <%= form.text_field :piazza_activity_download_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

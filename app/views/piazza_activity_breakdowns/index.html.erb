@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Piazza activity breakdowns</h1>
+
+<div id="piazza_activity_breakdowns">
+  <% @piazza_activity_breakdowns.each do |piazza_activity_breakdown| %>
+    <%= render piazza_activity_breakdown %>
+    <p>
+      <%= link_to "Show this piazza activity breakdown", piazza_activity_breakdown %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New piazza activity breakdown", new_piazza_activity_breakdown_path %>

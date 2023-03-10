@@ -1,0 +1,1 @@
+json.partial! "piazza_activity_breakdowns/piazza_activity_breakdown", piazza_activity_breakdown: @piazza_activity_breakdown

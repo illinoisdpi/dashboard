@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :piazza_activity_breakdowns
   resources :piazza_activity_downloads
   resources :enrollments
   resources :cohorts
