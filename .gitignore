@@ -31,3 +31,5 @@
 /config/master.key
 # Ignore dotenv files.env*
 
+# Ignore CSV data files
+/lib/data/
