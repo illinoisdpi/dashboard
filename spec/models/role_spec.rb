@@ -14,8 +14,8 @@
 #  index_roles_on_name                                    (name)
 #  index_roles_on_name_and_resource_type_and_resource_id  (name,resource_type,resource_id)
 #
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe Role, type: :model do
+RSpec.describe Role do
   pending "add some examples to (or delete) #{__FILE__}"
 end
