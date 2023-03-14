@@ -51,8 +51,6 @@ class PiazzaActivityDownload < ApplicationRecord
 
       user.piazza_full = row.fetch(:name, "None provided")
       user.save
-      ap user.errors.full_messages if user.errors.any?
-      ap user if user.errors.any?
 
       enrollment = Enrollment.find_or_create_by(user: user, cohort: cohort) do |the_enrollment|
         the_enrollment.role = row.fetch(:role)
