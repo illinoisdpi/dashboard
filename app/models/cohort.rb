@@ -23,7 +23,7 @@ class Cohort < ApplicationRecord
     presence: true,
     uniqueness: {scope: ["generation", "year"]}
 
-  scope :default_order, -> { order(:year, :generation, :number)}
+  scope :default_order, -> { order(:year, :generation, :number) }
 
   def code
     "#{year}-#{generation}.#{number}"
