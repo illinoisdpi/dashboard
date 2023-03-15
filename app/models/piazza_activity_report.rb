@@ -19,8 +19,6 @@
 #  fk_rails_...  (cohort_id => cohorts.id)
 #
 class PiazzaActivityReport < ApplicationRecord
-  include Adminable
-
   attr_accessor :csv_file
 
   belongs_to :cohort

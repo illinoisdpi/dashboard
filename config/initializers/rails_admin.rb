@@ -31,8 +31,12 @@ RailsAdmin.config do |config|
     export
     bulk_delete
     show
-    edit
-    delete
+    edit do
+      except ['PiazzaActivityReport', 'PiazzaActivityBreakdown']
+    end
+    delete do
+      except ['PiazzaActivityBreakdown']
+    end
     show_in_app
 
     ## With an audit adapter, you can add:
