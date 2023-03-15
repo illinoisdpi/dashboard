@@ -1,4 +1,4 @@
-# Dashboard
+# WE Dashboard
 
 > **You make what you measure**.... _Corollary: be careful what you measure._
 >
