@@ -25,6 +25,10 @@ class Cohort < ApplicationRecord
 
   scope :default_order, -> { order(:year, :generation, :number) }
 
+  def to_s
+    "[#{code}] #{name}"
+  end
+
   def code
     "#{year}-#{generation}.#{number}"
   end

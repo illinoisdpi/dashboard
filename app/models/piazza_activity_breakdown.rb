@@ -43,4 +43,5 @@
 class PiazzaActivityBreakdown < ApplicationRecord
   belongs_to :enrollment
   belongs_to :piazza_activity_download
+  has_one :user, through: :enrollment
 end
