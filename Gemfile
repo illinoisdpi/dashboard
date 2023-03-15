@@ -12,8 +12,10 @@ gem "jbuilder"
 gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
 gem "rails", "~> 7.0.4", ">= 7.0.4.2"
+gem "rails_admin", "~> 3.1"
 gem "redis", "~> 4.0"
 gem "rolify", "~> 6.0"
+gem "sassc-rails", "~> 2.1"
 gem "smarter_csv"
 gem "sprockets-rails"
 gem "stimulus-rails"
@@ -45,3 +47,5 @@ group :development do
   gem "rails_db", ">= 2.3.1"
   gem "rails-erd"
 end
+
+
