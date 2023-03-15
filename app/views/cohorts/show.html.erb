@@ -11,3 +11,49 @@
     </div>
   </div>
 </div>
+
+<div class="row mb-3">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="h6 mb-0">Piazza post views</h2>
+      </div>
+
+      <div class="card-body">
+        <%
+          post_views_data = @cohort.enrollments.map do |enrollment|
+            {
+              name: enrollment.user.to_s,
+              data: @cohort.piazza_activity_reports.map { |report| [report.activity_until, report.piazza_activity_breakdowns.find_by(enrollment: enrollment).post_views] }
+            }
+          end
+        %>
+        
+        <%= line_chart(post_views_data, curve: false) %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-3">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="h6 mb-0">Piazza posts</h2>
+      </div>
+
+      <div class="card-body">
+        <%
+          posts_data = @cohort.enrollments.map do |enrollment|
+            {
+              name: enrollment.user.to_s,
+              data: @cohort.piazza_activity_reports.map { |report| [report.activity_until, report.piazza_activity_breakdowns.find_by(enrollment: enrollment).posts] }
+            }
+          end
+        %>
+        
+        <%= line_chart(posts_data, curve: false) %>
+      </div>
+    </div>
+  </div>
+</div>
