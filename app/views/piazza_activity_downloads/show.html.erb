@@ -1,46 +1,43 @@
-<div class="row">
-  <div class="offset-md-3 col-md-6">
+<div class="row mb-3">
+  <div class="col-md-12">
     <%= render @piazza_activity_download %>
 
     <div>
-      <%= link_to "Back to piazza activity downloads", piazza_activity_downloads_path %>
-    
-      <%= button_to "Destroy this piazza activity download", @piazza_activity_download, method: :delete %>
+      <%= button_to "Delete this piazza activity download", cohort_piazza_activity_download_url(@piazza_activity_download.cohort, @piazza_activity_download), method: :delete, class: "btn btn-outline-secondary" %>
     </div>
-    
   </div>
 </div>
 
 <div class="row">
   <div class="col-md-12">
     <div class="table-responsive">
-      <table class="table">
-        <thead>
+      <table class="table table-bordered table-hover">
+        <thead class="table-light">
           <tr>
             <th>User</th>
             <th>Role</th>
-            <th>post views</th>
-            <th>posts</th>
-            <th>answers</th>
-            <th>followups</th>
-            <th>replies to followups</th>
-            <th>instructor good question</th>
-            <th>instructor good comment</th>
-            <th>instructor good answer</th>
-            <th>student good question</th>
-            <th>student helpful on followups</th>
-            <th>helpful on followups given</th>
-            <th>good question given</th>
-            <th>thanks on answers given</th>
-            <th>student thanks on answer</th>
-            <th>days online</th>
-            <th>live qa upvotes</th>
-            <th>edits to answers</th>
-            <th>edits to posts</th>
+            <th>Post views</th>
+            <th>Posts</th>
+            <th>Answers</th>
+            <th>Followups</th>
+            <th>Replies to followups</th>
+            <th>Instructor good question</th>
+            <th>Instructor good comment</th>
+            <th>Instructor good answer</th>
+            <th>Student good question</th>
+            <th>Student helpful on followups</th>
+            <th>Helpful on followups given</th>
+            <th>Good question given</th>
+            <th>Thanks on answers given</th>
+            <th>Student thanks on answer</th>
+            <th>Days online</th>
+            <th>Live Q&A upvotes</th>
+            <th>Edits to answers</th>
+            <th>Edits to posts</th>
           </tr>
         </thead>
 
-        <tbody>  
+        <tbody class="table-group-divider">  
           <% @piazza_activity_download.piazza_activity_breakdowns.each do |piazza_activity_breakdown| %>
             <tr>
               <td><%= piazza_activity_breakdown.user.piazza_full %></td>

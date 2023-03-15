@@ -3,8 +3,8 @@ Rails.application.routes.draw do
 
   root "cohorts#index"
 
-  resources :piazza_activity_breakdowns
-  resources :piazza_activity_downloads
-  resources :enrollments
-  resources :cohorts
+  resources :cohorts do
+    resources :enrollments
+    resources :piazza_activity_downloads
+  end
 end

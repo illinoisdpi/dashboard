@@ -1,13 +1,26 @@
 class PiazzaActivityDownloadsController < ApplicationController
+  before_action :set_cohort
   before_action :set_piazza_activity_download, only: %i[show edit update destroy]
 
   # GET /piazza_activity_downloads or /piazza_activity_downloads.json
   def index
+    @breadcrumbs = [
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Piazza Activity Downloads", href: cohort_piazza_activity_downloads_path(@cohort) },
+    ]
+
     @piazza_activity_downloads = PiazzaActivityDownload.all
   end
 
   # GET /piazza_activity_downloads/1 or /piazza_activity_downloads/1.json
   def show
+    @breadcrumbs = [
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Piazza Activity Downloads", href: cohort_piazza_activity_downloads_path(@cohort) },
+      { content: @piazza_activity_download.activity_until },
+    ]
   end
 
   # GET /piazza_activity_downloads/new
@@ -25,7 +38,7 @@ class PiazzaActivityDownloadsController < ApplicationController
 
     respond_to do |format|
       if @piazza_activity_download.save
-        format.html { redirect_to piazza_activity_download_url(@piazza_activity_download), notice: "Piazza activity download was successfully created." }
+        format.html { redirect_to cohort_piazza_activity_download_url(@piazza_activity_download.cohort, @piazza_activity_download), notice: "Piazza activity download was successfully created." }
         format.json { render :show, status: :created, location: @piazza_activity_download }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +51,7 @@ class PiazzaActivityDownloadsController < ApplicationController
   def update
     respond_to do |format|
       if @piazza_activity_download.update(piazza_activity_download_params)
-        format.html { redirect_to piazza_activity_download_url(@piazza_activity_download), notice: "Piazza activity download was successfully updated." }
+        format.html { redirect_to cohort_piazza_activity_download_url(@piazza_activity_download.cohort, @piazza_activity_download), notice: "Piazza activity download was successfully updated." }
         format.json { render :show, status: :ok, location: @piazza_activity_download }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -59,7 +72,10 @@ class PiazzaActivityDownloadsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
+  def set_cohort
+    @cohort = Cohort.find(params[:cohort_id])
+  end
+
   def set_piazza_activity_download
     @piazza_activity_download = PiazzaActivityDownload.find(params[:id])
   end
