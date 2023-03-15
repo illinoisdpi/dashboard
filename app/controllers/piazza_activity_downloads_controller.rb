@@ -5,9 +5,9 @@ class PiazzaActivityDownloadsController < ApplicationController
   # GET /piazza_activity_downloads or /piazza_activity_downloads.json
   def index
     @breadcrumbs = [
-      { content: "Cohorts", href: cohorts_path },
-      { content: @cohort.to_s, href: cohort_path(@cohort) },
-      { content: "Piazza activity reports", href: cohort_piazza_activity_downloads_path(@cohort) },
+      {content: "Cohorts", href: cohorts_path},
+      {content: @cohort.to_s, href: cohort_path(@cohort)},
+      {content: "Piazza activity reports", href: cohort_piazza_activity_downloads_path(@cohort)}
     ]
 
     @piazza_activity_downloads = @cohort.piazza_activity_downloads.default_order
@@ -16,20 +16,20 @@ class PiazzaActivityDownloadsController < ApplicationController
   # GET /piazza_activity_downloads/1 or /piazza_activity_downloads/1.json
   def show
     @breadcrumbs = [
-      { content: "Cohorts", href: cohorts_path },
-      { content: @cohort.to_s, href: cohort_path(@cohort) },
-      { content: "Piazza activity reports", href: cohort_piazza_activity_downloads_path(@cohort) },
-      { content: @piazza_activity_download.to_s },
+      {content: "Cohorts", href: cohorts_path},
+      {content: @cohort.to_s, href: cohort_path(@cohort)},
+      {content: "Piazza activity reports", href: cohort_piazza_activity_downloads_path(@cohort)},
+      {content: @piazza_activity_download.to_s}
     ]
   end
 
   # GET /piazza_activity_downloads/new
   def new
     @breadcrumbs = [
-      { content: "Cohorts", href: cohorts_path },
-      { content: @cohort.to_s, href: cohort_path(@cohort) },
-      { content: "Piazza activity reports", href: cohort_piazza_activity_downloads_path(@cohort) },
-      { content: "New" },
+      {content: "Cohorts", href: cohorts_path},
+      {content: @cohort.to_s, href: cohort_path(@cohort)},
+      {content: "Piazza activity reports", href: cohort_piazza_activity_downloads_path(@cohort)},
+      {content: "New"}
     ]
 
     @piazza_activity_download = @cohort.piazza_activity_downloads.build

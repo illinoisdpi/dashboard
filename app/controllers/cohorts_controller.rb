@@ -4,17 +4,17 @@ class CohortsController < ApplicationController
   # GET /cohorts or /cohorts.json
   def index
     @breadcrumbs = [
-      { content: "Cohorts", href: cohorts_path },
+      {content: "Cohorts", href: cohorts_path}
     ]
-      
+
     @cohorts = Cohort.all.default_order
   end
 
   # GET /cohorts/1 or /cohorts/1.json
   def show
     @breadcrumbs = [
-      { content: "Cohorts", href: cohorts_path },
-      { content: @cohort.to_s, href: cohort_path(@cohort) }
+      {content: "Cohorts", href: cohorts_path},
+      {content: @cohort.to_s, href: cohort_path(@cohort)}
     ]
   end
 

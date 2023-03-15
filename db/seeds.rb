@@ -20,9 +20,9 @@ emails = %w[
 
 user_info = emails.map { |email| {email: email, password: "password"} }
 
-ap User.create(user_info)
+Rails.logger.debug User.create(user_info)
 
-ap Cohort.create(
+Rails.logger.debug Cohort.create(
   [
     {
       year: 2022,
