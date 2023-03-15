@@ -6,7 +6,23 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-Cohort.create(
+emails = %w[
+  aparan3@uic.edu
+  diamondm@uillinois.edu
+  ian@biggreen.company
+  jfoil@uillinois.edu
+  raghu@firstdraft.com
+  schaud47@uic.edu
+  sfarzo@uillinois.edu
+  sjaime@uillinois.edu
+  tula@uillinois.edu
+]
+
+user_info = emails.map { |email| {email: email, password: "password"} }
+
+ap User.create(user_info)
+
+ap Cohort.create(
   [
     {
       year: 2022,
