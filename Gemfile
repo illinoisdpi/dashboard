@@ -47,5 +47,3 @@ group :development do
   gem "rails_db", ">= 2.3.1"
   gem "rails-erd"
 end
-
-

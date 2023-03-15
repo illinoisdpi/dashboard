@@ -12,6 +12,8 @@
 #  updated_at           :datetime         not null
 #
 class Cohort < ApplicationRecord
+  include Adminable
+
   has_many :enrollments, dependent: :destroy
   has_many :piazza_activity_downloads, dependent: :destroy
 

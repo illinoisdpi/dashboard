@@ -41,6 +41,7 @@
 #  fk_rails_...  (piazza_activity_download_id => piazza_activity_downloads.id)
 #
 class PiazzaActivityBreakdown < ApplicationRecord
+  include Adminable
   belongs_to :enrollment
   belongs_to :piazza_activity_download
   has_one :user, through: :enrollment
