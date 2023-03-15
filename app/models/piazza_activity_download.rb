@@ -35,6 +35,10 @@ class PiazzaActivityDownload < ApplicationRecord
 
   scope :default_order, -> { order(activity_until: :desc) }
 
+  def to_s
+    "#{activity_from_humanized} to #{activity_until_humanized}"
+  end
+
   def activity_from_humanized
     activity_from.strftime("%Y-%m-%d")
   end

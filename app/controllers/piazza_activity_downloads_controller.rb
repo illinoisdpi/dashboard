@@ -19,7 +19,7 @@ class PiazzaActivityDownloadsController < ApplicationController
       { content: "Cohorts", href: cohorts_path },
       { content: @cohort.to_s, href: cohort_path(@cohort) },
       { content: "Piazza activity reports", href: cohort_piazza_activity_downloads_path(@cohort) },
-      { content: @piazza_activity_download.activity_until },
+      { content: @piazza_activity_download.to_s },
     ]
   end
 

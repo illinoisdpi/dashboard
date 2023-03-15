@@ -18,9 +18,7 @@
           <%= link_to cohort_piazza_activity_download_path(@cohort, piazza_activity_download), class: "list-group-item" do %>
             <div class="d-flex">
               <div class="me-auto d-flex align-items-baseline font-monospace">
-                <%= piazza_activity_download.activity_from_humanized %>
-                to
-                <%= piazza_activity_download.activity_until_humanized %>
+                <%= piazza_activity_download.to_s %>
               </div>
   
               <div>
