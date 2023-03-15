@@ -14,8 +14,10 @@ namespace :dev do
     Time.use_zone("America/Chicago") do
       usernames = %w[alice bob carol]
 
+      users = []
+
       usernames.each do |username|
-        User.create(
+        users << User.create(
           email: "#{username}@example.com",
           password: "password"
         )
@@ -45,7 +47,8 @@ namespace :dev do
         cohort.piazza_activity_reports.create(
           activity_from: cohort_start_date + i.weeks,
           activity_until: cohort_start_date + (i + 1).weeks,
-          csv_file: uploaded_file
+          csv_file: uploaded_file,
+          user: users.sample
         )
       end
     end
