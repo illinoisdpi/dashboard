@@ -35,7 +35,7 @@ class PiazzaActivityDownload < ApplicationRecord
 
   def process_csv
     ActiveRecord::Base.transaction do
-      self.csv_filename = csv_file.original_filename
+      self.update(csv_filename: csv_file.original_filename)
 
       options = {key_mapping: {"live_q&a_upvotes": :live_qa_upvotes}}
 
