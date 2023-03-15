@@ -1,4 +1,4 @@
-module PiazzaActivityDownload::Adminable
+module PiazzaActivityReport::Adminable
   extend ActiveSupport::Concern
 
   included do

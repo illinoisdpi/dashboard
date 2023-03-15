@@ -25,7 +25,7 @@ RSpec.describe "piazza_activity_breakdowns/show" do
       helpful_on_followups_given: 17,
       post_views: 18,
       live_qa_upvotes: 19,
-      piazza_activity_download: nil
+      piazza_activity_report: nil
     ))
   end
 

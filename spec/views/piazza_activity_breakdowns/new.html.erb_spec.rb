@@ -25,7 +25,7 @@ RSpec.describe "piazza_activity_breakdowns/new" do
       helpful_on_followups_given: 1,
       post_views: 1,
       live_qa_upvotes: 1,
-      piazza_activity_download: nil
+      piazza_activity_report: nil
     ))
   end
 
@@ -77,7 +77,7 @@ RSpec.describe "piazza_activity_breakdowns/new" do
 
       assert_select "input[name=?]", "piazza_activity_breakdown[live_qa_upvotes]"
 
-      assert_select "input[name=?]", "piazza_activity_breakdown[piazza_activity_download_id]"
+      assert_select "input[name=?]", "piazza_activity_breakdown[piazza_activity_report_id]"
     end
   end
 end

@@ -1,10 +1,10 @@
-<%= form_with(model: piazza_activity_download, url: [piazza_activity_download.cohort, piazza_activity_download]) do |form| %>
-  <% if piazza_activity_download.errors.any? %>
+<%= form_with(model: piazza_activity_report, url: [piazza_activity_report.cohort, piazza_activity_report]) do |form| %>
+  <% if piazza_activity_report.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(piazza_activity_download.errors.count, "error") %> prohibited this piazza_activity_download from being saved:</h2>
+      <h2><%= pluralize(piazza_activity_report.errors.count, "error") %> prohibited this piazza_activity_report from being saved:</h2>
 
       <ul>
-        <% piazza_activity_download.errors.each do |error| %>
+        <% piazza_activity_report.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>

@@ -28,21 +28,21 @@
 #  created_at                   :datetime         not null
 #  updated_at                   :datetime         not null
 #  enrollment_id                :uuid             not null
-#  piazza_activity_download_id  :uuid             not null
+#  piazza_activity_report_id    :uuid             not null
 #
 # Indexes
 #
-#  index_piazza_activity_breakdowns_on_enrollment_id                (enrollment_id)
-#  index_piazza_activity_breakdowns_on_piazza_activity_download_id  (piazza_activity_download_id)
+#  index_piazza_activity_breakdowns_on_enrollment_id  (enrollment_id)
+#  index_piazza_activity_breakdowns_on_reports_id     (piazza_activity_report_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (enrollment_id => enrollments.id)
-#  fk_rails_...  (piazza_activity_download_id => piazza_activity_downloads.id)
+#  fk_rails_...  (piazza_activity_report_id => piazza_activity_reports.id)
 #
 class PiazzaActivityBreakdown < ApplicationRecord
   include Adminable
   belongs_to :enrollment
-  belongs_to :piazza_activity_download
+  belongs_to :piazza_activity_report
   has_one :user, through: :enrollment
 end

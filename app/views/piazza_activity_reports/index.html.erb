@@ -7,18 +7,18 @@
         <h1 class="h6 mb-0 me-auto">Piazza Activity Reports</h1>
 
         <div>
-          <%= link_to new_cohort_piazza_activity_download_path(@cohort) do %>
+          <%= link_to new_cohort_piazza_activity_report_path(@cohort) do %>
             <i class="fa-solid fa-plus fa-fw"></i>
           <% end %>
         </div>
       </div>
 
       <div class="list-group list-group-flush">
-        <% @piazza_activity_downloads.each do |piazza_activity_download| %>
-          <%= link_to cohort_piazza_activity_download_path(@cohort, piazza_activity_download), class: "list-group-item" do %>
+        <% @piazza_activity_reports.each do |piazza_activity_report| %>
+          <%= link_to cohort_piazza_activity_report_path(@cohort, piazza_activity_report), class: "list-group-item" do %>
             <div class="d-flex">
               <div class="me-auto d-flex align-items-baseline font-monospace">
-                <%= piazza_activity_download.to_s %>
+                <%= piazza_activity_report.to_s %>
               </div>
   
               <div>
