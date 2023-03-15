@@ -18,6 +18,7 @@
         <thead>
           <tr>
             <th>User</th>
+            <th>Role</th>
             <th>post views</th>
             <th>posts</th>
             <th>answers</th>
@@ -43,6 +44,7 @@
           <% @piazza_activity_download.piazza_activity_breakdowns.each do |piazza_activity_breakdown| %>
             <tr>
               <td><%= piazza_activity_breakdown.user.piazza_full %></td>
+              <td><%= piazza_activity_breakdown.enrollment.role %></td>
               <td><%= piazza_activity_breakdown.post_views %></td>
               <td><%= piazza_activity_breakdown.posts %></td>
               <td><%= piazza_activity_breakdown.answers %></td>
