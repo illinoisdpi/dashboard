@@ -24,11 +24,11 @@
   </div>
 
   <div class="mb-3">
-    <%= form.label :csv_file, class: "form-label" %>
-    <%= form.file_field :csv_file %>
+    <%= form.label :csv_file, "CSV file", class: "form-label" %>
+    <%= form.file_field :csv_file, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.submit class: "btn btn-outline-primary" %>
+  <div class="d-grid gap-2">
+    <%= form.submit class: "btn btn-secondary" %>
   </div>
 <% end %>

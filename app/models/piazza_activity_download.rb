@@ -33,6 +33,16 @@ class PiazzaActivityDownload < ApplicationRecord
 
   after_create :process_csv
 
+  scope :default_order, -> { order(activity_until: :desc) }
+
+  def activity_from_humanized
+    activity_from.strftime("%Y-%m-%d")
+  end
+
+  def activity_until_humanized
+    activity_until.strftime("%Y-%m-%d")
+  end
+
   def process_csv
     ActiveRecord::Base.transaction do
       self.update(csv_filename: csv_file.original_filename)

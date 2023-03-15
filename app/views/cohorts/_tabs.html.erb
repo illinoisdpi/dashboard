@@ -1,14 +1,14 @@
 <ul class="nav nav-tabs mb-3">
   <li class="nav-item">
-    <%= link_to "Overview", @cohort, class: "nav-link" %>
+    <%= simple_active_link_to "Overview", @cohort, class: "nav-link", active: :exclusive %>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Canvas</a>
+    <a class="nav-link">Canvas</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Piazza</a>
+    <%= simple_active_link_to "Piazza", cohort_piazza_activity_downloads_path(@cohort), class: "nav-link" %>
   </li>
   <li class="nav-item">
-    <a class="nav-link disabled">Attendance</a>
+    <a class="nav-link">Attendance</a>
   </li>
 </ul>

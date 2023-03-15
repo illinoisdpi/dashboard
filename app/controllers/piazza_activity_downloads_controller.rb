@@ -7,10 +7,10 @@ class PiazzaActivityDownloadsController < ApplicationController
     @breadcrumbs = [
       { content: "Cohorts", href: cohorts_path },
       { content: @cohort.to_s, href: cohort_path(@cohort) },
-      { content: "Piazza Activity Downloads", href: cohort_piazza_activity_downloads_path(@cohort) },
+      { content: "Piazza activity reports", href: cohort_piazza_activity_downloads_path(@cohort) },
     ]
 
-    @piazza_activity_downloads = PiazzaActivityDownload.all
+    @piazza_activity_downloads = @cohort.piazza_activity_downloads.default_order
   end
 
   # GET /piazza_activity_downloads/1 or /piazza_activity_downloads/1.json
@@ -18,14 +18,21 @@ class PiazzaActivityDownloadsController < ApplicationController
     @breadcrumbs = [
       { content: "Cohorts", href: cohorts_path },
       { content: @cohort.to_s, href: cohort_path(@cohort) },
-      { content: "Piazza Activity Downloads", href: cohort_piazza_activity_downloads_path(@cohort) },
+      { content: "Piazza activity reports", href: cohort_piazza_activity_downloads_path(@cohort) },
       { content: @piazza_activity_download.activity_until },
     ]
   end
 
   # GET /piazza_activity_downloads/new
   def new
-    @piazza_activity_download = PiazzaActivityDownload.new
+    @breadcrumbs = [
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Piazza activity reports", href: cohort_piazza_activity_downloads_path(@cohort) },
+      { content: "New" },
+    ]
+
+    @piazza_activity_download = @cohort.piazza_activity_downloads.build
   end
 
   # GET /piazza_activity_downloads/1/edit
@@ -38,7 +45,7 @@ class PiazzaActivityDownloadsController < ApplicationController
 
     respond_to do |format|
       if @piazza_activity_download.save
-        format.html { redirect_to cohort_piazza_activity_download_url(@piazza_activity_download.cohort, @piazza_activity_download), notice: "Piazza activity download was successfully created." }
+        format.html { redirect_to cohort_piazza_activity_download_url(@piazza_activity_download.cohort, @piazza_activity_download), notice: "Piazza activity report was successfully created." }
         format.json { render :show, status: :created, location: @piazza_activity_download }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -51,7 +58,7 @@ class PiazzaActivityDownloadsController < ApplicationController
   def update
     respond_to do |format|
       if @piazza_activity_download.update(piazza_activity_download_params)
-        format.html { redirect_to cohort_piazza_activity_download_url(@piazza_activity_download.cohort, @piazza_activity_download), notice: "Piazza activity download was successfully updated." }
+        format.html { redirect_to cohort_piazza_activity_download_url(@piazza_activity_download.cohort, @piazza_activity_download), notice: "Piazza activity report was successfully updated." }
         format.json { render :show, status: :ok, location: @piazza_activity_download }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -65,7 +72,7 @@ class PiazzaActivityDownloadsController < ApplicationController
     @piazza_activity_download.destroy
 
     respond_to do |format|
-      format.html { redirect_to piazza_activity_downloads_url, notice: "Piazza activity download was successfully destroyed." }
+      format.html { redirect_to piazza_activity_downloads_url, notice: "Piazza activity report was successfully destroyed." }
       format.json { head :no_content }
     end
   end
