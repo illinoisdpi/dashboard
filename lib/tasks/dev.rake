@@ -37,9 +37,9 @@ namespace :dev do
 
       6.times do |i|
         uploaded_file = ActionDispatch::Http::UploadedFile.new(
-          tempfile: File.open(Rails.root.join("lib", "sample_data", "piazza-activity-#{i}.csv")),
+          tempfile: Rails.root.join("lib", "sample_data", "piazza-activity-#{i}.csv").open,
           filename: "piazza-activity-#{i}.csv",
-          type: 'text/plain'
+          type: "text/plain"
         )
 
         cohort.piazza_activity_downloads.create(
