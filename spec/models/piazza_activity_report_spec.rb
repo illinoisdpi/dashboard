@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: piazza_activity_downloads
+# Table name: piazza_activity_reports
 #
 #  id             :uuid             not null, primary key
 #  activity_from  :datetime         not null
@@ -12,7 +12,7 @@
 #
 # Indexes
 #
-#  index_piazza_activity_downloads_on_cohort_id  (cohort_id)
+#  index_piazza_activity_reports_on_cohort_id  (cohort_id)
 #
 # Foreign Keys
 #
@@ -20,6 +20,6 @@
 #
 require "rails_helper"
 
-RSpec.describe PiazzaActivityDownload do
+RSpec.describe PiazzaActivityReport do
   pending "add some examples to (or delete) #{__FILE__}"
 end

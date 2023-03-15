@@ -5,6 +5,6 @@ Rails.application.routes.draw do
 
   resources :cohorts do
     resources :enrollments
-    resources :piazza_activity_downloads
+    resources :piazza_activity_reports
   end
 end

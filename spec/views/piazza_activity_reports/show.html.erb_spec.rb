@@ -1,8 +1,8 @@
 require "rails_helper"
 
-RSpec.describe "piazza_activity_downloads/show" do
+RSpec.describe "piazza_activity_reports/show" do
   before do
-    assign(:piazza_activity_download, PiazzaActivityDownload.create!(
+    assign(:piazza_activity_report, PiazzaActivityReport.create!(
       cohort: nil
     ))
   end

@@ -13,7 +13,7 @@
 #
 class Cohort < ApplicationRecord
   has_many :enrollments, dependent: :destroy
-  has_many :piazza_activity_downloads, dependent: :destroy
+  has_many :piazza_activity_reports, dependent: :destroy
 
   has_many :users, through: :enrollments, source: :user
 

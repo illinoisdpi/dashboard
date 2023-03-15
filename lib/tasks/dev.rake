@@ -42,7 +42,7 @@ namespace :dev do
           type: "text/plain"
         )
 
-        cohort.piazza_activity_downloads.create(
+        cohort.piazza_activity_reports.create(
           activity_from: cohort_start_date + i.weeks,
           activity_until: cohort_start_date + (i + 1).weeks,
           csv_file: uploaded_file
