@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.2.1"
 
+gem "simple_active_link_to"
 gem "awesome_print"
 gem "bootsnap", require: false
 gem "devise"

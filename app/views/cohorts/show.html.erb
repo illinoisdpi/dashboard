@@ -1,20 +1,17 @@
-<div class="row">
-  <div class="col-lg-6">
+<%= render "cohorts/tabs" %>
 
+<div class="row mb-3">
+  <div class="col-lg-6 mb-3">
     <div class="d-grid gap-2">
       <%= link_to "Edit this cohort", edit_cohort_path(@cohort), class: "btn btn-outline-secondary" %>
-
-      <%= link_to "Destroy this cohort", @cohort, data: { "turbo-method": :delete }, class: "btn btn-outline-secondary" %>
     </div>
+  </div>
 
-    <div>
-       |
-      <%= link_to "Back to cohorts", cohorts_path %>
-    
-      
+  <div class="col-lg-6 mb-3">
+    <div class="d-grid gap-2">
+      <%= link_to "Delete this cohort", @cohort, data: { "turbo-method": :delete }, class: "btn btn-outline-secondary" %>
     </div>
-    
-    <hr>
+  </div>
     
     <%= render "piazza_activity_downloads/form", piazza_activity_download: @cohort.piazza_activity_downloads.build %>
   </div>

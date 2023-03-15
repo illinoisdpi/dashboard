@@ -270,6 +270,9 @@ GEM
     ruby-graphviz (1.2.5)
       rexml
     ruby-progressbar (1.13.0)
+    simple_active_link_to (1.1.2)
+      actionpack (>= 5.0)
+      activesupport (>= 5.0)
     simple_form (5.2.0)
       actionpack (>= 5.2)
       activemodel (>= 5.2)
@@ -340,6 +343,7 @@ DEPENDENCIES
   rspec-rails
   rubocop-rails
   rubocop-rspec
+  simple_active_link_to
   smarter_csv
   sprockets-rails
   standard
