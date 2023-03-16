@@ -5,6 +5,7 @@ ruby "3.2.1"
 
 gem "simple_active_link_to"
 gem "awesome_print"
+gem "blazer"
 gem "bootsnap", require: false
 gem "chartkick"
 gem "devise"

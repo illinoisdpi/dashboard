@@ -79,6 +79,11 @@ GEM
     bindex (0.8.1)
     binding_of_caller (1.0.0)
       debug_inspector (>= 0.0.1)
+    blazer (2.6.5)
+      activerecord (>= 5)
+      chartkick (>= 3.2)
+      railties (>= 5)
+      safely_block (>= 0.1.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -104,6 +109,7 @@ GEM
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
       railties (>= 3.2)
+    errbase (0.2.2)
     erubi (1.12.0)
     faker (3.1.1)
       i18n (>= 1.8.11, < 2)
@@ -277,6 +283,8 @@ GEM
     ruby-graphviz (1.2.5)
       rexml
     ruby-progressbar (1.13.0)
+    safely_block (0.3.0)
+      errbase (>= 0.1.1)
     simple_active_link_to (1.1.2)
       actionpack (>= 5.0)
       activesupport (>= 5.0)
@@ -332,6 +340,7 @@ DEPENDENCIES
   awesome_print
   better_errors
   binding_of_caller
+  blazer
   bootsnap
   bullet
   chartkick
