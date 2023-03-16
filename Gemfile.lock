@@ -318,6 +318,7 @@ GEM
 PLATFORMS
   arm64-darwin-22
   x86_64-darwin-21
+  x86_64-darwin-22
   x86_64-linux
 
 DEPENDENCIES
@@ -340,6 +341,7 @@ DEPENDENCIES
   rails (~> 7.0.4, >= 7.0.4.2)
   rails-erd
   rails_db (>= 2.3.1)
+  ransack
   redis (~> 4.0)
   rolify (~> 6.0)
   rspec-rails

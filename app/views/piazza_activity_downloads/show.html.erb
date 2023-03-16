@@ -17,31 +17,31 @@
       <table class="table table-bordered table-hover">
         <thead class="table-light">
           <tr>
-            <th>User</th>
-            <th>Role</th>
-            <th>Post views</th>
-            <th>Posts</th>
-            <th>Answers</th>
-            <th>Followups</th>
-            <th>Replies to followups</th>
-            <th>Instructor good question</th>
-            <th>Instructor good comment</th>
-            <th>Instructor good answer</th>
-            <th>Student good question</th>
-            <th>Student helpful on followups</th>
-            <th>Helpful on followups given</th>
-            <th>Good question given</th>
-            <th>Thanks on answers given</th>
-            <th>Student thanks on answer</th>
-            <th>Days online</th>
-            <th>Live Q&A upvotes</th>
-            <th>Edits to answers</th>
-            <th>Edits to posts</th>
+            <th><%= sort_link(@q, :name, "User", default_order: :asc) %></th>
+            <th><%= sort_link(@q, :role, "Role") %></th>
+            <th><%= sort_link(@q, :post_views, "Post views") %></th>
+            <th><%= sort_link(@q, :posts, "Posts") %></th>
+            <th><%= sort_link(@q, :answers, "Answers") %></th>
+            <th><%= sort_link(@q, :followups, "Followups") %></th>
+            <th><%= sort_link(@q, :replies_to_followups, "Replies to followups") %></th>
+            <th><%= sort_link(@q, :instructor_good_question, "Instructor good question") %></th>
+            <th><%= sort_link(@q, :instructor_good_comment, "Instructor good comment") %></th>
+            <th><%= sort_link(@q, :instructor_good_answer, "Instructor good answer") %></th>
+            <th><%= sort_link(@q, :student_good_question, "Student good question") %></th>
+            <th><%= sort_link(@q, :student_helpful_on_followups, "Student helpful on followups") %></th>
+            <th><%= sort_link(@q, :helpful_on_followups_given, "Helpful on followups given") %></th>
+            <th><%= sort_link(@q, :good_question_given, "Good question given") %></th>
+            <th><%= sort_link(@q, :thanks_on_answers_given, "Thanks on answers given") %></th>
+            <th><%= sort_link(@q, :student_thanks_on_answer, "Student thanks on answer") %></th>
+            <th><%= sort_link(@q, :days_online, "Days online") %></th>
+            <th><%= sort_link(@q, :live_qa_upvotes, "Live Q&A upvotes") %></th>
+            <th><%= sort_link(@q, :edits_to_answers, "Edits to answers") %></th>
+            <th><%= sort_link(@q, :edits_to_posts, "Edits to posts") %></th>
           </tr>
         </thead>
 
         <tbody class="table-group-divider">  
-          <% @piazza_activity_download.piazza_activity_breakdowns.each do |piazza_activity_breakdown| %>
+          <% @piazza_activity_breakdowns.each do |piazza_activity_breakdown| %>
             <tr>
               <td><%= piazza_activity_breakdown.user.piazza_full %></td>
               <td><%= piazza_activity_breakdown.enrollment.role %></td>
