@@ -67,6 +67,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_15_193745) do
     t.index ["piazza_activity_report_id"], name: "index_piazza_activity_breakdowns_on_reports_id"
   end
 
+  create_table "piazza_activity_downloads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "activity_from", null: false
+    t.datetime "activity_until", null: false
+    t.uuid "cohort_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "csv_filename"
+    t.index ["cohort_id"], name: "index_piazza_activity_downloads_on_cohort_id"
+  end
+
   create_table "piazza_activity_reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "activity_from", null: false
     t.datetime "activity_until", null: false
