@@ -1,1 +1,0 @@
-json.partial! "piazza_activity_downloads/piazza_activity_download", piazza_activity_download: @piazza_activity_download

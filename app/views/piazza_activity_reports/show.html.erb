@@ -1,0 +1,76 @@
+<%= render "cohorts/tabs" %>
+
+<div class="row mb-3">
+  <div class="col-lg-12 mb-3">
+    <div class="d-flex justify-content-between">
+      <%= render @piazza_activity_report %>
+
+      <div>
+        <%= link_to "Back to Piazza activity reports", cohort_piazza_activity_reports_url(@cohort), class: "btn btn-outline-secondary me-2" %>
+
+        <%= link_to "Delete this Piazza activity report", cohort_piazza_activity_report_url(@piazza_activity_report.cohort, @piazza_activity_report), data: { "turbo-method": :delete }, class: "btn btn-outline-secondary" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="table-light">
+          <tr>
+            <th><%= sort_link(@q, :name, "User", default_order: :asc) %></th>
+            <th><%= sort_link(@q, :role, "Role") %></th>
+            <th><%= sort_link(@q, :post_views, "Post views") %></th>
+            <th><%= sort_link(@q, :posts, "Posts") %></th>
+            <th><%= sort_link(@q, :answers, "Answers") %></th>
+            <th><%= sort_link(@q, :followups, "Followups") %></th>
+            <th><%= sort_link(@q, :replies_to_followups, "Replies to followups") %></th>
+            <th><%= sort_link(@q, :instructor_good_question, "Instructor good question") %></th>
+            <th><%= sort_link(@q, :instructor_good_comment, "Instructor good comment") %></th>
+            <th><%= sort_link(@q, :instructor_good_answer, "Instructor good answer") %></th>
+            <th><%= sort_link(@q, :student_good_question, "Student good question") %></th>
+            <th><%= sort_link(@q, :student_helpful_on_followups, "Student helpful on followups") %></th>
+            <th><%= sort_link(@q, :helpful_on_followups_given, "Helpful on followups given") %></th>
+            <th><%= sort_link(@q, :good_question_given, "Good question given") %></th>
+            <th><%= sort_link(@q, :thanks_on_answers_given, "Thanks on answers given") %></th>
+            <th><%= sort_link(@q, :student_thanks_on_answer, "Student thanks on answer") %></th>
+            <th><%= sort_link(@q, :days_online, "Days online") %></th>
+            <th><%= sort_link(@q, :live_qa_upvotes, "Live Q&A upvotes") %></th>
+            <th><%= sort_link(@q, :edits_to_answers, "Edits to answers") %></th>
+            <th><%= sort_link(@q, :edits_to_posts, "Edits to posts") %></th>
+          </tr>
+        </thead>
+
+        <tbody class="table-group-divider">  
+          <% @piazza_activity_breakdowns.each do |piazza_activity_breakdown| %>
+            <tr>
+              <td><%= piazza_activity_breakdown.user.piazza_full %></td>
+              <td><%= piazza_activity_breakdown.enrollment.role %></td>
+              <td><%= piazza_activity_breakdown.post_views %></td>
+              <td><%= piazza_activity_breakdown.posts %></td>
+              <td><%= piazza_activity_breakdown.answers %></td>
+              <td><%= piazza_activity_breakdown.followups %></td>
+              <td><%= piazza_activity_breakdown.replies_to_followups %></td>
+              <td><%= piazza_activity_breakdown.instructor_good_question %></td>
+              <td><%= piazza_activity_breakdown.instructor_good_comment %></td>
+              <td><%= piazza_activity_breakdown.instructor_good_answer %></td>
+              <td><%= piazza_activity_breakdown.student_good_question %></td>
+              <td><%= piazza_activity_breakdown.student_helpful_on_followups %></td>
+              <td><%= piazza_activity_breakdown.helpful_on_followups_given %></td>
+              <td><%= piazza_activity_breakdown.good_question_given %></td>
+              <td><%= piazza_activity_breakdown.thanks_on_answers_given %></td>
+              <td><%= piazza_activity_breakdown.student_thanks_on_answer %></td>
+              <td><%= piazza_activity_breakdown.days_online %></td>
+              <td><%= piazza_activity_breakdown.live_qa_upvotes %></td>
+              <td><%= piazza_activity_breakdown.edits_to_answers %></td>
+              <td><%= piazza_activity_breakdown.edits_to_posts %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
