@@ -9,4 +9,3 @@ module User::Adminable
     end
   end
 end
-  
