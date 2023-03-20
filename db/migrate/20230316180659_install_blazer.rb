@@ -1,7 +1,7 @@
 class InstallBlazer < ActiveRecord::Migration[7.0]
   def change
     create_table :blazer_queries do |t|
-      t.references :creator
+      t.references :creator, type: :uuid
       t.string :name
       t.text :description
       t.text :statement
@@ -11,7 +11,7 @@ class InstallBlazer < ActiveRecord::Migration[7.0]
     end
 
     create_table :blazer_audits do |t|
-      t.references :user
+      t.references :user, type: :uuid
       t.references :query
       t.text :statement
       t.string :data_source
@@ -19,7 +19,7 @@ class InstallBlazer < ActiveRecord::Migration[7.0]
     end
 
     create_table :blazer_dashboards do |t|
-      t.references :creator
+      t.references :creator, type: :uuid
       t.string :name
       t.timestamps null: false
     end
@@ -32,7 +32,7 @@ class InstallBlazer < ActiveRecord::Migration[7.0]
     end
 
     create_table :blazer_checks do |t|
-      t.references :creator
+      t.references :creator, type: :uuid
       t.references :query
       t.string :state
       t.string :schedule

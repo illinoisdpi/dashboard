@@ -17,7 +17,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_16_180659) do
   enable_extension "plpgsql"
 
   create_table "blazer_audits", force: :cascade do |t|
-    t.bigint "user_id"
+    t.uuid "user_id"
     t.bigint "query_id"
     t.text "statement"
     t.string "data_source"
@@ -27,7 +27,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_16_180659) do
   end
 
   create_table "blazer_checks", force: :cascade do |t|
-    t.bigint "creator_id"
+    t.uuid "creator_id"
     t.bigint "query_id"
     t.string "state"
     t.string "schedule"
@@ -53,7 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_16_180659) do
   end
 
   create_table "blazer_dashboards", force: :cascade do |t|
-    t.bigint "creator_id"
+    t.uuid "creator_id"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -61,7 +61,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_16_180659) do
   end
 
   create_table "blazer_queries", force: :cascade do |t|
-    t.bigint "creator_id"
+    t.uuid "creator_id"
     t.string "name"
     t.text "description"
     t.text "statement"
