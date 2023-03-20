@@ -3,7 +3,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.2.1"
 
-gem "simple_active_link_to"
 gem "awesome_print"
 gem "blazer"
 gem "bootsnap", require: false
@@ -14,10 +13,14 @@ gem "importmap-rails"
 gem "jbuilder"
 gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
+gem "ransack"
 gem "rails", "~> 7.0.4", ">= 7.0.4.2"
+gem "rails_admin", "~> 3.1"
 gem "redis", "~> 4.0"
 gem "rolify", "~> 6.0"
 gem "rollbar", "~> 3.4"
+gem "sassc-rails", "~> 2.1"
+gem "simple_active_link_to"
 gem "smarter_csv"
 gem "sprockets-rails"
 gem "stimulus-rails"

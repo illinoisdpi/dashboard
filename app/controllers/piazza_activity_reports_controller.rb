@@ -21,6 +21,8 @@ class PiazzaActivityReportsController < ApplicationController
       {content: "Piazza activity reports", href: cohort_piazza_activity_reports_path(@cohort)},
       {content: @piazza_activity_report.to_s}
     ]
+    @q = @piazza_activity_report.piazza_activity_breakdowns.ransack(params[:q])
+    @piazza_activity_breakdowns = @q.result
   end
 
   # GET /piazza_activity_reports/new

@@ -16,6 +16,7 @@ emails = %w[
   sfarzo@uillinois.edu
   sjaime@uillinois.edu
   tula@uillinois.edu
+  homar4@uillinois.edu
 ]
 
 user_info = emails.map { |email| {email: email, password: "password"} }
