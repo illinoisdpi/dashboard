@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="offset-md-4 col-md-4">
+    <div class="card mb-3">
+      <h5 class="card-header">
+        <%= resource_name != "user" ? resource_name.to_s.titleize : "" %> Sign In
+      </h5>
+
+      <div class="card-body">
+        <% if flash[:notice].present? %>
+          <div class="alert alert-info" role="alert">
+            <%= flash[:notice] %>
+          </div>
+        <% end %>
+
+        <% if flash[:alert].present? %>
+          <div class="alert alert-danger" role="alert">
+            <%= flash[:alert] %>
+          </div>
+        <% end %>
+
+        <% form_html_options = { novalidate: true, class: "mb-3" } %>
+
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: form_html_options) do |f| %>
+          <div class="mb-3">
+            <%= f.label :email, class: "form-label" %>
+            <%= f.email_field :email, autofocus: true, class: "form-control" %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :password, class: "form-label" %>
+            <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+          </div>
+
+          <% if devise_mapping.rememberable? -%>
+            <div class="form-check mb-3">
+              <%= f.check_box :remember_me, class: "form-check-input" %>
+              <%= f.label :remember_me, class: "form-check-label"%>
+            </div>
+          <% end -%>
+
+          <div class="d-grid gap-2">
+            <%= f.submit "Sign in", class: "btn btn-outline-primary" %>
+          </div>
+
+          <hr>
+
+          <%= render "devise/shared/links" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

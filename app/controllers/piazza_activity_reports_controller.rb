@@ -41,7 +41,7 @@ class PiazzaActivityReportsController < ApplicationController
 
   # POST /piazza_activity_reports or /piazza_activity_reports.json
   def create
-    @piazza_activity_report = PiazzaActivityReport.new(piazza_activity_report_params)
+    @piazza_activity_report = PiazzaActivityReport.new(piazza_activity_report_params.merge(user: current_user))
 
     respond_to do |format|
       if @piazza_activity_report.save

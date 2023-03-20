@@ -28,4 +28,8 @@ class User < ApplicationRecord
   has_many :enrollments, dependent: :destroy
 
   has_many :cohorts, through: :enrollments, source: :cohort
+
+  def to_s
+    piazza_full || email
+  end
 end

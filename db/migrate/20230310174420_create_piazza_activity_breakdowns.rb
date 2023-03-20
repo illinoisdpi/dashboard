@@ -24,7 +24,7 @@ class CreatePiazzaActivityBreakdowns < ActiveRecord::Migration[7.0]
       t.integer :helpful_on_followups_given, null: false
       t.integer :post_views, null: false
       t.integer :live_qa_upvotes, null: false
-      t.references :piazza_activity_report, null: false, foreign_key: true, type: :uuid, index: { name: :index_piazza_activity_breakdowns_on_reports_id }
+      t.references :piazza_activity_report, null: false, foreign_key: true, type: :uuid, index: {name: :index_piazza_activity_breakdowns_on_reports_id}
 
       t.timestamps
     end
