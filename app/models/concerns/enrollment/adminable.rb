@@ -9,4 +9,3 @@ module Enrollment::Adminable
     end
   end
 end
-    
