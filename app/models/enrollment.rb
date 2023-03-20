@@ -20,6 +20,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Enrollment < ApplicationRecord
+  include Adminable
   belongs_to :user
   belongs_to :cohort
   has_many :piazza_activity_breakdowns, dependent: :destroy
