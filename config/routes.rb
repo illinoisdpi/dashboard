@@ -1,14 +1,14 @@
 Rails.application.routes.draw do
   authenticate :user, ->(user) { user.has_role? :admin } do
-    mount RailsAdmin::Engine => "/admin", as: "rails_admin"
+    mount RailsAdmin::Engine => "/admin", :as => "rails_admin"
   end
 
-  authenticate :user, ->(user) { [:admin, :instructor].any? {|role| user.has_role? role} } do
+  authenticate :user, ->(user) { [:admin, :instructor].any? { |role| user.has_role? role } } do
     mount Blazer::Engine, at: "blazer"
   end
 
   devise_for :users
-  
+
   root "cohorts#index"
 
   resources :cohorts do
