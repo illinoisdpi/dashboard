@@ -24,7 +24,7 @@
           post_views_data = @cohort.enrollments.map do |enrollment|
             {
               name: enrollment.user.to_s,
-              data: @cohort.piazza_activity_reports.map { |report| [report.activity_until, report.piazza_activity_breakdowns.find_by(enrollment: enrollment).post_views] }
+              data: @cohort.piazza_activity_reports.map { |report| [report.activity_until, report.piazza_activity_breakdowns.find_by(enrollment:)&.post_views] }
             }
           end
         %>
