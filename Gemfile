@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.2.1"
 
 gem "awesome_print"
+gem "blazer"
 gem "bootsnap", require: false
 gem "chartkick"
 gem "devise"
