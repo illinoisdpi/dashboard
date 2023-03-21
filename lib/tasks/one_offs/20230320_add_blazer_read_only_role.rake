@@ -1,7 +1,7 @@
 namespace :one_offs do
   desc "Add read only role for blazer queries"
   task add_blazer_read_only_role: :environment do
-    raise("ENV must have BLAZER_ROLE_PASSWORD") unless ENV["BLAZER_ROLE_PASSWORD"].present?
+    raise("ENV must have BLAZER_ROLE_PASSWORD") if ENV["BLAZER_ROLE_PASSWORD"].blank?
 
     sql = %(
       BEGIN;
