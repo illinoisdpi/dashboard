@@ -8,7 +8,7 @@
       <div>
         <%= link_to "Back to Piazza activity reports", cohort_piazza_activity_reports_url(@cohort), class: "btn btn-outline-secondary me-2" %>
 
-        <%= link_to "Delete this Piazza activity report", cohort_piazza_activity_report_url(@piazza_activity_report.cohort, @piazza_activity_report), data: { "turbo-method": :delete }, class: "btn btn-outline-secondary" %>
+        <%= link_to "Delete this Piazza activity report", cohort_piazza_activity_report_url(@piazza_activity_report.cohort, @piazza_activity_report), data: { "turbo-method": :delete, "turbo-confirm": "Are you sure? This is NOT reversible" }, class: "btn btn-outline-secondary" %>
       </div>
     </div>
   </div>
