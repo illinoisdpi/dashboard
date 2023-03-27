@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_16_180659) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_27_204541) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -154,7 +154,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_16_180659) do
     t.string "piazza_full"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "github_username"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["github_username"], name: "index_users_on_github_username", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
