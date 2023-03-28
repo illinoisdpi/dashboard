@@ -4,7 +4,7 @@ module User::Adminable
   included do
     rails_admin do
       edit do
-        include_fields :email, :password, :password_confirmation, :roles
+        include_fields :email, :github_username, :password, :password_confirmation, :roles
       end
     end
   end
