@@ -51,6 +51,20 @@ namespace :dev do
           user: users.sample
         )
       end
+
+      4.times do |i|
+        uploaded_file = ActionDispatch::Http::UploadedFile.new(
+          tempfile: Rails.root.join("lib", "sample_data", "canvas-gradebook-snapshot-#{i}.csv").open,
+          filename: "canvas-gradebook-snapshot-#{i}.csv",
+          type: "text/plain"
+        )
+
+        cohort.canvas_gradebook_snapshots.create(
+          downloaded_at: cohort_start_date + (i + 1).weeks,
+          csv_file: uploaded_file,
+          user: users.sample
+        )
+      end
     end
   end
 end

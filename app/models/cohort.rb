@@ -16,6 +16,8 @@ class Cohort < ApplicationRecord
 
   has_many :enrollments, dependent: :destroy
   has_many :piazza_activity_reports, dependent: :destroy
+  has_many :canvas_gradebook_snapshots, dependent: :destroy
+  has_many :canvas_assignments, dependent: :destroy
 
   has_many :users, through: :enrollments, source: :user
 

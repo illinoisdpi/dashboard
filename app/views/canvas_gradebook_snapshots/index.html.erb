@@ -1,0 +1,33 @@
+<%= render "cohorts/tabs" %>
+
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header d-flex align-items-center">
+        <h1 class="h6 mb-0 me-auto">Canvas Gradebook Snapshots</h1>
+
+        <div>
+          <%= link_to new_cohort_canvas_gradebook_snapshot_path(@cohort) do %>
+            <i class="fa-solid fa-plus fa-fw"></i>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="list-group list-group-flush">
+        <% @canvas_gradebook_snapshots.each do |canvas_gradebook_snapshot| %>
+          <%= link_to cohort_canvas_gradebook_snapshot_path(@cohort, canvas_gradebook_snapshot), class: "list-group-item" do %>
+            <div class="d-flex">
+              <div class="me-auto d-flex align-items-baseline font-monospace">
+                <%= canvas_gradebook_snapshot.to_s %>
+              </div>
+  
+              <div>
+                <i class="fa-solid fa-chevron-right fa-fw"></i>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

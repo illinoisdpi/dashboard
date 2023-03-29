@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_27_204719) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_28_142701) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -70,6 +70,44 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_204719) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_blazer_queries_on_creator_id"
+  end
+
+  create_table "canvas_assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.boolean "excluded"
+    t.integer "points_possible"
+    t.string "name"
+    t.string "id_from_canvas"
+    t.integer "weight"
+    t.integer "html"
+    t.integer "ruby"
+    t.integer "rails"
+    t.uuid "cohort_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cohort_id"], name: "index_canvas_assignments_on_cohort_id"
+  end
+
+  create_table "canvas_gradebook_snapshots", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "downloaded_at"
+    t.string "csv_filename"
+    t.uuid "cohort_id", null: false
+    t.uuid "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cohort_id"], name: "index_canvas_gradebook_snapshots_on_cohort_id"
+    t.index ["user_id"], name: "index_canvas_gradebook_snapshots_on_user_id"
+  end
+
+  create_table "canvas_submissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "canvas_assignment_id", null: false
+    t.uuid "enrollment_id", null: false
+    t.float "points"
+    t.uuid "canvas_gradebook_snapshot_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["canvas_assignment_id"], name: "index_canvas_submissions_on_canvas_assignment_id"
+    t.index ["canvas_gradebook_snapshot_id"], name: "index_canvas_submissions_on_canvas_gradebook_snapshot_id"
+    t.index ["enrollment_id"], name: "index_canvas_submissions_on_enrollment_id"
   end
 
   create_table "cohorts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -168,6 +206,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_204719) do
     t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
   end
 
+  add_foreign_key "canvas_assignments", "cohorts"
+  add_foreign_key "canvas_gradebook_snapshots", "cohorts"
+  add_foreign_key "canvas_gradebook_snapshots", "users"
+  add_foreign_key "canvas_submissions", "canvas_assignments"
+  add_foreign_key "canvas_submissions", "canvas_gradebook_snapshots"
+  add_foreign_key "canvas_submissions", "enrollments"
   add_foreign_key "enrollments", "cohorts"
   add_foreign_key "enrollments", "users"
   add_foreign_key "piazza_activity_breakdowns", "enrollments"
