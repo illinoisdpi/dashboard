@@ -14,41 +14,4 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-md-12">
-    <div class="table-responsive text-nowrap">
-      <table class="table table-bordered table-hover">
-        <thead class="table-light">
-          <tr>
-            <th>User</th>
-            <th>Role</th>
-            <% canvas_assignment_ids = @canvas_gradebook_snapshot.canvas_assignments.default_order.map(&:id) %>
-            <% @canvas_gradebook_snapshot.canvas_assignments.default_order.each do |canvas_assignment| %>
-              <th><%= canvas_assignment.name %></th>
-            <% end %>
-          </tr>
-          <tr>
-            <th>Points Possible</th>
-            <th></th>
-            <% @canvas_gradebook_snapshot.canvas_assignments.default_order.each do |canvas_assignment| %>
-              <th><%= canvas_assignment.points_possible %></th>
-            <% end %>
-          </tr>
-        </thead>
-
-        <tbody class="table-group-divider">  
-          <% @canvas_gradebook_snapshot.enrollments.each do |enrollment| %>
-            <tr>
-              <td><%= enrollment.user.piazza_full %></td>
-              <td><%= enrollment.role %></td>
-              <% canvas_submissions = @canvas_gradebook_snapshot.canvas_submissions.where(enrollment:).index_by(&:canvas_assignment_id) %>
-              <% canvas_assignment_ids.each do |canvas_assignment_id| %>
-                <td><%= canvas_submissions[canvas_assignment_id]&.points %></td>
-              <% end %>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+<%= render "table", canvas_gradebook_snapshot: @canvas_gradebook_snapshot %>
