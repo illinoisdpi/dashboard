@@ -8,6 +8,7 @@
 #  name                 :string
 #  number               :integer          not null
 #  piazza_course_number :string
+#  started_on           :date
 #  year                 :integer          not null
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null

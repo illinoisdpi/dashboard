@@ -26,7 +26,8 @@ class CanvasGradebookSnapshotsController < ApplicationController
   end
 
   # GET /canvas_gradebook_snapshots/1/edit
-  def edit; end
+  def edit
+  end
 
   # POST /canvas_gradebook_snapshots or /canvas_gradebook_snapshots.json
   def create

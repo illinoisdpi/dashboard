@@ -2,13 +2,38 @@
 #
 # Table name: enrollments
 #
-#  id             :uuid             not null, primary key
-#  id_from_canvas :string
-#  role           :string
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  cohort_id      :uuid             not null
-#  user_id        :uuid             not null
+#  id                             :uuid             not null, primary key
+#  career_attendance              :integer
+#  career_calendar_management     :integer
+#  career_customer_service        :integer
+#  career_networking              :integer
+#  career_problem_solving         :integer
+#  career_punctuality             :integer
+#  career_quality_of_work         :integer
+#  career_response_to_supervision :integer
+#  career_summary                 :text
+#  career_taking_initiative       :integer
+#  career_task_management         :integer
+#  career_teamwork                :integer
+#  career_total                   :integer
+#  career_workplace_appearance    :integer
+#  career_workplace_culture       :integer
+#  communication_nonverbal        :integer
+#  communication_summary          :text
+#  communication_total            :integer
+#  communication_verbal           :integer
+#  communication_written          :integer
+#  emotional_intelligence         :text
+#  id_from_canvas                 :string
+#  role                           :string
+#  staff_areas_for_growth         :text
+#  staff_strengths                :text
+#  technical_good_questions       :integer
+#  technical_progress             :integer
+#  created_at                     :datetime         not null
+#  updated_at                     :datetime         not null
+#  cohort_id                      :uuid             not null
+#  user_id                        :uuid             not null
 #
 # Indexes
 #

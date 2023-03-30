@@ -19,7 +19,8 @@ namespace :dev do
       usernames.each do |username|
         users << User.create(
           email: "#{username}@example.com",
-          password: "password"
+          password: "password",
+          github_username: username
         )
       end
 
@@ -28,7 +29,8 @@ namespace :dev do
         generation: 1,
         number: 2,
         name: "Sample Cohort",
-        canvas_shortname: "WE-2022-1.2-SDF"
+        canvas_shortname: "WE-2022-1.2-SDF",
+        started_on: "September 19th, 2022"
       )
 
       if cohort.errors.any?
@@ -43,8 +45,56 @@ namespace :dev do
       )
       sample_cohort_enrollment_csv = SmarterCSV.process(sample_cohort_enrollment_file)
       sample_cohort_enrollment_csv.each do |row|
-        user = User.create(email: row.fetch(:email), canvas_full: row.fetch(:name), password: "password")
-        cohort.enrollments.create(user:, id_from_canvas: row.fetch(:id_from_canvas), role: row.fetch(:role))
+        user = User.create(
+          email: row.fetch(:email),
+          canvas_full: row.fetch(:name),
+          password: "password",
+          github_username: row.fetch(:name).gsub(/[^a-z0-9]/i, ""),
+          quote: Faker::Quote.matz,
+          personal_website: Faker::Internet.url,
+          most_recent_role: Faker::Job.title,
+          languages: Array.new(rand(3)) { Faker::Nation.language }.to_sentence,
+          strengths: Array.new(3) { Faker::Superhero.power }.to_sentence,
+          education: Faker::Educator.degree
+        )
+
+        if user.errors.any?
+          ap user.errors.full_messages
+          ap user
+        end
+        
+        enrollment = cohort.enrollments.create(
+          user:,
+          id_from_canvas: row.fetch(:id_from_canvas),
+          role: row.fetch(:role),
+          career_summary: Faker::Lorem.paragraph,
+          career_attendance: rand(1..4),
+          career_punctuality: rand(1..4),
+          career_workplace_appearance: rand(1..4),
+          career_workplace_culture: rand(1..4),
+          career_taking_initiative: rand(1..4),
+          career_quality_of_work: rand(1..4),
+          career_networking: rand(1..4),
+          career_response_to_supervision: rand(1..4),
+          career_teamwork: rand(1..4),
+          career_customer_service: rand(1..4),
+          career_problem_solving: rand(1..4),
+          career_calendar_management: rand(1..4),
+          career_task_management: rand(1..4),
+          communication_summary: Faker::Lorem.paragraph,
+          communication_nonverbal: rand(1..4),
+          communication_verbal: rand(1..4),
+          communication_written: rand(1..4),
+          technical_good_questions: rand(1..4),
+          emotional_intelligence: Faker::Lorem.paragraph,
+          staff_strengths: Array.new(3) { Faker::Superhero.power }.to_sentence,
+          staff_areas_for_growth: Array.new(3) { Faker::Superhero.power }.to_sentence,
+        )
+
+        if enrollment.errors.any?
+          ap enrollment.errors.full_messages
+          ap enrollment
+        end
       end
 
       cohort_start_date = Date.parse("2023-01-30")
