@@ -1,0 +1,24 @@
+<%= form_with(model: canvas_gradebook_snapshot, url: [canvas_gradebook_snapshot.cohort, canvas_gradebook_snapshot]) do |form| %>
+  <% if canvas_gradebook_snapshot.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(canvas_gradebook_snapshot.errors.count, "error") %> prohibited this canvas_gradebook_snapshot from being saved:</h2>
+
+      <ul>
+        <% canvas_gradebook_snapshot.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.hidden_field :cohort_id, class: "form-control" %>
+
+  <div class="mb-3">
+    <%= form.label :csv_file, "CSV file", class: "form-label" %>
+    <%= form.file_field :csv_file, class: "form-control" %>
+  </div>
+
+  <div class="d-grid gap-2">
+    <%= form.submit class: "btn btn-secondary" %>
+  </div>
+<% end %>

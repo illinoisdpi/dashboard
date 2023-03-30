@@ -3,6 +3,7 @@
 # Table name: users
 #
 #  id                     :uuid             not null, primary key
+#  canvas_full            :string
 #  email                  :citext           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  github_username        :string

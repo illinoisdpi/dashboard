@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   root "cohorts#index"
 
   resources :cohorts do
+    resources :canvas_gradebook_snapshots
     resources :enrollments
     resources :piazza_activity_reports
   end

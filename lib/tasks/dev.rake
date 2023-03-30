@@ -27,7 +27,8 @@ namespace :dev do
         year: 2022,
         generation: 1,
         number: 2,
-        name: "Sample Cohort"
+        name: "Sample Cohort",
+        canvas_shortname: "WE-2022-1.2-SDF"
       )
 
       if cohort.errors.any?
@@ -49,6 +50,21 @@ namespace :dev do
           activity_until: cohort_start_date + (i + 1).weeks,
           csv_file: uploaded_file,
           user: users.sample
+        )
+      end
+
+      1.upto(4) do |i|
+        filename = "2022-0#{i}-01T1#{i}00_Grades-WE-2022-1.2-SDF.csv"
+        csv_file = ActionDispatch::Http::UploadedFile.new(
+          tempfile: Rails.root.join("lib", "sample_data", filename).open,
+          type: "text/plain",
+          filename:
+        )
+
+        cohort.canvas_gradebook_snapshots.create(
+          downloaded_at: cohort_start_date + (i + 1).weeks,
+          user: users.sample,
+          csv_file:,
         )
       end
     end

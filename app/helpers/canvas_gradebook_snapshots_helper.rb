@@ -1,0 +1,2 @@
+module CanvasGradebookSnapshotsHelper
+end
