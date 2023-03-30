@@ -1,0 +1,202 @@
+<div class="bg-dpi py-5">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-8 col-lg-3 mb-4 d-flex align-items-center">
+        <div class="me-md-5">
+          <%= image_tag("/#{@enrollment.github_username}.jpg", class: "img-fluid rounded-circle border border-5")%>
+        </div>
+      </div>
+
+      <div class="col-lg-6 d-flex align-items-center">
+        <div>
+          <h1 class="display-1 text-white mb-3">
+            <%= @enrollment %>
+          </h1>
+
+          <div class="d-flex text-white justify-content-between mb-4">
+            <div>
+              <%= @cohort.started_on.strftime("%B %Y") %> Cohort
+            </div>
+
+            <div>
+              <%= link_to @enrollment.personal_website, @enrollment.personal_website, class: "text-white" %>
+            </div>
+          </div>
+
+          <p class="lead text-white">
+            <%= @enrollment.quote %>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row d-flex justify-content-center mt-5 text-white text-center">
+      <div class="col-md-3">
+        <h4 class="h6">
+          Most recent role
+        </h4>
+
+        <p class="lead">
+          <%=  @enrollment.most_recent_role %>
+        </p>
+      </div>
+
+      <div class="col-md-3">
+        <h4 class="h6">
+          Education
+        </h4>
+
+        <p class="lead">
+          <%=  @enrollment.education %>
+        </p>
+      </div>
+  
+      <div class="col-md-3">
+        <h4 class="h6">
+          Strengths
+        </h4>
+
+        <p class="lead">
+          <%=  @enrollment.strengths %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+
+  <div class="row d-flex justify-content-center my-5">
+    <div class="col-md-3">
+      <h4>
+        Career readiness rating
+      </h4>
+
+      <p>
+        <%= @enrollment.career_total %>
+      </p>
+    </div>
+
+    <div class="col-md-3">
+      <h4>
+        Communication skills rating
+      </h4>
+
+      <p>
+        <%= @enrollment.communication_total %>
+      </p>
+    </div>
+
+    <div class="col-md-3">
+      <h4>
+        Technical skills rating
+      </h4>
+
+      <p>
+        <%= @enrollment.technical_progress + @enrollment.technical_good_questions %>
+      </p>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-6">
+    <ul class="list-group">
+      <li class="list-group-item">
+        quote: <%= @enrollment.quote %>
+      </li>
+      <li class="list-group-item">
+        personal_website: <%= @enrollment.personal_website %>
+      </li>
+      <li class="list-group-item">
+        most_recent_role: <%= @enrollment.most_recent_role %>
+      </li>
+      <li class="list-group-item">
+        languages: <%= @enrollment.languages %>
+      </li>
+      <li class="list-group-item">
+        strengths: <%= @enrollment.strengths %>
+      </li>
+      <li class="list-group-item">
+        education: <%= @enrollment.education %>
+      </li>
+      <li class="list-group-item">
+        career_total: <%= @enrollment.career_total %>
+      </li>
+      <li class="list-group-item">
+        career_summary: <%= @enrollment.career_summary %>
+      </li>
+      <li class="list-group-item">
+        career_attendance: <%= @enrollment.career_attendance %>
+      </li>
+      <li class="list-group-item">
+        career_punctuality: <%= @enrollment.career_punctuality %>
+      </li>
+      <li class="list-group-item">
+        career_workplace_appearance: <%= @enrollment.career_workplace_appearance %>
+      </li>
+      <li class="list-group-item">
+        career_workplace_culture: <%= @enrollment.career_workplace_culture %>
+      </li>
+      <li class="list-group-item">
+        career_taking_initiative: <%= @enrollment.career_taking_initiative %>
+      </li>
+      <li class="list-group-item">
+        career_quality_of_work: <%= @enrollment.career_quality_of_work %>
+      </li>
+      <li class="list-group-item">
+        career_networking: <%= @enrollment.career_networking %>
+      </li>
+      <li class="list-group-item">
+        career_response_to_supervision: <%= @enrollment.career_response_to_supervision %>
+      </li>
+      <li class="list-group-item">
+        career_teamwork: <%= @enrollment.career_teamwork %>
+      </li>
+      <li class="list-group-item">
+        career_customer_service: <%= @enrollment.career_customer_service %>
+      </li>
+      <li class="list-group-item">
+        career_problem_solving: <%= @enrollment.career_problem_solving %>
+      </li>
+      <li class="list-group-item">
+        career_calendar_management: <%= @enrollment.career_calendar_management %>
+      </li>
+      <li class="list-group-item">
+        career_task_management: <%= @enrollment.career_task_management %>
+      </li>
+      <li class="list-group-item">
+        communication_total: <%= @enrollment.communication_total %>
+      </li>
+      <li class="list-group-item">
+        communication_summary: <%= @enrollment.communication_summary %>
+      </li>
+      <li class="list-group-item">
+        communication_nonverbal: <%= @enrollment.communication_nonverbal %>
+      </li>
+      <li class="list-group-item">
+        communication_verbal: <%= @enrollment.communication_verbal %>
+      </li>
+      <li class="list-group-item">
+        communication_written: <%= @enrollment.communication_written %>
+      </li>
+      <li class="list-group-item">
+        technical_progress: <%= @enrollment.technical_progress %>
+      </li>
+      <li class="list-group-item">
+        technical_good_questions: <%= @enrollment.technical_good_questions %>
+      </li>
+      <li class="list-group-item">
+        emotional_intelligence: <%= @enrollment.emotional_intelligence %>
+      </li>
+      <li class="list-group-item">
+        staff_strengths: <%= @enrollment.staff_strengths %>
+      </li>
+      <li class="list-group-item">
+        staff_areas_for_growth: <%= @enrollment.staff_areas_for_growth %>
+      </li>
+    </ul>
+  </div>
+</div>

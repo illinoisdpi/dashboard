@@ -9,6 +9,7 @@ gem "bootsnap", require: false
 gem "chartkick"
 gem "devise"
 gem "groupdate"
+gem "faker"
 gem "importmap-rails"
 gem "jbuilder"
 gem "pg", "~> 1.1"
@@ -36,7 +37,6 @@ group :development, :test do
   gem "binding_of_caller"
   gem "debug", platforms: %i[mri mingw x64_mingw]
   gem "dotenv-rails"
-  gem "faker"
   gem "pry-rails"
   gem "rack-mini-profiler"
   gem "rspec-rails"

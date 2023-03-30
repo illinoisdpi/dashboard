@@ -1,14 +1,65 @@
-<p style="color: green"><%= notice %></p>
+<%= render "cohorts/tabs" %>
 
-<h1>Enrollments</h1>
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header d-flex align-items-center">
+        <h1 class="h6 mb-0 me-auto">Students</h1>
 
-<div id="enrollments">
-  <% @enrollments.each do |enrollment| %>
-    <%= render enrollment %>
-    <p>
-      <%= link_to "Show this enrollment", enrollment %>
-    </p>
-  <% end %>
+        <div>
+          <%= link_to new_cohort_enrollment_path(@cohort) do %>
+            <i class="fa-solid fa-plus fa-fw"></i>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="list-group list-group-flush">
+        <% @cohort.enrollments.student.default_order.each do |enrollment| %>
+          <%= link_to cohort_enrollment_path(@cohort, enrollment), class: "list-group-item" do %>
+            <div class="d-flex">
+              <div class="me-auto d-flex align-items-baseline font-monospace">
+                <%= enrollment.to_s %>
+              </div>
+  
+              <div>
+                <i class="fa-solid fa-chevron-right fa-fw"></i>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header d-flex align-items-center">
+        <h1 class="h6 mb-0 me-auto">Other</h1>
+
+        <div>
+          <%= link_to new_cohort_enrollment_path(@cohort) do %>
+            <i class="fa-solid fa-plus fa-fw"></i>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="list-group list-group-flush">
+        <% @cohort.enrollments.not_student.default_order.each do |enrollment| %>
+          <%= link_to cohort_enrollment_path(@cohort, enrollment), class: "list-group-item" do %>
+            <div class="d-flex">
+              <div class="me-auto d-flex align-items-center font-monospace gap-2">
+                <%= enrollment.to_s %>
+
+                <span class="badge bg-secondary"><%= enrollment.role %></span>
+              </div>
+  
+              <div>
+                <i class="fa-solid fa-chevron-right fa-fw"></i>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
-
-<%= link_to "New enrollment", new_enrollment_path %>

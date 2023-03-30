@@ -3,6 +3,12 @@
     <%= simple_active_link_to "Overview", @cohort, class: "nav-link", active: :exclusive %>
   </li>
   <li class="nav-item">
+    <%= simple_active_link_to "Profiles", cohort_profiles_path(@cohort), class: "nav-link" %>
+  </li>
+  <li class="nav-item">
+    <%= simple_active_link_to "Enrollments", cohort_enrollments_path(@cohort), class: "nav-link" %>
+  </li>
+  <li class="nav-item">
     <%= simple_active_link_to "Canvas", cohort_canvas_gradebook_snapshots_path(@cohort), class: "nav-link" %>
   </li>
   <li class="nav-item">

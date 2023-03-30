@@ -1,18 +1,29 @@
 class EnrollmentsController < ApplicationController
+  before_action :set_cohort
   before_action :set_enrollment, only: %i[show edit update destroy]
 
   # GET /enrollments or /enrollments.json
   def index
-    @enrollments = Enrollment.all
+    @breadcrumbs = [
+      {content: "Cohorts", href: cohorts_path},
+      {content: @cohort.to_s, href: cohort_path(@cohort)},
+      {content: "Enrollments", href: cohort_enrollments_path(@cohort)}
+    ]
   end
 
   # GET /enrollments/1 or /enrollments/1.json
   def show
+    @breadcrumbs = [
+      {content: "Cohorts", href: cohorts_path},
+      {content: @cohort.to_s, href: cohort_path(@cohort)},
+      {content: "Enrollments", href: cohort_enrollments_path(@cohort)},
+      {content: @enrollment.to_s}
+    ]
   end
 
   # GET /enrollments/new
   def new
-    @enrollment = Enrollment.new
+    @enrollment = @cohort.enrollments.new
   end
 
   # GET /enrollments/1/edit
@@ -21,7 +32,7 @@ class EnrollmentsController < ApplicationController
 
   # POST /enrollments or /enrollments.json
   def create
-    @enrollment = Enrollment.new(enrollment_params)
+    @enrollment = @cohort.enrollments.new(enrollment_params)
 
     respond_to do |format|
       if @enrollment.save
@@ -60,8 +71,12 @@ class EnrollmentsController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
+  def set_cohort
+    @cohort = Cohort.find(params.fetch(:cohort_id))
+  end
+
   def set_enrollment
-    @enrollment = Enrollment.find(params[:id])
+    @enrollment = @cohort.enrollments.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
