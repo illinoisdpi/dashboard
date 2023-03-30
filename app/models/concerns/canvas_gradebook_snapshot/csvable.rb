@@ -3,8 +3,10 @@ module CanvasGradebookSnapshot::Csvable
 
   included do
     attr_accessor :csv_file
+
     validates :csv_file, presence: true
-    validates :csv_filename, uniqueness: true
+    validates :csv_filename, uniqueness: true, format: { with: ->(canvas_gradebook_snapshot) { /\A.*#{Regexp.escape(canvas_gradebook_snapshot.cohort.canvas_shortname)}.*\z/ }, message: "must contain canvas shortname belonging to this cohort" }
+
     before_validation :process_csv_filename
     after_create :process_csv
   end

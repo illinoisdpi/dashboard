@@ -3,6 +3,7 @@
 # Table name: cohorts
 #
 #  id                   :uuid             not null, primary key
+#  canvas_shortname     :string
 #  generation           :integer          not null
 #  name                 :string
 #  number               :integer          not null

@@ -29,19 +29,22 @@ Rails.logger.debug Cohort.create(
       year: 2022,
       generation: 1,
       number: 1,
-      name: "The Pioneers"
+      name: "The Pioneers",
+      canvas_shortname: "WE-2022-1.1-SDF"
     },
     {
       year: 2023,
       generation: 1,
       number: 1,
-      name: "Hash Rockets"
+      name: "Hash Rockets",
+      canvas_shortname: "WE-2023-1.1-SDF"
     },
     {
       year: 2023,
       generation: 2,
       number: 1,
-      name: "Fullstack Pancakes"
+      name: "Fullstack Pancakes",
+      canvas_shortname: "WE-2023-2.1-SDF"
     }
   ]
 )

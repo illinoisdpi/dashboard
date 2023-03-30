@@ -27,7 +27,8 @@ namespace :dev do
         year: 2022,
         generation: 1,
         number: 2,
-        name: "Sample Cohort"
+        name: "Sample Cohort",
+        canvas_shortname: "WE-2022-1.2-SDF"
       )
 
       if cohort.errors.any?
