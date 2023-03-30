@@ -52,17 +52,18 @@ namespace :dev do
         )
       end
 
-      4.times do |i|
-        uploaded_file = ActionDispatch::Http::UploadedFile.new(
-          tempfile: Rails.root.join("lib", "sample_data", "canvas-gradebook-snapshot-#{i}.csv").open,
-          filename: "canvas-gradebook-snapshot-#{i}.csv",
-          type: "text/plain"
+      1.upto(4) do |i|
+        filename = "2022-0#{i}-01T1#{i}00_Grades-WE-2022-1.2-SDF.csv"
+        csv_file = ActionDispatch::Http::UploadedFile.new(
+          tempfile: Rails.root.join("lib", "sample_data", filename).open,
+          type: "text/plain",
+          filename:
         )
 
         cohort.canvas_gradebook_snapshots.create(
           downloaded_at: cohort_start_date + (i + 1).weeks,
-          csv_file: uploaded_file,
-          user: users.sample
+          user: users.sample,
+          csv_file:,
         )
       end
     end

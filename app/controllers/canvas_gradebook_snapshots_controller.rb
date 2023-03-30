@@ -61,6 +61,6 @@ class CanvasGradebookSnapshotsController < ApplicationController
   end
 
   def canvas_gradebook_snapshot_params
-    params.require(:canvas_gradebook_snapshot).permit(:downloaded_at, :cohort_id, :csv_file)
+    params.require(:canvas_gradebook_snapshot).permit(:cohort_id, :csv_file)
   end
 end

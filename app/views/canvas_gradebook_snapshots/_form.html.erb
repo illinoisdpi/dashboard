@@ -14,11 +14,6 @@
   <%= form.hidden_field :cohort_id, class: "form-control" %>
 
   <div class="mb-3">
-    <%= form.label :downloaded_at, class: "form-label" %>
-    <%= form.date_field :downloaded_at, class: "form-control" %>
-  </div>
-
-  <div class="mb-3">
     <%= form.label :csv_file, "CSV file", class: "form-label" %>
     <%= form.file_field :csv_file, class: "form-control" %>
   </div>

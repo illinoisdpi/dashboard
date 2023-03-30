@@ -4,13 +4,18 @@ module CanvasGradebookSnapshot::Csvable
   included do
     attr_accessor :csv_file
     validates :csv_file, presence: true
+    validates :csv_filename, uniqueness: true
+    before_validation :process_csv_filename
     after_create :process_csv
+  end
+
+  def process_csv_filename
+    self.csv_filename = csv_file.original_filename
+    self.downloaded_at = CanvasGradebookSnapshot.extract_downloaded_at(csv_filename)
   end
 
   def process_csv
     ActiveRecord::Base.transaction do
-      self.update(csv_filename: csv_file.original_filename)
-
       csv = SmarterCSV.process(csv_file)
 
       csv.each_with_index do |row, i|
@@ -61,6 +66,10 @@ module CanvasGradebookSnapshot::Csvable
 
     def extract_id_from_canvas(assignment_name_raw)
       assignment_name_raw.to_s.split("_").pop.gsub(/\D/, '')
+    end
+
+    def extract_downloaded_at(csv_filename)
+      DateTime.strptime(csv_filename.split("_").at(0), '%Y-%m-%dT%H%M')
     end
   end
 end
