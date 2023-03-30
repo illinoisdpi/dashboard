@@ -29,9 +29,11 @@ module CanvasGradebookSnapshot::Csvable
           user = User.where(email: emails).first
 
           if user.blank?
-            # TODO: add User#canvas_full col?
-            user = User.create(email: emails.first, password: SecureRandom.hex(16))       
+            user = User.new(email: emails.first, password: SecureRandom.hex(16))       
           end
+
+          user.canvas_full = row.fetch(:student, "None provided")
+          user.save
 
           enrollment = Enrollment.find_or_create_by(user:, cohort:) do |e|
             e.id_from_canvas = row.fetch(:id)
