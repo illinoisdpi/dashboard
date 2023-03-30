@@ -1,3 +1,4 @@
+<% canvas_assignments = @canvas_gradebook_snapshot.canvas_assignments.default_order %>
 <div class="row">
   <div class="col-md-12">
     <div class="table-responsive text-nowrap">
@@ -6,15 +7,14 @@
           <tr>
             <th>User</th>
             <th>Role</th>
-            <% canvas_assignment_ids = @canvas_gradebook_snapshot.canvas_assignments.default_order.map(&:id) %>
-            <% @canvas_gradebook_snapshot.canvas_assignments.default_order.each do |canvas_assignment| %>
+            <% canvas_assignments.each do |canvas_assignment| %>
               <th><%= canvas_assignment.name %></th>
             <% end %>
           </tr>
           <tr>
             <th>Points Possible</th>
             <th></th>
-            <% @canvas_gradebook_snapshot.canvas_assignments.default_order.each do |canvas_assignment| %>
+            <% canvas_assignments.each do |canvas_assignment| %>
               <th><%= canvas_assignment.points_possible %></th>
             <% end %>
           </tr>
@@ -22,11 +22,11 @@
 
         <tbody class="table-group-divider">  
           <% @canvas_gradebook_snapshot.enrollments.each do |enrollment| %>
+            <% canvas_submissions = @canvas_gradebook_snapshot.canvas_submissions.where(enrollment:).index_by(&:canvas_assignment_id) %>
             <tr>
               <td><%= enrollment.user.piazza_full %></td>
               <td><%= enrollment.role %></td>
-              <% canvas_submissions = @canvas_gradebook_snapshot.canvas_submissions.where(enrollment:).index_by(&:canvas_assignment_id) %>
-              <% canvas_assignment_ids.each do |canvas_assignment_id| %>
+              <% canvas_assignments.map(&:id).each do |canvas_assignment_id| %>
                 <td><%= canvas_submissions[canvas_assignment_id]&.points %></td>
               <% end %>
             </tr>
