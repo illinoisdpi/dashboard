@@ -35,10 +35,8 @@ class CanvasGradebookSnapshotsController < ApplicationController
     respond_to do |format|
       if @canvas_gradebook_snapshot.save
         format.html { redirect_to cohort_canvas_gradebook_snapshot_url(@canvas_gradebook_snapshot.cohort, @canvas_gradebook_snapshot), notice: "Canvas gradebook snapshot was successfully created." }
-        format.json { render :show, status: :created, location: @canvas_gradebook_snapshot }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @canvas_gradebook_snapshot.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -49,7 +47,6 @@ class CanvasGradebookSnapshotsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to cohort_canvas_gradebook_snapshots_url(@cohort), notice: "Canvas gradebook snapshot was successfully destroyed." }
-      format.json { head :no_content }
     end
   end
 
