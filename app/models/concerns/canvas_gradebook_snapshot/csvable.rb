@@ -28,7 +28,11 @@ module CanvasGradebookSnapshot::Csvable
             name = CanvasGradebookSnapshot.extract_assignment_name(assignment_name_raw)
             id_from_canvas = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw)
 
-            CanvasAssignment.find_or_create_by(cohort:, points_possible:, id_from_canvas:, name:, position:)
+            cohort.canvas_assignments.find_or_create_by(id_from_canvas:) do |assignment|
+              assignment.name = name
+              assignment.points_possible = points_possible
+              assignment.position = position
+            end
           end
         else
 
