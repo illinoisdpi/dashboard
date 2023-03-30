@@ -18,9 +18,8 @@ module CanvasGradebookSnapshot::Csvable
           row.to_a.each_with_index do |(assignment_name_raw, points_possible), position|
             next unless points_possible.is_a?(Numeric)
 
-            name_array = assignment_name_raw.to_s.split("_")
-            id_from_canvas = name_array.pop.gsub(/\D/, '')
-            name = name_array.join(' ')
+            name = CanvasGradebookSnapshot.extract_assignment_name(assignment_name_raw)
+            id_from_canvas = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw)
 
             CanvasAssignment.find_or_create_by(cohort:, points_possible:, id_from_canvas:, name:, position:)
           end
@@ -34,12 +33,12 @@ module CanvasGradebookSnapshot::Csvable
             user = User.create(email: emails.first, password: SecureRandom.hex(16))       
           end
 
-          enrollment = Enrollment.find_or_create_by(user:, cohort:) do |the_enrollment|
-            the_enrollment.id_from_canvas = row.fetch(:id)
+          enrollment = Enrollment.find_or_create_by(user:, cohort:) do |e|
+            e.id_from_canvas = row.fetch(:id)
           end
 
           row.each do |assignment_name_raw, points|
-            id_from_canvas = assignment_name_raw.to_s.split("_").pop.gsub(/\D/, '')
+            id_from_canvas = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw)
             canvas_assignment = CanvasAssignment.find_by_id_from_canvas id_from_canvas
             next if canvas_assignment.nil?
 
@@ -47,6 +46,18 @@ module CanvasGradebookSnapshot::Csvable
           end
         end
       end
+    end
+  end
+
+  class_methods do
+    def extract_assignment_name(assignment_name_raw)
+      name_array = assignment_name_raw.to_s.split("_")
+
+      name_array.take(name_array.length - 1).join(' ')
+    end
+
+    def extract_id_from_canvas(assignment_name_raw)
+      assignment_name_raw.to_s.split("_").pop.gsub(/\D/, '')
     end
   end
 end
