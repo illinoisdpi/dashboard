@@ -51,14 +51,14 @@ class CanvasGradebookSnapshot < ApplicationRecord
 
       csv.each_with_index do |row, i|
         if i.zero?
-          row.each do |assignment_name_raw, points_possible|
+          row.to_a.each_with_index do |(assignment_name_raw, points_possible), position|
             next unless points_possible.is_a?(Numeric)
 
             name_array = assignment_name_raw.to_s.split("_")
             id_from_canvas = name_array.pop.gsub(/\D/, '')
             name = name_array.join(' ')
-            # TODO: add position
-            CanvasAssignment.find_or_create_by(cohort:, points_possible:, id_from_canvas:, name:)
+
+            CanvasAssignment.find_or_create_by(cohort:, points_possible:, id_from_canvas:, name:, position:)
           end
         else
 
@@ -74,7 +74,6 @@ class CanvasGradebookSnapshot < ApplicationRecord
             the_enrollment.id_from_canvas = row.fetch(:id)
           end
 
-          # loop through all keys for canvas_assignment/points
           row.each do |assignment_name_raw, points|
             id_from_canvas = assignment_name_raw.to_s.split("_").pop.gsub(/\D/, '')
             canvas_assignment = CanvasAssignment.find_by_id_from_canvas id_from_canvas

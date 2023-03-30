@@ -3,11 +3,12 @@
 # Table name: canvas_assignments
 #
 #  id              :uuid             not null, primary key
-#  excluded        :boolean
+#  excluded        :boolean          default(FALSE)
 #  html            :integer
 #  id_from_canvas  :string
 #  name            :string
 #  points_possible :integer
+#  position        :integer
 #  rails           :integer
 #  ruby            :integer
 #  weight          :integer
@@ -25,4 +26,6 @@
 #
 class CanvasAssignment < ApplicationRecord
   belongs_to :cohort
+
+  scope :default_order, -> { order(position: :asc) }
 end

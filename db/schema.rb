@@ -73,7 +73,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_28_142701) do
   end
 
   create_table "canvas_assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.boolean "excluded"
+    t.boolean "excluded", default: false
     t.integer "points_possible"
     t.string "name"
     t.string "id_from_canvas"
@@ -82,6 +82,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_28_142701) do
     t.integer "ruby"
     t.integer "rails"
     t.uuid "cohort_id", null: false
+    t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cohort_id"], name: "index_canvas_assignments_on_cohort_id"

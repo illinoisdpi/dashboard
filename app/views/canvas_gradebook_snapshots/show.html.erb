@@ -22,15 +22,15 @@
           <tr>
             <th>User</th>
             <th>Role</th>
-            <% canvas_assignment_ids = @canvas_gradebook_snapshot.canvas_assignments.map(&:id) %>
-            <% @canvas_gradebook_snapshot.canvas_assignments.each do |canvas_assignment| %>
+            <% canvas_assignment_ids = @canvas_gradebook_snapshot.canvas_assignments.default_order.map(&:id) %>
+            <% @canvas_gradebook_snapshot.canvas_assignments.default_order.each do |canvas_assignment| %>
               <th><%= canvas_assignment.name %></th>
             <% end %>
           </tr>
           <tr>
             <th>Points Possible</th>
             <th></th>
-            <% @canvas_gradebook_snapshot.canvas_assignments.each do |canvas_assignment| %>
+            <% @canvas_gradebook_snapshot.canvas_assignments.default_order.each do |canvas_assignment| %>
               <th><%= canvas_assignment.points_possible %></th>
             <% end %>
           </tr>
