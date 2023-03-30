@@ -43,6 +43,16 @@ class CanvasGradebookSnapshotsController < ApplicationController
     end
   end
 
+  # DELETE /canvas_gradebook_snapshots/1 or /canvas_gradebook_snapshots/1.json
+  def destroy
+    @canvas_gradebook_snapshot.destroy
+
+    respond_to do |format|
+      format.html { redirect_to cohort_canvas_gradebook_snapshots_url(@cohort), notice: "Canvas gradebook snapshot was successfully destroyed." }
+      format.json { head :no_content }
+    end
+  end
+
   private
 
   def set_cohort

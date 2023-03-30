@@ -28,6 +28,7 @@ module CanvasGradebookSnapshot::Csvable
           emails = row.fetch(:sis_login_id).split(";").map(&:strip)
           user = User.where(email: emails).first
 
+          # TODO: don't create user/enrollment. lookup by id_from_canvas so we don't mistakenly add to cohort
           if user.blank?
             user = User.new(email: emails.first, password: SecureRandom.hex(16))       
           end

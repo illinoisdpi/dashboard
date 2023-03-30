@@ -25,7 +25,7 @@ class CanvasGradebookSnapshot < ApplicationRecord
 
   belongs_to :cohort
   belongs_to :user
-  has_many :canvas_submissions
+  has_many :canvas_submissions, dependent: :destroy
   has_many :enrollments, -> { distinct }, through: :canvas_submissions
   has_many :canvas_assignments, -> { distinct }, through: :canvas_submissions
 
