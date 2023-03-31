@@ -23,6 +23,8 @@
 class User < ApplicationRecord
   include Adminable
 
+  has_paper_trail
+
   rolify
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable

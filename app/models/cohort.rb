@@ -15,6 +15,8 @@
 class Cohort < ApplicationRecord
   include Adminable
 
+  has_paper_trail
+
   has_many :enrollments, dependent: :destroy
   has_many :piazza_activity_reports, dependent: :destroy
   has_many :canvas_gradebook_snapshots, dependent: :destroy

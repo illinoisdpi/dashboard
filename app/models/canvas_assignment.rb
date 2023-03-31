@@ -32,6 +32,8 @@
 class CanvasAssignment < ApplicationRecord
   include Adminable
 
+  has_paper_trail
+
   belongs_to :cohort
 
   scope :default_order, -> { order(position: :asc) }
