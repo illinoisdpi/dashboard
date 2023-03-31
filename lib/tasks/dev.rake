@@ -36,6 +36,17 @@ namespace :dev do
         ap cohort
       end
 
+      sample_cohort_enrollment_file = ActionDispatch::Http::UploadedFile.new(
+        tempfile: Rails.root.join("lib", "sample_data", "sample-cohort-enrollment.csv").open,
+        filename: "sample-cohort-enrollment.csv",
+        type: "text/plain"
+      )
+      sample_cohort_enrollment_csv = SmarterCSV.process(sample_cohort_enrollment_file)
+      sample_cohort_enrollment_csv.each do |row|
+        user = User.create(email: row.fetch(:email), canvas_full: row.fetch(:name), password: "password")
+        cohort.enrollments.create(user:, id_from_canvas: row.fetch(:id_from_canvas), role: row.fetch(:role))
+      end
+
       cohort_start_date = Date.parse("2023-01-30")
 
       6.times do |i|
