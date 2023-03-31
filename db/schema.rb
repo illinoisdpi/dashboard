@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_30_214017) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_31_173825) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -85,6 +85,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_30_214017) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "css"
+    t.integer "databases"
+    t.integer "authentication"
+    t.integer "domain_modeling"
+    t.integer "javascript"
     t.index ["cohort_id"], name: "index_canvas_assignments_on_cohort_id"
   end
 

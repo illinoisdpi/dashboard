@@ -3,9 +3,14 @@
 # Table name: canvas_assignments
 #
 #  id              :uuid             not null, primary key
+#  authentication  :integer
+#  css             :integer
+#  databases       :integer
+#  domain_modeling :integer
 #  excluded        :boolean          default(FALSE)
 #  html            :integer
 #  id_from_canvas  :string
+#  javascript      :integer
 #  name            :string
 #  points_possible :integer
 #  position        :integer
@@ -25,6 +30,8 @@
 #  fk_rails_...  (cohort_id => cohorts.id)
 #
 class CanvasAssignment < ApplicationRecord
+  include Adminable
+
   belongs_to :cohort
 
   scope :default_order, -> { order(position: :asc) }

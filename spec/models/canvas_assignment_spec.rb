@@ -3,9 +3,14 @@
 # Table name: canvas_assignments
 #
 #  id              :uuid             not null, primary key
+#  authentication  :integer
+#  css             :integer
+#  databases       :integer
+#  domain_modeling :integer
 #  excluded        :boolean          default(FALSE)
 #  html            :integer
 #  id_from_canvas  :string
+#  javascript      :integer
 #  name            :string
 #  points_possible :integer
 #  position        :integer
