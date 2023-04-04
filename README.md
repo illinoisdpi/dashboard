@@ -11,6 +11,7 @@ An application that helps students, instructors, administrators, employers, and 
 ## How To
 
 - [Upload a piazza activity report](./docs/how-to-upload-piazza-activity-report.md)
+- [Upload canvas gradebook snapshot](./docs/how-to-upload-canvas-gradebook-snapshot.md)
 - [Provide feedback](./docs/how-to-provide-feedback.md)
 - [Contribute](./docs/how-to-contribute.md)
 
