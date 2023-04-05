@@ -178,31 +178,59 @@
           </h4>
 
           <div>
-            <em>HTML:</em> 3
+            <em>HTML:</em> <%= @enrollment.most_advanced_completed_project_for(:html).html %>
+
+            <div class="text-muted">
+              <%= @enrollment.most_advanced_completed_project_for(:html).name %>
+            </div>
           </div>
 
           <div>
-            <em>CSS: </em>3
+            <em>CSS:</em> <%= @enrollment.most_advanced_completed_project_for(:css).css %>
+
+            <div class="text-muted">
+              <%= @enrollment.most_advanced_completed_project_for(:css).name %>
+            </div>
           </div>
 
           <div>
-            <em>Javas</em>cript: 2
+            <em>Ruby:</em> <%= @enrollment.most_advanced_completed_project_for(:ruby).ruby %>
+
+            <div class="text-muted">
+              <%= @enrollment.most_advanced_completed_project_for(:ruby).name %>
+            </div>
           </div>
 
           <div>
-            <em>Ruby:</em> 2
+            <em>Ruby on Rails:</em> <%= @enrollment.most_advanced_completed_project_for(:rails).rails %>
+
+            <div class="text-muted">
+              <%= @enrollment.most_advanced_completed_project_for(:rails).name %>
+            </div>
           </div>
 
           <div>
-            <em>Rails:</em> 4
+            <em>Relational databases:</em> <%= @enrollment.most_advanced_completed_project_for(:databases).databases %>
+
+            <div class="text-muted">
+              <%= @enrollment.most_advanced_completed_project_for(:databases).name %>
+            </div>
           </div>
 
           <div>
-            <em>Databases:</em> 2
+            <em>Authorization & authentication:</em> <%= @enrollment.most_advanced_completed_project_for(:authentication).authentication %>
+
+            <div class="text-muted">
+              <%= @enrollment.most_advanced_completed_project_for(:authentication).name %>
+            </div>
           </div>
 
           <div>
-            <em>Authentication:</em> 4
+            <em>JavaScript & Ajax:</em> <%= @enrollment.most_advanced_completed_project_for(:javascript).javascript %>
+
+            <div class="text-muted">
+              <%= @enrollment.most_advanced_completed_project_for(:javascript).name %>
+            </div>
           </div>
         </div>
       </div>
@@ -216,82 +244,82 @@
       <div class="col-md-9">
         <ul class="list-group">
           <li class="list-group-item">
-            career_total: <%= @enrollment.career_total %>
+            Career total: <%= @enrollment.career_total %>
           </li>
           <li class="list-group-item">
-            career_summary: <%= @enrollment.career_summary %>
+            Career summary: <%= @enrollment.career_summary %>
           </li>
           <li class="list-group-item">
-            career_attendance: <%= @enrollment.career_attendance %>
+            Career attendance: <%= @enrollment.career_attendance %>
           </li>
           <li class="list-group-item">
-            career_punctuality: <%= @enrollment.career_punctuality %>
+            Career punctuality: <%= @enrollment.career_punctuality %>
           </li>
           <li class="list-group-item">
-            career_workplace_appearance: <%= @enrollment.career_workplace_appearance %>
+            Career workplace appearance: <%= @enrollment.career_workplace_appearance %>
           </li>
           <li class="list-group-item">
-            career_workplace_culture: <%= @enrollment.career_workplace_culture %>
+            Career workplace culture: <%= @enrollment.career_workplace_culture %>
           </li>
           <li class="list-group-item">
-            career_taking_initiative: <%= @enrollment.career_taking_initiative %>
+            Career taking initiative: <%= @enrollment.career_taking_initiative %>
           </li>
           <li class="list-group-item">
-            career_quality_of_work: <%= @enrollment.career_quality_of_work %>
+            Career quality of work: <%= @enrollment.career_quality_of_work %>
           </li>
           <li class="list-group-item">
-            career_networking: <%= @enrollment.career_networking %>
+            Career networking: <%= @enrollment.career_networking %>
           </li>
           <li class="list-group-item">
-            career_response_to_supervision: <%= @enrollment.career_response_to_supervision %>
+            Career response to supervision: <%= @enrollment.career_response_to_supervision %>
           </li>
           <li class="list-group-item">
-            career_teamwork: <%= @enrollment.career_teamwork %>
+            Career teamwork: <%= @enrollment.career_teamwork %>
           </li>
           <li class="list-group-item">
-            career_customer_service: <%= @enrollment.career_customer_service %>
+            Career customer service: <%= @enrollment.career_customer_service %>
           </li>
           <li class="list-group-item">
-            career_problem_solving: <%= @enrollment.career_problem_solving %>
+            Career problem solving: <%= @enrollment.career_problem_solving %>
           </li>
           <li class="list-group-item">
-            career_calendar_management: <%= @enrollment.career_calendar_management %>
+            Career calendar management: <%= @enrollment.career_calendar_management %>
           </li>
           <li class="list-group-item">
-            career_task_management: <%= @enrollment.career_task_management %>
+            Career task management: <%= @enrollment.career_task_management %>
           </li>
           <li class="list-group-item">
-            communication_total: <%= @enrollment.communication_total %>
+            Communication total: <%= @enrollment.communication_total %>
           </li>
           <li class="list-group-item">
-            communication_summary: <%= @enrollment.communication_summary %>
+            Communication summary: <%= @enrollment.communication_summary %>
           </li>
           <li class="list-group-item">
-            communication_nonverbal: <%= @enrollment.communication_nonverbal %>
+            Communication nonverbal: <%= @enrollment.communication_nonverbal %>
           </li>
           <li class="list-group-item">
-            communication_verbal: <%= @enrollment.communication_verbal %>
+            Communication verbal: <%= @enrollment.communication_verbal %>
           </li>
           <li class="list-group-item">
-            communication_written: <%= @enrollment.communication_written %>
+            Communication written: <%= @enrollment.communication_written %>
           </li>
           <li class="list-group-item">
-            technical_total: <%= @enrollment.technical_total %>
+            Technical total: <%= @enrollment.technical_total %>
           </li>
           <li class="list-group-item">
-            technical_project_points: <%= @enrollment.technical_project_points %>
+            Technical project points: <%= @enrollment.technical_project_points %>
           </li>
           <li class="list-group-item">
-            technical_good_questions: <%= @enrollment.technical_good_questions %>
+            Technical good questions: <%= @enrollment.technical_good_questions %>
           </li>
           <li class="list-group-item">
-            emotional_intelligence: <%= @enrollment.emotional_intelligence %>
+            Emotional intelligence: <%= @enrollment.emotional_intelligence %>
           </li>
           <li class="list-group-item">
-            staff_strengths: <%= @enrollment.staff_strengths %>
+            Staff strengths: <%= @enrollment.staff_strengths %>
           </li>
           <li class="list-group-item">
-            staff_areas_for_growth: <%= @enrollment.staff_areas_for_growth %>
+            Staff areas for growth: <%= @enrollment.staff_areas_for_growth %>
           </li>
         </ul>
       </div>

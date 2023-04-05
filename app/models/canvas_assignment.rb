@@ -34,5 +34,7 @@ class CanvasAssignment < ApplicationRecord
 
   belongs_to :cohort
 
+  has_many :canvas_submissions
+
   scope :default_order, -> { order(position: :asc) }
 end

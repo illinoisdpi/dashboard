@@ -133,4 +133,22 @@ class Enrollment < ApplicationRecord
       :emerging
     end
   end
+
+  def completed_assignments
+    results = []
+
+    cohort.canvas_assignments.each do |canvas_assignment|
+      my_submission = canvas_assignment.canvas_submissions.find_by(enrollment: self)
+
+      if my_submission && my_submission.points == canvas_assignment.points_possible
+        results << canvas_assignment
+      end
+    end
+
+    results
+  end
+
+  def most_advanced_completed_project_for(skill)
+    completed_assignments.max { |a, b| a.send(skill).to_i <=> b.send(skill).to_i }
+  end
 end
