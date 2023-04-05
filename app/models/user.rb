@@ -41,4 +41,8 @@ class User < ApplicationRecord
   def to_s
     canvas_full || piazza_full || email
   end
+
+  def name
+    to_s
+  end
 end

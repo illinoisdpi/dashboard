@@ -66,6 +66,7 @@ class Enrollment < ApplicationRecord
     :quote,
     :strengths,
     :to_s,
+    :name,
     to: :user
 
   before_validation :set_career_total
