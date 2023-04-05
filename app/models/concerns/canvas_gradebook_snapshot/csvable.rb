@@ -1,6 +1,8 @@
 module CanvasGradebookSnapshot::Csvable
   extend ActiveSupport::Concern
 
+  class InvalidCanvasShortnameError < StandardError; end
+
   included do
     attr_accessor :csv_file
 
@@ -11,9 +13,40 @@ module CanvasGradebookSnapshot::Csvable
     after_create :process_csv
   end
 
+  class_methods do
+    def extract_assignment_name(assignment_name_raw)
+      name_array = assignment_name_raw.to_s.split("_")
+
+      name_array.take(name_array.length - 1).join(' ')
+    end
+
+    def extract_id_from_canvas(assignment_name_raw)
+      assignment_name_raw.to_s.split("_").pop.gsub(/\D/, '')
+    end
+
+    def extract_downloaded_at(csv_filename)
+      DateTime.strptime(csv_filename.split("_").at(0), '%Y-%m-%dT%H%M')
+    end
+  end
+
+  private
+
   def process_csv_filename
     self.csv_filename = csv_file.original_filename
     self.downloaded_at = CanvasGradebookSnapshot.extract_downloaded_at(csv_filename)
+    validate_canvas_shortname
+  rescue InvalidCanvasShortnameError => e
+    errors.add(:csv_filename, e.message)
+  rescue Date::Error
+    errors.add(:csv_filename, "Invalid format for downloaded_at in CSV filename. Expected format: 'YYYY-MM-DDTHHMM'")
+  end
+
+  def validate_canvas_shortname
+    raise InvalidCanvasShortnameError.new("Please add canvas shortname to selected cohort") if cohort.canvas_shortname.blank?
+    canvas_shortname_regex = Regexp.new(Regexp.escape(cohort.canvas_shortname))
+    unless canvas_shortname_regex.match?(csv_filename)
+      raise InvalidCanvasShortnameError.new("Invalid canvas shortname in CSV filename. Expected format: '#{cohort.canvas_shortname}'")
+    end
   end
 
   def process_csv
@@ -48,22 +81,6 @@ module CanvasGradebookSnapshot::Csvable
           end
         end
       end
-    end
-  end
-
-  class_methods do
-    def extract_assignment_name(assignment_name_raw)
-      name_array = assignment_name_raw.to_s.split("_")
-
-      name_array.take(name_array.length - 1).join(' ')
-    end
-
-    def extract_id_from_canvas(assignment_name_raw)
-      assignment_name_raw.to_s.split("_").pop.gsub(/\D/, '')
-    end
-
-    def extract_downloaded_at(csv_filename)
-      DateTime.strptime(csv_filename.split("_").at(0), '%Y-%m-%dT%H%M')
     end
   end
 end
