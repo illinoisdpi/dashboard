@@ -13,23 +13,23 @@
 
       <div class="col-lg-6 d-flex align-items-center">
         <div>
-          <h1 class="display-1 text-white mb-3">
+          <h1 class="display-1 text-white text-md-start text-center mb-3">
             <%= @enrollment %>
           </h1>
 
-          <div class="d-flex text-white justify-content-between mb-4">
-            <div>
+          <div class="row mb-4 text-white text-md-start text-center">
+            <div class="col-md-6">
               <%= @cohort.started_on.strftime("%B %Y") %> Cohort
             </div>
 
-            <div>
+            <div class="col-md-6 text-md-end text-center">
               <% if @enrollment.personal_website.present? %>
                 <%= link_to @enrollment.personal_website, @enrollment.personal_website, class: "text-white" %>
               <% end %>
             </div>
           </div>
 
-          <p class="lead text-white border-start border-3 ps-4">
+          <p class="lead text-white border-start border-3 ps-4 fst-italic">
             <%= @enrollment.quote %>
           </p>
         </div>
@@ -37,35 +37,41 @@
     </div>
 
     <div class="row d-flex justify-content-center mt-5 text-white text-center">
-      <div class="col-md-3">
-        <h4 class="h6">
-          Most recent role
-        </h4>
+      <% if @enrollment.most_recent_role.present? %>
+        <div class="col-md-3">
+          <h4 class="h6">
+            Most recent role
+          </h4>
 
-        <p class="lead">
-          <%=  @enrollment.most_recent_role %>
-        </p>
-      </div>
+          <p class="lead">
+            <%= @enrollment.most_recent_role %>
+          </p>
+        </div>        
+      <% end %>
 
-      <div class="col-md-3">
-        <h4 class="h6">
-          Education
-        </h4>
+      <% if @enrollment.education.present? %>
+        <div class="col-md-3">
+          <h4 class="h6">
+            Education
+          </h4>
 
-        <p class="lead">
-          <%=  @enrollment.education %>
-        </p>
-      </div>
+          <p class="lead">
+            <%=  @enrollment.education %>
+          </p>
+        </div>
+      <% end %>
   
-      <div class="col-md-3">
-        <h4 class="h6">
-          Strengths
-        </h4>
+      <% if @enrollment.strengths.present? %>
+        <div class="col-md-3">
+          <h4 class="h6">
+            Strengths
+          </h4>
 
-        <p class="lead">
-          <%=  @enrollment.strengths %>
-        </p>
-      </div>
+          <p class="lead">
+            <%=  @enrollment.strengths %>
+          </p>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
