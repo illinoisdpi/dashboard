@@ -19,7 +19,9 @@
             </div>
 
             <div>
-              <%= link_to @enrollment.personal_website, @enrollment.personal_website, class: "text-white" %>
+              <% if @enrollment.personal_website.present? %>
+                <%= link_to @enrollment.personal_website, @enrollment.personal_website, class: "text-white" %>
+              <% end %>
             </div>
           </div>
 
