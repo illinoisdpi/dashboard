@@ -19,7 +19,9 @@
             </div>
 
             <div>
-              <%= link_to @enrollment.personal_website, @enrollment.personal_website, class: "text-white" %>
+              <% if @enrollment.personal_website.present? %>
+                <%= link_to @enrollment.personal_website, @enrollment.personal_website, class: "text-white" %>
+              <% end %>
             </div>
           </div>
 
@@ -94,7 +96,7 @@
       </h4>
 
       <p>
-        <%= @enrollment.technical_progress.to_i + @enrollment.technical_good_questions %>
+        <%= @enrollment.technical_progress + @enrollment.technical_good_questions %>
       </p>
     </div>
   </div>

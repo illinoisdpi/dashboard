@@ -28,6 +28,7 @@ class Cohort < ApplicationRecord
   validates :number,
     presence: true,
     uniqueness: {scope: ["generation", "year"]}
+  validates :started_on, presence: true
 
   scope :default_order, -> { order(:year, :generation, :number) }
 

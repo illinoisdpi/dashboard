@@ -3,33 +3,33 @@
 # Table name: enrollments
 #
 #  id                             :uuid             not null, primary key
-#  career_attendance              :integer
-#  career_calendar_management     :integer
-#  career_customer_service        :integer
-#  career_networking              :integer
-#  career_problem_solving         :integer
-#  career_punctuality             :integer
-#  career_quality_of_work         :integer
-#  career_response_to_supervision :integer
+#  career_attendance              :integer          default(0)
+#  career_calendar_management     :integer          default(0)
+#  career_customer_service        :integer          default(0)
+#  career_networking              :integer          default(0)
+#  career_problem_solving         :integer          default(0)
+#  career_punctuality             :integer          default(0)
+#  career_quality_of_work         :integer          default(0)
+#  career_response_to_supervision :integer          default(0)
 #  career_summary                 :text
-#  career_taking_initiative       :integer
-#  career_task_management         :integer
-#  career_teamwork                :integer
-#  career_total                   :integer
-#  career_workplace_appearance    :integer
-#  career_workplace_culture       :integer
-#  communication_nonverbal        :integer
+#  career_taking_initiative       :integer          default(0)
+#  career_task_management         :integer          default(0)
+#  career_teamwork                :integer          default(0)
+#  career_total                   :integer          default(0)
+#  career_workplace_appearance    :integer          default(0)
+#  career_workplace_culture       :integer          default(0)
+#  communication_nonverbal        :integer          default(0)
 #  communication_summary          :text
-#  communication_total            :integer
-#  communication_verbal           :integer
-#  communication_written          :integer
+#  communication_total            :integer          default(0)
+#  communication_verbal           :integer          default(0)
+#  communication_written          :integer          default(0)
 #  emotional_intelligence         :text
 #  id_from_canvas                 :string
 #  role                           :string
 #  staff_areas_for_growth         :text
 #  staff_strengths                :text
-#  technical_good_questions       :integer
-#  technical_progress             :integer
+#  technical_good_questions       :integer          default(0)
+#  technical_progress             :integer          default(0)
 #  created_at                     :datetime         not null
 #  updated_at                     :datetime         not null
 #  cohort_id                      :uuid             not null

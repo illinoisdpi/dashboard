@@ -135,28 +135,28 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_05_050555) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "id_from_canvas"
-    t.integer "career_total"
+    t.integer "career_total", default: 0
     t.text "career_summary"
-    t.integer "career_attendance"
-    t.integer "career_punctuality"
-    t.integer "career_workplace_appearance"
-    t.integer "career_workplace_culture"
-    t.integer "career_taking_initiative"
-    t.integer "career_quality_of_work"
-    t.integer "career_networking"
-    t.integer "career_response_to_supervision"
-    t.integer "career_teamwork"
-    t.integer "career_customer_service"
-    t.integer "career_problem_solving"
-    t.integer "career_calendar_management"
-    t.integer "career_task_management"
-    t.integer "communication_total"
+    t.integer "career_attendance", default: 0
+    t.integer "career_punctuality", default: 0
+    t.integer "career_workplace_appearance", default: 0
+    t.integer "career_workplace_culture", default: 0
+    t.integer "career_taking_initiative", default: 0
+    t.integer "career_quality_of_work", default: 0
+    t.integer "career_networking", default: 0
+    t.integer "career_response_to_supervision", default: 0
+    t.integer "career_teamwork", default: 0
+    t.integer "career_customer_service", default: 0
+    t.integer "career_problem_solving", default: 0
+    t.integer "career_calendar_management", default: 0
+    t.integer "career_task_management", default: 0
+    t.integer "communication_total", default: 0
     t.text "communication_summary"
-    t.integer "communication_nonverbal"
-    t.integer "communication_verbal"
-    t.integer "communication_written"
-    t.integer "technical_progress"
-    t.integer "technical_good_questions"
+    t.integer "communication_nonverbal", default: 0
+    t.integer "communication_verbal", default: 0
+    t.integer "communication_written", default: 0
+    t.integer "technical_progress", default: 0
+    t.integer "technical_good_questions", default: 0
     t.text "emotional_intelligence"
     t.text "staff_strengths"
     t.text "staff_areas_for_growth"
