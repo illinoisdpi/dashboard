@@ -18,4 +18,8 @@ module User::Adminable
       end
     end
   end
+
+  def name
+    self.to_s
+  end
 end
