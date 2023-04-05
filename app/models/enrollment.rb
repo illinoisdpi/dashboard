@@ -95,13 +95,13 @@ class Enrollment < ApplicationRecord
   end
 
   def technical_total
-    rand(100)
+    rand(70)
   end
 
   def career_rating
-    if career_total >= 61
+    if career_total >= 46
       :proficient
-    elsif career_total >= 52
+    elsif career_total >= 41
       :capable
     else
       :emerging
@@ -109,9 +109,9 @@ class Enrollment < ApplicationRecord
   end
   
   def communication_rating
-    if communication_total >= 61
+    if communication_total >= 10.5
       :proficient
-    elsif communication_total >= 52
+    elsif communication_total >= 8.5
       :capable
     else
       :emerging
