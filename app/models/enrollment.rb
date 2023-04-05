@@ -95,7 +95,13 @@ class Enrollment < ApplicationRecord
   end
 
   def technical_total
-    rand(70)
+    technical_project_points + technical_good_questions * 5
+  end
+
+  def technical_project_points
+    latest_gradebook = cohort.canvas_gradebook_snapshots.order(created_at: :desc).first
+
+    latest_gradebook.canvas_submissions.where(enrollment: self).sum(:points)
   end
 
   def career_rating
@@ -119,9 +125,9 @@ class Enrollment < ApplicationRecord
   end
 
   def technical_rating
-    if technical_total >= 61
+    if technical_total >= 200
       :proficient
-    elsif technical_total >= 52
+    elsif technical_total >= 150
       :capable
     else
       :emerging
