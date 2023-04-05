@@ -125,9 +125,9 @@ class Enrollment < ApplicationRecord
   end
 
   def technical_rating
-    if technical_total >= 200
+    if technical_total >= 225
       :proficient
-    elsif technical_total >= 150
+    elsif technical_total >= 200
       :capable
     else
       :emerging
