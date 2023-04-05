@@ -74,44 +74,50 @@
   <div class="row d-flex justify-content-center my-5 text-center">
     <div class="col-md-3 d-flex mb-3">
       <div class="card flex-fill">
-        <div class="card-body">
-          <h4 class="h6">
+        <div class="card-body d-flex flex-column">
+          <h4 class="h6 flex-grow-0 m-0">
             Career readiness rating
           </h4>
 
-          <p class="lead">
-            <%= @enrollment.career_total %>
-          </p>
+          <div class="flex-grow-1 d-flex align-items-center justify-content-center">
+            <p class="lead text-<%= rating_class(@enrollment.career_rating)%> m-0">
+              <%= @enrollment.career_rating.to_s.titlecase %>
+            </p>
+          </div>
         </div>
       </div>
     </div>
 
     <div class="col-md-3 d-flex mb-3">
       <div class="card flex-fill">
-        <div class="card-body">
-          <h4 class="h6">
+        <div class="card-body d-flex flex-column">
+          <h4 class="h6 flex-grow-0 m-0">
             Communication skills rating
           </h4>
 
-          <p class="lead">
-            <%= @enrollment.communication_total %>
-          </p>
+          <div class="flex-grow-1 d-flex align-items-center justify-content-center">
+            <p class="lead text-<%= rating_class(@enrollment.communication_rating)%> m-0">
+              <%= @enrollment.communication_rating.to_s.titlecase %>
+            </p>
+          </div>
         </div>
       </div>
     </div>
 
     <div class="col-md-3 d-flex mb-3">
       <div class="card flex-fill">
-        <div class="card-body">
-          <h4 class="h6">
+        <div class="card-body d-flex flex-column">
+          <h4 class="h6 flex-grow-0 m-0">
             Technical skills rating
           </h4>
 
-          <p class="lead">
-            <%= @enrollment.technical_progress + @enrollment.technical_good_questions %>
-          </p>
+          <div class="flex-grow-1 d-flex flex-column align-items-center gap-2 justify-content-center">
+            <p class="lead text-<%= rating_class(@enrollment.technical_rating)%> m-0">
+              <%= @enrollment.technical_rating.to_s.titlecase %>
+            </p>
 
-          <%= image_tag("/tech_velocities/#{@enrollment.github_username}.png", class: "img-fluid")%>
+            <%= image_tag("/tech_velocities/#{@enrollment.github_username}.png", class: "img-fluid")%>
+          </div>
         </div>
       </div>
     </div>

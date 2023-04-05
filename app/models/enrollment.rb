@@ -92,4 +92,38 @@ class Enrollment < ApplicationRecord
       communication_verbal +
       communication_written
   end
+
+  def technical_total
+    rand(100)
+  end
+
+  def career_rating
+    if career_total >= 61
+      :proficient
+    elsif career_total >= 52
+      :capable
+    else
+      :emerging
+    end
+  end
+  
+  def communication_rating
+    if communication_total >= 61
+      :proficient
+    elsif communication_total >= 52
+      :capable
+    else
+      :emerging
+    end
+  end
+
+  def technical_rating
+    if technical_total >= 61
+      :proficient
+    elsif technical_total >= 52
+      :capable
+    else
+      :emerging
+    end
+  end
 end
