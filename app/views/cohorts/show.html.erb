@@ -21,7 +21,7 @@
 
       <div class="card-body">
         <%
-          post_views_data = @cohort.enrollments.map do |enrollment|
+          post_views_data = @cohort.enrollments.student.map do |enrollment|
             {
               name: enrollment.user.to_s,
               data: @cohort.piazza_activity_reports.map { |report| [report.activity_until, report.piazza_activity_breakdowns.find_by(enrollment:)&.post_views] }
@@ -44,7 +44,7 @@
 
       <div class="card-body">
         <%
-          posts_data = @cohort.enrollments.map do |enrollment|
+          posts_data = @cohort.enrollments.student.map do |enrollment|
             {
               name: enrollment.user.to_s,
               data: @cohort.piazza_activity_reports.map { |report| [report.activity_until, report.piazza_activity_breakdowns.find_by(enrollment: enrollment)&.posts] }
