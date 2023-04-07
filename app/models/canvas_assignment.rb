@@ -32,7 +32,7 @@
 class CanvasAssignment < ApplicationRecord
   include Adminable
 
-  has_paper_trail
+  has_paper_trail skip: [:created_at, :updated_at]
 
   belongs_to :cohort
 

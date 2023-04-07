@@ -16,7 +16,7 @@
 class Cohort < ApplicationRecord
   include Adminable
 
-  has_paper_trail
+  has_paper_trail skip: [:created_at, :updated_at]
 
   has_many :enrollments, dependent: :destroy
   has_many :piazza_activity_reports, dependent: :destroy

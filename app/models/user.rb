@@ -29,7 +29,7 @@
 class User < ApplicationRecord
   include Adminable
 
-  has_paper_trail
+  has_paper_trail skip: [:created_at, :updated_at]
 
   rolify
   # Include default devise modules. Others available are:
