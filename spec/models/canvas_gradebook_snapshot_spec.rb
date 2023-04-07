@@ -20,8 +20,8 @@
 #  fk_rails_...  (cohort_id => cohorts.id)
 #  fk_rails_...  (user_id => users.id)
 #
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe CanvasGradebookSnapshot, type: :model do
+RSpec.describe CanvasGradebookSnapshot do
   pending "add some examples to (or delete) #{__FILE__}"
 end

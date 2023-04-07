@@ -3,8 +3,8 @@
 <%= render @enrollment %>
 
 <div>
-  <%= link_to "Edit this enrollment", edit_enrollment_path(@enrollment) %> |
-  <%= link_to "Back to enrollments", enrollments_path %>
+  <%= link_to "Edit this enrollment", edit_cohort_enrollment_path(@cohort, @enrollment) %> |
+  <%= link_to "Back to enrollments", cohort_enrollments_path %>
 
-  <%= button_to "Destroy this enrollment", @enrollment, method: :delete %>
+  <%= button_to "Destroy this enrollment", cohort_enrollment_path(@cohort, @enrollment), method: :delete %>
 </div>

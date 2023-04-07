@@ -22,8 +22,8 @@
 #  fk_rails_...  (canvas_gradebook_snapshot_id => canvas_gradebook_snapshots.id)
 #  fk_rails_...  (enrollment_id => enrollments.id)
 #
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe CanvasSubmission, type: :model do
+RSpec.describe CanvasSubmission do
   pending "add some examples to (or delete) #{__FILE__}"
 end

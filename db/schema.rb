@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_31_202034) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_05_050555) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -125,6 +125,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_31_202034) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "canvas_shortname"
+    t.date "started_on"
   end
 
   create_table "enrollments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -134,6 +135,31 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_31_202034) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "id_from_canvas"
+    t.integer "career_total", default: 0
+    t.text "career_summary"
+    t.integer "career_attendance", default: 0
+    t.integer "career_punctuality", default: 0
+    t.integer "career_workplace_appearance", default: 0
+    t.integer "career_workplace_culture", default: 0
+    t.integer "career_taking_initiative", default: 0
+    t.integer "career_quality_of_work", default: 0
+    t.integer "career_networking", default: 0
+    t.integer "career_response_to_supervision", default: 0
+    t.integer "career_teamwork", default: 0
+    t.integer "career_customer_service", default: 0
+    t.integer "career_problem_solving", default: 0
+    t.integer "career_calendar_management", default: 0
+    t.integer "career_task_management", default: 0
+    t.integer "communication_total", default: 0
+    t.text "communication_summary"
+    t.integer "communication_nonverbal", default: 0
+    t.integer "communication_verbal", default: 0
+    t.integer "communication_written", default: 0
+    t.integer "technical_progress", default: 0
+    t.integer "technical_good_questions", default: 0
+    t.text "emotional_intelligence"
+    t.text "staff_strengths"
+    t.text "staff_areas_for_growth"
     t.index ["cohort_id"], name: "index_enrollments_on_cohort_id"
     t.index ["id_from_canvas"], name: "index_enrollments_on_id_from_canvas", unique: true
     t.index ["user_id"], name: "index_enrollments_on_user_id"
@@ -203,6 +229,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_31_202034) do
     t.datetime "updated_at", null: false
     t.string "github_username"
     t.string "canvas_full"
+    t.text "quote"
+    t.string "personal_website"
+    t.text "most_recent_role"
+    t.text "languages"
+    t.text "strengths"
+    t.text "education"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["github_username"], name: "index_users_on_github_username", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

@@ -8,6 +8,7 @@
 #  name                 :string
 #  number               :integer          not null
 #  piazza_course_number :string
+#  started_on           :date
 #  year                 :integer          not null
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
@@ -29,6 +30,7 @@ class Cohort < ApplicationRecord
   validates :number,
     presence: true,
     uniqueness: {scope: ["generation", "year"]}
+  validates :started_on, presence: true
 
   scope :default_order, -> { order(:year, :generation, :number) }
 

@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe "CanvasGradebookSnapshots", type: :request do
+RSpec.describe "CanvasGradebookSnapshots" do
   describe "GET /index" do
     pending "add some examples (or delete) #{__FILE__}"
   end
