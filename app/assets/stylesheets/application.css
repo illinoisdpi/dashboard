@@ -20,7 +20,8 @@
 
 .profile-pic-container {
   width: 100%;
-  padding-bottom: 100%; /* Equal to the width for a 1:1 aspect ratio */
+  /* Equal to the width for a 1:1 aspect ratio */
+  padding-bottom: 100%;
   position: relative;
   overflow: hidden;
 }
@@ -38,4 +39,163 @@
   height: 100%;
   object-fit: cover;
   object-position: center top;
+}
+
+@media print {
+
+  #profile {
+    page-break-after: always;
+  }
+
+  #tech-skills-rating {
+    page-break-after: always;
+  }
+
+  #skills-developed {
+    page-break-after: always;
+  }
+
+  #career-readiness .list-group-item {
+    font-size: 10px !important;
+  }
+
+  #profile .text-white {
+    color: #000 !important;
+  }
+
+  .bg-dpi,
+  .container,
+  .row,
+  .col-8,
+  .col-lg-3,
+  .col-lg-6,
+  .col-md-3,
+  .card,
+  .card-body,
+  .h4,
+  .h6,
+  .lead,
+  .profile-pic-container,
+  .profile-pic-wrapper,
+  .display-1,
+  .text-white,
+  .border,
+  .border-5,
+  .rounded-circle,
+  .mb-4,
+  .align-items-center,
+  .text-md-start,
+  .text-center,
+  .ps-4,
+  .fst-italic,
+  .mt-5,
+  .text-md-end,
+  .text-center,
+  .most-recent-role,
+  .education,
+  .strengths,
+  .my-5,
+  .m-0,
+  .h-25,
+  .communication-rating,
+  .technical-rating,
+  .flex-grow-0,
+  .flex-grow-1,
+  .gap-2,
+  .img-fluid,
+  .emotional-intelligence,
+  .teamwork,
+  .professionalism,
+  .leadership,
+  .flex-column,
+  .align-items-center,
+  .gap-2,
+  .justify-content-center,
+  .gap-3,
+  .flex-shrink-0,
+  .bg-primary,
+  .border-top,
+  .border-4,
+  .text-center,
+  .small,
+  .blockquote,
+  .blockquote-footer {
+    font-size: 18px !important;
+  }
+
+  h1.display-1 {
+    font-size: 32px !important;
+    margin-bottom: 3em !important;
+  }
+
+  .row,
+  .col-lg-3,
+  .col-md-6,
+  .col-md-3,
+  .col-md-4,
+  .card,
+  .h4,
+  .h6,
+  .lead,
+  .img-fluid,
+  .blockquote {
+    margin-bottom: 0 !important;
+  }
+
+  .row,
+  .text-center {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .flex-grow-1 {
+    flex-grow: 0 !important;
+  }
+
+  .border,
+  .border-5,
+  .border-3,
+  .border-4,
+  .border-top {
+    border-width: 0 !important;
+  }
+
+  .h-25 {
+    height: auto !important;
+  }
+
+  .text-md-end {
+    margin-left: auto !important;
+    margin-right: 0 !important;
+  }
+
+  .blockquote-footer {
+    font-size: 8px !important;
+  }
+
+  .bg-dpi {
+    background-color: white !important;
+  }
+
+  .profile-pic-container {
+    padding-bottom: 150px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .profile-pic-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  .profile-pic-wrapper img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  body.pb-5 {
+    padding-bottom: 0rem !important;
+  }
 }
