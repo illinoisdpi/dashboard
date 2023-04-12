@@ -30,4 +30,11 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  skills:
+    html: "HTML"
+    css: "CSS"
+    ruby: "Ruby"
+    rails: "Ruby on Rails"
+    databases: "Databases"
+    authentication: "Authentication"
+    javascript: "JavaScript"
