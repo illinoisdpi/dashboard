@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :set_paper_trail_whodunnit
 
   around_action :set_time_zone
 

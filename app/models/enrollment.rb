@@ -48,6 +48,9 @@
 #
 class Enrollment < ApplicationRecord
   include Adminable
+
+  has_paper_trail skip: [:created_at, :updated_at]
+
   belongs_to :user
   belongs_to :cohort
   has_many :piazza_activity_breakdowns, dependent: :destroy
