@@ -1,5 +1,7 @@
 # How to Use Blazer: A Guide for DPI Workforce Education Instructors
 
+![](./images/blazer-canvas-cohort-avg.png)
+
 ## Introduction:
 Blazer is a powerful tool that allows you to create charts, graphs, and alerts using raw SQL. With Blazer, you can track apprentice progress, monitor assignments, and analyze contributions. This guide will help you get started using Blazer to streamline your work.
 
