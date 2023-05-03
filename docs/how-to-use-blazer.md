@@ -1,5 +1,5 @@
 # How to Use Blazer
-A Guide for DPI Workforce Education Instructors
+A Guide for Discovery Partners Institue Workforce Education Instructors and Administrators
 
 ![](./images/blazer-canvas-cohort-avg.png)
 
