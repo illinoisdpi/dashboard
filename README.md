@@ -10,6 +10,8 @@ An application that helps students, instructors, administrators, employers, and 
 
 ## How To
 
+- [How to use dashboard](./docs/how-to-use-dashboard.md)
+- [How to use Blazer](./docs/how-to-use-blazer.md)
 - [Upload a piazza activity report](./docs/how-to-upload-piazza-activity-report.md)
 - [Upload canvas gradebook snapshot](./docs/how-to-upload-canvas-gradebook-snapshot.md)
 - [Provide feedback](./docs/how-to-provide-feedback.md)

@@ -1,5 +1,5 @@
 # How to Use the Workforce Education Dashboard
-A Guide for Discovery Partners Institue Workforce Education Instructors and Administrators
+A Guide for Discovery Partners Institute Workforce Education Instructors and Administrators
 
 ![](./images/we-dashboard.png)
 
