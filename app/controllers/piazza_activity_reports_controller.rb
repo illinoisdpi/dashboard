@@ -74,7 +74,7 @@ class PiazzaActivityReportsController < ApplicationController
     @piazza_activity_report.destroy
 
     respond_to do |format|
-      format.html { redirect_to piazza_activity_reports_url, notice: "Piazza activity report was successfully destroyed." }
+      format.html { redirect_to cohort_piazza_activity_reports_url(@cohort), notice: "Piazza activity report was successfully destroyed." }
       format.json { head :no_content }
     end
   end
