@@ -1,0 +1,54 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary bg-dpi-primary">
+  <div class="container-fluid">
+    <span class="text-light me-auto">MEET THE DPI APPRENTICES</span>
+    <%= image_tag 'logo', height: "40px" %>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row my-2">
+    <div class="col-4">
+      <% # TODO: use image uploads   %>
+      <%= image_tag("/profile_pics/#{@enrollment.github_username}.jpeg", class: "border-5 border-dpi-primary img-fluid")%>
+    </div>
+    <div class="col-5">
+      <%# TODO: add user first/last %>
+      <h1><%= @enrollment.user.canvas_full.split(' ').first %></h1>
+      <%# TODO: add 1-liner to user %>
+      <p><%= Faker::Lorem.sentence %></p>
+      <h5 class="text-dpi-secondary">Skills and Projects:</h5>
+      <ul>
+        <% @enrollment.user.strengths.split(",").each do |strength| %>
+          <li><%= strength %></li>
+        <% end %>
+      </ul>
+      <h5 class="text-dpi-secondary">Real-Time DPI Skill Development:</h5>
+      <ul>
+        <% Faker::Lorem.words(number: 4).each do |skill| %>
+          <li><%= skill %></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="col-3">
+      <div class="border-5 border-dpi-secondary bg-light">
+        <p class="my-5 mx-2 fs-6">"<%= @enrollment.user.quote %>"</p>
+      </div>
+    </div>
+  </div>
+  <div class="row mx-5 my-2">
+    <hr />
+    <div class="col-4 border-end">
+      <h5 class="text-dpi-secondary">Most recent role</h5>
+      <p><%= @enrollment.user.most_recent_role %></p>
+    </div>
+    <div class="col-4 border-end">
+      <h5 class="text-dpi-secondary">Education</h5>
+      <p><%= @enrollment.user.education %></p>
+    </div>
+    <div class="col-4 border-end">
+      <h5 class="text-dpi-secondary">Fun fact</h5>
+      <%# TODO: fun fact %>
+      <p><%= Faker::Lorem.sentence %></p>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,26 @@
-.bg-dpi {
-  background-color: #122666;
+:root {
+  --digital-blue: #122666;
+  --terminal-green: #64d755;
+  --white: #ffffff;
+  --light-grey: #dcdcdc;
+  --dark-grey: #323232;
+}
+
+.bg-dpi-primary {
+  background-color: var(--digital-blue);
+}
+
+.border-dpi-primary {
+  border: var(--bs-border-width) var(--bs-border-style) var(--digital-blue);
+  --bs-border-opacity: 1;
+}
+
+.border-dpi-secondary {
+  border: var(--bs-border-width) var(--bs-border-style) var(--terminal-green);
+  --bs-border-opacity: 1;
+}
+
+.text-dpi-secondary {
+  --bs-text-opacity: 1;
+  color: var(--terminal-green) !important;
 }

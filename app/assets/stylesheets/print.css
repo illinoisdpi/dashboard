@@ -20,7 +20,7 @@
     color: #000 !important;
   }
 
-  .bg-dpi,
+  .bg-dpi-primary,
   .container,
   .row,
   .col-8,
@@ -70,7 +70,7 @@
   .justify-content-center,
   .gap-3,
   .flex-shrink-0,
-  .bg-primary,
+  .bg-dpi-primary,
   .border-top,
   .border-4,
   .text-center,
@@ -130,7 +130,7 @@
     font-size: 8px !important;
   }
 
-  .bg-dpi {
+  .bg-dpi-primary {
     background-color: white !important;
   }
 

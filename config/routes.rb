@@ -15,6 +15,10 @@ Rails.application.routes.draw do
     resources :canvas_gradebook_snapshots
     resources :enrollments
     resources :piazza_activity_reports
-    resources :profiles
+    resources :profiles do
+      member do
+        get 'snapshot'
+      end
+    end
   end
 end

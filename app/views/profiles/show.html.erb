@@ -1,11 +1,11 @@
-<div id="profile" class="bg-dpi py-5">
+<div id="profile" class="bg-dpi-primary py-5">
   <div class="container">
     <div class="row d-flex justify-content-center">
       <% if @enrollment.github_username.present? %>
         <div class="col-8 col-lg-3 mb-4 d-flex align-items-center">
           <div class="profile-pic-container">
             <div class="profile-pic-wrapper">
-              <%= image_tag("/profile_pics/#{@enrollment.github_username}.jpeg", class: "border border-5 rounded-circle")%>    
+              <%= image_tag("/profile_pics/#{@enrollment.github_username}.jpeg", class: "border border-5 rounded-circle")%>
             </div>
           </div>
         </div>
@@ -198,7 +198,7 @@
   </div>
 </div>
 
-<div id="career-readiness" class="bg-dpi">
+<div id="career-readiness" class="bg-dpi-primary">
   <div class="container py-5">
     <div class="row d-flex justify-content-center">
       <div class="col-md-9">
