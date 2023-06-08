@@ -81,6 +81,9 @@ module CanvasGradebookSnapshot::Csvable
               user = User.create(email:, password: SecureRandom.hex(16), canvas_full:)
             end
 
+            # test student has invalid email and doesn't save
+            next unless user.persisted?
+
             enrollment = Enrollment.find_or_create_by(user: user, cohort: cohort) do |e|
               e.role = "student"
               e.id_from_canvas = id_from_canvas
