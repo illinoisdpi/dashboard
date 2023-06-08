@@ -82,7 +82,7 @@ module CanvasGradebookSnapshot::Csvable
             end
 
             # test student has invalid email and doesn't save
-            next unless user.persisted?
+            next unless user.valid?
 
             enrollment = Enrollment.find_or_create_by(user: user, cohort: cohort) do |e|
               e.role = "student"
