@@ -68,9 +68,24 @@ module CanvasGradebookSnapshot::Csvable
             end
           end
         else
+          enrollment = cohort.enrollments.find_by_id_from_canvas(row.fetch(:id))
 
-          enrollment = cohort.enrollments.find_by_id_from_canvas row.fetch(:id)
-          next if enrollment.blank?
+          if enrollment.blank?
+            id_from_canvas = row.fetch(:id)
+            email = row.fetch(:sis_login_id)
+            canvas_full = row.fetch(:student, "None provided")
+
+            user = User.find_by_email(email)
+        
+            if user.blank?
+              user = User.create(email:, password: SecureRandom.hex(16), canvas_full:)
+            end
+
+            enrollment = Enrollment.find_or_create_by(user: user, cohort: cohort) do |e|
+              e.role = "student"
+              e.id_from_canvas = id_from_canvas
+            end
+          end
 
           row.each do |assignment_name_raw, points|
             id_from_canvas = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw)
