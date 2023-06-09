@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_07_154237) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_09_134940) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -161,7 +161,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_07_154237) do
     t.text "staff_strengths"
     t.text "staff_areas_for_growth"
     t.index ["cohort_id"], name: "index_enrollments_on_cohort_id"
-    t.index ["id_from_canvas"], name: "index_enrollments_on_id_from_canvas", unique: true
+    t.index ["id_from_canvas"], name: "index_enrollments_on_id_from_canvas"
     t.index ["user_id"], name: "index_enrollments_on_user_id"
   end
 
