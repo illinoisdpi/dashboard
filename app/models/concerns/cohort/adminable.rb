@@ -4,7 +4,7 @@ module Cohort::Adminable
   included do
     rails_admin do
       edit do
-        include_fields :name, :year, :generation, :number, :piazza_course_number
+        include_fields :name, :year, :generation, :number, :piazza_course_number, :started_on
       end
     end
   end

@@ -38,7 +38,7 @@
 # Indexes
 #
 #  index_enrollments_on_cohort_id       (cohort_id)
-#  index_enrollments_on_id_from_canvas  (id_from_canvas) UNIQUE
+#  index_enrollments_on_id_from_canvas  (id_from_canvas)
 #  index_enrollments_on_user_id         (user_id)
 #
 # Foreign Keys
