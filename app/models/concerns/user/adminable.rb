@@ -20,7 +20,8 @@ module User::Adminable
           :middle_name,
           :last_name,
           :one_liner,
-          :skills_and_projects
+          :skills_and_projects,
+          :headshot
       end
     end
   end

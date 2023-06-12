@@ -8,7 +8,7 @@
       <div class="card-body">
         <% was_validated = resource.errors.any? %>
 
-        <% form_html_options = { method: :put, novalidate: true, class: "mb-3" } %>
+        <% form_html_options = { method: :put, multipart: true, novalidate: true, class: "mb-3" } %>
 
         <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: form_html_options) do |f| %>
           <% if flash[:notice].present? %>
@@ -22,6 +22,14 @@
               <%= flash[:alert] %>
             </div>
           <% end %>
+
+          <div class="mb-3">
+            <% if current_user.headshot? %>
+              <%= image_tag current_user.headshot.url, class: "img-fluid mb-2" %>
+            <% end %>
+            <%= f.label :headshot, class: "form-label" %>
+            <%= f.file_field :headshot %>
+          </div>
 
           <div class="mb-3">
             <% email_was_invalid = resource.errors.include?(:email) %>

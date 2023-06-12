@@ -10,6 +10,7 @@
 #  first_name             :string
 #  fun_fact               :text
 #  github_username        :string
+#  headshot               :string
 #  languages              :text
 #  last_name              :string
 #  middle_name            :string

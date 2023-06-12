@@ -10,6 +10,7 @@
 #  first_name             :string
 #  fun_fact               :text
 #  github_username        :string
+#  headshot               :string
 #  languages              :text
 #  last_name              :string
 #  middle_name            :string
@@ -34,6 +35,8 @@
 #
 class User < ApplicationRecord
   include Adminable
+
+  mount_uploader :headshot, HeadshotUploader
 
   has_paper_trail skip: [:created_at, :updated_at]
 
