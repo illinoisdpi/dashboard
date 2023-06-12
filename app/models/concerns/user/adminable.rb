@@ -14,7 +14,13 @@ module User::Adminable
           :personal_website,
           :quote,
           :roles,
-          :strengths
+          :strengths,
+          :fun_fact,
+          :first_name,
+          :middle_name,
+          :last_name,
+          :one_liner,
+          :skills_and_projects
       end
     end
   end
