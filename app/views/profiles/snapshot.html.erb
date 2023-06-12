@@ -16,13 +16,13 @@
       <p><%= @enrollment.user.one_liner %></p>
       <h5 class="text-dpi-secondary">Skills and Projects:</h5>
       <ul>
-        <% @enrollment.user.skills_and_projects&.split(",")&.each do |strength| %>
+        <% @enrollment.user.skills_and_projects&.split(",")&.sample(3).each do |strength| %>
           <li><%= strength %></li>
         <% end %>
       </ul>
       <h5 class="text-dpi-secondary">Real-Time DPI Skill Development:</h5>
       <ul>
-        <% @enrollment.skills_development&.split(",")&.each do |skill| %>
+        <% @enrollment.skills_development&.split(",")&.sample(3).each do |skill| %>
           <li><%= skill %></li>
         <% end %>
       </ul>
@@ -33,7 +33,7 @@
       </div>
     </div>
   </div>
-  <div class="row mx-5 my-2">
+  <div class="row mx-2 mt-2">
     <hr />
     <div class="col-4 border-end">
       <h5 class="text-dpi-secondary">Most recent role</h5>
