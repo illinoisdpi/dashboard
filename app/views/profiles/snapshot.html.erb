@@ -8,23 +8,21 @@
 <div class="container-fluid">
   <div class="row my-2">
     <div class="col-4">
-      <% # TODO: use image uploads   %>
+      <% # TODO: use image uploads %>
       <%= image_tag("/profile_pics/#{@enrollment.github_username}.jpeg", class: "border-5 border-dpi-primary img-fluid")%>
     </div>
     <div class="col-5">
-      <%# TODO: add user first/last %>
-      <h1><%= @enrollment.user.canvas_full.split(' ').first %></h1>
-      <%# TODO: add 1-liner to user %>
-      <p><%= Faker::Lorem.sentence %></p>
+      <h1><%= @enrollment.user.first_name %></h1>
+      <p><%= @enrollment.user.one_liner %></p>
       <h5 class="text-dpi-secondary">Skills and Projects:</h5>
       <ul>
-        <% @enrollment.user.strengths.split(",").each do |strength| %>
+        <% @enrollment.user.skills_and_projects&.split(",")&.each do |strength| %>
           <li><%= strength %></li>
         <% end %>
       </ul>
       <h5 class="text-dpi-secondary">Real-Time DPI Skill Development:</h5>
       <ul>
-        <% Faker::Lorem.words(number: 4).each do |skill| %>
+        <% @enrollment.skills_development&.split(",")&.each do |skill| %>
           <li><%= skill %></li>
         <% end %>
       </ul>
@@ -47,8 +45,7 @@
     </div>
     <div class="col-4 border-end">
       <h5 class="text-dpi-secondary">Fun fact</h5>
-      <%# TODO: fun fact %>
-      <p><%= Faker::Lorem.sentence %></p>
+      <p><%= @enrollment.user.fun_fact %></p>
     </div>
   </div>
 </div>

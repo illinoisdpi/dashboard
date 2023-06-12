@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_09_134940) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_12_133316) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -160,6 +160,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_134940) do
     t.text "emotional_intelligence"
     t.text "staff_strengths"
     t.text "staff_areas_for_growth"
+    t.text "skills_development"
     t.index ["cohort_id"], name: "index_enrollments_on_cohort_id"
     t.index ["id_from_canvas"], name: "index_enrollments_on_id_from_canvas"
     t.index ["user_id"], name: "index_enrollments_on_user_id"
@@ -235,6 +236,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_134940) do
     t.text "languages"
     t.text "strengths"
     t.text "education"
+    t.text "fun_fact"
+    t.string "first_name"
+    t.string "middle_name"
+    t.string "last_name"
+    t.text "one_liner"
+    t.text "skills_and_projects"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["github_username"], name: "index_users_on_github_username", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

@@ -55,7 +55,12 @@ namespace :dev do
           most_recent_role: Faker::Job.title,
           languages: Array.new(rand(3)) { Faker::Nation.language }.to_sentence,
           strengths: Array.new(3) { Faker::Superhero.power }.to_sentence,
-          education: Faker::Educator.degree
+          education: Faker::Educator.degree,
+          fun_fact: Faker::Lorem.sentence(word_count: 10),
+          first_name: row.fetch(:name).split(' ').at(0),
+          last_name: row.fetch(:name).split(' ').at(1),
+          one_liner: "Passionate professional with expertise in #{Faker::Job.title}.",
+          skills_and_projects: Array.new(3) { Faker::ProgrammingLanguage.unique.name }.to_sentence
         )
 
         if user.errors.any?
@@ -89,6 +94,7 @@ namespace :dev do
           emotional_intelligence: Faker::Lorem.paragraph,
           staff_strengths: Array.new(3) { Faker::Superhero.power }.to_sentence,
           staff_areas_for_growth: Array.new(3) { Faker::Superhero.power }.to_sentence,
+          skills_development: Array.new(3) { Faker::Hacker.adjective }.to_sentence
         )
 
         if enrollment.errors.any?
