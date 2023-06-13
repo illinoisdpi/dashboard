@@ -21,6 +21,7 @@ module User::Adminable
           :last_name,
           :one_liner,
           :skills_and_projects,
+          :career_highlights,
           :headshot
       end
     end

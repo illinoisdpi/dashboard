@@ -236,13 +236,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_183253) do
     t.text "languages"
     t.text "strengths"
     t.text "education"
+    t.string "headshot"
     t.text "fun_fact"
     t.string "first_name"
     t.string "middle_name"
     t.string "last_name"
     t.text "one_liner"
     t.text "skills_and_projects"
-    t.string "headshot"
+    t.text "career_highlights"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["github_username"], name: "index_users_on_github_username", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

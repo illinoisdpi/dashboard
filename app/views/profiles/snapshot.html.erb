@@ -18,7 +18,7 @@
       <% if @enrollment.user.skills_and_projects.present? %>
         <h5 class="text-dpi-secondary">Skills and Projects:</h5>
         <ul>
-          <% @enrollment.user.skills_and_projects.split(",").sample(3).each do |strength| %>
+          <% @enrollment.user.skills_and_projects.split(",").each do |strength| %>
             <li><%= strength %></li>
           <% end %>
         </ul>
@@ -26,7 +26,7 @@
       <% if @enrollment.skills_development.present? %>
         <h5 class="text-dpi-secondary">Real-Time DPI Skill Development:</h5>
         <ul>
-          <% @enrollment.skills_development.split(",").sample(3).each do |skill| %>
+          <% @enrollment.skills_development.split(",").each do |skill| %>
             <li><%= skill %></li>
           <% end %>
         </ul>
@@ -34,22 +34,40 @@
     </div>
     <div class="col-3">
       <div class="border-5 border-dpi-secondary bg-light">
-        <p class="my-5 mx-2 fs-6">"<%= @enrollment.user.quote %>"</p>
+      <%# TODO: limit to n chars %>
+        <p class="my-5 mx-2 fs-6">"<%= @enrollment.user.quote.slice(0, 250) %>"</p>
+      </div>
+      <%# TODO: add assessment %>
+      <div class="mt-2">
+        <h5 class="text-dpi-secondary">DPI Endorsements</h5>
+        <ul>
+          <li>Technical: </li>
+          <li>Career: </li>
+          <li>Communication: </li>
+        </ul>
       </div>
     </div>
   </div>
   <div class="row mx-2 mt-2">
     <hr />
     <div class="col-4 border-end">
-      <h5 class="text-dpi-secondary">Most recent role</h5>
-      <p><%= @enrollment.user.most_recent_role %></p>
+      <h5 class="text-dpi-secondary">Career Highlights</h5>
+      <% if @enrollment.user.career_highlights.present? %>
+        <ul>
+          <% @enrollment.user.career_highlights.split(",").sample(3).each do |highlight| %>
+            <li><%= highlight %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p><%= @enrollment.user.most_recent_role %></p>
+      <% end %>
     </div>
     <div class="col-4 border-end">
       <h5 class="text-dpi-secondary">Education</h5>
       <p><%= @enrollment.user.education %></p>
     </div>
     <div class="col-4 border-end">
-      <h5 class="text-dpi-secondary">Fun fact</h5>
+      <h5 class="text-dpi-secondary">Fun Fact</h5>
       <p><%= @enrollment.user.fun_fact %></p>
     </div>
   </div>
