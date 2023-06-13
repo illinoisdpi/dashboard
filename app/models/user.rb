@@ -4,18 +4,26 @@
 #
 #  id                     :uuid             not null, primary key
 #  canvas_full            :string
+#  career_highlights      :text
 #  education              :text
 #  email                  :citext           default(""), not null
 #  encrypted_password     :string           default(""), not null
+#  first_name             :string
+#  fun_fact               :text
 #  github_username        :string
+#  headshot               :string
 #  languages              :text
+#  last_name              :string
+#  middle_name            :string
 #  most_recent_role       :text
+#  one_liner              :text
 #  personal_website       :string
 #  piazza_full            :string
 #  quote                  :text
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  skills_and_projects    :text
 #  strengths              :text
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -28,6 +36,8 @@
 #
 class User < ApplicationRecord
   include Adminable
+
+  mount_uploader :headshot, HeadshotUploader
 
   has_paper_trail skip: [:created_at, :updated_at]
 

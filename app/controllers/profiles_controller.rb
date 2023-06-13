@@ -1,6 +1,6 @@
 class ProfilesController < ApplicationController
   before_action :set_cohort
-  before_action :set_enrollment, only: :show
+  before_action :set_enrollment, only: [:show, :snapshot]
 
   def index
     @breadcrumbs = [
@@ -17,6 +17,10 @@ class ProfilesController < ApplicationController
       {content: "Profiles", href: cohort_profiles_path(@cohort)},
       {content: @enrollment.to_s}
     ]
+  end
+
+  def snapshot
+    render layout: "navbarless"
   end
 
   private

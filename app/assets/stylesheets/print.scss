@@ -1,46 +1,3 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
- */
-
-.bg-dpi {
-  background-color: #122666;
-}
-
-.profile-pic-container {
-  width: 100%;
-  /* Equal to the width for a 1:1 aspect ratio */
-  padding-bottom: 100%;
-  position: relative;
-  overflow: hidden;
-}
-
-.profile-pic-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.profile-pic-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-}
-
 @media print {
 
   #profile {
@@ -63,7 +20,7 @@
     color: #000 !important;
   }
 
-  .bg-dpi,
+  .bg-dpi-primary,
   .container,
   .row,
   .col-8,
@@ -113,7 +70,7 @@
   .justify-content-center,
   .gap-3,
   .flex-shrink-0,
-  .bg-primary,
+  .bg-dpi-primary,
   .border-top,
   .border-4,
   .text-center,
@@ -173,7 +130,7 @@
     font-size: 8px !important;
   }
 
-  .bg-dpi {
+  .bg-dpi-primary {
     background-color: white !important;
   }
 

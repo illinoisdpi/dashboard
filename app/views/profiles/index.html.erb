@@ -13,21 +13,30 @@
         </div>
       </div>
 
-      <div class="list-group list-group-flush">
+      <ul class="list-group list-group-flush">
         <% @cohort.enrollments.student.default_order.each do |enrollment| %>
-          <%= link_to cohort_profile_path(@cohort, enrollment), class: "list-group-item" do %>
-            <div class="d-flex">
+          <li class="list-group-item">
+            <div class="d-flex align-items-center" data-bs-toggle="collapse" data-bs-target="#enrollment-<%= enrollment.id %>-links" aria-expanded="false" aria-controls="enrollment-<%= enrollment.id %>-links">
               <div class="me-auto d-flex align-items-baseline font-monospace">
                 <%= enrollment.to_s %>
               </div>
-  
               <div>
                 <i class="fa-solid fa-chevron-right fa-fw"></i>
               </div>
             </div>
-          <% end %>
+            <div class="collapse" id="enrollment-<%= enrollment.id %>-links">
+              <ul class="list-unstyled my-2 ms-2">
+                <li>
+                  <%= link_to "Overview", cohort_profile_path(@cohort, enrollment), class: "text-black" %>
+                </li>
+                <li>
+                  <%= link_to "Snapshot", snapshot_cohort_profile_path(@cohort, enrollment), class: "text-black" %>
+                </li>
+              </ul>
+            </div>
+          </li>
         <% end %>
-      </div>
+      </ul>
     </div>
   </div>
 </div>

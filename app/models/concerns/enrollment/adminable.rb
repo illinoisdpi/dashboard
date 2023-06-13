@@ -67,7 +67,8 @@ module Enrollment::Adminable
           :staff_areas_for_growth,
           :staff_strengths,
           :technical_good_questions,
-          :technical_progress
+          :technical_progress,
+          :skills_development
       end
     end
   end

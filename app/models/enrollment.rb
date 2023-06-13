@@ -26,6 +26,7 @@
 #  emotional_intelligence         :text
 #  id_from_canvas                 :string
 #  role                           :string
+#  skills_development             :text
 #  staff_areas_for_growth         :text
 #  staff_strengths                :text
 #  technical_good_questions       :integer          default(0)

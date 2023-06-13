@@ -32,3 +32,6 @@
 # Ignore dotenv files.env*
 
 .vscode/
+
+/config/credentials/production.key
+/config/credentials/development.key
