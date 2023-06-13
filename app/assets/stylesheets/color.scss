@@ -20,6 +20,11 @@
   --bs-border-opacity: 1;
 }
 
+.text-dpi-primary {
+  --bs-text-opacity: 1;
+  color: var(--digital-blue) !important;
+}
+
 .text-dpi-secondary {
   --bs-text-opacity: 1;
   color: var(--terminal-green) !important;

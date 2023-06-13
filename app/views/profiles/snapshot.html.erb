@@ -13,20 +13,20 @@
       <% end %>
     </div>
     <div class="col-5">
-      <h1><%= @enrollment.user.first_name %></h1>
-      <p><%= @enrollment.user.one_liner %></p>
+      <h1 class="text-dpi-primary"><%= @enrollment.user.first_name %></h1>
+      <p class="text-dpi-primary"><%= @enrollment.user.one_liner %></p>
       <% if @enrollment.user.skills_and_projects.present? %>
         <h5 class="text-dpi-secondary">Skills and Projects:</h5>
-        <ul>
-          <% @enrollment.user.skills_and_projects.split(",").each do |strength| %>
+        <ul class="text-dpi-primary">
+          <% @enrollment.user.skills_and_projects.split(",").sample(6).each do |strength| %>
             <li><%= strength %></li>
           <% end %>
         </ul>
       <% end %>
       <% if @enrollment.skills_development.present? %>
         <h5 class="text-dpi-secondary">Real-Time DPI Skill Development:</h5>
-        <ul>
-          <% @enrollment.skills_development.split(",").each do |skill| %>
+        <ul class="text-dpi-primary">
+          <% @enrollment.skills_development.split(",").sample(6).each do |skill| %>
             <li><%= skill %></li>
           <% end %>
         </ul>
@@ -35,11 +35,11 @@
     <div class="col-3">
       <div class="border-5 border-dpi-secondary bg-light">
       <%# TODO: limit to n chars %>
-        <p class="my-5 mx-2 fs-6">"<%= @enrollment.user.quote.slice(0, 250) %>"</p>
+        <p class="my-5 mx-2 fs-6 text-dpi-primary">"<%= @enrollment.user.quote.slice(0, 250) %>"</p>
       </div>
       <div class="mt-2">
         <h5 class="text-dpi-secondary">DPI Endorsements</h5>
-        <ul class="px-0 list-unstyled">
+        <ul class="px-0 list-unstyled text-dpi-primary">
           <li>Career Readiness: <span class="fw-bold lead text-<%= rating_class(@enrollment.career_rating)%>"><%= @enrollment.career_rating.upcase %></span></li>
           <li>Communication: <span class="fw-bold lead text-<%= rating_class(@enrollment.communication_rating)%>"><%= @enrollment.communication_rating.upcase %></span></li>
           <li>Technical: <span class="fw-bold lead text-<%= rating_class(@enrollment.technical_rating)%>"><%= @enrollment.technical_rating.upcase %></span></li>
@@ -52,18 +52,18 @@
     <div class="col-4 border-end">
       <h5 class="text-dpi-secondary">Career Highlights</h5>
       <% if @enrollment.user.career_highlights.present? %>
-        <ul class="px-0 list-unstyled">
+        <ul class="px-0 list-unstyled text-dpi-primary">
           <% @enrollment.user.career_highlights.split(",").sample(3).each do |highlight| %>
             <li><%= highlight %></li>
           <% end %>
         </ul>
       <% else %>
-        <p><%= @enrollment.user.most_recent_role %></p>
+        <p class="text-dpi-primary"><%= @enrollment.user.most_recent_role %></p>
       <% end %>
     </div>
     <div class="col-4 border-end">
       <h5 class="text-dpi-secondary">Education</h5>
-      <ul class="px-0 list-unstyled">
+      <ul class="px-0 list-unstyled text-dpi-primary">
         <% @enrollment.user.education.split(",").sample(3).each do |education| %>
           <li><%= education %></li>
         <% end %>
@@ -71,7 +71,7 @@
     </div>
     <div class="col-4 border-end">
       <h5 class="text-dpi-secondary">Fun Fact</h5>
-      <p><%= @enrollment.user.fun_fact %></p>
+      <p class="text-dpi-primary"><%= @enrollment.user.fun_fact %></p>
     </div>
   </div>
 </div>
