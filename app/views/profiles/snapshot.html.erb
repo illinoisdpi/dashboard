@@ -41,9 +41,9 @@
       <div class="mt-2">
         <h5 class="text-dpi-secondary">DPI Endorsements</h5>
         <ul>
-          <li>Technical: </li>
-          <li>Career: </li>
-          <li>Communication: </li>
+          <li>Career Readiness: <span class="fw-bold lead text-<%= rating_class(@enrollment.career_rating)%>"><%= @enrollment.career_rating.upcase %></span></li>
+          <li>Communication: <span class="fw-bold lead text-<%= rating_class(@enrollment.communication_rating)%>"><%= @enrollment.communication_rating.upcase %></span></li>
+          <li>Technical: <span class="fw-bold lead text-<%= rating_class(@enrollment.technical_rating)%>"><%= @enrollment.technical_rating.upcase %></span></li>
         </ul>
       </div>
     </div>
