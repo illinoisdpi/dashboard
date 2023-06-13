@@ -63,7 +63,6 @@
     </div>
     <div class="col-4 border-end">
       <h5 class="text-dpi-secondary">Education</h5>
-      <p><%= @enrollment.user.education %></p>
       <ul class="px-0 list-unstyled">
         <% @enrollment.user.education.split(",").sample(3).each do |education| %>
           <li><%= education %></li>
