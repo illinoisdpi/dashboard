@@ -18,7 +18,7 @@
       <% if @enrollment.user.skills_and_projects.present? %>
         <h5 class="text-dpi-secondary fw-bold">Skills and Projects:</h5>
         <ul class="text-dpi-primary">
-          <% @enrollment.user.skills_and_projects.split(",").sample(6).each do |strength| %>
+          <% @enrollment.user.skills_and_projects.split(",").take(6).each do |strength| %>
             <li><%= strength %></li>
           <% end %>
         </ul>
@@ -26,7 +26,7 @@
       <% if @enrollment.skills_development.present? %>
         <h5 class="text-dpi-secondary fw-bold">Real-Time DPI Skill Development:</h5>
         <ul class="text-dpi-primary">
-          <% @enrollment.skills_development.split(",").sample(6).each do |skill| %>
+          <% @enrollment.skills_development.split(",").take(6).each do |skill| %>
             <li><%= skill %></li>
           <% end %>
         </ul>
@@ -53,7 +53,7 @@
       <h5 class="text-dpi-secondary fw-bold">Career Highlights</h5>
       <% if @enrollment.user.career_highlights.present? %>
         <ul class="px-0 list-unstyled text-dpi-primary">
-          <% @enrollment.user.career_highlights.split(",").sample(3).each do |highlight| %>
+          <% @enrollment.user.career_highlights.split(",").take(3).each do |highlight| %>
             <li><%= highlight %></li>
           <% end %>
         </ul>
@@ -64,7 +64,7 @@
     <div class="col-4 border-top-0 border-start-0 border-bottom-0 border-dpi-primary border-3 opacity-100">
       <h5 class="text-dpi-secondary fw-bold">Education</h5>
       <ul class="px-0 list-unstyled text-dpi-primary">
-        <% @enrollment.user.education.split(",").sample(3).each do |education| %>
+        <% @enrollment.user.education.split(",").take(3).each do |education| %>
           <li><%= education %></li>
         <% end %>
       </ul>
