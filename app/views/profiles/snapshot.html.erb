@@ -52,7 +52,7 @@
     <div class="col-4 border-end">
       <h5 class="text-dpi-secondary">Career Highlights</h5>
       <% if @enrollment.user.career_highlights.present? %>
-        <ul>
+        <ul class="px-0 list-unstyled">
           <% @enrollment.user.career_highlights.split(",").sample(3).each do |highlight| %>
             <li><%= highlight %></li>
           <% end %>
@@ -64,6 +64,11 @@
     <div class="col-4 border-end">
       <h5 class="text-dpi-secondary">Education</h5>
       <p><%= @enrollment.user.education %></p>
+      <ul class="px-0 list-unstyled">
+        <% @enrollment.user.education.split(",").sample(3).each do |education| %>
+          <li><%= education %></li>
+        <% end %>
+      </ul>
     </div>
     <div class="col-4 border-end">
       <h5 class="text-dpi-secondary">Fun Fact</h5>
