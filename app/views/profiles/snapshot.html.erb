@@ -8,7 +8,7 @@
 <div class="container-fluid">
   <div class="row my-2">
     <div class="col-4">
-      <%= image_tag @enrollment.user.headshot.url, class: "border-5 border-dpi-primary img-fluid" %>
+      <%= image_tag(@enrollment.user.headshot.url, class: "border-5 border-dpi-primary img-fluid") unless @enrollment.user.headshot.nil? %>
     </div>
     <div class="col-5">
       <h1><%= @enrollment.user.first_name %></h1>
