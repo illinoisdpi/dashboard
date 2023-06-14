@@ -1,9 +1,9 @@
 module ApplicationHelper
   def rating_class(rating)
     case rating
-    when :proficient
+    when :excellent
       "success"
-    when :capable
+    when :proficient
       "info"
     when :emerging
       "primary"
