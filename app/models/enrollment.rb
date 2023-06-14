@@ -110,9 +110,9 @@ class Enrollment < ApplicationRecord
 
   def career_rating
     if career_total >= 46
-      :proficient
+      :excellent
     elsif career_total >= 41
-      :capable
+      :proficient
     else
       :emerging
     end
@@ -120,9 +120,9 @@ class Enrollment < ApplicationRecord
   
   def communication_rating
     if communication_total >= 10.5
-      :proficient
+      :excellent
     elsif communication_total >= 8.5
-      :capable
+      :proficient
     else
       :emerging
     end
@@ -130,9 +130,9 @@ class Enrollment < ApplicationRecord
 
   def technical_rating
     if technical_total >= 225
-      :proficient
+      :excellent
     elsif technical_total >= 200
-      :capable
+      :proficient
     else
       :emerging
     end
