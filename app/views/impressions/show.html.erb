@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @impression %>
+
+<div>
+  <%= link_to "Edit this impression", edit_impression_path(@impression) %> |
+  <%= link_to "Back to impressions", impressions_path %>
+
+  <%= button_to "Destroy this impression", @impression, method: :delete %>
+</div>

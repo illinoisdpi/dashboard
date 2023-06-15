@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_12_183253) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_15_162606) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -166,6 +166,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_183253) do
     t.index ["user_id"], name: "index_enrollments_on_user_id"
   end
 
+  create_table "impressions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "author_id", null: false
+    t.uuid "subject_id", null: false
+    t.text "content", null: false
+    t.text "emoji", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_impressions_on_author_id"
+    t.index ["subject_id"], name: "index_impressions_on_subject_id"
+  end
+
   create_table "piazza_activity_breakdowns", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "enrollment_id", null: false
     t.string "name"
@@ -274,6 +285,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_183253) do
   add_foreign_key "canvas_submissions", "enrollments"
   add_foreign_key "enrollments", "cohorts"
   add_foreign_key "enrollments", "users"
+  add_foreign_key "impressions", "enrollments", column: "subject_id"
+  add_foreign_key "impressions", "users", column: "author_id"
   add_foreign_key "piazza_activity_breakdowns", "enrollments"
   add_foreign_key "piazza_activity_breakdowns", "piazza_activity_reports"
   add_foreign_key "piazza_activity_reports", "cohorts"

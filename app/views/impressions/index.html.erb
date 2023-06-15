@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Impressions</h1>
+
+<div id="impressions">
+  <% @impressions.each do |impression| %>
+    <%= render impression %>
+    <p>
+      <%= link_to "Show this impression", impression %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New impression", new_impression_path %>
