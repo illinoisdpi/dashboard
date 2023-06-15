@@ -16,7 +16,7 @@
       <h1 class="text-dpi-primary fw-bold"><%= @enrollment.user.first_name %></h1>
       <p class="text-dpi-primary"><%= @enrollment.user.one_liner %></p>
       <% if @enrollment.user.skills_and_projects.present? %>
-        <h5 class="text-dpi-secondary fw-bold">Skills and Projects:</h5>
+        <h5 class="text-dpi-secondary fw-bold">Skills and Projects</h5>
         <ul class="text-dpi-primary">
           <% @enrollment.user.skills_and_projects.split(",").take(6).each do |strength| %>
             <li><%= strength %></li>
@@ -24,7 +24,7 @@
         </ul>
       <% end %>
       <% if @enrollment.skills_development.present? %>
-        <h5 class="text-dpi-secondary fw-bold">Real-Time DPI Skill Development:</h5>
+        <h5 class="text-dpi-secondary fw-bold">Real-Time DPI Skill Development</h5>
         <ul class="text-dpi-primary">
           <% @enrollment.skills_development.split(",").take(6).each do |skill| %>
             <li><%= skill %></li>
