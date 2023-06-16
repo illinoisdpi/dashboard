@@ -9,11 +9,11 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  root "cohorts#index"
-
+  resources :impressions
   resources :cohorts do
     resources :canvas_gradebook_snapshots
     resources :enrollments
+    resources :impressions, module: :cohort
     resources :piazza_activity_reports
     resources :profiles do
       member do
@@ -21,4 +21,6 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  root "dashboard#index"
 end

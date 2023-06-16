@@ -1,0 +1,71 @@
+<div class="row my-2">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header d-flex align-items-center">
+        <h2 class="h6 mb-0 me-auto">Cohorts</h2>
+
+        <div>
+          <%= link_to new_cohort_path do %>
+            <i class="fa-solid fa-plus fa-fw"></i>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="list-group list-group-flush">
+        <% @cohorts.each do |cohort| %>
+          <%= link_to cohort, class: "list-group-item" do %>
+            <div class="d-flex">
+              <div class="me-auto d-flex align-items-baseline">
+                <span class="badge bg-secondary font-monospace me-2">
+                  <%= cohort.code %>
+                </span>
+                
+                <%= cohort.name %>
+              </div>
+  
+              <div>
+                <i class="fa-solid fa-chevron-right fa-fw"></i>
+              </div>
+            </div>
+            
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row my-2">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header d-flex align-items-center">
+        <h2 class="h6 mb-0 me-auto">Your Recently Authored Impressions</h2>
+        <div>
+          <%= link_to new_impression_path do %>
+            <i class="fa-solid fa-plus fa-fw"></i>
+          <% end %>
+        </div>
+      </div>
+      <div class="list-group list-group-flush">
+        <% @impressions.each do |impression| %>
+          <%= link_to impression, class: "list-group-item" do %>
+            <div class="d-flex">
+              <div class="me-auto d-flex align-items-baseline">
+                <span class="badge bg-secondary font-monospace me-2">
+                  <%= impression.emoji %>
+                </span>
+                
+                <%= impression.subject.user %>
+              </div>
+  
+              <div>
+                <i class="fa-solid fa-chevron-right fa-fw"></i>
+              </div>
+            </div>
+            
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

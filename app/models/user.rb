@@ -47,11 +47,17 @@ class User < ApplicationRecord
   devise :database_authenticatable, :recoverable, :rememberable, :validatable, :registerable
 
   has_many :enrollments, dependent: :destroy
-
   has_many :cohorts, through: :enrollments, source: :cohort
+  has_many :authored_impressions, class_name: "Impression", foreign_key: "author_id"
 
   def to_s
+    return full_name if full_name.present?
+
     canvas_full || piazza_full || email
+  end
+
+  def full_name
+    "#{first_name} #{last_name}"
   end
 
   def name
