@@ -1,14 +1,36 @@
-<p style="color: green"><%= notice %></p>
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header d-flex align-items-center">
+        <h1 class="h6 mb-0 me-auto">Impressions</h1>
 
-<h1>Impressions</h1>
+        <div>
+          <%= link_to new_impression_path do %>
+            <i class="fa-solid fa-plus fa-fw"></i>
+          <% end %>
+        </div>
+      </div>
 
-<div id="impressions">
-  <% @impressions.each do |impression| %>
-    <%= render impression %>
-    <p>
-      <%= link_to "Show this impression", impression %>
-    </p>
-  <% end %>
+      <div class="list-group list-group-flush">
+        <% @impressions.each do |impression| %>
+          <%= link_to impression, class: "list-group-item" do %>
+            <div class="d-flex">
+              <div class="me-auto d-flex align-items-baseline">
+                <span class="badge bg-secondary font-monospace me-2">
+                  <%= impression.emoji %>
+                </span>
+                
+                <%= impression.subject %>
+              </div>
+  
+              <div>
+                <i class="fa-solid fa-chevron-right fa-fw"></i>
+              </div>
+            </div>
+            
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
-
-<%= link_to "New impression", new_impression_path %>

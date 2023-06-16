@@ -1,8 +1,15 @@
 class ImpressionsController < ApplicationController
+  before_action :set_cohort
   before_action :set_impression, only: %i[ show edit update destroy ]
 
   # GET /impressions or /impressions.json
   def index
+    @breadcrumbs = [
+      {content: "Cohorts", href: cohorts_path},
+      {content: @cohort.to_s, href: cohort_path(@cohort)},
+      {content: "Impressions", href: cohort_impressions_path(@cohort)}
+    ]
+
     @impressions = Impression.all
   end
 
@@ -58,13 +65,19 @@ class ImpressionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_impression
-      @impression = Impression.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def impression_params
-      params.require(:impression).permit(:author_id, :subject_id, :content, :emoji)
-    end
+  def set_cohort
+    # TODO: have separate controlers with cohort module
+    @cohort = Cohort.find(params.fetch(:cohort_id)) if params.dig(:cohort_id).present?
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_impression
+    @impression = Impression.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def impression_params
+    params.require(:impression).permit(:author_id, :subject_id, :content, :emoji)
+  end
 end

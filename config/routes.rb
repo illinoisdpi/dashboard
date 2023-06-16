@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   resources :cohorts do
     resources :canvas_gradebook_snapshots
     resources :enrollments
+    # TODO: add module: :cohort
+    resources :impressions
     resources :piazza_activity_reports
     resources :profiles do
       member do
