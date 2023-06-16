@@ -20,7 +20,11 @@
   <div class="mb-3" data-controller="emoji-input">
     <%= form.label :emoji, class: "form-label" %>
     <%= form.text_field :emoji, class: "form-control", "aria-described-by": "emoji-help", "data-emoji-input-target": "textInput" %>
-    <div id="emoji-help" class="form-text">How do you feel about this impression? Please select an emoji to best describe this impression.</div>
+    <div id="emoji-help" class="form-text">
+      Please select an emoji to best describe this impression. You can use the emoji keyboard to select an emoji.<br/>
+      macOS (control ⌃ + command ⌘ + spacebar)<br/>
+      Windows (Windows logo key + .)<br/>
+    </div>
     <div id="emoji-buttons" class="d-flex flex-wrap">
       <% Impression::EMOJIS.each do |emoji, description| %>
         <button type="button" class="emoji-btn" data-emoji="<%= emoji %>" data-action="click->emoji-input#addEmoji">
@@ -33,7 +37,10 @@
 
   <div class="mb-3">
     <%= form.label :content, class: "form-label" %>
-    <%= form.text_area :content, class: "form-control", rows: "10" %>
+    <%= form.text_area :content, class: "form-control", rows: "10", "aria-described-by": "content-help" %>
+    <div id="content-help" class="form-text">
+      This impression may be shared with the subject.
+    </div>
   </div>
 
   <div class="d-grid gap-2 mt-2">
