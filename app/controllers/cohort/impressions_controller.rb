@@ -1,11 +1,23 @@
-class ImpressionsController < ApplicationController
+class Cohort::ImpressionsController < ApplicationController
+  before_action :set_cohort
   before_action :set_impression, only: %i[ show edit update destroy ]
+
+  # GET /impressions or /impressions.json
+  def index
+    @breadcrumbs = [
+      {content: "Cohorts", href: cohorts_path},
+      {content: @cohort.to_s, href: cohort_path(@cohort)},
+      {content: "Impressions", href: cohort_impressions_path(@cohort)}
+    ]
+  end
 
   # GET /impressions/1 or /impressions/1.json
   def show
     @breadcrumbs = [
-      {content: "Dashboard", href: root_path},
-      {content: @impression.to_s, href: impression_path(@impression)},
+      {content: "Cohorts", href: cohorts_path},
+      {content: @cohort.to_s, href: cohort_path(@cohort)},
+      {content: "Impressions", href: cohort_impressions_path(@cohort)},
+      {content: @impression}
     ]
   end
 
@@ -24,7 +36,7 @@ class ImpressionsController < ApplicationController
 
     respond_to do |format|
       if @impression.save
-        format.html { redirect_to impression_url(@impression), notice: "Impression was successfully created." }
+        format.html { redirect_to cohort_impression_url(@cohort, @impression), notice: "Impression was successfully created." }
         format.json { render :show, status: :created, location: @impression }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -37,7 +49,7 @@ class ImpressionsController < ApplicationController
   def update
     respond_to do |format|
       if @impression.update(impression_params)
-        format.html { redirect_to impression_url(@impression), notice: "Impression was successfully updated." }
+        format.html { redirect_to cohort_impression_url(@cohort, @impression), notice: "Impression was successfully updated." }
         format.json { render :show, status: :ok, location: @impression }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -57,6 +69,10 @@ class ImpressionsController < ApplicationController
   end
 
   private
+
+  def set_cohort
+    @cohort = Cohort.find(params.fetch(:cohort_id)) if params.dig(:cohort_id).present?
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_impression

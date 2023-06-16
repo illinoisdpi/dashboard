@@ -44,7 +44,13 @@ class Impression < ApplicationRecord
     😑: "lack progress"
   }.freeze
 
+  scope :default_order, -> { order(created_at: :desc) }
+
   def summary
     "#{author} had a #{emoji} impression of #{subject}"
+  end
+
+  def to_s
+    summary
   end
 end

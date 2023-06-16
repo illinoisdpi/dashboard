@@ -56,6 +56,7 @@ class Enrollment < ApplicationRecord
   belongs_to :cohort
   has_many :piazza_activity_breakdowns, dependent: :destroy
   has_many :canvas_submissions, dependent: :destroy
+  has_many :impressions, foreign_key: "subject_id", dependent: :destroy
 
   scope :default_order, -> { joins(:user).order(User.arel_table[:piazza_full].asc) }
 
