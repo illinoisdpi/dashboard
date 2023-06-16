@@ -17,7 +17,6 @@ class Slack
 
     response = http.request(request)
 
-    # Handle the response as per your requirements
     if response.is_a?(Net::HTTPSuccess)
       puts 'Message sent successfully!'
     else
