@@ -21,6 +21,8 @@
 #  fk_rails_...  (subject_id => enrollments.id)
 #
 class Impression < ApplicationRecord
+  include Slackable
+
   has_paper_trail skip: [:created_at, :updated_at]
 
   belongs_to :author, class_name: "User", foreign_key: "author_id"
@@ -29,7 +31,18 @@ class Impression < ApplicationRecord
   validates :content, presence: true
   validates :emoji, emoji: true
 
-  EMOJIS = %w[😊 😢 🤔 😠 😄 🤯 😵‍💫 😭 🤥 🫣 🥴 🤑 🤮 🙁 🥳 🤩 😇 😎 😅].freeze
+  EMOJIS = {
+    👍: "positive",
+    👎: "negative",
+    🙋: "asking questions",
+    😇: "helping others",
+    🥳: "growth",
+    😬: "unprofessional",
+    😠: "lashing out",
+    🤩: "all star",
+    😶: "lack communication",
+    😑: "lack progress"
+  }.freeze
 
   def summary
     "#{author} had a #{emoji} impression of #{subject}"

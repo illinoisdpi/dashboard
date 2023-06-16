@@ -22,9 +22,10 @@
     <%= form.text_field :emoji, class: "form-control", "aria-described-by": "emoji-help", "data-emoji-input-target": "textInput" %>
     <div id="emoji-help" class="form-text">How do you feel about this impression? Please select an emoji to best describe this impression.</div>
     <div id="emoji-buttons" class="d-flex flex-wrap">
-      <% Impression::EMOJIS.each do |emoji| %>
+      <% Impression::EMOJIS.each do |emoji, description| %>
         <button type="button" class="emoji-btn" data-emoji="<%= emoji %>" data-action="click->emoji-input#addEmoji">
           <%= emoji %>
+          <%= description %>
         </button>
       <% end %>
     </div>
