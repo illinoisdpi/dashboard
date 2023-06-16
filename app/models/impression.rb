@@ -29,5 +29,9 @@ class Impression < ApplicationRecord
   validates :content, presence: true
   validates :emoji, emoji: true
 
-  EMOJIS = %w[😊 😢 😠 😄 🤯 😵‍💫 😭 🤥 🫣 🥴 🤑 🤮 🙁 🥳 🤩 😇 😎 😅].freeze
+  EMOJIS = %w[😊 😢 🤔 😠 😄 🤯 😵‍💫 😭 🤥 🫣 🥴 🤑 🤮 🙁 🥳 🤩 😇 😎 😅].freeze
+
+  def summary
+    "#{author} had a #{emoji} impression of #{subject}"
+  end
 end
