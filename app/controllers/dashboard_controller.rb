@@ -5,6 +5,6 @@ class DashboardController < ApplicationController
     ]
 
     @cohorts = Cohort.all.default_order
-    @impressions = current_user.authored_impressions.take(5)
+    @impressions = current_user.authored_impressions.default_order.take(5)
   end
 end
