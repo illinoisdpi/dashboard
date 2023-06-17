@@ -99,8 +99,12 @@ class Enrollment < ApplicationRecord
       communication_written
   end
 
+  def technical_score
+    technical_total / cohort.canvas_assignments.sum(:points_possible)
+  end
+
   def technical_total
-    technical_project_points + technical_good_questions * 5
+    technical_project_points + technical_good_questions
   end
 
   def technical_project_points
@@ -130,9 +134,9 @@ class Enrollment < ApplicationRecord
   end
 
   def technical_rating
-    if technical_total >= 225
+    if technical_score >= 0.8
       :excellent
-    elsif technical_total >= 200
+    elsif technical_score >= 0.7
       :proficient
     else
       :emerging
