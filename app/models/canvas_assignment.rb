@@ -39,4 +39,5 @@ class CanvasAssignment < ApplicationRecord
   has_many :canvas_submissions
 
   scope :default_order, -> { order(position: :asc) }
+  scope :included, -> { where(excluded: false) }
 end

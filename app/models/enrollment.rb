@@ -100,7 +100,7 @@ class Enrollment < ApplicationRecord
   end
 
   def technical_score
-    technical_total / cohort.canvas_assignments.sum(:points_possible)
+    technical_total / cohort.included_canvas_assignments.sum(:points_possible)
   end
 
   def technical_total
@@ -110,7 +110,7 @@ class Enrollment < ApplicationRecord
   def technical_project_points
     latest_gradebook = cohort.canvas_gradebook_snapshots.order(created_at: :desc).first
 
-    latest_gradebook.canvas_submissions.where(enrollment: self).sum(:points)
+    latest_gradebook.canvas_submissions.where(enrollment: self, canvas_assignment: CanvasAssignment.included).sum(:points)
   end
 
   def career_rating
