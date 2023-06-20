@@ -18,8 +18,10 @@
       <% if @enrollment.user.skills_and_projects.present? %>
         <h5 class="text-dpi-secondary fw-bold">Skills and Projects</h5>
         <ul class="text-dpi-primary">
-          <% @enrollment.user.skills_and_projects.split(",").take(6).each do |strength| %>
-            <li><%= strength %></li>
+          <% if @enrollment.user.skills_and_projects.present? %>
+            <% @enrollment.user.skills_and_projects.split(",").take(6).each do |strength| %>
+              <li><%= strength %></li>
+            <% end %>
           <% end %>
         </ul>
       <% end %>
@@ -63,8 +65,10 @@
     <div class="col-4 border-top-0 border-start-0 border-bottom-0 border-dpi-primary border-3 opacity-100">
       <h5 class="text-dpi-secondary fw-bold">Education</h5>
       <ul class="px-0 list-unstyled text-dpi-primary">
-        <% @enrollment.user.education.split(",").take(3).each do |education| %>
-          <li><%= education %></li>
+        <% if @enrollment.user.education.present? %>
+          <% @enrollment.user.education.split(",").take(3).each do |education| %>
+            <li><%= education %></li>
+          <% end %>
         <% end %>
       </ul>
     </div>
