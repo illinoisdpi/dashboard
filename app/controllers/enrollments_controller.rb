@@ -13,6 +13,8 @@ class EnrollmentsController < ApplicationController
 
   # GET /enrollments/1 or /enrollments/1.json
   def show
+    #p "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! E#{@enrollment.id} U#{@enrollment.user_id}"
+    #authorize @enrollment
     @breadcrumbs = [
       {content: "Cohorts", href: cohorts_path},
       {content: @cohort.to_s, href: cohort_path(@cohort)},

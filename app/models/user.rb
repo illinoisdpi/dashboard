@@ -4,7 +4,6 @@
 #
 #  id                     :uuid             not null, primary key
 #  canvas_full            :string
-#  career_highlights      :text
 #  education              :text
 #  email                  :citext           default(""), not null
 #  encrypted_password     :string           default(""), not null

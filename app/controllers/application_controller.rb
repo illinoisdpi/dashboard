@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include Pundit::Authorization
+  
   before_action :authenticate_user!, :set_paper_trail_whodunnit
   before_action :configure_permitted_parameters, if: :devise_controller?
 
