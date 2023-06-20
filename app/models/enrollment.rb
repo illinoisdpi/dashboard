@@ -134,7 +134,7 @@ class Enrollment < ApplicationRecord
   end
 
   def technical_rating
-    if technical_score >= 0.8
+    if technical_score >= 0.9
       :excellent
     elsif technical_score >= 0.7
       :proficient
