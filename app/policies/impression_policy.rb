@@ -1,9 +1,9 @@
-class RolePolicy < ApplicationPolicy
-    attr_reader :user, :role
+class ImpressionPolicy < ApplicationPolicy
+    attr_reader :user, :impression
 
-    def initialize(user, role)
+    def initialize(user, impression)
         @user = user
-        @role = role
+        @impression = impression
     end
 
     def index?
@@ -15,7 +15,7 @@ class RolePolicy < ApplicationPolicy
     end
     
     def create?
-        [:admin].any? { |role| @user.has_role?(role) }
+        [:admin, :instructor, :ta].any? { |role| @user.has_role?(role) }
     end
     
     def new?
@@ -33,5 +33,4 @@ class RolePolicy < ApplicationPolicy
     def destroy?
         create?
     end
-
 end

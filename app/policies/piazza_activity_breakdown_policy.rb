@@ -1,9 +1,9 @@
-class RolePolicy < ApplicationPolicy
-    attr_reader :user, :role
+class PiazzaActivityBreakdownPolicy < ApplicationPolicy
+    attr_reader :user, :piazza_activity_breakdown
 
-    def initialize(user, role)
+    def initialize(user, piazza_activity_breakdown)
         @user = user
-        @role = role
+        @piazza_activity_breakdown = piazza_activity_breakdown
     end
 
     def index?
@@ -33,5 +33,4 @@ class RolePolicy < ApplicationPolicy
     def destroy?
         create?
     end
-
 end

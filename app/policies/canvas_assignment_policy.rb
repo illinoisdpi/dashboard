@@ -1,9 +1,9 @@
-class RolePolicy < ApplicationPolicy
-    attr_reader :user, :role
+class CanvasAssignmentPolicy < ApplicationPolicy
+    attr_reader :user, :canvas_assignment
 
-    def initialize(user, role)
+    def initialize(user, canvas_assignment)
         @user = user
-        @role = role
+        @canvas_assignment = canvas_assignment
     end
 
     def index?
@@ -33,5 +33,4 @@ class RolePolicy < ApplicationPolicy
     def destroy?
         create?
     end
-
 end

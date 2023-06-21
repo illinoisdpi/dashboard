@@ -1,6 +1,6 @@
 # Authorization policies
 
-Using the [pundit gem](https://github.com/varvet/pundit)
+Using the [pundit gem](https://github.com/varvet/pundit),  [latest documentation](https://www.rubydoc.info/gems/pundit)
 
 Existing roles: ```:admin :instructor :ta :student```
 
@@ -15,12 +15,23 @@ Models && policies:
 - `Enrollment` 
     - CUD: admin, instructor
     - R: admin, instructor, ta if not also a student in this cohort 
-- User
+- `User`
+    - TODO
 - `Role` 
     - CUD: admin
     - R: admin, instructor, ta
-- Impression
-- CanvasAssignment
-- CanvasGradebookSnapshot
-- PiazzaActivityBreakdown
-- PiazzaActivityReport
+- `Impression`
+    - CUD: admin, instructor, ta 
+    - R: admin, instructor, ta  
+- `CanvasAssignment`
+    - CUD: admin
+    - R: admin, instructor, ta
+- `CanvasGradebookSnapshot`
+    - CUD: admin
+    - R: admin, instructor, ta
+- `PiazzaActivityBreakdown`
+    - CUD: admin
+    - R: admin, instructor, ta
+- `PiazzaActivityReport`
+    - CUD: admin
+    - R: admin, instructor, ta
