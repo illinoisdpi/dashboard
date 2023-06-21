@@ -10,7 +10,7 @@ class CohortPolicy < ApplicationPolicy
         # The current user is not enrolled in this cohort
         # OR the current user is an admin or instructor:
         @cohort.enrollments.where(user_id: @user.id).empty? ||
-           [:admin, :instructor].any? { |role| @user.has_role?(role) }
+           [:admin, :instructor, :ta].any? { |role| @user.has_role?(role) }
     end
 
     def index?
@@ -26,14 +26,14 @@ class CohortPolicy < ApplicationPolicy
     end
 
     def create?
-        [:admin, :instructor].any? { |role| @user.has_role?(role) }
+        [:admin].any? { |role| @user.has_role?(role) }
     end
 
     def destroy?
-        [:admin, :instructor].any? { |role| @user.has_role?(role) }
+        [:admin].any? { |role| @user.has_role?(role) }
     end
 
     def new?
-        [:admin, :instructor].any? { |role| @user.has_role?(role) }
+        [:admin].any? { |role| @user.has_role?(role) }
     end
 end
