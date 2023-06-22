@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :impressions
+  resources :feed, only: [:index]
   resources :cohorts do
     resources :canvas_gradebook_snapshots
     resources :enrollments

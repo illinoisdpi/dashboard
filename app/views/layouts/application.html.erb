@@ -16,6 +16,8 @@
     <%= javascript_importmap_tags %>
 
     <%= render "shared/cdn_assets" %>
+
+    <%= auto_discovery_link_tag :rss, feed_index_url(:format => :xml) %>
   </head>
 
   <body class="pb-5">

@@ -22,4 +22,6 @@
 #
 class DevtoArticle < ApplicationRecord
   belongs_to :author, class_name: "User", foreign_key: "author_id"
+
+  scope :default_order, -> { order(published_at: :desc) }
 end
