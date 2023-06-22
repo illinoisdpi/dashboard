@@ -14,7 +14,7 @@ class CohortPolicy < ApplicationPolicy
     end
 
     def index?
-        show?
+        true
     end
 
     def edit?

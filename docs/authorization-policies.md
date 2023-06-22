@@ -11,7 +11,7 @@ Models && policies:
     - parent class methods provide a default CRUD deny
 - `Cohort` 
     - CUD: admin
-    - R: admin, instructor, ta
+    - R: admin, instructor, ta, student
 - `Enrollment` 
     - CUD: admin, instructor
     - R: admin, instructor, ta if not also a student in this cohort 

@@ -12,22 +12,13 @@ class CohortsController < ApplicationController
 
   # GET /cohorts/1 or /cohorts/1.json
   def show
-    @cohort=Cohort.find(params[:id])
-    begin 
-      authorize @cohort
-    rescue Exception => e 
-      p "pundit exception:#{e} show Cohort #{@cohort.id} by user U#{@current_user.id}"
-      respond_to do |format|
-        format.html { redirect_to cohorts_url, alert: "Not authorized to show Cohort" }
-        format.json { head :no_content }
-      end
-    else
-      p "Show Cohort #{@cohort.id} by user U#{@current_user.id}"
-      @breadcrumbs = [
-        {content: "Cohorts", href: cohorts_path},
-        {content: @cohort.to_s, href: cohort_path(@cohort)}
-      ]
-    end
+    @cohorts = Cohort.find(params[:id])
+    authorize @cohort
+
+    @breadcrumbs = [
+      {content: "Cohorts", href: cohorts_path},
+      {content: @cohort.to_s, href: cohort_path(@cohort)}
+    ]
   end
 
   # GET /cohorts/new
