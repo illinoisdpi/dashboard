@@ -1,10 +1,4 @@
 class UserPolicy < ApplicationPolicy
-    attr_reader :user, :role
-
-    def initialize(user, role)
-        @user = user
-        @role = role
-    end
 
     def index?
         [:admin, :instructor, :ta].any? { |role| @user.has_role?(role) }

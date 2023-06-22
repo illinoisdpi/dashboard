@@ -1,10 +1,4 @@
 class ImpressionPolicy < ApplicationPolicy
-    attr_reader :user, :impression
-
-    def initialize(user, impression)
-        @user = user
-        @impression = impression
-    end
 
     def index?
         [:admin, :instructor, :ta].any? { |role| @user.has_role?(role) }

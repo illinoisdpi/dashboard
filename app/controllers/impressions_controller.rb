@@ -3,6 +3,8 @@ class ImpressionsController < ApplicationController
 
   # GET /impressions/1 or /impressions/1.json
   def show
+    authorize @impression
+
     @breadcrumbs = [
       {content: "Dashboard", href: root_path},
       {content: @impression.to_s, href: impression_path(@impression)},
@@ -11,15 +13,20 @@ class ImpressionsController < ApplicationController
 
   # GET /impressions/new
   def new
+    authorize Impression
+
     @impression = current_user.authored_impressions.new
   end
 
   # GET /impressions/1/edit
   def edit
+    authorize @impression
   end
 
   # POST /impressions or /impressions.json
   def create
+    authorize Impression
+
     @impression = current_user.authored_impressions.new(impression_params)
 
     respond_to do |format|
@@ -35,6 +42,8 @@ class ImpressionsController < ApplicationController
 
   # PATCH/PUT /impressions/1 or /impressions/1.json
   def update
+    authorize @impression
+
     respond_to do |format|
       if @impression.update(impression_params)
         format.html { redirect_to impression_url(@impression), notice: "Impression was successfully updated." }
@@ -48,6 +57,8 @@ class ImpressionsController < ApplicationController
 
   # DELETE /impressions/1 or /impressions/1.json
   def destroy
+    authorize @impression
+    
     @impression.destroy
 
     respond_to do |format|

@@ -1,10 +1,4 @@
 class PiazzaActivityBreakdownPolicy < ApplicationPolicy
-    attr_reader :user, :piazza_activity_breakdown
-
-    def initialize(user, piazza_activity_breakdown)
-        @user = user
-        @piazza_activity_breakdown = piazza_activity_breakdown
-    end
 
     def index?
         [:admin, :instructor, :ta].any? { |role| @user.has_role?(role) }

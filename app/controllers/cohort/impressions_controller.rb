@@ -4,6 +4,8 @@ class Cohort::ImpressionsController < ApplicationController
 
   # GET /impressions or /impressions.json
   def index
+    authorize Impression
+
     @breadcrumbs = [
       {content: "Cohorts", href: cohorts_path},
       {content: @cohort.to_s, href: cohort_path(@cohort)},
@@ -13,6 +15,8 @@ class Cohort::ImpressionsController < ApplicationController
 
   # GET /impressions/1 or /impressions/1.json
   def show
+    authorize @impression
+
     @breadcrumbs = [
       {content: "Cohorts", href: cohorts_path},
       {content: @cohort.to_s, href: cohort_path(@cohort)},
@@ -23,15 +27,20 @@ class Cohort::ImpressionsController < ApplicationController
 
   # GET /impressions/new
   def new
+    authorize Impression
+
     @impression = current_user.authored_impressions.new
   end
 
   # GET /impressions/1/edit
   def edit
+    authorize @impression
   end
 
   # POST /impressions or /impressions.json
   def create
+    authorize Impression
+
     @impression = current_user.authored_impressions.new(impression_params)
 
     respond_to do |format|
@@ -47,6 +56,8 @@ class Cohort::ImpressionsController < ApplicationController
 
   # PATCH/PUT /impressions/1 or /impressions/1.json
   def update
+    authorize @impression
+
     respond_to do |format|
       if @impression.update(impression_params)
         format.html { redirect_to cohort_impression_url(@cohort, @impression), notice: "Impression was successfully updated." }
@@ -60,6 +71,8 @@ class Cohort::ImpressionsController < ApplicationController
 
   # DELETE /impressions/1 or /impressions/1.json
   def destroy
+    authorize @impression
+
     @impression.destroy
 
     respond_to do |format|
