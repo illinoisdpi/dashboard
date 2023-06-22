@@ -3,6 +3,8 @@ class CohortsController < ApplicationController
 
   # GET /cohorts or /cohorts.json
   def index
+    authorize Cohort
+
     @breadcrumbs = [
       {content: "Cohorts", href: cohorts_path}
     ]
@@ -12,7 +14,6 @@ class CohortsController < ApplicationController
 
   # GET /cohorts/1 or /cohorts/1.json
   def show
-    @cohorts = Cohort.find(params[:id])
     authorize @cohort
 
     @breadcrumbs = [
@@ -23,15 +24,20 @@ class CohortsController < ApplicationController
 
   # GET /cohorts/new
   def new
+    authorize Cohort
+
     @cohort = Cohort.new
   end
 
   # GET /cohorts/1/edit
   def edit
+    authorize @cohort
   end
 
   # POST /cohorts or /cohorts.json
   def create
+    authorize Cohort
+
     @cohort = Cohort.new(cohort_params)
 
     respond_to do |format|
@@ -47,6 +53,8 @@ class CohortsController < ApplicationController
 
   # PATCH/PUT /cohorts/1 or /cohorts/1.json
   def update
+    authorize @cohort
+
     respond_to do |format|
       if @cohort.update(cohort_params)
         format.html { redirect_to cohort_url(@cohort), notice: "Cohort was successfully updated." }
@@ -60,6 +68,8 @@ class CohortsController < ApplicationController
 
   # DELETE /cohorts/1 or /cohorts/1.json
   def destroy
+    authorize @cohort
+    
     @cohort.destroy
 
     respond_to do |format|
