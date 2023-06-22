@@ -9,8 +9,6 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :impressions
-  resources :feed, only: [:index]
   resources :cohorts do
     resources :canvas_gradebook_snapshots
     resources :enrollments
@@ -22,6 +20,9 @@ Rails.application.routes.draw do
       end
     end
   end
+  resources :devto_articles, only: [:index]
+  resources :feed, only: [:index]
+  resources :impressions
 
   root "dashboard#index"
 end
