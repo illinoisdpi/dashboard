@@ -1,22 +1,18 @@
-<div id="<%= dom_id impression %>">
-  <p>
-    <strong>Author:</strong>
-    <%= impression.author %>
-  </p>
+<div id="<%= dom_id impression %>" class="card">
+  <div class="card-header">
+    <div class="d-flex justify-content-between align-items-center">
+      <h1 class="me-auto mb-0 h6"><%= impression.summary %></h1>
+      <%= link_to edit_cohort_impression_path(@cohort, @impression), class: "me-2" do %>
+        <i class="fa-solid fa-pen-to-square"></i>
+      <% end %>
+      <%= button_to @impression, data: { "turbo-method": :delete, "turbo-confirm": "Are you sure you want to delete this impression?" }, class: "btn btn-link" do %>
+        <i class="fa-solid fa-trash text-danger"></i>
+      <% end %>
+    </div>
+  </div>
 
-  <p>
-    <strong>Subject:</strong>
-    <%= impression.subject %>
-  </p>
-
-  <p>
-    <strong>Emoji:</strong>
-    <%= impression.emoji %>
-  </p>
-
-  <p>
-    <strong>Content:</strong>
-    <%= impression.content %>
-  </p>
+  <div class="card-body">
+    <p><%= impression.content %></p>
+  </div>
 
 </div>
