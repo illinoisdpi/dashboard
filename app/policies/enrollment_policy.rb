@@ -8,11 +8,11 @@ class EnrollmentPolicy < ApplicationPolicy
 
     def show?
         @enrollment.user_id != @user.id  ||
-        [:admin, :instructor, :ta].any? { |role| @user.has_role?(role) }
+          [:admin, :instructor, :ta].any? { |role| @user.has_role?(role) }
     end
 
     def index?
-        show?
+        [:admin, :instructor, :ta].any? { |role| @user.has_role?(role) }
     end
 
     def edit?

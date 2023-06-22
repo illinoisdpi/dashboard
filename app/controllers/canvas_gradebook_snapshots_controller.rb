@@ -4,6 +4,8 @@ class CanvasGradebookSnapshotsController < ApplicationController
 
   # GET /canvas_gradebook_snapshots or /canvas_gradebook_snapshots.json
   def index
+    authorize CanvasGradebookSnapshot
+
     @breadcrumbs = [
       {content: "Cohorts", href: cohorts_path},
       {content: @cohort.to_s, href: cohort_path(@cohort)},
@@ -15,6 +17,8 @@ class CanvasGradebookSnapshotsController < ApplicationController
 
   # GET /canvas_gradebook_snapshots/new
   def new
+    authorize CanvasGradebookSnapshot
+
     @breadcrumbs = [
       {content: "Cohorts", href: cohorts_path},
       {content: @cohort.to_s, href: cohort_path(@cohort)},
@@ -27,10 +31,13 @@ class CanvasGradebookSnapshotsController < ApplicationController
 
   # GET /canvas_gradebook_snapshots/1/edit
   def edit
+    authorize @canvas_gradebook_snapshot
   end
 
   # POST /canvas_gradebook_snapshots or /canvas_gradebook_snapshots.json
   def create
+    authorize CanvasGradebookSnapshot
+
     @canvas_gradebook_snapshot = CanvasGradebookSnapshot.new(canvas_gradebook_snapshot_params.merge(user: current_user))
 
     respond_to do |format|
@@ -44,6 +51,8 @@ class CanvasGradebookSnapshotsController < ApplicationController
 
   # DELETE /canvas_gradebook_snapshots/1 or /canvas_gradebook_snapshots/1.json
   def destroy
+    authorize @canvas_gradebook_snapshot
+
     @canvas_gradebook_snapshot.destroy
 
     respond_to do |format|

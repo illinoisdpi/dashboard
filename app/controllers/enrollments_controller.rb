@@ -4,6 +4,8 @@ class EnrollmentsController < ApplicationController
 
   # GET /enrollments or /enrollments.json
   def index
+    authorize Enrollment
+
     @breadcrumbs = [
       {content: "Cohorts", href: cohorts_path},
       {content: @cohort.to_s, href: cohort_path(@cohort)},
@@ -13,8 +15,8 @@ class EnrollmentsController < ApplicationController
 
   # GET /enrollments/1 or /enrollments/1.json
   def show
-    #p "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! E#{@enrollment.id} U#{@enrollment.user_id}"
-    #authorize @enrollment
+    authorize @enrollment
+
     @breadcrumbs = [
       {content: "Cohorts", href: cohorts_path},
       {content: @cohort.to_s, href: cohort_path(@cohort)},
@@ -25,15 +27,20 @@ class EnrollmentsController < ApplicationController
 
   # GET /enrollments/new
   def new
+    authorize Enrollment
+
     @enrollment = @cohort.enrollments.new
   end
 
   # GET /enrollments/1/edit
   def edit
+    authorize @enrollment
   end
 
   # POST /enrollments or /enrollments.json
   def create
+    authorize Enrollment
+
     @enrollment = @cohort.enrollments.new(enrollment_params)
 
     respond_to do |format|
@@ -49,6 +56,8 @@ class EnrollmentsController < ApplicationController
 
   # PATCH/PUT /enrollments/1 or /enrollments/1.json
   def update
+    authorize @enrollment
+
     respond_to do |format|
       if @enrollment.update(enrollment_params)
         format.html { redirect_to enrollment_url(@enrollment), notice: "Enrollment was successfully updated." }
@@ -62,6 +71,8 @@ class EnrollmentsController < ApplicationController
 
   # DELETE /enrollments/1 or /enrollments/1.json
   def destroy
+    authorize @enrollment
+
     @enrollment.destroy
 
     respond_to do |format|
