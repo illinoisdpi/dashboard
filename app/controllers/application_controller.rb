@@ -5,8 +5,6 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   around_action :set_time_zone
-  
-  # after_action :verify_authorized, except: :index
 
   private
 

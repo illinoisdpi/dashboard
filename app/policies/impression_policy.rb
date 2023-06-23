@@ -17,14 +17,14 @@ class ImpressionPolicy < ApplicationPolicy
     end
     
     def update?
-        create?
+        edit?
     end
     
     def edit?
-        create?
+        @record.author_id == @user.id || @user.has_role?(:admin)  
     end
     
     def destroy?
-        create?
+        @user.has_role?(:admin)
     end
 end

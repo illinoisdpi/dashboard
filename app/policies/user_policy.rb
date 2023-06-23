@@ -17,11 +17,11 @@ class UserPolicy < ApplicationPolicy
     end
     
     def update?
-        create?
+        edit?
     end
     
     def edit?
-        create?
+        @record.id == @user.id || @user.has_role?(:admin)   
     end
     
     def destroy?
