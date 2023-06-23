@@ -1,6 +1,21 @@
 # frozen_string_literal: true
 
 class ApplicationPolicy
+  class Scope
+    def initialize(user, scope)
+      @user = user
+      @scope = scope
+    end
+
+    def resolve
+      scope.all
+    end
+
+    private
+
+    attr_reader :user, :scope
+  end
+
   attr_reader :user, :record
 
   def initialize(user, record)
@@ -36,6 +51,7 @@ class ApplicationPolicy
     false
   end
 
+  # rails_admin
   def dashboard?
     @user.has_role?(:admin) 
   end
@@ -46,24 +62,5 @@ class ApplicationPolicy
   
   def history?
     @user.has_role?(:admin)
-  end
-
-  def show_in_app?
-    @user.has_role?(:admin)
-  end
-
-  class Scope
-    def initialize(user, scope)
-      @user = user
-      @scope = scope
-    end
-
-    def resolve
-      scope
-    end
-
-    private
-
-    attr_reader :user, :scope
   end
 end

@@ -13,36 +13,20 @@
 
       <div class="list-group list-group-flush">
         <% @cohorts.each do |cohort| %>
-          <% if policy(cohort).show? %>
-            <%= link_to cohort, class: "list-group-item" do %>
-              <div class="d-flex">
-                <div class="me-auto d-flex align-items-baseline">
-                  <span class="badge bg-secondary font-monospace me-2">
-                    <%= cohort.code %>
-                  </span>
-                  
-                  <%= cohort.name %>
-                </div>
-    
-                <div>
-                  <i class="fa-solid fa-chevron-right fa-fw"></i>
-                </div>
-              </div> 
-            <% end %>
-          <% else %>
-            <div class="list-group-item">
-              <div class="d-flex">
-                <div class="me-auto d-flex align-items-baseline">
-                  <span class="badge bg-secondary font-monospace me-2">
-                    <%= cohort.code %>
-                  </span>          
-                  <%= cohort.name %> 
-                </div>
-                <div>
-                  ⛔
-                </div>
-              </div> 
-            </div>
+          <%= link_to cohort, class: "list-group-item" do %>
+            <div class="d-flex">
+              <div class="me-auto d-flex align-items-baseline">
+                <span class="badge bg-secondary font-monospace me-2">
+                  <%= cohort.code %>
+                </span>
+                
+                <%= cohort.name %>
+              </div>
+  
+              <div>
+                <i class="fa-solid fa-chevron-right fa-fw"></i>
+              </div>
+            </div> 
           <% end %>
         <% end %>
       </div>

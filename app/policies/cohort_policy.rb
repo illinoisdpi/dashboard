@@ -1,34 +1,39 @@
 class CohortPolicy < ApplicationPolicy
-
-    def show?
-        # The current user is not enrolled in this cohort
-        # OR the current user is an admin or instructor:
-        [:admin, :instructor, :ta].any? { |role| @user.has_role?(role) } ||
-          @record.enrollments.where(user_id: @user.id).empty?
-           
+  class Scope < Scope
+    def resolve
+      if user.has_role? :admin
+        scope.all
+      else
+        scope.where(id: user.cohorts.pluck(:id))
+      end
     end
+  end
 
-    def index?
-        true
-    end
+  def show?
+    user.has_role?(:admin) || user.cohorts.include?(record)
+  end
 
-    def edit?
-        show?
-    end
+  def index?
+    true
+  end
 
-    def update?
-        show?
-    end
+  def edit?
+    user.has_role?(:admin) || user.has_role?(:instructor)
+  end
 
-    def create?
-        [:admin].any? { |role| @user.has_role?(role) }
-    end
+  def update?
+    user.has_role?(:admin) || user.has_role?(:instructor)
+  end
 
-    def destroy?
-        [:admin].any? { |role| @user.has_role?(role) }
-    end
+  def create?
+    user.has_role?(:admin) || user.has_role?(:instructor)
+  end
 
-    def new?
-        [:admin].any? { |role| @user.has_role?(role) }
-    end
+  def destroy?
+    user.has_role?(:admin)
+  end
+
+  def new?
+    user.has_role?(:admin) || user.has_role?(:instructor)
+  end
 end
