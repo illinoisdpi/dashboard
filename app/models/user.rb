@@ -36,8 +36,7 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class User < ApplicationRecord
-  include Adminable
-  include Blogable
+  include Adminable, Blogable, Ransackable
 
   mount_uploader :headshot, HeadshotUploader
 
