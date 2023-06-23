@@ -141,6 +141,9 @@ GEM
     http-accept (1.7.0)
     http-cookie (1.0.5)
       domain_name (~> 0.5)
+    httparty (0.21.0)
+      mini_mime (>= 1.0.0)
+      multi_xml (>= 0.5.2)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
@@ -183,6 +186,7 @@ GEM
     mini_mime (1.1.2)
     minitest (5.18.0)
     msgpack (1.6.1)
+    multi_xml (0.6.0)
     nested_form (0.3.2)
     net-imap (0.3.4)
       date
@@ -416,6 +420,7 @@ DEPENDENCIES
   dotenv-rails
   faker
   groupdate
+  httparty
   importmap-rails
   jbuilder
   paper_trail

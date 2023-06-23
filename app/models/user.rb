@@ -5,6 +5,7 @@
 #  id                     :uuid             not null, primary key
 #  canvas_full            :string
 #  career_highlights      :text
+#  devto_username         :string
 #  education              :text
 #  email                  :citext           default(""), not null
 #  encrypted_password     :string           default(""), not null
@@ -36,6 +37,7 @@
 #
 class User < ApplicationRecord
   include Adminable
+  include Blogable
 
   mount_uploader :headshot, HeadshotUploader
 

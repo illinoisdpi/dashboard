@@ -1,0 +1,26 @@
+<div class="row my-2">
+  <div class="col">
+    <div class="card mb-2">
+      <div class="card-header d-flex align-items-center">
+        <h2 class="h6 mb-0 me-auto">Devto Articles</h2>
+      </div>
+
+      <div class="list-group list-group-flush">
+        <% @articles.each do |article| %>
+         <%= link_to article.url, class: "list-group-item", target: "_blank" do %>
+            <div class="d-flex align-items-center">
+              <div class="me-auto">
+                <h5><%= article.title %></h5>
+                <div>By <%= article.author %></div>
+                <small class="text-secondary">Published on <%= article.published_at.strftime("%Y-%m-%d") %></small>
+              </div>
+              <div>
+                <i class="fa-solid fa-chevron-right fa-fw"></i>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
