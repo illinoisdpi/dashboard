@@ -1,6 +1,10 @@
+require 'sidekiq/web'
+require 'sidekiq/cron/web'
+
 Rails.application.routes.draw do
   authenticate :user, ->(user) { user.has_role? :admin } do
     mount RailsAdmin::Engine, at: "admin", as: "rails_admin"
+    mount Sidekiq::Web => "/sidekiq"
   end
 
   authenticate :user, ->(user) { [:admin, :instructor].any? { |role| user.has_role? role } } do

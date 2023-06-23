@@ -35,3 +35,6 @@
 
 /config/credentials/production.key
 /config/credentials/development.key
+
+# ignore redis database file
+dump.rdb

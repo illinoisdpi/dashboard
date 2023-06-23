@@ -6,6 +6,15 @@
   "formation": {
     "web": {
       "quantity": 1
+    },
+    "worker": {
+      "quantity": 1,
+      "size": "standard-1X"
     }
-  }
+  },
+  "addons": [
+    {
+      "plan": "heroku-redis:hobby-dev"
+    }
+  ]
 }
