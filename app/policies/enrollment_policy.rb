@@ -1,8 +1,9 @@
 class EnrollmentPolicy < ApplicationPolicy
 
     def show?
-        @record.user_id != @user.id  ||
-          [:admin, :instructor, :ta].any? { |role| @user.has_role?(role) }
+      [:admin, :instructor, :ta].any? { |role| @user.has_role?(role) } ||
+       @record.user_id != @user.id 
+          
     end
 
     def index?

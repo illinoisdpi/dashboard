@@ -21,7 +21,7 @@ class UserPolicy < ApplicationPolicy
     end
     
     def edit?
-        @record.id == @user.id || @user.has_role?(:admin)   
+      @user.has_role?(:admin) || @record.id == @user.id 
     end
     
     def destroy?

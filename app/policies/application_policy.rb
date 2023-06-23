@@ -48,6 +48,10 @@ class ApplicationPolicy
     @user.has_role?(:admin)
   end
 
+  def show_in_app?
+    @user.has_role?(:admin)
+  end
+
   class Scope
     def initialize(user, scope)
       @user = user

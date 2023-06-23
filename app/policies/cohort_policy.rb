@@ -3,8 +3,9 @@ class CohortPolicy < ApplicationPolicy
     def show?
         # The current user is not enrolled in this cohort
         # OR the current user is an admin or instructor:
-        @record.enrollments.where(user_id: @user.id).empty? ||
-           [:admin, :instructor, :ta].any? { |role| @user.has_role?(role) }
+        [:admin, :instructor, :ta].any? { |role| @user.has_role?(role) } ||
+          @record.enrollments.where(user_id: @user.id).empty?
+           
     end
 
     def index?
