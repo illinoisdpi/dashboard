@@ -1,0 +1,4 @@
+fetch_devto_articles:
+  cron: "*/30 * * * *" # execute every 30 minutes
+  class: "FetchDevtoArticlesJob"
+  queue: default

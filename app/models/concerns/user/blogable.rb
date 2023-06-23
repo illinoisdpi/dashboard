@@ -8,7 +8,10 @@ module User::Blogable
 
   class_methods do
     def fetch_devto_articles
-      User.bloggers.each(&:fetch_devto_articles)
+      User.bloggers.each do |u|
+        u.fetch_devto_articles
+        sleep(1) # hack fix for 429 status code
+      end
     end
   end
 
