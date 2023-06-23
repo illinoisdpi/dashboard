@@ -14,7 +14,7 @@
       </div>
 
       <div class="list-group list-group-flush">
-        <% @cohort.impressions.each do |impression| %>
+        <% @cohort.impressions.default_order.each do |impression| %>
           <%= link_to cohort_impression_path(@cohort, impression), class: "list-group-item" do %>
             <div class="d-flex">
               <div class="me-auto d-flex align-items-baseline">

@@ -1,0 +1,43 @@
+<div class="row my-2">
+  <div class="col">
+    <div class="card mb-2">
+      <div class="card-header">
+        <%= search_form_for @q, class: "row" do |f| %>
+          <div class="form-floating col-6 mb-2">
+            <%= f.text_field :title_or_description_cont, placeholder: "Enter a few characters", class: "form-control" %>
+            <%= f.label :title_or_description_cont, "Title" %>
+          </div>
+
+          <div class="form-floating col-6 mb-2">
+            <%= f.text_field :author_first_name_or_author_last_name_cont, placeholder: "Enter author name", class: "form-control" %>
+            <%= f.label :author_first_name_or_author_last_name_cont, "Author" %>
+          </div>
+
+          <div class="d-flex align-items-center">
+            <%= f.submit :class => "btn btn-primary d-flex" %>
+            <%= link_to "Clear filter", devto_articles_path, class: "ms-2" %>
+          </div>
+          
+        <% end %>
+      </div>
+
+      <div class="list-group list-group-flush">
+        <% @articles.each do |article| %>
+         <%= link_to article.url, class: "list-group-item", target: "_blank" do %>
+            <div class="d-flex align-items-center">
+              <div class="me-auto">
+                <h5><%= article.title %></h5>
+                <div>By <%= article.author %></div>
+                <small class="text-secondary">Published on <%= article.published_at.strftime("%Y-%m-%d") %></small>
+              </div>
+              <div>
+                <i class="fa-solid fa-chevron-right fa-fw"></i>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <%= paginate @articles, theme: 'bootstrap-5', nav_class: "d-flex my-2", pagination_class: "mx-auto" %>
+  </div>
+</div>

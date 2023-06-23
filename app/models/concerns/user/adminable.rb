@@ -22,7 +22,8 @@ module User::Adminable
           :one_liner,
           :skills_and_projects,
           :career_highlights,
-          :headshot
+          :headshot,
+          :devto_username
       end
     end
   end

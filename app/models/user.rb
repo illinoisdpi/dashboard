@@ -4,6 +4,7 @@
 #
 #  id                     :uuid             not null, primary key
 #  canvas_full            :string
+#  career_highlights      :text
 #  devto_username         :string
 #  education              :text
 #  email                  :citext           default(""), not null
@@ -35,7 +36,7 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class User < ApplicationRecord
-  include Adminable
+  include Adminable, Blogable, Ransackable
 
   mount_uploader :headshot, HeadshotUploader
 
