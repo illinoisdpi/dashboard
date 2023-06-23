@@ -63,4 +63,8 @@ class ApplicationPolicy
   def history?
     @user.has_role?(:admin)
   end
+
+  def show_in_app?
+    @user.has_role?(:admin)
+  end
 end
