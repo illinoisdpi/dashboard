@@ -1,5 +1,4 @@
 class CanvasGradebookSnapshotPolicy < ApplicationPolicy
-
     def index?
         [:admin, :instructor, :ta].any? { |role| @user.has_role?(role) }
     end
