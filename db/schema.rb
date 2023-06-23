@@ -259,7 +259,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_195129) do
     t.text "languages"
     t.text "strengths"
     t.text "education"
-    t.string "headshot"
     t.text "fun_fact"
     t.string "first_name"
     t.string "middle_name"
@@ -267,6 +266,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_195129) do
     t.text "one_liner"
     t.text "skills_and_projects"
     t.text "career_highlights"
+    t.string "headshot"
     t.string "devto_username"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["github_username"], name: "index_users_on_github_username", unique: true
