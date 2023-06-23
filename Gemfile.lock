@@ -93,6 +93,9 @@ GEM
       safely_block (>= 0.1.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
+    bootstrap5-kaminari-views (0.0.1)
+      kaminari (>= 0.13)
+      rails (>= 3.1)
     builder (3.2.4)
     bullet (7.0.7)
       activesupport (>= 3.0.0)
@@ -429,6 +432,7 @@ DEPENDENCIES
   binding_of_caller
   blazer
   bootsnap
+  bootstrap5-kaminari-views (~> 0.0.1)
   bullet
   carrierwave
   chartkick
@@ -441,6 +445,7 @@ DEPENDENCIES
   httparty
   importmap-rails
   jbuilder
+  kaminari (~> 1.2)
   paper_trail
   pg (~> 1.1)
   pry-rails

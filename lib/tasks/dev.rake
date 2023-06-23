@@ -101,6 +101,8 @@ namespace :dev do
           ap enrollment.errors.full_messages
           ap enrollment
         end
+
+        user.devto_articles.create(title: Faker::Book.title, description: Faker::Lorem.sentence, published_at: Faker::Time.between(from: DateTime.now - 365, to: DateTime.now))
       end
 
       cohort_start_date = Date.parse("2023-01-30")
