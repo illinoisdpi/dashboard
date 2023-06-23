@@ -253,6 +253,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_162606) do
     t.string "last_name"
     t.text "one_liner"
     t.text "skills_and_projects"
+    t.text "career_highlights"
     t.string "headshot"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["github_username"], name: "index_users_on_github_username", unique: true

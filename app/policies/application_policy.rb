@@ -44,6 +44,10 @@ class ApplicationPolicy
     @user.has_role?(:admin) 
   end
   
+  def history?
+    @user.has_role?(:admin)
+  end
+
   class Scope
     def initialize(user, scope)
       @user = user
@@ -51,7 +55,7 @@ class ApplicationPolicy
     end
 
     def resolve
-      raise NotImplementedError, "You must define #resolve in #{self.class}"
+      scope
     end
 
     private
