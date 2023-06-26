@@ -4,7 +4,7 @@ class ImpressionsController < ApplicationController
   # GET /impressions/1 or /impressions/1.json
   def show
     @breadcrumbs = [
-      {content: "Dashboard", href: root_path},
+      {content: "Dashboard", href: dashboard_root_path},
       {content: @impression.to_s, href: impression_path(@impression)},
     ]
   end

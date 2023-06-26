@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    
-    <title>WE Dashboard</title>
-    
+
+    <title>DPI Dev News</title>
+
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
     <%= render "shared/favicon" %>
@@ -16,16 +16,12 @@
     <%= javascript_importmap_tags %>
 
     <%= render "shared/cdn_assets" %>
+
+    <%= auto_discovery_link_tag :rss, rss_url(:format => :xml) %>
   </head>
 
   <body class="pb-5">
-    <%= render "shared/navbar" %>
-
-    <div class="container-fluid mb-5">
-      <%= render "shared/breadcrumbs" %>
-
-      <%= render "shared/toasts" %>
-
+    <div class="container mb-5">
       <%= yield %>
     </div>
   </body>
