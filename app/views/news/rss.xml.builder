@@ -3,7 +3,7 @@ xml.rss version: "2.0" do
   xml.channel do
     xml.title "WE-PTTL Blog"
     xml.description "This is a blog by Discovery Partners Institute Workforce Education"
-    xml.link root_url
+    xml.link news_root_url
 
     @articles.each do |article|
       xml.item do

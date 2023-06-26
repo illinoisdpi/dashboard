@@ -37,3 +37,13 @@ Here's what you'll need to work with jobs in your development environment.
 3. Start sidekiq by running `bundle exec sidekiq`
 
 You can access the sidekiq web ui at /sidekiq (if you have admin role)
+
+
+## Subdomains
+
+Add this to your `/etc/hosts` file so you can access subdomains in your dev environment.
+
+```
+127.0.0.1 news.dpi.local
+127.0.0.1 dashboard.dpi.local
+```
