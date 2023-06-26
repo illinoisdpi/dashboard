@@ -1,4 +1,14 @@
 class EnrollmentPolicy < ApplicationPolicy
+  class Scope < Scope
+    def resolve
+      if user.has_role? :admin
+        scope.all
+      else
+        # I'm not sure of this:
+        scope.where(user_id: user.cohorts.pluck(:id))
+      end
+    end
+  end
   def show?
     [:admin, :instructor, :ta].any? { |role| @user.has_role?(role) } ||
       @record.user_id != @user.id     

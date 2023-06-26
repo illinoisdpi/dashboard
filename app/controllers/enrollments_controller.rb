@@ -4,7 +4,7 @@ class EnrollmentsController < ApplicationController
 
   # GET /enrollments or /enrollments.json
   def index
-    authorize Enrollment
+    authorize @cohort
 
     @breadcrumbs = [
       {content: "Cohorts", href: cohorts_path},
