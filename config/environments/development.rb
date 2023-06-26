@@ -1,8 +1,7 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
-  config.hosts << "news.dpi.local"
-  config.hosts << "dashboard.dpi.local"
+  config.hosts += ["news.dpi.local", "dashboard.dpi.local"]
 
   # Settings specified here will take precedence over those in config/application.rb.
   routes.default_url_options = {host: "localhost", port: 3000}
