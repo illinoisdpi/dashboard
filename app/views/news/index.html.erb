@@ -4,8 +4,9 @@
       <div class="card-header">
         <%= search_form_for(@q, url: news_root_path, class: "row") do |f| %>
           <div class="form-floating col-6 mb-2">
+            <%# TODO: add devto tags for better filtering %>
             <%= f.text_field :title_or_description_cont, placeholder: "Enter a few characters", class: "form-control" %>
-            <%= f.label :title_or_description_cont, "Title" %>
+            <%= f.label :title_or_description_cont, "Topic" %>
           </div>
 
           <div class="form-floating col-6 mb-2">
