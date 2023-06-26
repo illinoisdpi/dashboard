@@ -1,11 +1,10 @@
 class NewsController < ApplicationController
+  layout "news"
   skip_before_action :authenticate_user!
 
   def index
     @q = DevtoArticle.page(params[:page]).ransack(params[:q])
     @articles = @q.result.includes(:author).default_order
-
-    render layout: "news"
   end
 
   def rss
