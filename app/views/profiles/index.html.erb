@@ -14,7 +14,13 @@
       </div>
 
       <ul class="list-group list-group-flush">
-        <% @cohort.enrollments.student.default_order.each do |enrollment| %>
+      <% if @cohort.enrollments.where(user_id: @current_user.id, role: :student).blank?
+            visible = @cohort.enrollments.student.default_order
+          else
+            visible = @cohort.enrollments.where(user_id: @current_user.id)
+          end
+
+          visible.each do |enrollment| %>
           <li class="list-group-item">
             <div class="d-flex align-items-center" data-bs-toggle="collapse" data-bs-target="#enrollment-<%= enrollment.id %>-links" aria-expanded="false" aria-controls="enrollment-<%= enrollment.id %>-links">
               <div class="me-auto d-flex align-items-baseline font-monospace">
