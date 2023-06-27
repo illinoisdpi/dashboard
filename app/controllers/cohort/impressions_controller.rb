@@ -4,8 +4,8 @@ class Cohort::ImpressionsController < ApplicationController
 
   # GET /impressions or /impressions.json
   def index
-    authorize @cohort
-
+    authorize @cohort  # TODO: replace with policy_scope
+    
     @breadcrumbs = [
       {content: "Cohorts", href: cohorts_path},
       {content: @cohort.to_s, href: cohort_path(@cohort)},
@@ -37,9 +37,7 @@ class Cohort::ImpressionsController < ApplicationController
 
   # POST /impressions or /impressions.json
   def create
-    authorize Impression
-
-    @impression = current_user.authored_impressions.new(impression_params)
+    @impression = authorize current_user.authored_impressions.new(impression_params)
 
     respond_to do |format|
       if @impression.save
