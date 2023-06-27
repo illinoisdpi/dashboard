@@ -1,6 +1,7 @@
 class ProfilesController < ApplicationController
   before_action :set_cohort
   before_action :set_enrollment, only: [:show, :snapshot]
+  before_action { authorize(:profiles) }    
 
   def index
     @breadcrumbs = [
