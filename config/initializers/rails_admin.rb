@@ -1,6 +1,10 @@
 RailsAdmin.config do |config|
   config.asset_source = :sprockets
 
+  config.navigation_static_links = {
+    "Home" => "/",
+  }
+
   ### Popular gems integration
 
   ## == Devise ==
@@ -22,7 +26,7 @@ RailsAdmin.config do |config|
 
   ## == Gravatar integration ==
   ## To disable Gravatar integration in Navigation Bar set to false
-  # config.show_gravatar = true
+  config.show_gravatar = false
 
   config.actions do
     dashboard                     # mandatory
