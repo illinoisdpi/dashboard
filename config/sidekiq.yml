@@ -11,6 +11,7 @@
   - critical
   - mailers
   - default
+  - news
   - action_mailbox_routing
   - action_mailbox_incineration
   - active_storage_analysis
