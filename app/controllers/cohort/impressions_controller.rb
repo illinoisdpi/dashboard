@@ -4,7 +4,7 @@ class Cohort::ImpressionsController < ApplicationController
 
   # GET /impressions or /impressions.json
   def index
-    authorize Impression
+    authorize @cohort
 
     @breadcrumbs = [
       {content: "Cohorts", href: cohorts_path},
@@ -15,7 +15,7 @@ class Cohort::ImpressionsController < ApplicationController
 
   # GET /impressions/1 or /impressions/1.json
   def show
-    authorize @impression
+    authorize @cohort
 
     @breadcrumbs = [
       {content: "Cohorts", href: cohorts_path},
@@ -27,9 +27,7 @@ class Cohort::ImpressionsController < ApplicationController
 
   # GET /impressions/new
   def new
-    authorize Impression
-
-    @impression = current_user.authored_impressions.new
+    @impression = authorize current_user.authored_impressions.new
   end
 
   # GET /impressions/1/edit

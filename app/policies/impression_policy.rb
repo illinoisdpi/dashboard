@@ -12,7 +12,7 @@ class ImpressionPolicy < ApplicationPolicy
   end
   
   def new?
-    create?
+    [:admin, :instructor, :ta].any? { |role| @user.has_role?(role) }
   end
   
   def update?

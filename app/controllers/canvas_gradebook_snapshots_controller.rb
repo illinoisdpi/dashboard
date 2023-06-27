@@ -4,7 +4,7 @@ class CanvasGradebookSnapshotsController < ApplicationController
 
   # GET /canvas_gradebook_snapshots or /canvas_gradebook_snapshots.json
   def index
-    authorize CanvasGradebookSnapshot
+    authorize @cohort
 
     @breadcrumbs = [
       {content: "Cohorts", href: cohorts_path},
