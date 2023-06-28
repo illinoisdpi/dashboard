@@ -1,0 +1,9 @@
+<nav class="navbar bg-dpi-primary rounded">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <%= image_tag "logo", class: "rounded", alt: "DPI" %>
+      <span class="text-white">Dev News</span>
+    </a>
+    <%= link_to "RSS", rss_path(format: :xml), class: "ms-auto text-white text-decoration-none" %>
+  </div>
+</nav>

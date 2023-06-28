@@ -1,11 +1,13 @@
+<%= render "navbar" %>
 <div class="row my-2">
   <div class="col">
     <div class="card mb-2">
       <div class="card-header">
-        <%= search_form_for @q, class: "row" do |f| %>
+        <%= search_form_for(@q, url: news_root_path, class: "row") do |f| %>
           <div class="form-floating col-6 mb-2">
+            <%# TODO: add devto tags for better filtering %>
             <%= f.text_field :title_or_description_cont, placeholder: "Enter a few characters", class: "form-control" %>
-            <%= f.label :title_or_description_cont, "Title" %>
+            <%= f.label :title_or_description_cont, "Topic" %>
           </div>
 
           <div class="form-floating col-6 mb-2">
@@ -15,7 +17,7 @@
 
           <div class="d-flex align-items-center">
             <%= f.submit :class => "btn btn-primary d-flex" %>
-            <%= link_to "Clear filter", devto_articles_path, class: "ms-2" %>
+            <%= link_to "Clear filter", news_root_path, class: "ms-2" %>
           </div>
           
         <% end %>

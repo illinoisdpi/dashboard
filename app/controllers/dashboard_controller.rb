@@ -1,7 +1,7 @@
 class DashboardController < ApplicationController
   def index
     @breadcrumbs = [
-      {content: "Dashboard", href: root_path}
+      {content: "Dashboard", href: dashboard_root_path}
     ]
 
     @cohorts = policy_scope(Cohort).all.default_order

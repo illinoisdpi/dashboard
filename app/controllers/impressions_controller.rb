@@ -6,7 +6,7 @@ class ImpressionsController < ApplicationController
     authorize @impression
 
     @breadcrumbs = [
-      {content: "Dashboard", href: root_path},
+      {content: "Dashboard", href: dashboard_root_path},
       {content: @impression.to_s, href: impression_path(@impression)},
     ]
   end
