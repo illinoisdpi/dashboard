@@ -78,7 +78,7 @@ class ApplicationPolicy
     user.has_role? :instructor
   end
 
-  def ta?
-    user.has_role? :ta
+  def teaching_assistant?
+    user.has_role? :teaching_assistant
   end
 end

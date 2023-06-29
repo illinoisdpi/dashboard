@@ -10,11 +10,11 @@ class ImpressionPolicy < ApplicationPolicy
   end
 
   def index?
-    admin? || instructor? || ta?
+    admin? || instructor? || teaching_assistant?
   end
 
   def show?
-    admin? || instructor? || ta?
+    admin? || instructor? || teaching_assistant?
   end
 
   def create?
@@ -22,7 +22,7 @@ class ImpressionPolicy < ApplicationPolicy
   end
 
   def new?
-    admin? || instructor? || ta?
+    admin? || instructor? || teaching_assistant?
   end
 
   def update?

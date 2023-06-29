@@ -1,6 +1,6 @@
 class EnrollmentPolicy < ApplicationPolicy
   def show?
-    admin? || instructor? || ta? || record.user_id == user.id
+    admin? || instructor? || teaching_assistant? || record.user_id == user.id
   end
 
   def index?

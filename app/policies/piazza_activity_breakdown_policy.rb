@@ -1,10 +1,10 @@
 class PiazzaActivityBreakdownPolicy < ApplicationPolicy
   def index?
-    admin? || instructor? || ta?
+    admin? || instructor? || teaching_assistant?
   end
   
   def show?
-    admin? || instructor? || ta?
+    admin? || instructor? || teaching_assistant?
   end
   
   def create?
