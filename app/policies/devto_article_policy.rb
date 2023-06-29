@@ -1,0 +1,2 @@
+class DevtoArticlePolicy < ApplicationPolicy
+end

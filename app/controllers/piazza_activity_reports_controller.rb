@@ -1,6 +1,7 @@
 class PiazzaActivityReportsController < ApplicationController
   before_action :set_cohort
   before_action :set_piazza_activity_report, only: %i[show edit update destroy]
+  before_action { authorize(@piazza_activity_report || PiazzaActivityReport) }
 
   # GET /piazza_activity_reports or /piazza_activity_reports.json
   def index
@@ -10,7 +11,7 @@ class PiazzaActivityReportsController < ApplicationController
       {content: "Piazza activity reports", href: cohort_piazza_activity_reports_path(@cohort)}
     ]
 
-    @piazza_activity_reports = @cohort.piazza_activity_reports.default_order
+    @piazza_activity_reports = policy_scope(@cohort.piazza_activity_reports.default_order)
   end
 
   # GET /piazza_activity_reports/1 or /piazza_activity_reports/1.json

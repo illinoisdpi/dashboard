@@ -1,6 +1,7 @@
 class Cohort::ImpressionsController < ApplicationController
   before_action :set_cohort
   before_action :set_impression, only: %i[ show edit update destroy ]
+  before_action { authorize(@impression || Impression) }
 
   # GET /impressions or /impressions.json
   def index
@@ -9,6 +10,7 @@ class Cohort::ImpressionsController < ApplicationController
       {content: @cohort.to_s, href: cohort_path(@cohort)},
       {content: "Impressions", href: cohort_impressions_path(@cohort)}
     ]
+    @impressions = policy_scope(@cohort.impressions.default_order)
   end
 
   # GET /impressions/1 or /impressions/1.json

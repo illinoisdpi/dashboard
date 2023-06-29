@@ -1,5 +1,6 @@
 class CohortsController < ApplicationController
   before_action :set_cohort, only: %i[show edit update destroy]
+  before_action { authorize(@cohort || Cohort) }
 
   # GET /cohorts or /cohorts.json
   def index
@@ -7,7 +8,7 @@ class CohortsController < ApplicationController
       {content: "Cohorts", href: cohorts_path}
     ]
 
-    @cohorts = Cohort.all.default_order
+    @cohorts = policy_scope(Cohort).all.default_order
   end
 
   # GET /cohorts/1 or /cohorts/1.json
@@ -69,7 +70,7 @@ class CohortsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_cohort
-    @cohort = Cohort.find(params[:id])
+    @cohort = policy_scope(Cohort).find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

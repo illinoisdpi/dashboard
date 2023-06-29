@@ -1,5 +1,6 @@
 class PiazzaActivityBreakdownsController < ApplicationController
   before_action :set_piazza_activity_breakdown, only: %i[show edit update destroy]
+  before_action { authorize(@piazza_activity_breakdown || PiazzaActivityBreakdowns) }
 
   # GET /piazza_activity_breakdowns or /piazza_activity_breakdowns.json
   def index

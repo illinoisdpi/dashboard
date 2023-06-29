@@ -1,6 +1,7 @@
 class CanvasGradebookSnapshotsController < ApplicationController
   before_action :set_cohort
   before_action :set_canvas_gradebook_snapshot, only: %i[show edit update destroy]
+  before_action { authorize(@canvas_gradebook_snapshot || CanvasGradebookSnapshot) }
 
   # GET /canvas_gradebook_snapshots or /canvas_gradebook_snapshots.json
   def index
@@ -10,7 +11,7 @@ class CanvasGradebookSnapshotsController < ApplicationController
       {content: "Canvas gradebook snapshots", href: cohort_canvas_gradebook_snapshots_path(@cohort)}
     ]
 
-    @canvas_gradebook_snapshots = @cohort.canvas_gradebook_snapshots.default_order
+    @canvas_gradebook_snapshots = policy_scope(@cohort.canvas_gradebook_snapshots.default_order)
   end
 
   # GET /canvas_gradebook_snapshots/new

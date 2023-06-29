@@ -1,5 +1,6 @@
 class ImpressionsController < ApplicationController
   before_action :set_impression, only: %i[ show edit update destroy ]
+  before_action { authorize(@impression || Impression) }
 
   # GET /impressions/1 or /impressions/1.json
   def show

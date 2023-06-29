@@ -2,11 +2,15 @@
   <div class="card-header">
     <div class="d-flex justify-content-between align-items-center">
       <h1 class="me-auto mb-0 h6"><%= enrollment %></h1>
-      <%= link_to edit_cohort_enrollment_path(@cohort, enrollment), class: "me-2" do %>
-        <i class="fa-solid fa-pen-to-square"></i>
+      <% if policy(enrollment).edit? %>
+        <%= link_to edit_cohort_enrollment_path(@cohort, enrollment), class: "me-2" do %>
+          <i class="fa-solid fa-pen-to-square"></i>
+        <% end %>
       <% end %>
-      <%= button_to cohort_enrollment_path(@cohort, enrollment), data: { "turbo-method": :delete, "turbo-confirm": "Are you sure? This is NOT reversible" }, method: :delete, class: "btn btn-link"  do %>
-        <i class="fa-solid fa-trash text-danger"></i>
+      <% if policy(enrollment).destroy? %>
+        <%= button_to cohort_enrollment_path(@cohort, enrollment), data: { "turbo-method": :delete, "turbo-confirm": "Are you sure? This is NOT reversible" }, method: :delete, class: "btn btn-link"  do %>
+          <i class="fa-solid fa-trash text-danger"></i>
+        <% end %>
       <% end %>
     </div>
   </div>

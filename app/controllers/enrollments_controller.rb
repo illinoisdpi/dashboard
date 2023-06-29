@@ -1,6 +1,7 @@
 class EnrollmentsController < ApplicationController
   before_action :set_cohort
   before_action :set_enrollment, only: %i[show edit update destroy]
+  before_action { authorize(@enrollment || Enrollment) }
 
   # GET /enrollments or /enrollments.json
   def index
@@ -9,6 +10,8 @@ class EnrollmentsController < ApplicationController
       {content: @cohort.to_s, href: cohort_path(@cohort)},
       {content: "Enrollments", href: cohort_enrollments_path(@cohort)}
     ]
+
+    @enrollments = policy_scope(@cohort.enrollments)
   end
 
   # GET /enrollments/1 or /enrollments/1.json
@@ -76,7 +79,7 @@ class EnrollmentsController < ApplicationController
   end
 
   def set_enrollment
-    @enrollment = @cohort.enrollments.find(params[:id])
+    @enrollment = policy_scope(@cohort.enrollments).find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
