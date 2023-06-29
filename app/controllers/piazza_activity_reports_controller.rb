@@ -11,7 +11,7 @@ class PiazzaActivityReportsController < ApplicationController
       {content: "Piazza activity reports", href: cohort_piazza_activity_reports_path(@cohort)}
     ]
 
-    @piazza_activity_reports = @cohort.piazza_activity_reports.default_order
+    @piazza_activity_reports = policy_scope(@cohort.piazza_activity_reports.default_order)
   end
 
   # GET /piazza_activity_reports/1 or /piazza_activity_reports/1.json

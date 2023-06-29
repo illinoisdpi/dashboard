@@ -11,7 +11,7 @@ class CanvasGradebookSnapshotsController < ApplicationController
       {content: "Canvas gradebook snapshots", href: cohort_canvas_gradebook_snapshots_path(@cohort)}
     ]
 
-    @canvas_gradebook_snapshots = @cohort.canvas_gradebook_snapshots.default_order
+    @canvas_gradebook_snapshots = policy_scope(@cohort.canvas_gradebook_snapshots.default_order)
   end
 
   # GET /canvas_gradebook_snapshots/new

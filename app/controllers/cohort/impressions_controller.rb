@@ -1,22 +1,20 @@
 class Cohort::ImpressionsController < ApplicationController
   before_action :set_cohort
   before_action :set_impression, only: %i[ show edit update destroy ]
+  before_action { authorize(@impression || Impression) }
 
   # GET /impressions or /impressions.json
   def index
-    authorize @cohort  # TODO: replace with policy_scope
-    
     @breadcrumbs = [
       {content: "Cohorts", href: cohorts_path},
       {content: @cohort.to_s, href: cohort_path(@cohort)},
       {content: "Impressions", href: cohort_impressions_path(@cohort)}
     ]
+    @impressions = policy_scope(@cohort.impressions.default_order)
   end
 
   # GET /impressions/1 or /impressions/1.json
   def show
-    authorize @cohort
-
     @breadcrumbs = [
       {content: "Cohorts", href: cohorts_path},
       {content: @cohort.to_s, href: cohort_path(@cohort)},
@@ -27,17 +25,16 @@ class Cohort::ImpressionsController < ApplicationController
 
   # GET /impressions/new
   def new
-    @impression = authorize current_user.authored_impressions.new
+    @impression = current_user.authored_impressions.new
   end
 
   # GET /impressions/1/edit
   def edit
-    authorize @impression
   end
 
   # POST /impressions or /impressions.json
   def create
-    @impression = authorize current_user.authored_impressions.new(impression_params)
+    @impression = current_user.authored_impressions.new(impression_params)
 
     respond_to do |format|
       if @impression.save
@@ -52,8 +49,6 @@ class Cohort::ImpressionsController < ApplicationController
 
   # PATCH/PUT /impressions/1 or /impressions/1.json
   def update
-    authorize @impression
-
     respond_to do |format|
       if @impression.update(impression_params)
         format.html { redirect_to cohort_impression_url(@cohort, @impression), notice: "Impression was successfully updated." }
@@ -67,8 +62,6 @@ class Cohort::ImpressionsController < ApplicationController
 
   # DELETE /impressions/1 or /impressions/1.json
   def destroy
-    authorize @impression
-
     @impression.destroy
 
     respond_to do |format|

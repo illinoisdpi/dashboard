@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
   after_action :verify_authorized
-  # TODO: do we want to scope everything?
   after_action :verify_policy_scoped, only: :index
   
   before_action :authenticate_user!, :set_paper_trail_whodunnit
