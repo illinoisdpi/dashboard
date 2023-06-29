@@ -10,7 +10,7 @@ class CohortPolicy < ApplicationPolicy
   end
 
   def show?
-    user.has_role?(:admin) || user.cohorts.include?(record)
+    admin? || user.cohorts.include?(record)
   end
 
   def index?
@@ -18,22 +18,30 @@ class CohortPolicy < ApplicationPolicy
   end
 
   def edit?
-    user.has_role?(:admin) || user.has_role?(:instructor)
+    admin? || instructor?
   end
 
   def update?
-    user.has_role?(:admin) || user.has_role?(:instructor)
+    admin? || instructor?
   end
 
   def create?
-    user.has_role?(:admin) || user.has_role?(:instructor)
+    admin? || instructor?
   end
 
   def destroy?
-    user.has_role?(:admin)
+    admin?
   end
 
   def new?
-    user.has_role?(:admin) || user.has_role?(:instructor)
+    admin? || instructor?
+  end
+
+  def piazza_post_views
+    admin? || instructor?
+  end
+
+  def piazza_posts
+    admin? || instructor?
   end
 end

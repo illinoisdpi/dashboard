@@ -1,4 +1,6 @@
 class DashboardController < ApplicationController
+  before_action { authorize(:dashboard) }
+
   def index
     @breadcrumbs = [
       {content: "Dashboard", href: dashboard_root_path}

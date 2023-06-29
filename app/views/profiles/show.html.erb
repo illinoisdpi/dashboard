@@ -5,7 +5,9 @@
         <div class="col-8 col-lg-3 mb-4 d-flex align-items-center">
           <div class="profile-pic-container">
             <div class="profile-pic-wrapper">
-              <%= image_tag(@enrollment.user.headshot.url, class: "border border-5 rounded-circle") %>
+              <% if @enrollment.user.headshot.present? %>
+                <%= image_tag(@enrollment.user.headshot.url, class: "border border-5 rounded-circle") %>
+              <% end %>
             </div>
           </div>
         </div>

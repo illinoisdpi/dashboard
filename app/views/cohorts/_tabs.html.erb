@@ -1,23 +1,34 @@
 <ul class="nav nav-tabs mb-3">
-  <li class="nav-item">
-    <%= simple_active_link_to "Overview", @cohort, class: "nav-link", active: :exclusive %>
-  </li>
-  <li class="nav-item">
-    <%= simple_active_link_to "Profiles", cohort_profiles_path(@cohort), class: "nav-link" %>
-  </li>
-  <% if @cohort.enrollments.where(user_id: @current_user.id, role: :student).blank?%>
+  <% if policy(@cohort).show? %>
+    <li class="nav-item">
+      <%= simple_active_link_to "Overview", @cohort, class: "nav-link", active: :exclusive %>
+    </li>
+  <% end %>
+  <% if policy(Enrollment).index? %>
+    <li class="nav-item">
+      <%= simple_active_link_to "Profiles", cohort_profiles_path(@cohort), class: "nav-link" %>
+    </li>
+  <% end %>
+  <% if policy(Enrollment).index? %>
     <li class="nav-item">
       <%= simple_active_link_to "Enrollments", cohort_enrollments_path(@cohort), class: "nav-link" %>
     </li>
+  <% end %>
+  <% if policy(CanvasGradebookSnapshot).index? %>
     <li class="nav-item">
       <%= simple_active_link_to "Canvas", cohort_canvas_gradebook_snapshots_path(@cohort), class: "nav-link" %>
     </li>
+  <% end %>
+  <% if policy(PiazzaActivityReport).index? %>
     <li class="nav-item">
       <%= simple_active_link_to "Piazza", cohort_piazza_activity_reports_path(@cohort), class: "nav-link" %>
     </li>
-    <li class="nav-item">
-      <a class="nav-link">Attendance</a>
-    </li>
+  <% end %>
+  <%# TODO: start tracking attendance %>
+  <%# <li class="nav-item">
+    <a class="nav-link">Attendance</a>
+  </li> %>
+  <% if policy(Impression).index? %>
     <li class="nav-item">
       <%= simple_active_link_to "Impressions", cohort_impressions_path(@cohort), class: "nav-link" %>
     </li>

@@ -10,30 +10,30 @@ class ImpressionPolicy < ApplicationPolicy
   end
 
   def index?
-    [:admin, :instructor, :ta].any? { |role| @user.has_role?(role) }
+    admin? || instructor? || ta?
   end
-  
+
   def show?
-    [:admin, :instructor, :ta].any? { |role| @user.has_role?(role) }
+    admin? || instructor? || ta?
   end
-  
+
   def create?
-    [:admin, :instructor, :ta].any? { |role| @user.has_role?(role) }
+    new?
   end
-  
+
   def new?
-    [:admin, :instructor, :ta].any? { |role| @user.has_role?(role) }
+    admin? || instructor? || ta?
   end
-  
+
   def update?
     edit?
   end
-  
+
   def edit?
-    @user.has_role?(:admin) || @record.author_id == @user.id  
+    admin? || @record.author_id == @user.id  
   end
-  
+
   def destroy?
-    @user.has_role?(:admin)
+    admin?
   end
 end

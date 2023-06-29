@@ -1,7 +1,7 @@
 class ProfilesController < ApplicationController
   before_action :set_cohort
   before_action :set_enrollment, only: [:show, :snapshot]
-  before_action { authorize(:profiles) }    
+  before_action { authorize(:profile) }
 
   def index
     @breadcrumbs = [
@@ -9,6 +9,8 @@ class ProfilesController < ApplicationController
       {content: @cohort.to_s, href: cohort_path(@cohort)},
       {content: "Profiles", href: cohort_profiles_path(@cohort)}
     ]
+
+    @profiles = policy_scope(@cohort.enrollments, policy_scope_class: ProfilePolicy::Scope).student.default_order
   end
 
   def show

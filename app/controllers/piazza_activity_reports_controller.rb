@@ -1,7 +1,7 @@
 class PiazzaActivityReportsController < ApplicationController
   before_action :set_cohort
   before_action :set_piazza_activity_report, only: %i[show edit update destroy]
-  before_action { authorize(PiazzaActivityReports) }
+  before_action { authorize(@piazza_activity_report || PiazzaActivityReport) }
 
   # GET /piazza_activity_reports or /piazza_activity_reports.json
   def index

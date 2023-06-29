@@ -53,18 +53,32 @@ class ApplicationPolicy
 
   # rails_admin
   def dashboard?
-    @user.has_role?(:admin) 
+    admin?
   end
 
   def export?
-    @user.has_role?(:admin) 
+    admin?
   end
   
   def history?
-    @user.has_role?(:admin)
+    admin?
   end
 
   def show_in_app?
-    @user.has_role?(:admin)
+    admin?
+  end
+
+  protected
+
+  def admin?
+    user.has_role? :admin
+  end
+
+  def instructor?
+    user.has_role? :instructor
+  end
+
+  def ta?
+    user.has_role? :ta
   end
 end

@@ -1,14 +1,14 @@
 class PiazzaActivityReportPolicy < ApplicationPolicy
   def index?
-    [:admin, :instructor, :ta].any? { |role| @user.has_role?(role) }
+    admin? || instructor? || ta?
   end
   
   def show?
-    [:admin, :instructor, :ta].any? { |role| @user.has_role?(role) }
+    admin? || instructor? || ta?
   end
   
   def create?
-    [:admin].any? { |role| @user.has_role?(role) }
+    admin? || instructor? || ta?
   end
   
   def new?
