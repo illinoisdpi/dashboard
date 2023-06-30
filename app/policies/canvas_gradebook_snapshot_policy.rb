@@ -1,10 +1,10 @@
 class CanvasGradebookSnapshotPolicy < ApplicationPolicy
   def index?
-    admin? || instructor? || teaching_assistant?
+    admin? || instructor?
   end
   
   def show?
-    admin? || instructor? || teaching_assistant?
+    admin? || instructor?
   end
   
   def create?

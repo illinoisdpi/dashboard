@@ -2,11 +2,15 @@
   <div class="card-header">
     <div class="d-flex justify-content-between align-items-center">
       <h1 class="me-auto mb-0 h6"><%= impression.summary %></h1>
-      <%= link_to edit_impression_path(@impression), class: "me-2" do %>
-        <i class="fa-solid fa-pen-to-square"></i>
+      <% if policy(impression).edit? %>
+        <%= link_to edit_impression_path(@impression), class: "me-2" do %>
+          <i class="fa-solid fa-pen-to-square"></i>
+        <% end %>
       <% end %>
-      <%= button_to @impression, data: { "turbo-method": :delete, "turbo-confirm": "Are you sure you want to delete this impression?" }, class: "btn btn-link" do %>
-        <i class="fa-solid fa-trash text-danger"></i>
+      <% if policy(impression).destroy? %>
+        <%= button_to @impression, data: { "turbo-method": :delete, "turbo-confirm": "Are you sure you want to delete this impression?" }, class: "btn btn-link" do %>
+          <i class="fa-solid fa-trash text-danger"></i>
+        <% end %>
       <% end %>
     </div>
   </div>
