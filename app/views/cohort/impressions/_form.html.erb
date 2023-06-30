@@ -1,4 +1,4 @@
-<%= form_with(model: impression, url: cohort_impressions_path(@cohort)) do |form| %>
+<%= form_for impression do |form| %>
   <% if impression.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(impression.errors.count, "error") %> prohibited this impression from being saved:</h2>
