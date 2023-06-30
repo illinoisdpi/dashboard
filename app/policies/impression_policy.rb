@@ -1,10 +1,10 @@
 class ImpressionPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user.has_role? :admin
+      if admin? || instructor?
         scope.all
       else
-        scope.where(id: user.pluck(:id))
+        scope.where(author_id: user.id)
       end
     end
   end
@@ -30,10 +30,10 @@ class ImpressionPolicy < ApplicationPolicy
   end
 
   def edit?
-    admin? || @record.author_id == @user.id  
+    admin? || record.author == user
   end
 
   def destroy?
-    admin?
+    admin? || record.author == user
   end
 end

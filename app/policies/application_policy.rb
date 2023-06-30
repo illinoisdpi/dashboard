@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class ApplicationPolicy
+  include Roleable
+
   class Scope
+    include Roleable
+
     def initialize(user, scope)
       @user = user
       @scope = scope
@@ -66,19 +70,5 @@ class ApplicationPolicy
 
   def show_in_app?
     admin?
-  end
-
-  protected
-
-  def admin?
-    user.has_role? :admin
-  end
-
-  def instructor?
-    user.has_role? :instructor
-  end
-
-  def teaching_assistant?
-    user.has_role? :teaching_assistant
   end
 end
