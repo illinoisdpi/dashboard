@@ -37,11 +37,15 @@ class CohortPolicy < ApplicationPolicy
     admin? || instructor?
   end
 
-  def piazza_post_views
-    admin? || instructor?
+  def canvas_highest_position_submission_count?
+    admin? || instructor? || teaching_assistant?
   end
 
-  def piazza_posts
-    admin? || instructor?
+  def piazza_post_views?
+    admin? || instructor? || teaching_assistant?
+  end
+
+  def piazza_posts?
+    admin? || instructor? || teaching_assistant?
   end
 end

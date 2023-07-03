@@ -14,12 +14,29 @@
     </div>
   </div>
 </div>
-<% if policy(@cohort).piazza_post_views %>
+
+<% if policy(@cohort).canvas_highest_position_submission_count? %>
   <div class="row mb-3">
     <div class="col-lg-12">
       <div class="card">
         <div class="card-header">
-          <h2 class="h6 mb-0">Piazza post views</h2>
+          <h2 class="h6 mb-0">Canvas: Highest Position Submission Count</h2>
+        </div>
+        <div class="card-body">
+          <% canvas_count_data = @cohort.canvas_assignments.group_by_highest_position_submission_count.map { |canvas_assignment| [canvas_assignment.name, canvas_assignment.student_count] } %>
+          <%= column_chart canvas_count_data %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if policy(@cohort).piazza_post_views? %>
+  <div class="row mb-3">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="h6 mb-0">Piazza: Post Views</h2>
         </div>
 
         <div class="card-body">
@@ -38,12 +55,12 @@
     </div>
   </div>
 <% end %>
-<% if policy(@cohort).piazza_posts %>
+<% if policy(@cohort).piazza_posts? %>
   <div class="row mb-3">
     <div class="col-lg-12">
       <div class="card">
         <div class="card-header">
-          <h2 class="h6 mb-0">Piazza posts</h2>
+          <h2 class="h6 mb-0">Piazza: Posts</h2>
         </div>
 
         <div class="card-body">
