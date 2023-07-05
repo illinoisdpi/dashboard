@@ -78,7 +78,7 @@ class Cohort::ImpressionsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_impression
-    @impression = Impression.find(params[:id])
+    @impression = policy_scope(Impression).find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
