@@ -1,0 +1,26 @@
+<%= form_with(model: @enrollment, url: cohort_enrollments_path(@cohort)) do |form| %>
+  <% if @enrollment.errors.any? %>
+    <div class="text-danger">
+      <h2><%= pluralize(@enrollment.errors.count, "error") %> prohibited this enrollment from being saved:</h2>
+      <ul>
+        <% @enrollment.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :role %>
+    <%= form.collection_select :role, Enrollment.roles.except("student").keys, :to_s, :humanize, {}, class: "form-select" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :user, class: "form-label" %>
+    <%= form.collection_select :user_id, User.all.default_order, :id, :name, {}, class: "form-select" %>
+  </div>
+
+  <div>
+    <%= form.submit class: "btn btn-primary" %>
+  </div>
+<% end %>

@@ -23,6 +23,7 @@ module PiazzaActivityReport::Csvable
         user = User.where(email: emails).first
         
         if user.blank?
+          # TODO: throw error?
           user = User.new(email: emails.first, password: SecureRandom.hex(16))
         end
 
