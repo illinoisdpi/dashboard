@@ -1,4 +1,4 @@
-class EnrollmentsController < ApplicationController
+class Cohort::EnrollmentsController < ApplicationController
   before_action :set_cohort
   before_action :set_enrollment, only: %i[show edit update destroy]
   before_action { authorize(@enrollment || Enrollment) }
@@ -39,7 +39,7 @@ class EnrollmentsController < ApplicationController
 
     respond_to do |format|
       if @enrollment.save
-        format.html { redirect_to enrollment_url(@enrollment), notice: "Enrollment was successfully created." }
+        format.html { redirect_to cohort_enrollments_url(@cohort), notice: "Enrollment was successfully created." }
         format.json { render :show, status: :created, location: @enrollment }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -66,7 +66,7 @@ class EnrollmentsController < ApplicationController
     @enrollment.destroy
 
     respond_to do |format|
-      format.html { redirect_to enrollments_url, notice: "Enrollment was successfully destroyed." }
+      format.html { redirect_to cohort_enrollments_url(@cohort), notice: "Enrollment was successfully destroyed." }
       format.json { head :no_content }
     end
   end

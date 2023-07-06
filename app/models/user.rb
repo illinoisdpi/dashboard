@@ -51,6 +51,8 @@ class User < ApplicationRecord
   has_many :cohorts, through: :enrollments, source: :cohort
   has_many :authored_impressions, class_name: "Impression", foreign_key: "author_id"
 
+  scope :default_order, -> { order(:first_name) }
+
   def to_s
     return full_name if full_name.present?
 

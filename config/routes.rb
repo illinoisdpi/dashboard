@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
     resources :cohorts do
       resources :canvas_gradebook_snapshots
-      resources :enrollments
+      resources :enrollments, module: :cohort
       resources :impressions, module: :cohort
       resources :piazza_activity_reports
       resources :profiles do
