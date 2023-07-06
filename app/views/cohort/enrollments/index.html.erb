@@ -9,27 +9,30 @@
 
       <div class="list-group list-group-flush">
         <% @enrollments.student.default_order.each do |enrollment| %>
-          <% if policy(enrollment).show? %>
-            <%= link_to cohort_enrollment_path(@cohort, enrollment), class: "list-group-item" do %>
-              <div class="d-flex">
-                <div class="me-auto d-flex align-items-baseline font-monospace">
-                  <%= enrollment.to_s %>
-                </div>
-    
-                <div>
-                  <i class="fa-solid fa-chevron-right fa-fw"></i>
-                </div>
+          <li class="list-group-item">
+            <div class="d-flex align-items-center" data-bs-toggle="collapse" data-bs-target="#enrollment-<%= enrollment.id %>-links" aria-expanded="false" aria-controls="enrollment-<%= enrollment.id %>-links">
+              <div class="me-auto d-flex align-items-baseline font-monospace">
+                <%= enrollment.to_s %>
               </div>
-            <% end %>
-          <% else %>
-            <div class="list-group-item">
-              <div class="d-flex">
-                <div class="me-auto d-flex align-items-baseline font-monospace">
-                  <%= enrollment.to_s %>
-                </div>
+              <div>
+                <i class="fa-solid fa-chevron-right fa-fw"></i>
               </div>
             </div>
-          <% end %>
+            <div class="collapse" id="enrollment-<%= enrollment.id %>-links">
+              <ul class="list-unstyled my-2 ms-2">
+                <% if policy(Enrollment).overview? %>
+                  <li>
+                    <%= link_to "Overview", overview_cohort_enrollment_path(@cohort, enrollment), class: "text-black" %>
+                  </li>
+                <% end %>
+                <% if policy(Enrollment).snapshot? %>
+                  <li>
+                    <%= link_to "Snapshot", snapshot_cohort_enrollment_path(@cohort, enrollment), class: "text-black" %>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          </li>
         <% end %>
       </div>
     </div>
@@ -48,16 +51,25 @@
 
       <div class="list-group list-group-flush">
         <% @enrollments.not_student.default_order.each do |enrollment| %>
-          <%= link_to cohort_enrollment_path(@cohort, enrollment), class: "list-group-item" do %>
-            <div class="d-flex">
-              <div class="me-auto d-flex align-items-center font-monospace gap-2">
-                <%= enrollment.to_s %>
-
-                <span class="badge bg-secondary"><%= enrollment.role.humanize %></span>
+          <% if policy(enrollment).show? %>
+            <%= link_to cohort_enrollment_path(@cohort, enrollment), class: "list-group-item" do %>
+              <div class="d-flex">
+                <div class="me-auto d-flex align-items-center font-monospace gap-2">
+                  <%= enrollment.to_s %>
+                  <span class="badge bg-secondary"><%= enrollment.role.humanize %></span>
+                </div>
+                <div>
+                  <i class="fa-solid fa-chevron-right fa-fw"></i>
+                </div>
               </div>
-  
-              <div>
-                <i class="fa-solid fa-chevron-right fa-fw"></i>
+            <% end %>
+          <% else %>
+            <div class="list-group-item">
+              <div class="d-flex">
+                <div class="me-auto d-flex align-items-center font-monospace gap-2">
+                  <%= enrollment.to_s %>
+                  <span class="badge bg-secondary"><%= enrollment.role.humanize %></span>
+                </div>
               </div>
             </div>
           <% end %>
