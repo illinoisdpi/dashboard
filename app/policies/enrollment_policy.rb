@@ -26,4 +26,16 @@ class EnrollmentPolicy < ApplicationPolicy
   def new?
     admin? || instructor?
   end
+
+  def overview?
+    true
+  end
+
+  def rating?
+    admin? || instructor?
+  end
+  
+  def snapshot?
+    true
+  end
 end

@@ -1,6 +1,6 @@
 class Cohort::EnrollmentsController < ApplicationController
   before_action :set_cohort
-  before_action :set_enrollment, only: %i[show edit update destroy]
+  before_action :set_enrollment, only: %i[show overview snapshot edit update destroy]
   before_action { authorize(@enrollment || Enrollment) }
 
   # GET /enrollments or /enrollments.json
@@ -69,6 +69,19 @@ class Cohort::EnrollmentsController < ApplicationController
       format.html { redirect_to cohort_enrollments_url(@cohort), notice: "Enrollment was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def overview
+    @breadcrumbs = [
+      {content: "Cohorts", href: cohorts_path},
+      {content: @cohort.to_s, href: cohort_path(@cohort)},
+      {content: "Enrollments", href: cohort_enrollments_path(@cohort)},
+      {content: @enrollment.to_s}
+    ]
+  end
+
+  def snapshot
+    render layout: "navbarless"
   end
 
   private

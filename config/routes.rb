@@ -16,14 +16,14 @@ Rails.application.routes.draw do
 
     resources :cohorts do
       resources :canvas_gradebook_snapshots
-      resources :enrollments, module: :cohort
-      resources :impressions, module: :cohort
-      resources :piazza_activity_reports
-      resources :profiles do
+      resources :enrollments, module: :cohort do
         member do
+          get 'overview'
           get 'snapshot'
         end
       end
+      resources :impressions, module: :cohort
+      resources :piazza_activity_reports
     end
     resources :impressions
 
