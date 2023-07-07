@@ -24,7 +24,6 @@ class Cohort < ApplicationRecord
   has_many :canvas_assignments, dependent: :destroy
   has_many :included_canvas_assignments, -> { included }, class_name: "CanvasAssignment"
   has_many :impressions, through: :enrollments, source: :impressions
-
   has_many :users, through: :enrollments, source: :user
 
   validates :year, presence: true

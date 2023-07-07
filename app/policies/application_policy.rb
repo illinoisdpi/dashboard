@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationPolicy
-  include Roleable
-
   class Scope
-    include Roleable
-
     def initialize(user, scope)
       @user = user
       @scope = scope
@@ -57,18 +53,18 @@ class ApplicationPolicy
 
   # rails_admin
   def dashboard?
-    admin?
+    user.admin?
   end
 
   def export?
-    admin?
+    user.admin?
   end
   
   def history?
-    admin?
+    user.admin?
   end
 
   def show_in_app?
-    admin?
+    user.admin?
   end
 end

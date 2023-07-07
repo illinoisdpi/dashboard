@@ -72,7 +72,6 @@ class Enrollment < ApplicationRecord
     :quote,
     :strengths,
     :to_s,
-    :name,
     to: :user
   
   enum role: {

@@ -1,14 +1,14 @@
 class PiazzaActivityReportPolicy < ApplicationPolicy
   def index?
-    admin? || instructor?
+    user.admin? || user.instructor?
   end
   
   def show?
-    admin? || instructor?
+    user.admin? || user.instructor?
   end
   
   def create?
-    admin? || instructor?
+    user.admin? || user.instructor?
   end
   
   def new?

@@ -1,28 +1,28 @@
 class CanvasGradebookSnapshotPolicy < ApplicationPolicy
   def index?
-    admin? || instructor?
+    user.admin? || user.instructor?
   end
-  
+
   def show?
-    admin? || instructor?
+    user.admin? || user.instructor?
   end
-  
+
   def create?
-    admin?
+    user.admin? || user.instructor?
   end
-  
+
   def new?
     create?
   end
-  
+
   def update?
     create?
   end
-  
+
   def edit?
     create?
   end
-  
+
   def destroy?
     create?
   end

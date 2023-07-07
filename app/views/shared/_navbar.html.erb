@@ -54,7 +54,7 @@
             <%= link_to "Sign in", new_user_session_path, class: "nav-link" %>
           </li>
         <% else %>
-          <% if current_user.has_role? :admin %>
+          <% if current_user.admin? %>
             <li class="nav-item">
               <%= link_to "Admin", rails_admin_path, class: "nav-link" %>
             </li>
@@ -62,12 +62,11 @@
               <%= link_to "Sidekiq", sidekiq_web_path, class: "nav-link" %>
             </li>
           <% end %> 
-          <% if [:admin, :instructor].any? { |role| current_user.has_role?(role) } %>
+          <% if current_user.admin? || current_user.instructor? %>
              <li class="nav-item">
                <%= link_to "Blazer", blazer_path, class: "nav-link" %>
              </li>
-          <% end %> 
-
+          <% end %>
           <li class="nav-item">
             <%= link_to "Edit profile", edit_user_registration_path, class: "nav-link" %>
           </li>
