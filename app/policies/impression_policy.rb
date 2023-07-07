@@ -1,7 +1,7 @@
 class ImpressionPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if admin? || instructor?
+      if user.admin? || user.instructor?
         scope.all
       else
         scope.where(author_id: user.id)
@@ -10,11 +10,11 @@ class ImpressionPolicy < ApplicationPolicy
   end
 
   def index?
-    admin? || instructor? || teaching_assistant?
+    user.admin? || user.instructor? || user.teaching_assistant?
   end
 
   def show?
-    admin? || instructor? || teaching_assistant?
+    user.admin? || user.instructor? || user.teaching_assistant?
   end
 
   def create?
@@ -22,7 +22,7 @@ class ImpressionPolicy < ApplicationPolicy
   end
 
   def new?
-    admin? || instructor? || teaching_assistant?
+    user.admin? || user.instructor? || user.teaching_assistant?
   end
 
   def update?
@@ -30,10 +30,10 @@ class ImpressionPolicy < ApplicationPolicy
   end
 
   def edit?
-    admin? || record.author == user
+    user.admin? || record.author == user
   end
 
   def destroy?
-    admin? || record.author == user
+    user.admin? || record.author == user
   end
 end

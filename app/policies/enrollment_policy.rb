@@ -1,6 +1,6 @@
 class EnrollmentPolicy < ApplicationPolicy
   def show?
-    admin? || instructor? || teaching_assistant? || record.user_id == user.id
+    user.admin? || user.instructor? || user.teaching_assistant? || record.user_id == user.id
   end
 
   def index?
@@ -8,7 +8,7 @@ class EnrollmentPolicy < ApplicationPolicy
   end
 
   def edit?
-    admin? || instructor?
+    user.admin? || user.instructor?
   end
 
   def update?
@@ -16,15 +16,15 @@ class EnrollmentPolicy < ApplicationPolicy
   end
 
   def create?
-    admin? || instructor?
+    user.admin? || user.instructor?
   end
 
   def destroy?
-    admin? || instructor?
+    user.admin? || user.instructor?
   end
 
   def new?
-    admin? || instructor?
+    user.admin? || user.instructor?
   end
 
   def overview?
@@ -32,7 +32,7 @@ class EnrollmentPolicy < ApplicationPolicy
   end
 
   def rating?
-    admin? || instructor?
+    user.admin? || user.instructor?
   end
   
   def snapshot?

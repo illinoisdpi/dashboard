@@ -4,17 +4,17 @@
       <%= simple_active_link_to "Overview", @cohort, class: "nav-link", active: :exclusive %>
     </li>
   <% end %>
-  <% if policy(Enrollment).index? %>
+  <% if policy(@cohort).cohort_enrollments? %>
     <li class="nav-item">
       <%= simple_active_link_to "Enrollments", cohort_enrollments_path(@cohort), class: "nav-link" %>
     </li>
   <% end %>
-  <% if policy(CanvasGradebookSnapshot).index? %>
+  <% if policy(@cohort).cohort_canvas_gradebook_snapshots? %>
     <li class="nav-item">
       <%= simple_active_link_to "Canvas", cohort_canvas_gradebook_snapshots_path(@cohort), class: "nav-link" %>
     </li>
   <% end %>
-  <% if policy(PiazzaActivityReport).index? %>
+  <% if policy(@cohort).cohort_piazza_activity_reports? %>
     <li class="nav-item">
       <%= simple_active_link_to "Piazza", cohort_piazza_activity_reports_path(@cohort), class: "nav-link" %>
     </li>
@@ -23,7 +23,7 @@
   <%# <li class="nav-item">
     <a class="nav-link">Attendance</a>
   </li> %>
-  <% if policy(Impression).index? %>
+  <% if policy(@cohort).cohort_impressions? %>
     <li class="nav-item">
       <%= simple_active_link_to "Impressions", cohort_impressions_path(@cohort), class: "nav-link" %>
     </li>

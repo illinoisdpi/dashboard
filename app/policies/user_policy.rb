@@ -1,14 +1,14 @@
 class UserPolicy < ApplicationPolicy
   def index?
-    admin? || instructor? || teaching_assistant?
+    user.admin? || user.instructor? || user.teaching_assistant?
   end
   
   def show?
-    admin? || instructor? || teaching_assistant?
+    user.admin? || user.instructor? || user.teaching_assistant?
   end
   
   def create?
-    admin?
+    user.admin?
   end
   
   def new?
@@ -20,7 +20,7 @@ class UserPolicy < ApplicationPolicy
   end
   
   def edit?
-    admin? || record.id == user.id 
+    user.admin? || record.id == user.id 
   end
   
   def destroy?

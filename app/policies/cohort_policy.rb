@@ -1,7 +1,7 @@
 class CohortPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user.has_role? :admin
+      if user.admin?
         scope.all
       else
         scope.where(id: user.cohorts.pluck(:id))
@@ -10,7 +10,7 @@ class CohortPolicy < ApplicationPolicy
   end
 
   def show?
-    admin? || user.cohorts.include?(record)
+    user.admin? || user.cohorts.include?(record)
   end
 
   def index?
@@ -18,34 +18,50 @@ class CohortPolicy < ApplicationPolicy
   end
 
   def edit?
-    admin? || instructor?
+    user.admin? || user.cohort_instructor?(record)
   end
 
   def update?
-    admin? || instructor?
+    user.admin? || user.cohort_instructor?(record)
   end
 
   def create?
-    admin? || instructor?
+    user.admin? || user.cohort_instructor?(record)
   end
 
   def destroy?
-    admin?
+    user.admin?
   end
 
   def new?
-    admin? || instructor?
+    user.admin? || user.cohort_instructor?(record)
   end
 
   def canvas_highest_position_submission_count?
-    admin? || instructor? || teaching_assistant?
+    user.admin? || user.cohort_instructor?(record) || user.cohort_teaching_assistant?(record)
   end
 
   def piazza_post_views?
-    admin? || instructor? || teaching_assistant?
+    user.admin? || user.cohort_instructor?(record) || user.cohort_teaching_assistant?(record)
   end
 
   def piazza_posts?
-    admin? || instructor? || teaching_assistant?
+    user.admin? || user.cohort_instructor?(record) || user.cohort_teaching_assistant?(record)
+  end
+
+  def cohort_enrollments?
+    true
+  end
+
+  def cohort_canvas_gradebook_snapshots?
+    user.admin? || user.cohort_instructor?(record)
+  end
+
+  def cohort_piazza_activity_reports?
+    user.admin? || user.cohort_instructor?(record)
+  end
+
+  def cohort_impressions?
+    user.admin? || user.cohort_instructor?(record) || user.cohort_teaching_assistant?(record)
   end
 end

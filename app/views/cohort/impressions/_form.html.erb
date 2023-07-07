@@ -15,7 +15,7 @@
   <%# TODO: add user photo  %>
   <div class="mb-3">
     <%= form.label :subject_id, class: "form-label" %>
-    <%= form.collection_select :subject_id, @cohort.enrollments.all.default_order, :id, :name, { prompt: "Select a subject" }, class: "form-control" %>
+    <%= form.collection_select :subject_id, @cohort.enrollments.all.default_order, :id, :to_s, { prompt: "Select a subject" }, class: "form-control" %>
   </div>
 
   <div class="mb-3" data-controller="emoji-input">

@@ -3,12 +3,12 @@ require 'sidekiq/cron/web'
 
 Rails.application.routes.draw do
   constraints subdomain: "dashboard" do
-    authenticate :user, ->(user) { user.has_role? :admin } do
+    authenticate :user, ->(user) { user.admin? } do
       mount RailsAdmin::Engine, at: "admin", as: "rails_admin"
       mount Sidekiq::Web => "/sidekiq"
     end
 
-    authenticate :user, ->(user) { [:admin, :instructor].any? { |role| user.has_role? role } } do
+    authenticate :user, ->(user) { user.admin? || user.instructor? } do
       mount Blazer::Engine, at: "blazer"
     end
 
