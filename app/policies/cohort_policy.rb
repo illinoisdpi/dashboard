@@ -41,6 +41,10 @@ class CohortPolicy < ApplicationPolicy
     user.admin? || user.cohort_instructor?(record) || user.cohort_teaching_assistant?(record)
   end
 
+  def canvas_total_points?
+    user.admin? || user.cohort_instructor?(record)
+  end
+
   def piazza_post_views?
     user.admin? || user.cohort_instructor?(record) || user.cohort_teaching_assistant?(record)
   end
