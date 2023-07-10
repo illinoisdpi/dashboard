@@ -41,7 +41,11 @@ class CohortPolicy < ApplicationPolicy
     user.admin? || user.cohort_instructor?(record) || user.cohort_teaching_assistant?(record)
   end
 
-  def canvas_total_points?
+  def canvas_cumulative_points?
+    user.admin? || user.cohort_instructor?(record)
+  end
+
+  def canvas_point_total_most_recent?
     user.admin? || user.cohort_instructor?(record)
   end
 
