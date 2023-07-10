@@ -1,4 +1,4 @@
-class RunChecksJob < ApplicationJob
+class Blazer::RunChecksJob < ApplicationJob
   queue_as :blazer
 
   def perform(schedule)
