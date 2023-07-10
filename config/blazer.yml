@@ -55,7 +55,7 @@ user_method: current_user
 # from_email: blazer@example.org
 
 # webhook for Slack
-# slack_webhook_url: <%= ENV["BLAZER_SLACK_WEBHOOK_URL"] %>
+slack_webhook_url: <%= Rails.applications.credentials.dig(:slack, :blazer_webhook_url) %>
 
 check_schedules:
   - "1 day"
