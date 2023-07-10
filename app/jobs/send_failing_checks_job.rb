@@ -1,4 +1,4 @@
-class Blazer::SendFailingChecksJob < ApplicationJob
+class SendFailingChecksJob < ApplicationJob
   queue_as :blazer
 
   def perform
