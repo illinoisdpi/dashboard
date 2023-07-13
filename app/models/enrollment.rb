@@ -60,7 +60,7 @@ class Enrollment < ApplicationRecord
   has_many :canvas_submissions, dependent: :destroy
   has_many :impressions, foreign_key: "subject_id", dependent: :destroy
 
-  scope :default_order, -> { joins(:user).order(User.arel_table[:piazza_full].asc) }
+  scope :default_order, -> { joins(:user).order(User.arel_table[:first_name].asc) }
   scope :student, -> { where(role: "student") }
   scope :not_student, -> { where.not(role: "student") }
 
