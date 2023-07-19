@@ -1,6 +1,6 @@
 class CanvasGradebookSnapshotPolicy < ApplicationPolicy
   def index?
-    user.admin? || user.instructor?
+    user.admin? || user.instructor? || user.teaching_assistant?
   end
 
   def show?
@@ -8,7 +8,7 @@ class CanvasGradebookSnapshotPolicy < ApplicationPolicy
   end
 
   def create?
-    user.admin? || user.instructor?
+    user.admin? || user.instructor? || user.teaching_assistant?
   end
 
   def new?
@@ -16,14 +16,14 @@ class CanvasGradebookSnapshotPolicy < ApplicationPolicy
   end
 
   def update?
-    create?
+    user.admin? || user.instructor?
   end
 
   def edit?
-    create?
+    user.admin? || user.instructor?
   end
 
   def destroy?
-    create?
+    user.admin? || user.instructor?
   end
 end

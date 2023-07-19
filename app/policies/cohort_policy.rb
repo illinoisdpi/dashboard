@@ -42,11 +42,11 @@ class CohortPolicy < ApplicationPolicy
   end
 
   def canvas_cumulative_points?
-    user.admin? || user.cohort_instructor?(record)
+    user.admin? || user.cohort_instructor?(record) || user.cohort_teaching_assistant?(record)
   end
 
   def canvas_point_total_most_recent?
-    user.admin? || user.cohort_instructor?(record)
+    user.admin? || user.cohort_instructor?(record) || user.cohort_teaching_assistant?(record)
   end
 
   def piazza_post_views?
@@ -62,7 +62,7 @@ class CohortPolicy < ApplicationPolicy
   end
 
   def cohort_canvas_gradebook_snapshots?
-    user.admin? || user.cohort_instructor?(record)
+    user.admin? || user.cohort_instructor?(record) || user.cohort_teaching_assistant?(record)
   end
 
   def cohort_piazza_activity_reports?
