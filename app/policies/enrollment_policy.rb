@@ -32,7 +32,7 @@ class EnrollmentPolicy < ApplicationPolicy
   end
 
   def view_rating?
-    user.admin? || user.instructor? || record.user == user
+    user.admin? || user.instructor? || (record.is_a?(Enrollment) && record.user == user)
   end
 
   def snapshot?
