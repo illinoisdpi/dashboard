@@ -20,10 +20,14 @@ class UserPolicy < ApplicationPolicy
   end
   
   def edit?
-    user.admin? || record.id == user.id 
+    user.admin? || user.instructor? || user.teaching_assistant? || (record.is_a?(User) && user == record)
   end
   
   def destroy?
     create?
+  end
+
+  def change_password?
+    user.admin? || (record.is_a?(User) && user == record)
   end
 end

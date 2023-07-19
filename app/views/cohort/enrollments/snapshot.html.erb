@@ -38,7 +38,7 @@
       <div class="border-5 border-dpi-secondary bg-light">
         <p class="my-5 mx-2 fs-6 text-dpi-primary fw-bold">"<%= @enrollment.user.quote %>"</p>
       </div>
-      <% if policy(Enrollment).rating? %>
+      <% if policy(Enrollment).view_rating? %>
         <div class="my-5">
           <h5 class="text-dpi-secondary fw-bold">DPI Endorsements</h5>
           <ul class="px-0 list-unstyled text-dpi-primary">

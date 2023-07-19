@@ -9,11 +9,8 @@ module User::Adminable
           :github_username,
           :languages,
           :most_recent_role,
-          :password_confirmation,
-          :password,
           :personal_website,
           :quote,
-          :roles,
           :strengths,
           :fun_fact,
           :first_name,
@@ -24,6 +21,21 @@ module User::Adminable
           :career_highlights,
           :headshot,
           :devto_username
+        
+        field :roles do
+          visible do
+            bindings[:controller].current_user.admin?
+          end
+        end
+
+        password_fields = [:password, :password_confirmation]
+        password_fields.each do |field_name|
+          field field_name do
+            visible do
+              UserPolicy.new(bindings[:controller].current_user, bindings[:object]).change_password?
+            end
+          end
+        end
       end
     end
   end
