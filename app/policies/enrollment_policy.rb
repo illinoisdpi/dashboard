@@ -1,6 +1,6 @@
 class EnrollmentPolicy < ApplicationPolicy
   def show?
-    user.admin? || user.instructor? || user.teaching_assistant? || record.user_id == user.id
+    user.admin? || user.instructor? || user.teaching_assistant? || record.user == user
   end
 
   def index?
@@ -32,9 +32,9 @@ class EnrollmentPolicy < ApplicationPolicy
   end
 
   def view_rating?
-    user.admin? || user.instructor?
+    user.admin? || user.instructor? || record.user == user
   end
-  
+
   def snapshot?
     true
   end
