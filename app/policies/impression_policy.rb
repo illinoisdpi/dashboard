@@ -30,10 +30,10 @@ class ImpressionPolicy < ApplicationPolicy
   end
 
   def edit?
-    user.admin? || record.author == user
+    user.admin? || (record.is_a?(Impression) && user == record.author)
   end
 
   def destroy?
-    user.admin? || record.author == user
+    user.admin? || (record.is_a?(Impression) && user == record.author)
   end
 end

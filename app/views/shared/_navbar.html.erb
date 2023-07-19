@@ -54,15 +54,17 @@
             <%= link_to "Sign in", new_user_session_path, class: "nav-link" %>
           </li>
         <% else %>
-          <% if current_user.admin? %>
+          <% if policy(current_user).admin_panel_accessible? %>
             <li class="nav-item">
               <%= link_to "Admin", rails_admin_path, class: "nav-link" %>
             </li>
+          <% end %> 
+          <% if policy(current_user).sidekiq_panel_accessible? %>
             <li class="nav-item">
               <%= link_to "Sidekiq", sidekiq_web_path, class: "nav-link" %>
             </li>
           <% end %> 
-          <% if current_user.admin? || current_user.instructor? %>
+          <% if policy(current_user).blazer_panel_accessible? %>
              <li class="nav-item">
                <%= link_to "Blazer", blazer_path, class: "nav-link" %>
              </li>
