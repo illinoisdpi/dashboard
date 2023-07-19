@@ -31,7 +31,7 @@ class EnrollmentPolicy < ApplicationPolicy
     true
   end
 
-  def rating?
+  def view_rating?
     user.admin? || user.instructor?
   end
   
