@@ -71,6 +71,9 @@ class Enrollment < ApplicationRecord
     :personal_website,
     :quote,
     :strengths,
+    :first_name,
+    :last_name,
+    :email,
     :to_s,
     to: :user
   
