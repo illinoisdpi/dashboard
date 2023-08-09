@@ -146,6 +146,7 @@ GEM
     fugit (1.8.1)
       et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
+    gemoji (4.1.0)
     globalid (1.1.0)
       activesupport (>= 5.0)
     groupdate (6.2.0)
@@ -451,6 +452,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   faker
+  gemoji
   groupdate
   http
   importmap-rails
