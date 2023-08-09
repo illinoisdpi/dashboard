@@ -1,4 +1,5 @@
 class Cohort::ImpressionsController < ApplicationController
+  include Csvable
   before_action :set_cohort
   before_action :set_impression, only: %i[ show edit update destroy ]
   before_action { authorize(@impression || Impression) }
@@ -11,6 +12,11 @@ class Cohort::ImpressionsController < ApplicationController
       {content: "Impressions", href: cohort_impressions_path(@cohort)}
     ]
     @impressions = policy_scope(@cohort.impressions.default_order)
+
+    respond_to do |format|
+      format.html
+      format.csv { export_to_csv(@impressions) }
+    end
   end
 
   # GET /impressions/1 or /impressions/1.json
@@ -85,4 +91,28 @@ class Cohort::ImpressionsController < ApplicationController
   def impression_params
     params.require(:impression).permit(:author_id, :subject_id, :content, :emoji)
   end
+
+  # def generate_csv(impressions)
+  #   CSV.generate(headers: true) do |csv|
+  #     csv << ["ID", "Created At", "Content", "Emoji", "Updated At", "Author ID", "Author Email", "Author First Name", "Author Last Name", "Subject ID", "Subject Email", "Subject First Name", "Subject Last Name"]
+      
+  #     impressions.each do |impression|
+  #       csv << [
+  #         impression.id,
+  #         impression.created_at,
+  #         impression.updated_at,
+  #         impression.content,
+  #         impression.emoji,
+  #         impression.author_id,
+  #         impression.author.email,
+  #         impression.author.first_name,
+  #         impression.author.last_name,
+  #         impression.subject_id,
+  #         impression.subject.email,
+  #         impression.subject.first_name,
+  #         impression.subject.last_name
+  #       ]
+  #     end
+  #   end
+  # end
 end
