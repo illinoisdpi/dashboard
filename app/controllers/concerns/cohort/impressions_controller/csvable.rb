@@ -29,7 +29,7 @@ module Cohort::ImpressionsController::Csvable
           impression.updated_at.strftime("%c"),
           impression.content,
           impression.emoji,
-          Emoji.find_by_unicode(impression.emoji).name,
+          impression.emoji_name,
           impression.author_id,
           impression.author.email,
           impression.author.first_name,
