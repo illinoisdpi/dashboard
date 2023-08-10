@@ -41,7 +41,8 @@ class Impression < ApplicationRecord
     😠: "lashing out",
     🤩: "all star",
     😶: "lack communication",
-    😑: "lack progress"
+    😑: "lack progress",
+    ⏰: "time management"
   }.freeze
 
   scope :default_order, -> { order(created_at: :desc) }
