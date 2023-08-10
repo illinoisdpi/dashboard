@@ -60,6 +60,7 @@ end
 group :development do
   gem "annotate"
   gem "bullet"
+  gem "letter_opener"
   gem "rails_db", ">= 2.3.1"
   gem "rails-erd"
 end
