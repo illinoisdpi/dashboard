@@ -30,6 +30,7 @@ gem "redis", "~> 4.0"
 gem "rolify", "~> 6.0"
 gem "rollbar", "~> 3.4"
 gem "sassc-rails", "~> 2.1"
+gem "sendgrid-ruby", "~> 6.6"
 gem "sidekiq", "~> 7.1"
 gem "sidekiq-cron", "~> 1.10"
 gem "simple_active_link_to"
@@ -64,5 +65,3 @@ group :development do
   gem "rails_db", ">= 2.3.1"
   gem "rails-erd"
 end
-
-gem "sendgrid-ruby", "~> 6.6"
