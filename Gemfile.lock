@@ -366,6 +366,7 @@ GEM
     ruby-progressbar (1.13.0)
     ruby-vips (2.1.4)
       ffi (~> 1.12)
+    ruby_http_client (3.5.5)
     safely_block (0.3.0)
       errbase (>= 0.1.1)
     sassc (2.4.0)
@@ -376,6 +377,8 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    sendgrid-ruby (6.6.2)
+      ruby_http_client (~> 3.4)
     sidekiq (7.1.2)
       concurrent-ruby (< 2)
       connection_pool (>= 2.3.0)
@@ -484,6 +487,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   sassc-rails (~> 2.1)
+  sendgrid-ruby (~> 6.6)
   sidekiq (~> 7.1)
   sidekiq-cron (~> 1.10)
   simple_active_link_to
