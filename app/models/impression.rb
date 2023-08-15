@@ -22,6 +22,7 @@
 #
 class Impression < ApplicationRecord
   include Slackable
+  include Emojiable
 
   has_paper_trail skip: [:created_at, :updated_at]
 
@@ -31,27 +32,13 @@ class Impression < ApplicationRecord
   validates :content, presence: true
   validates :emoji, emoji: true
 
-  EMOJIS = {
-    👍: "positive",
-    👎: "negative",
-    🙋: "asking questions",
-    😇: "helping others",
-    🥳: "growth",
-    😬: "unprofessional",
-    😠: "lashing out",
-    🤩: "all star",
-    😶: "lack communication",
-    😑: "lack progress",
-    ⏰: "time management"
-  }.freeze
-
   scope :default_order, -> { order(created_at: :desc) }
 
   def summary
-    "#{author} authored a #{emoji} impression of #{subject}"
+  "#{author} authored a #{emoji} impression of #{subject}"
   end
 
   def to_s
-    summary
+  summary
   end
 end
