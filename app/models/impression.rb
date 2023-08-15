@@ -21,8 +21,7 @@
 #  fk_rails_...  (subject_id => enrollments.id)
 #
 class Impression < ApplicationRecord
-  include Slackable
-  include Emojiable
+  include Slackable, Emojiable
 
   has_paper_trail skip: [:created_at, :updated_at]
 
@@ -30,7 +29,6 @@ class Impression < ApplicationRecord
   belongs_to :subject, class_name: "Enrollment", foreign_key: "subject_id"
 
   validates :content, presence: true
-  validates :emoji, emoji: true
 
   scope :default_order, -> { order(created_at: :desc) }
 
