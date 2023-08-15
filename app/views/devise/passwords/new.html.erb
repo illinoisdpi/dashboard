@@ -14,7 +14,7 @@
           <div class="form-group">
             <% email_was_invalid = resource.errors.include?(:email) %>
 
-            <% email_class = "form-control" %>
+            <% email_class = "form-control mb-3" %>
 
             <% if was_validated %>
               <% if email_was_invalid %>
@@ -25,7 +25,6 @@
             <% end %>
 
             <%= f.label :email %>
-
             <%= f.email_field :email, autofocus: true, class: email_class %>
 
             <% if email_was_invalid %>
@@ -37,7 +36,7 @@
             <% end %>
           </div>
 
-          <%= f.submit "Send me reset password instructions", class: "btn btn-block btn-outline-primary" %>
+          <%= f.submit "Send me reset password instructions", class: "btn btn-outline-primary" %>
 
           <hr>
 

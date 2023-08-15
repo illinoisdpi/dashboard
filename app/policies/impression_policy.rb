@@ -36,4 +36,8 @@ class ImpressionPolicy < ApplicationPolicy
   def destroy?
     user.admin? || (record.is_a?(Impression) && user == record.author)
   end
+
+  def download_csv?
+    user.admin? || user.instructor?
+  end
 end
