@@ -35,10 +35,10 @@ class Impression < ApplicationRecord
   scope :default_order, -> { order(created_at: :desc) }
 
   def summary
-  "#{author} authored a #{emoji} impression of #{subject}"
+    "#{author} authored a #{emoji} impression of #{subject}"
   end
 
   def to_s
-  summary
+    summary
   end
 end
