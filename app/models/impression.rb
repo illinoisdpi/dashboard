@@ -21,7 +21,7 @@
 #  fk_rails_...  (subject_id => enrollments.id)
 #
 class Impression < ApplicationRecord
-  include Slackable, Emojiable
+  include Emojiable, Slackable
 
   has_paper_trail skip: [:created_at, :updated_at]
 
