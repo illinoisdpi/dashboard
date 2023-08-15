@@ -1,6 +1,10 @@
 module Impression::Emojiable
     extend ActiveSupport::Concern
   
+    included do
+        validates :emoji, emoji: true
+    end
+    
     EMOJIS = {
         👍: "positive",
         👎: "negative",
