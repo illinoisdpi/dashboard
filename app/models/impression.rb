@@ -31,4 +31,12 @@ class Impression < ApplicationRecord
   validates :content, presence: true
 
   scope :default_order, -> { order(created_at: :desc) }
+
+  def summary
+    "#{author} authored a #{emoji} impression of #{subject}"
+  end
+  
+  def to_s
+    summary
+  end
 end
