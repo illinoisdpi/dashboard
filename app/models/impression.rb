@@ -35,7 +35,7 @@ class Impression < ApplicationRecord
   def summary
     "#{author} authored a #{emoji} impression of #{subject}"
   end
-  
+
   def to_s
     summary
   end
