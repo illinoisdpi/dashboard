@@ -1,3 +1,23 @@
+<div id="dev-to-blog" class="container py-5">
+  <h2 class="text-center mb-4">Dev.to Blog Post</h2>
+
+  <div class="row">
+    <div class="col-md-12">
+      <% if @enrollment.dev_to_blog.present? %>
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title"><%= @enrollment.dev_to_blog.title %></h5>
+            <p class="card-text"><%= truncate(@enrollment.dev_to_blog.body, length: 150) %></p>
+            <a href="<%= @enrollment.dev_to_blog.url %>" class="btn btn-primary" target="_blank">Read More</a>
+          </div>
+        </div>
+      <% else %>
+        <p class="text-center">No recent Dev.to blog post available.</p>
+      <% end %>
+    </div>
+  </div>
+</div>
+
 <div id="profile" class="bg-dpi-primary py-5">
   <div class="container">
     <div class="row d-flex justify-content-center">
