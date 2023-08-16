@@ -32,10 +32,6 @@ class Impression < ApplicationRecord
 
   scope :default_order, -> { order(created_at: :desc) }
 
-  def emoji_name
-    Impression::EMOJIS[emoji.to_sym] || Emoji.find_by_unicode(emoji).name
-  end
-
   def summary
     "#{author} authored a #{emoji} impression of #{subject}"
   end
