@@ -5,6 +5,14 @@ module Impression::Emojiable
     validates :emoji, emoji: true
   end
   
+  def summary
+    "#{author} authored a #{emoji} impression of #{subject}"
+  end
+  
+  def to_s
+    summary
+  end
+  
   EMOJIS = {
     👍: "positive",
     👎: "negative",
