@@ -8,6 +8,7 @@ module Cohort::ImpressionsController::Csvable
       'Updated At',
       'Content',
       'Emoji',
+      'Emoji Name',
       'Author ID',
       'Author Email',
       'Author First Name',
@@ -24,10 +25,11 @@ module Cohort::ImpressionsController::Csvable
       impressions.each do |impression|
         csv << [
           impression.id,
-          impression.created_at,
-          impression.updated_at,
+          impression.created_at.strftime("%c"),
+          impression.updated_at.strftime("%c"),
           impression.content,
           impression.emoji,
+          impression.emoji_name,
           impression.author_id,
           impression.author.email,
           impression.author.first_name,
