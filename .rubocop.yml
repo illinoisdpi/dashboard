@@ -21,3 +21,5 @@ RSpec/DescribeClass:
   Enabled: false # ignore missing comments on classes
 Bundler/DuplicatedGem:
   Enabled: false # ignore duplicated gem errors because we will have duplicated gems when dual booting
+Style/MixinGrouping:
+  EnforcedStyle: grouped
