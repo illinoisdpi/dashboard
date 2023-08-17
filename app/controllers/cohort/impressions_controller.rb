@@ -12,7 +12,7 @@ class Cohort::ImpressionsController < ApplicationController
       {content: "Impressions", href: cohort_impressions_path(@cohort)}
     ]
 
-    @impressions = policy_scope(@cohort.impressions.default_order).page(params[:page]).per(10)
+    @impressions = policy_scope(@cohort.impressions.default_order).page(params[:page])
 
     respond_to do |format|
       format.html
