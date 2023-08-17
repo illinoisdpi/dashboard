@@ -21,6 +21,7 @@ gem "jbuilder"
 gem "kaminari", "~> 1.2"
 gem "paper_trail"
 gem "pg", "~> 1.1"
+gem 'pg_search', '~> 2.3', '>= 2.3.6'
 gem "puma", "~> 5.0"
 gem 'pundit'
 gem "ransack"
