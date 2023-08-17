@@ -9,7 +9,7 @@
         <div class="card mb-4">
           <div class="card-body">
             <h5 class="card-title"><%= DevtoArticle.where(author_id: @enrollment.user_id).first.title %></h5>
-            <p class="card-text"><%= truncate(@enrollment.dev_to_blog.body, length: 150) %></p>
+            <p class="card-text"><%= truncate(@enrollment.devto_username.body, length: 150) %></p>
             <a href="<%= @enrollment.user.devto_username.url %>" class="btn btn-primary" target="_blank">Read More</a>
           </div>
         </div>
