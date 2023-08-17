@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_06_145213) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_17_164912) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -188,6 +188,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_06_145213) do
     t.datetime "updated_at", null: false
     t.index ["author_id"], name: "index_impressions_on_author_id"
     t.index ["subject_id"], name: "index_impressions_on_subject_id"
+  end
+
+  create_table "pg_search_documents", force: :cascade do |t|
+    t.text "content"
+    t.string "searchable_type"
+    t.bigint "searchable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable"
   end
 
   create_table "piazza_activity_breakdowns", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
