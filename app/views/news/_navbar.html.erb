@@ -1,16 +1,17 @@
 <nav class="navbar bg-dpi-primary rounded">
   <div class="container-fluid">
-    <a class="navbar-brand me-5" href="/">
+    <a class="navbar-brand me-auto" href="/">
       <%= image_tag "logo", class: "rounded", alt: "DPI" %>
       <span class="text-white">Dev News</span>
     </a>
 
-    <div class="navbar-nav ms-5" style="margin-bottom:2px">
-      <a class="nav-link ms-2" href="https://forms.illinois.edu/sec/1182397580" target="_blank">
+    <div class="navbar-nav me-3">
+      <a class="nav-link" href="https://forms.illinois.edu/sec/1182397580" target="_blank">
         <span class="text-white">Apply</span>
       </a>
     </div>
 
-    <%= link_to "RSS", rss_path(format: :xml), class: "ms-auto text-white text-decoration-none" %>
+        
+    <%= link_to "RSS", rss_path(format: :xml), class: "text-white text-decoration-none" %>
   </div>
 </nav>
