@@ -12,10 +12,12 @@ class Cohort::ImpressionsController < ApplicationController
       {content: "Impressions", href: cohort_impressions_path(@cohort)}
     ]
 
-    @impressions = policy_scope(@cohort.impressions.default_order).page(params[:page])
+    @impressions = policy_scope(@cohort.impressions.default_order)
 
     respond_to do |format|
-      format.html
+      format.html do
+        @impressions = @impressions.page(params[:page])
+      end
       format.csv { export_to_csv(@impressions) }
     end
   end
