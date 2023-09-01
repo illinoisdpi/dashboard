@@ -1,3 +1,23 @@
+<div id="dev-to-blog" class="container py-5">
+  <h2 class="text-center mb-4">Dev.to Blog Post</h2>
+
+  <div class="row">
+    <div class="col-md-12">
+      <% if DevtoArticle.where(author_id: @enrollment.user_id).present? %>
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title"><%= DevtoArticle.where(author_id: @enrollment.user_id).first.title %></h5>
+            <p class="card-text"><%= truncate(DevtoArticle.where(author_id: @enrollment.user_id).first.description, length: 150) %></p>
+            <a href="<%= DevtoArticle.where(author_id: @enrollment.user_id).first.url %>" class="btn btn-primary" target="_blank">Read More</a>
+          </div>
+        </div>
+      <% else %>
+        <p class="text-center">No recent Dev.to blog post available.</p>
+      <% end %>
+    </div>
+  </div>
+</div>
+
 <div id="profile" class="bg-dpi-primary py-5">
   <div class="container">
     <div class="row d-flex justify-content-center">
