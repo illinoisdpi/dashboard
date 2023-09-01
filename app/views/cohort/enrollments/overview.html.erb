@@ -290,9 +290,9 @@
   </div>
 <% end %>
 
-  <% if @enrollment.user.devto_articles.empty? %>
-    <p class="text-center">No recent Dev.to blog posts available.</p>
-  <% end %>
+<% if @enrollment.user.devto_articles.empty? %>
+  <p class="text-center">No recent Dev.to blog posts available.</p>
+<% end %>
 
 <% @enrollment.user.devto_articles.order(published_at: :desc).take(5).each do |article| %>
   <div class="card mb-4">
