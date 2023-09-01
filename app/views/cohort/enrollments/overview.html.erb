@@ -294,9 +294,7 @@
     <p class="text-center">No recent Dev.to blog posts available.</p>
   <% end %>
 
-  <!-- Blog post section moved to the bottom -->
 <% @enrollment.user.devto_articles.order(published_at: :desc).take(5).each do |article| %>
-  <!-- Loops through the 5 most recent Dev.to blog posts -->
   <div class="card mb-4">
     <div class="card-body">
       <h5 class="card-title"><%= article.title %></h5>
