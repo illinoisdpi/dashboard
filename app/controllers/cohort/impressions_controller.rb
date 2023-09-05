@@ -11,9 +11,9 @@ class Cohort::ImpressionsController < ApplicationController
       {content: @cohort.to_s, href: cohort_path(@cohort)},
       {content: "Impressions", href: cohort_impressions_path(@cohort)}
     ]
+    @q = policy_scope(@cohort.impressions.default_order).page(params[:page]).ransack(params[:q])
 
-    @impressions = policy_scope(@cohort.impressions.default_order).page(params[:page])
-
+    @impressions = @q.result
     respond_to do |format|
       format.html
       format.csv { export_to_csv(@impressions) }
