@@ -22,7 +22,7 @@ data_sources:
     # use_transaction: false
 
     smart_variables:
-      user_id: "SELECT id, piazza_full FROM users ORDER BY piazza_full ASC"
+      user_id: "SELECT id, canvas_full FROM users ORDER BY canvas_full ASC"
       cohort_id: "SELECT id, name FROM cohorts ORDER BY name ASC"
       role: ["student", "instructor", "ta"]
 
