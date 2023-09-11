@@ -295,7 +295,7 @@
 <% end %>
 
 <% @enrollment.user.devto_articles.order(published_at: :desc).take(5).each do |article| %>
-  <div class="card mb-4">
+  <div class="card mt-4">
     <div class="card-body">
       <h5 class="card-title"><%= article.title %></h5>
       <p class="card-text"><%= truncate(article.description, length: 150) %></p>
