@@ -1,23 +1,30 @@
 <%= render "cohorts/tabs" %>
 <%# TODO: make this a ransack sortable/searchable table with pagination %>
 <div class="row">
-  <%= search_form_for(@q, url: cohort_impressions_path) do |f| %>
-    <p>Narrow results:</p>
+ <%= search_form_for(@q, url: cohort_impressions_path) do |f| %>
+  <p>Narrow results:</p>
 
-    <div>
-      <%= f.label :content_cont, "Content contains" %>
-      <%= f.text_field :content_cont, placeholder: "Enter content" %>
-    </div>
-    
-    <%= f.submit class: "btn btn-primary btn-block" %>
-    <%= link_to "Clear filter", cohort_impressions_path, class: "ms-2" %>
-  <% end %>
-  <div class="col">
-    <div class="d-flex align-items-center flex-row-reverse mb-2">
-      <% if policy(Impression).download_csv? %>
-        <%= link_to "Download CSV", cohort_impressions_path(@cohort, format: :csv), class: 'btn btn-outline-secondary' %>
-      <% end %>
-    </div>
+  <div>
+    <%= f.label :content_cont, "Content contains" %>
+    <%= f.text_field :content_cont, placeholder: "Enter content" %>
+  </div>
+  
+  <div>
+    <%= f.label :author_first_name_or_author_last_name_cont, "Author Name contains" %>
+    <%= f.text_field :author_first_name_or_author_last_name_cont, placeholder: "Search by Author Name" %>
+  </div>
+
+  <div>
+    <%= f.label :subject_first_name_or_subject_last_name_cont, "Subject Name contains" %>
+    <%= f.text_field :subject_first_name_or_subject_last_name_cont, placeholder: "Search by Subject Name" %>
+  </div>
+
+  <%= f.submit class: "btn btn-primary btn-block" %>
+  <%= link_to "Clear filter", cohort_impressions_path, class: "ms-2" %>
+<% end %>
+
+
+</div>
     <div class="card">
       <div class="card-header d-flex align-items-center">
         <h1 class="h6 mb-0 me-auto">Impressions</h1>
@@ -46,7 +53,7 @@
               </div>
   
               <div>
-                <i class="fa-solid fa-chevron-right fa-fw"></i>
+                <i cladsass="fa-solid fa-chevron-right fa-fw"></i>
               </div>
             </div>
             
@@ -57,3 +64,9 @@
   </div>
   <%= paginate @impressions, theme: 'bootstrap-5', nav_class: "d-flex my-2", pagination_class: "mx-auto" %>
 </div>
+
+
+
+
+
+

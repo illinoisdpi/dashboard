@@ -13,7 +13,8 @@ class Cohort::ImpressionsController < ApplicationController
     ]
     @q = policy_scope(@cohort.impressions.default_order).page(params[:page]).ransack(params[:q])
 
-    @impressions = @q.result
+    @impressions = @q.result.includes(:author, :subject)
+
     respond_to do |format|
       format.html
       format.csv { export_to_csv(@impressions) }
