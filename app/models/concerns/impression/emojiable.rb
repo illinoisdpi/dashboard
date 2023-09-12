@@ -20,6 +20,16 @@ module Impression::Emojiable
     🤩: "all star",
     😶: "lack communication",
     😑: "lack progress",
-    ⏰: "time management"
+    ⏰: "time management",
+    ✅: "consistant",
+    ❌: "inconsistant",
+    🏁: "commited",
+    🚷: "lack of follow-through",
+    😎: "confident",
+    🙈: "lack of confidence",
+    💬: "good communication",
+    🤐: "lacking communication",
+    🤝: "collaboration",
+    🚧: "conflict/lack of collaboration"
   }.freeze
 end
