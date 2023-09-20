@@ -5,6 +5,10 @@ module Impression::Emojiable
     validates :emoji, emoji: true
   end
   
+  def emoji_name
+    Impression::EMOJIS[emoji.to_sym] || Emoji.find_by_unicode(emoji).name
+  end
+
   EMOJIS = {
     👍: "positive",
     👎: "negative",

@@ -16,7 +16,9 @@ class Cohort::ImpressionsController < ApplicationController
     @impressions = @q.result.includes(:author, subject: :user)
 
     respond_to do |format|
-      format.html
+      format.html do
+        @impressions = @impressions.page(params[:page])
+      end
       format.csv { export_to_csv(@impressions) }
     end
   end
