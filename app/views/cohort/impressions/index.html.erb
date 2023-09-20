@@ -1,30 +1,5 @@
 <%= render "cohorts/tabs" %>
 <%# TODO: make this a ransack sortable/searchable table with pagination %>
-<div class="row">
- <%= search_form_for(@q, url: cohort_impressions_path) do |f| %>
-  <p>Narrow results:</p>
-
-  <div>
-    <%= f.label :content_cont, "Content contains" %>
-    <%= f.text_field :content_cont, placeholder: "Enter content" %>
-  </div>
-  
-  <div>
-    <%= f.label :author_first_name_or_author_last_name_cont, "Author Name contains" %>
-    <%= f.text_field :author_first_name_or_author_last_name_cont, placeholder: "Search by Author Name" %>
-  </div>
-
-  <div>
-    <%= f.label :subject_first_name_or_subject_last_name_cont, "Subject Name contains" %>
-    <%= f.text_field :subject_first_name_or_subject_last_name_cont, placeholder: "Search by Subject Name" %>
-  </div>
-
-  <%= f.submit class: "btn btn-primary btn-block" %>
-  <%= link_to "Clear filter", cohort_impressions_path, class: "ms-2" %>
-<% end %>
-
-
-</div>
     <div class="card">
       <div class="card-header d-flex align-items-center">
         <h1 class="h6 mb-0 me-auto">Impressions</h1>
@@ -34,6 +9,26 @@
             <i class="fa-solid fa-plus fa-fw"></i>
           <% end %>
         </div>
+      </div>
+
+      <div class="card-header">
+        <%= search_form_for(@q, url: cohort_impressions_path, class: "d-flex align-items-center") do |f| %>
+          <div class="card-body">
+            <%= f.label :content_cont, "Content contains", class: "form-label" %>
+            <%= f.text_field :content_cont, placeholder: "Enter content", class: "form-control" %>
+          </div>
+          
+          <div class="card-body">
+            <%= f.label :author_first_name_or_author_last_name_cont, "Author Name contains", class: "form-label" %>
+            <%= f.text_field :author_first_name_or_author_last_name_cont, placeholder: "Search by Author Name",class: "form-control" %>
+          </div>
+        
+          <div class="card-body mt-4">
+            <%= f.submit class: "btn btn-primary mt-2 me-4" %>
+            <%= link_to "Clear filter", cohort_impressions_path, class: "mt-4" %>
+          </div>
+          
+        <% end %>
       </div>
 
       <div class="list-group list-group-flush">
@@ -64,9 +59,3 @@
   </div>
   <%= paginate @impressions, theme: 'bootstrap-5', nav_class: "d-flex my-2", pagination_class: "mx-auto" %>
 </div>
-
-
-
-
-
-
