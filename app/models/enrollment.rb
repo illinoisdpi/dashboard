@@ -49,7 +49,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Enrollment < ApplicationRecord
-  include Adminable, Endorsable, Ransackable
+  include Adminable, Endorsable
   has_paper_trail skip: [:created_at, :updated_at]
 
   belongs_to :user

@@ -1,5 +1,13 @@
 <%= render "cohorts/tabs" %>
 <%# TODO: make this a ransack sortable/searchable table with pagination %>
+<div class="row">
+  <div class="col">
+    <div class="d-flex align-items-center flex-row-reverse mb-2">
+      <% if policy(Impression).download_csv? %>
+        <%= link_to "Download CSV", cohort_impressions_path(@cohort, format: :csv), class: 'btn btn-outline-secondary' %>
+      <% end %>
+    </div>
+
     <div class="card">
       <div class="card-header d-flex align-items-center">
         <h1 class="h6 mb-0 me-auto">Impressions</h1>
@@ -48,7 +56,7 @@
               </div>
   
               <div>
-                <i cladsass="fa-solid fa-chevron-right fa-fw"></i>
+                <i class="fa-solid fa-chevron-right fa-fw"></i>
               </div>
             </div>
             

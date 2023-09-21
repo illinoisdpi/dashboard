@@ -5,16 +5,14 @@ module Impression::Ransackable
     def ransackable_attributes(auth_object = nil)
       [
         "content",
-        "author_first_name_or_author_last_name_cont",
-        "subject_user_first_name_cont"
+        "author_first_name_or_author_last_name_cont"
       ]
     end
 
     def ransackable_associations(auth_object = nil)
       [
         "author",
-        "subject",
-        "subject.user"
+        "subject"
       ]
     end
   end

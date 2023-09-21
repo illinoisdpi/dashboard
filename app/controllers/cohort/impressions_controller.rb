@@ -13,7 +13,7 @@ class Cohort::ImpressionsController < ApplicationController
     ]
     @q = policy_scope(@cohort.impressions.default_order).page(params[:page]).ransack(params[:q])
 
-    @impressions = @q.result.includes(:author, subject: :user)
+    @impressions = @q.result.includes(:author, :subject)
 
     respond_to do |format|
       format.html
