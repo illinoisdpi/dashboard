@@ -70,6 +70,9 @@ class CohortPolicy < ApplicationPolicy
   end
 
   def cohort_impressions?
-    user.admin? || user.cohort_instructor?(record) || user.cohort_teaching_assistant?(record)
+    user.admin? ||
+    user.cohort_instructor?(record) ||
+    user.cohort_teaching_assistant?(record) ||
+    user.cohort_staff?(record)
   end
 end

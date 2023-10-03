@@ -5,6 +5,10 @@ module User::Roleable
     has_role? :admin
   end
 
+  def cohort_staff? cohort
+    enrollments.where(cohort:, role: :staff).exists?
+  end
+
   def cohort_student? cohort
     enrollments.where(cohort:, role: :student).exists?
   end
@@ -15,6 +19,10 @@ module User::Roleable
 
   def cohort_teaching_assistant? cohort
     enrollments.where(cohort:, role: :teaching_assistant).exists?
+  end
+
+  def staff?
+    enrollments.where(role: :staff).exists?
   end
 
   def student?

@@ -79,8 +79,9 @@ class Enrollment < ApplicationRecord
   
   enum role: {
     instructor: 'instructor',
-    teaching_assistant: 'teaching assistant',
-    student: 'student'
+    staff: 'staff',
+    student: 'student',
+    teaching_assistant: 'teaching assistant'
   }, _default: :student
 
   def completed_assignments

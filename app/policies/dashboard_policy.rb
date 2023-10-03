@@ -4,7 +4,7 @@ class DashboardPolicy < ApplicationPolicy
   end
 
   def authored_impressions?
-    user.admin? || user.instructor? || user.teaching_assistant?
+    user.admin? || user.instructor? || user.teaching_assistant? || user.staff?
   end
 
   def cohorts?
