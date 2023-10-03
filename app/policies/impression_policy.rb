@@ -10,7 +10,7 @@ class ImpressionPolicy < ApplicationPolicy
   end
 
   def index?
-    user.admin? || user.instructor? || user.teaching_assistant?
+    user.admin? || user.instructor? || user.teaching_assistant? || user.staff?
   end
 
   def show?
@@ -22,7 +22,7 @@ class ImpressionPolicy < ApplicationPolicy
   end
 
   def new?
-    user.admin? || user.instructor? || user.teaching_assistant?
+    user.admin? || user.instructor? || user.teaching_assistant? || user.staff?
   end
 
   def update?
