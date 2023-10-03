@@ -70,17 +70,17 @@ module CanvasGradebookSnapshot::Csvable
         else
           enrollment = cohort.enrollments.find_by_id_from_canvas(row.fetch(:id))
 
-          if enrollment.blank? && row.has_key?(:sis_login_id)
+          if enrollment.blank?
             id_from_canvas = row.fetch(:id)
-            # TODO: go to next row if sis_login_id.blank?
+
+            next unless row.has_key?(:sis_login_id)
+
             email = row.fetch(:sis_login_id)
-            ##  if the email.sis_login_id === nil
-              ## then we want to skip the coloumn
-              
+
             canvas_full = row.fetch(:student, "None provided")
 
             user = User.find_by_email(email)
-        
+
             if user.blank?
               user = User.create(email:, password: SecureRandom.hex(16), canvas_full:)
             end
