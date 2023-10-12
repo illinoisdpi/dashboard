@@ -72,11 +72,15 @@ module CanvasGradebookSnapshot::Csvable
 
           if enrollment.blank?
             id_from_canvas = row.fetch(:id)
+
+            next unless row.has_key?(:sis_login_id)
+
             email = row.fetch(:sis_login_id)
+
             canvas_full = row.fetch(:student, "None provided")
 
             user = User.find_by_email(email)
-        
+
             if user.blank?
               user = User.create(email:, password: SecureRandom.hex(16), canvas_full:)
             end
