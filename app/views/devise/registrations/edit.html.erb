@@ -26,21 +26,21 @@
           <div class="col-md-6 mb-3">
             <% if current_user.first_name.present? %>
               <%= f.label :first_name, class: "form-label" %>
-              <%= f.text_field :first_name, autofocus: true, class: "form-control", value: current_user.first_name %>
+              <%= f.text_field :first_name, autofocus: true, class: "form-control" %>
             <% end %>
           </div>
           
           <div class="col-md-6 mb-3">
             <% if current_user.middle_name.present? %>
             <%= f.label :middle_name, class: "form-label" %>
-            <%= f.text_field :middle_name, autofocus: true, class: "form-control", value: current_user.middle_name %>
+            <%= f.text_field :middle_name, class: "form-control" %>
             <% end %>
           </div>
 
           <div class="col-md-6 mb-3">
             <% if current_user.last_name.present? %>
               <%= f.label :last_name, class: "form-label" %>
-              <%= f.text_field :last_name, autofocus: true, class: "form-control", value: current_user.last_name %>
+              <%= f.text_field :last_name, class: "form-control" %>
             <% end %>
           </div>
 
@@ -57,42 +57,42 @@
           <div class="col-md-6 mb-3">
             <% if current_user.github_username.present? %>
               <%= f.label :github_username, class: "form-label" %>
-              <%= f.text_field :github_username, autofocus: true, class: "form-control", value: current_user.github_username %>
+              <%= f.text_field :github_username, class: "form-control" %>
             <% end %>
           </div>
 
           <div class="col-md-6 mb-3">
             <% if current_user.personal_website.present? %>
               <%= f.label :personal_website, class: "form-label" %>
-              <%= f.text_field :personal_website, autofocus: true, class: "form-control", value: current_user.personal_website %>
+              <%= f.text_field :personal_website, class: "form-control" %>
             <% end %>
           </div>
 
           <div class="mb-3">
             <% if current_user.most_recent_role.present? %>
               <%= f.label :most_recent_role, class: "form-label" %>
-              <%= f.text_field :most_recent_role, autofocus: true, class: "form-control", value: current_user.most_recent_role %>
+              <%= f.text_field :most_recent_role, class: "form-control" %>
             <% end %>
           </div>
 
           <div class="mb-3">
             <% if current_user.career_highlights.present? %>
               <%= f.label :career_highlights, class: "form-label" %>
-              <%= f.text_area :career_highlights, autofocus: true, class: "form-control", value: current_user.career_highlights %>
+              <%= f.text_area :career_highlights, class: "form-control" %>
             <% end %>
           </div>
 
           <div class="mb-3">
             <% if current_user.education.present? %>
               <%= f.label :education, class: "form-label" %>
-              <%= f.text_field :education, autofocus: true, class: "form-control", value: current_user.education %>
+              <%= f.text_field :education, class: "form-control" %>
             <% end %>
           </div>
 
           <div class="mb-3">
             <% if current_user.languages.present? %>
               <%= f.label :languages, class: "form-label" %>
-              <%= f.text_area :languages, autofocus: true, class: "form-control", value: current_user.languages %>
+              <%= f.text_area :languages, class: "form-control" %>
             <% end %>
           </div>
 
@@ -101,35 +101,35 @@
           <div class="mb-3">
             <% if current_user.quote.present? %>
               <%= f.label :quote, class: "form-label" %>
-              <%= f.text_area :quote, autofocus: true, class: "form-control", value: current_user.quote %>
+              <%= f.text_area :quote, class: "form-control" %>
             <% end %>
           </div>
 
           <div class="mb-3">
             <% if current_user.skills_and_projects.present? %>
               <%= f.label :skills_and_projects, class: "form-label" %>
-              <%= f.text_area :skills_and_projects, autofocus: true, class: "form-control", value: current_user.skills_and_projects %>
+              <%= f.text_area :skills_and_projects, class: "form-control" %>
             <% end %>
           </div>
 
           <div class="mb-3">
             <% if current_user.strengths.present? %>
               <%= f.label :strengths, class: "form-label" %>
-              <%= f.text_area :strengths, autofocus: true, class: "form-control", value: current_user.strengths %>
+              <%= f.text_area :strengths, class: "form-control" %>
             <% end %>
           </div>
 
           <div class="mb-3">
             <% if current_user.fun_fact.present? %>
               <%= f.label :fun_fact, class: "form-label" %>
-              <%= f.text_area :fun_fact, autofocus: true, class: "form-control", value: current_user.fun_fact %>
+              <%= f.text_area :fun_fact, class: "form-control" %>
             <% end %>
           </div>
 
           <div class="mb-3">
             <% if current_user.one_liner.present? %>
               <%= f.label :one_liner, class: "form-label" %>
-              <%= f.text_area :one_liner, autofocus: true, class: "form-control", value: current_user.one_liner %>
+              <%= f.text_area :one_liner, class: "form-control" %>
             <% end %>
           </div>
 
@@ -150,7 +150,7 @@
 
             <%= f.label :email, class: "form-label" %>
 
-            <%= f.email_field :email, autofocus: true, class: email_class %>
+            <%= f.email_field :email, class: email_class %>
 
             <% if email_was_invalid %>
               <% resource.errors.full_messages_for(:email).each do |message| %>
