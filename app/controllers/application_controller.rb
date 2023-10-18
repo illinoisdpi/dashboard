@@ -11,7 +11,22 @@ class ApplicationController < ActionController::Base
   private
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:account_update, keys: [:headshot])
+    devise_parameter_sanitizer.permit(:account_update, keys: [
+      :headshot, 
+      :first_name, 
+      :last_name, 
+      :middle_name, 
+      :github_username, 
+      :languages, 
+      :personal_website, 
+      :quote, 
+      :skills_and_projects, 
+      :strengths, 
+      :fun_fact, 
+      :one_liner,
+      :most_recent_role,
+      :career_highlights,
+    ])
   end
 
   def set_time_zone(&block)

@@ -8,7 +8,7 @@
       <div class="card-body">
         <% was_validated = resource.errors.any? %>
 
-        <% form_html_options = { method: :put, multipart: true, novalidate: true, class: "mb-3" } %>
+        <% form_html_options = { method: :put, multipart: true, novalidate: true, class: "row g-3 mb-3"} %>
 
         <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: form_html_options) do |f| %>
           <% if flash[:notice].present? %>
@@ -23,13 +23,117 @@
             </div>
           <% end %>
 
-          <div class="mb-3">
+          <div class="col-md-6 mb-3">
+            <% if current_user.first_name.present? %>
+              <%= f.label :first_name, class: "form-label" %>
+              <%= f.text_field :first_name, autofocus: true, class: "form-control" %>
+            <% end %>
+          </div>
+          
+          <div class="col-md-6 mb-3">
+            <% if current_user.middle_name.present? %>
+            <%= f.label :middle_name, class: "form-label" %>
+            <%= f.text_field :middle_name, class: "form-control" %>
+            <% end %>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <% if current_user.last_name.present? %>
+              <%= f.label :last_name, class: "form-label" %>
+              <%= f.text_field :last_name, class: "form-control" %>
+            <% end %>
+          </div>
+
+          <div class="col-12 mb-3">
             <% if current_user.headshot? %>
               <%= image_tag current_user.headshot.url, class: "img-fluid mb-2" %>
             <% end %>
             <%= f.label :headshot, class: "form-label" %>
             <%= f.file_field :headshot %>
           </div>
+
+          <hr>
+
+          <div class="col-md-6 mb-3">
+            <% if current_user.github_username.present? %>
+              <%= f.label :github_username, class: "form-label" %>
+              <%= f.text_field :github_username, class: "form-control" %>
+            <% end %>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <% if current_user.personal_website.present? %>
+              <%= f.label :personal_website, class: "form-label" %>
+              <%= f.text_field :personal_website, class: "form-control" %>
+            <% end %>
+          </div>
+
+          <div class="mb-3">
+            <% if current_user.most_recent_role.present? %>
+              <%= f.label :most_recent_role, class: "form-label" %>
+              <%= f.text_field :most_recent_role, class: "form-control" %>
+            <% end %>
+          </div>
+
+          <div class="mb-3">
+            <% if current_user.career_highlights.present? %>
+              <%= f.label :career_highlights, class: "form-label" %>
+              <%= f.text_area :career_highlights, class: "form-control" %>
+            <% end %>
+          </div>
+
+          <div class="mb-3">
+            <% if current_user.education.present? %>
+              <%= f.label :education, class: "form-label" %>
+              <%= f.text_field :education, class: "form-control" %>
+            <% end %>
+          </div>
+
+          <div class="mb-3">
+            <% if current_user.languages.present? %>
+              <%= f.label :languages, class: "form-label" %>
+              <%= f.text_area :languages, class: "form-control" %>
+            <% end %>
+          </div>
+
+          <hr>
+
+          <div class="mb-3">
+            <% if current_user.quote.present? %>
+              <%= f.label :quote, class: "form-label" %>
+              <%= f.text_area :quote, class: "form-control" %>
+            <% end %>
+          </div>
+
+          <div class="mb-3">
+            <% if current_user.skills_and_projects.present? %>
+              <%= f.label :skills_and_projects, class: "form-label" %>
+              <%= f.text_area :skills_and_projects, class: "form-control" %>
+            <% end %>
+          </div>
+
+          <div class="mb-3">
+            <% if current_user.strengths.present? %>
+              <%= f.label :strengths, class: "form-label" %>
+              <%= f.text_area :strengths, class: "form-control" %>
+            <% end %>
+          </div>
+
+          <div class="mb-3">
+            <% if current_user.fun_fact.present? %>
+              <%= f.label :fun_fact, class: "form-label" %>
+              <%= f.text_area :fun_fact, class: "form-control" %>
+            <% end %>
+          </div>
+
+          <div class="mb-3">
+            <% if current_user.one_liner.present? %>
+              <%= f.label :one_liner, class: "form-label" %>
+              <%= f.text_area :one_liner, class: "form-control" %>
+            <% end %>
+          </div>
+
+          <hr>
 
           <div class="mb-3">
             <% email_was_invalid = resource.errors.include?(:email) %>
@@ -46,7 +150,7 @@
 
             <%= f.label :email, class: "form-label" %>
 
-            <%= f.email_field :email, autofocus: true, class: email_class %>
+            <%= f.email_field :email, class: email_class %>
 
             <% if email_was_invalid %>
               <% resource.errors.full_messages_for(:email).each do |message| %>
@@ -162,6 +266,7 @@
           <%= link_to "Back", :back, class: "btn btn-outline-secondary" %>
         </div>
       </div>
+    </div>
 
       <div class="card-footer">
         <%= link_to "Cancel my account", registration_path(resource_name), data: { "turbo-method": :delete, "turbo-confirm": "Are you sure? This is NOT reversible" }, class: "btn btn-block btn-link", method: :delete %>
