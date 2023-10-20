@@ -32,7 +32,10 @@ class EnrollmentPolicy < ApplicationPolicy
   end
 
   def view_rating?
-    user.admin? || user.instructor? || (record.is_a?(Enrollment) && record.user == user)
+    user.admin? || user.instructor?
+    # TODO: changing how we calculate endorsement in issue #214
+    # Only allow admins/instructors to view rating until 214 is completed
+    # || (record.is_a?(Enrollment) && record.user == user)
   end
 
   def snapshot?
