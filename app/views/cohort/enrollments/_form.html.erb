@@ -1,4 +1,7 @@
-<%= form_with(model: @enrollment, url: cohort_enrollments_path(@cohort)) do |form| %>
+<%
+  #TODO: fix. Should probably have separate forms for POST and PATCH
+%>
+<%= form_with(model: @enrollment, url: (@enrollment.new_record? ? cohort_enrollments_path(@cohort) : cohort_enrollment_path(@cohort, @enrollment)), method: (@enrollment.new_record? ? :post : :patch)) do |form| %>
   <% if @enrollment.errors.any? %>
     <div class="text-danger">
       <h2><%= pluralize(@enrollment.errors.count, "error") %> prohibited this enrollment from being saved:</h2>
@@ -10,16 +13,25 @@
     </div>
   <% end %>
 
-  <div class="mb-3">
-    <%= form.label :role %>
-    <%= form.collection_select :role, Enrollment.roles.except("student").keys, :to_s, :humanize, {}, class: "form-select" %>
-  </div>
+  <% if policy(@enrollment).edit_role? %>
+    <div class="mb-3">
+      <%= form.label :role %>
+      <%= form.collection_select :role, Enrollment.roles.keys, :to_s, :humanize, {}, class: "form-select" %>
+    </div>
+  <% end %>
 
-  <div class="mb-3">
-    <%= form.label :user, class: "form-label" %>
-    <%= form.collection_select :user_id, User.all.default_order, :id, :name, {}, class: "form-select" %>
-  </div>
+  <% if policy(@enrollment).edit_user? %>
+    <div class="mb-3">
+      <%= form.label :user, class: "form-label" %>
+      <%= form.collection_select :user_id, User.all.default_order, :id, :name, {}, class: "form-select" %>
+    </div>
+  <% end %>
 
+   <div class="mb-3">
+    <%= form.label :Real_time_DPI_skill_development, class: "form-label" %>
+    <%= form.text_area :skills_development, class: "form-control" %>
+  </div>
+  
   <div>
     <%= form.submit class: "btn btn-primary" %>
   </div>

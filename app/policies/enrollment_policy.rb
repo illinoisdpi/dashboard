@@ -8,6 +8,14 @@ class EnrollmentPolicy < ApplicationPolicy
   end
 
   def edit?
+    user.admin? || user.instructor? || record.user == user
+  end
+
+  def edit_role?
+    user.admin? || user.instructor?
+  end
+
+  def edit_user?
     user.admin? || user.instructor?
   end
 

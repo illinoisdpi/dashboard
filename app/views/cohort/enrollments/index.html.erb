@@ -20,14 +20,19 @@
             </div>
             <div class="collapse" id="enrollment-<%= enrollment.id %>-links">
               <ul class="list-unstyled my-2 ms-2">
-                <% if policy(Enrollment).overview? %>
+                <% if policy(enrollment).overview? %>
                   <li>
                     <%= link_to "Overview", overview_cohort_enrollment_path(@cohort, enrollment), class: "text-black" %>
                   </li>
                 <% end %>
-                <% if policy(Enrollment).snapshot? %>
+                <% if policy(enrollment).snapshot? %>
                   <li>
                     <%= link_to "Snapshot", snapshot_cohort_enrollment_path(@cohort, enrollment), class: "text-black" %>
+                  </li>
+                <% end %>
+                <% if policy(enrollment).edit? %>
+                  <li>
+                    <%= link_to "Edit", edit_cohort_enrollment_path(@cohort, enrollment), class: "text-black" %>
                   </li>
                 <% end %>
               </ul>
