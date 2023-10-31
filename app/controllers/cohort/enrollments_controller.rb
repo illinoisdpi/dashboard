@@ -52,7 +52,7 @@ class Cohort::EnrollmentsController < ApplicationController
   def update
     respond_to do |format|
       if @enrollment.update(enrollment_params)
-        format.html { redirect_to enrollment_url(@enrollment), notice: "Enrollment was successfully updated." }
+        format.html { redirect_to cohort_enrollments_url(@enrollment), notice: "Enrollment was successfully updated." }
         format.json { render :show, status: :ok, location: @enrollment }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -97,6 +97,6 @@ class Cohort::EnrollmentsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def enrollment_params
-    params.require(:enrollment).permit(:role, :user_id, :cohort_id)
+    params.require(:enrollment).permit(:role, :user_id, :cohort_id, :skills_development)
   end
 end
