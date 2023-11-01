@@ -134,6 +134,11 @@ module Enrollment::Adminable
             end
           end
         end
+        field :user do
+          visible do
+            bindings[:controller].current_user.admin?
+          end
+        end
       end
     end
   end
