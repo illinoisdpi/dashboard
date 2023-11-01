@@ -1,7 +1,4 @@
-<%
-  #TODO: fix. Should probably have separate forms for POST and PATCH
-%>
-<%= form_with(model: @enrollment, url: (@enrollment.new_record? ? cohort_enrollments_path(@cohort) : cohort_enrollment_path(@cohort, @enrollment)), method: (@enrollment.new_record? ? :post : :patch)) do |form| %>
+<%= form_with(model: @enrollment, url: [@cohort, @enrollment]) do |form| %>
   <% if @enrollment.errors.any? %>
     <div class="text-danger">
       <h2><%= pluralize(@enrollment.errors.count, "error") %> prohibited this enrollment from being saved:</h2>
