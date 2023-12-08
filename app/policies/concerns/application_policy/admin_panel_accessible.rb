@@ -10,6 +10,6 @@ module ApplicationPolicy::AdminPanelAccessible
   end
 
   def blazer_panel_accessible?
-    user.admin? || user.instructor?
+    user.admin? || user.instructor? || user.teaching_assistant?
   end
 end
