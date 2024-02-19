@@ -4,7 +4,7 @@ class CanvasGradebookSnapshotPolicy < ApplicationPolicy
   end
 
   def show?
-    user.admin? || user.instructor?
+    user.admin? || user.instructor? || user.teaching_assistant?
   end
 
   def create?
