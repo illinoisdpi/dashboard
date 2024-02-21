@@ -37,4 +37,8 @@ Rails.application.routes.draw do
     root "news#index", as: "news_root"
     get "/rss", to: "news#rss"
   end
+
+  constraints subdomain: "rfp" do
+    root "rfp#index", as: "rfp_root"
+  end
 end
