@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_06_145213) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_22_203842) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -231,6 +231,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_06_145213) do
     t.uuid "user_id", null: false
     t.index ["cohort_id"], name: "index_piazza_activity_reports_on_cohort_id"
     t.index ["user_id"], name: "index_piazza_activity_reports_on_user_id"
+  end
+
+  create_table "rfp_idea_submissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "contact_name"
+    t.string "email"
+    t.string "title"
+    t.text "details"
+    t.string "supporting_doc_filename"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "roles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
