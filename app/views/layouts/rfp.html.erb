@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+
+    <title>DPI Dev RFP</title>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <%= render "shared/favicon" %>
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+
+    <%= render "shared/cdn_assets" %>
+  </head>
+
+  <body class="pb-5">
+    <div class="container mb-5">
+      <%= yield %>
+    </div>
+  </body>
+</html>

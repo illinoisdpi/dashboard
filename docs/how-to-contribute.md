@@ -46,4 +46,5 @@ Add this to your `/etc/hosts` file so you can access subdomains in your dev envi
 ```
 127.0.0.1 news.dpi.local
 127.0.0.1 dashboard.dpi.local
+127.0.0.1 rfp.dpi.local
 ```
