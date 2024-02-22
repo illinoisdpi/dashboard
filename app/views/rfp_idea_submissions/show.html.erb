@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @rfp_idea_submission %>
+
+<div>
+  <%= link_to "Edit this rfp idea submission", edit_rfp_idea_submission_path(@rfp_idea_submission) %> |
+  <%= link_to "Back to rfp idea submissions", rfp_idea_submissions_path %>
+
+  <%= button_to "Destroy this rfp idea submission", @rfp_idea_submission, method: :delete %>
+</div>

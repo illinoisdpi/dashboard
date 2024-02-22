@@ -1,0 +1,2 @@
+class RfpIdeaSubmission < ApplicationRecord
+end

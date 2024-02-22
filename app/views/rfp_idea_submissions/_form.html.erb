@@ -1,0 +1,42 @@
+<%= form_with(model: rfp_idea_submission) do |form| %>
+  <% if rfp_idea_submission.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(rfp_idea_submission.errors.count, "error") %> prohibited this rfp_idea_submission from being saved:</h2>
+
+      <ul>
+        <% rfp_idea_submission.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :contact_name, style: "display: block" %>
+    <%= form.text_field :contact_name %>
+  </div>
+
+  <div>
+    <%= form.label :email, style: "display: block" %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div>
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.label :details, style: "display: block" %>
+    <%= form.text_area :details %>
+  </div>
+
+  <div>
+    <%= form.label :supporting_doc_filename, style: "display: block" %>
+    <%= form.text_field :supporting_doc_filename %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
