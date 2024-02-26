@@ -2,7 +2,7 @@ class RfpIdeaSubmissionsController < ApplicationController
   layout "rfp"
   skip_before_action :authenticate_user!
   skip_after_action :verify_policy_scoped
-  before_action { authorize(:rfp_idea_submission) }
+  before_action { authorize(:rfp_idea_submissions) }
   before_action :set_rfp_idea_submission, only: %i[ show edit update destroy ]
   
 
