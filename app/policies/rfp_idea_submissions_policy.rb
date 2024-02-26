@@ -14,7 +14,7 @@ class RfpIdeaSubmissionsPolicy < ApplicationPolicy
   def create?
     true
   end
-  
+
   def edit?
   end
 
