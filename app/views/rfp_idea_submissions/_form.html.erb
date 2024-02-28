@@ -3,7 +3,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">RFP Idea Submission Form </h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Submit a Project Idea </h1>
       </div>
       <div class="modal-body">
         <%= form_with(model: RfpIdeaSubmission.new, url: rfp_idea_submissions_path, local: true) do |form| %>
@@ -27,14 +27,13 @@
             <%= form.label :supporting_doc_filename, style: "display: block" %>
             <%= form.file_field :supporting_doc_filename %>
           </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <div>
-            <%= form.submit %>
+            <%= form.submit class: "btn btn-primary submit_idea_button" %>
           </div>
         <% end %>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Understood</button>
       </div>
     </div>
   </div>
