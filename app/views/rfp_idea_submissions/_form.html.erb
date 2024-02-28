@@ -24,14 +24,14 @@
             <%= form.text_area :details %>
           </div>
           <div>
-            <%= form.label :supporting_doc_filename, style: "display: block" %>
-            <%= form.file_field :supporting_doc_filename %>
+            <%= form.label :add_attachment, style: "display: block" %>
+            <%= form.file_field  :supporting_doc_filename %>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <div>
-            <%= form.submit class: "btn btn-primary submit_idea_button" %>
+            <%= form.submit "Submit", class: "btn btn-primary submit_idea_button" %>
           </div>
         <% end %>
       </div>
