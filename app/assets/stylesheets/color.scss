@@ -6,6 +6,24 @@
   --dark-grey: #323232;
 }
 
+.btn-dpi-primary {
+  --bs-btn-font-weight: 600;
+  --bs-btn-color: var(--white);
+  --bs-btn-bg: var(--digital-blue);
+  --bs-btn-border-color: var(--digital-blue);
+  --bs-btn-hover-color: var(--white);
+  --bs-btn-hover-bg: #{shade-color(--digital-blue, 10%)};
+  --bs-btn-hover-border-color: #{shade-color(--digital-blue 10%)};
+  --bs-btn-focus-shadow-rgb: var(--digital-blue);
+  --bs-btn-active-color: var(--bs-btn-hover-color);
+  --bs-btn-active-bg: #{shade-color(--digital-blue, 20%)};
+  --bs-btn-active-border-color: #{shade-color(--digital-blue, 20%)};
+}
+.btn-dpi-secondary {
+  
+}
+
+
 .bg-dpi-primary {
   background-color: var(--digital-blue);
 }
