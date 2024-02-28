@@ -29,13 +29,20 @@ class RfpIdeaSubmissionsController < ApplicationController
     @rfp_idea_submission = RfpIdeaSubmission.new(rfp_idea_submission_params)
 
     respond_to do |format|
+      # if @rfp_idea_submission.save
+      #   format.html { redirect_to rfp_idea_submission_url(@rfp_idea_submission), notice: "Rfp idea submission was successfully created." }
+      #   format.json { render :show, status: :created, location: @rfp_idea_submission }
+      # else
+      #   format.html { render :new, status: :unprocessable_entity }
+      #   format.json { render json: @rfp_idea_submission.errors, status: :unprocessable_entity }
+      # end
+
       if @rfp_idea_submission.save
-        format.html { redirect_to rfp_idea_submission_url(@rfp_idea_submission), notice: "Rfp idea submission was successfully created." }
-        format.json { render :show, status: :created, location: @rfp_idea_submission }
+        flash[:notice] = 'Project idea was submitted successfully!'
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @rfp_idea_submission.errors, status: :unprocessable_entity }
+        flash[:alert] = 'Error submitting project idea. Please try again.'
       end
+      redirect_to rfp_root_path
     end
   end
 
