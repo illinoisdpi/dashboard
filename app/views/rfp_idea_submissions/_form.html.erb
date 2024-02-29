@@ -1,41 +1,28 @@
-<!-- Start: Form with Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Submit a Project Idea </h1>
-      </div>
-      <div class="modal-body">
-        <%= form_with(model: RfpIdeaSubmission.new, url: rfp_idea_submissions_path, local: true) do |form| %>
-          <div>
-            <%= form.label :contact_name, style: "display: block" %>
-            <%= form.text_field :contact_name %>
-          </div>
-          <div>
-            <%= form.label :email, style: "display: block" %>
-            <%= form.text_field :email %>
-          </div>
-          <div>
-            <%= form.label :title, style: "display: block" %>
-            <%= form.text_field :title %>
-          </div>
-          <div>
-            <%= form.label :details, style: "display: block" %>
-            <%= form.text_area :details %>
-          </div>
-          <div>
-            <%= form.label :add_attachment, style: "display: block" %>
-            <%= form.file_field  :supporting_doc_filename %>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <div>
-            <%= form.submit "Submit", class: "btn btn-primary submit_idea_button" %>
-          </div>
-        <% end %>
-      </div>
-    </div>
+<%= form_with(model: RfpIdeaSubmission.new, url: rfp_idea_submissions_path, local: true) do |form| %>
+  <div>
+    <%= form.label :contact_name, style: "display: block" %>
+    <%= form.text_field :contact_name %>
+  </div>
+  <div>
+    <%= form.label :email, style: "display: block" %>
+    <%= form.text_field :email %>
+  </div>
+  <div>
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_field :title %>
+  </div>
+  <div>
+    <%= form.label :details, style: "display: block" %>
+    <%= form.text_area :details %>
+  </div>
+  <div>
+    <%= form.label :add_attachment, style: "display: block" %>
+    <%= form.file_field  :supporting_doc_filename %>
   </div>
 </div>
-<!-- End: Form with Modal -->
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+  <div>
+    <%= form.submit "Submit", class: "btn btn-primary submit_idea_button" %>
+  </div>
+<% end %>
