@@ -1,7 +1,12 @@
-<h1>New rfp idea submission</h1>
-<%= render "form", rfp_idea_submission: @rfp_idea_submission %>
-<!-- 
+<%= render "rfp/navbar" %>
+<div class="container my-5">
+  <div class="mb-3">
+    <h1>Submit Project Idea </h1>
+  </div>
+  <%= render "form", rfp_idea_submission: @rfp_idea_submission %>
+  <!-- 
 <div>
   <%= link_to "Back to rfp idea submissions", rfp_idea_submissions_path %>
 </div>
 -->
+</div>
