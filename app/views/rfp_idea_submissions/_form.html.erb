@@ -3,23 +3,20 @@
     <%= form.label :contact_name, class: "form-label" %>
     <%= form.text_field :contact_name, class: "form-control", placeholder: "Joe Schmoe" %>
   </div>
-  <div>
+  <div class="mb-3">
     <%= form.label :email, class: "form-label" %>
     <%= form.text_field :email, class: "form-control", placeholder: "name@example.com" %>
   </div>
-  <div>
+  <div class="mb-3">
     <%= form.label :title, class: "form-label"%>
     <%= form.text_field :title, class: "form-control", placeholder: "Your Title"  %>
   </div>
-  <div>
-    <%= form.label :details,class: "form-label" %>
-    <%= form.text_area :details, class: "form-control", rows: 4 %>
+  <div class="mb-3">
+    <%= form.label :project_details,class: "form-label" %>
+    <%= form.text_area :project_details, class: "form-control", rows: 4 %>
   </div>
 </div>
-<div>
-  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-</div>
-<div>
-  <%= form.submit "Submit", class: "btn btn-primary btn-dpi-primary" %>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+  <%= form.submit "Submit", class: "btn btn-primary btn-dpi-primary me-md-2" %>
 </div>
 <% end %>
