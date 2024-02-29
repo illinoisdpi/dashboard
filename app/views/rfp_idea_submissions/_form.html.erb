@@ -1,28 +1,25 @@
 <%= form_with(model: RfpIdeaSubmission.new, url: rfp_idea_submissions_path, local: true) do |form| %>
-  <div>
-    <%= form.label :contact_name, style: "display: block" %>
-    <%= form.text_field :contact_name %>
+  <div class="mb-3">
+    <%= form.label :contact_name, class: "form-label" %>
+    <%= form.text_field :contact_name, class: "form-control", placeholder: "Joe Schmoe" %>
   </div>
   <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
+    <%= form.label :email, class: "form-label" %>
+    <%= form.text_field :email, class: "form-control", placeholder: "name@example.com" %>
   </div>
   <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+    <%= form.label :title, class: "form-label"%>
+    <%= form.text_field :title, class: "form-control", placeholder: "Your Title"  %>
   </div>
   <div>
-    <%= form.label :details, style: "display: block" %>
-    <%= form.text_area :details %>
-  </div>
-  <div>
-    <%= form.label :add_attachment, style: "display: block" %>
-    <%= form.file_field  :supporting_doc_filename %>
+    <%= form.label :details,class: "form-label" %>
+    <%= form.text_area :details, class: "form-control", rows: 4 %>
   </div>
 </div>
-<div class="modal-footer">
+<div>
   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-  <div>
-    <%= form.submit "Submit", class: "btn btn-primary submit_idea_button" %>
-  </div>
+</div>
+<div>
+  <%= form.submit "Submit", class: "btn btn-primary btn-dpi-primary" %>
+</div>
 <% end %>
