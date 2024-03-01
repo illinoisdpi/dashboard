@@ -12,4 +12,8 @@
 #  updated_at   :datetime         not null
 #
 class RfpIdeaSubmission < ApplicationRecord
+  validates :contact_name, presence: true
+  validates :title, presence: true
+  validates :email, presence: true
+  validates :details, presence: true
 end
