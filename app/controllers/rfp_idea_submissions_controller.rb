@@ -5,7 +5,6 @@ class RfpIdeaSubmissionsController < ApplicationController
   before_action { authorize(:rfp_idea_submissions) }
   before_action :set_rfp_idea_submission, only: %i[ show edit update destroy ]
   
-
   # GET /rfp_idea_submissions or /rfp_idea_submissions.json
   def index
     @rfp_idea_submissions = RfpIdeaSubmission.all
@@ -29,20 +28,14 @@ class RfpIdeaSubmissionsController < ApplicationController
     @rfp_idea_submission = RfpIdeaSubmission.new(rfp_idea_submission_params)
 
     respond_to do |format|
-      # if @rfp_idea_submission.save
-      #   format.html { redirect_to rfp_idea_submission_url(@rfp_idea_submission), notice: "Rfp idea submission was successfully created." }
-      #   format.json { render :show, status: :created, location: @rfp_idea_submission }
-      # else
-      #   format.html { render :new, status: :unprocessable_entity }
-      #   format.json { render json: @rfp_idea_submission.errors, status: :unprocessable_entity }
-      # end
-
       if @rfp_idea_submission.save
-        flash[:notice] = 'Project idea was submitted successfully!'
+        format.html { redirect_to new_rfp_idea_submission_path, notice: "Your project idea was submitted successfully." }
+        format.json { render :show, status: :created, location: @rfp_idea_submission }
       else
-        flash[:alert] = 'Error submitting project idea. Please try again.'
+        flash[:alert] = 'Error submitting project. Please try again.'
+        format.html { redirect_to new_rfp_idea_submission_path }
+        format.json { render json: @rfp_idea_submission.errors, status: :unprocessable_entity }
       end
-      redirect_to rfp_root_path
     end
   end
 
@@ -77,6 +70,6 @@ class RfpIdeaSubmissionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def rfp_idea_submission_params
-      params.require(:rfp_idea_submission).permit(:contact_name, :email, :title, :details, :supporting_doc_filename)
+      params.require(:rfp_idea_submission).permit(:contact_name, :email, :title, :details, :phone_number)
     end
 end
