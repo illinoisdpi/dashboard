@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_01_024502) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_01_024939) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -238,7 +238,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_01_024502) do
     t.string "email"
     t.string "title"
     t.text "details"
-    t.string "supporting_doc_filename"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "phone_number"
