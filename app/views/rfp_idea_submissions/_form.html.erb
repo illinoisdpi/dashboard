@@ -13,11 +13,11 @@
   </div>
   <div class="form-floating mb-3">
     <%= form.text_field :phone_number, class: "form-control", id:"floating-phone-input", placeholder: "555-555-5555"  %>
-    <%= form.label :phone_number, class: "form-label", for: "floating-phone-input"%>
+    <%= form.label :phone_number, "Phone number (optional)", class: "form-label", for: "floating-phone-input"%>
   </div>
   <div class="form-floating mb-3">
     <%= form.text_area :details, class: "form-control", id: "floatingPassword", placeholder: "Password", style: "height: 120px" %>
-    <%= form.label :details, "Project Details", class: "form-label", for: "floatingPassword" %>
+    <%= form.label :details, "Project details", class: "form-label", for: "floatingPassword" %>
   </div>
   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
     <%= form.submit "Submit Project Idea", class: "w-100 btn btn-lg btn-primary btn-dpi-primary" %>
