@@ -4,12 +4,16 @@
     <%= form.text_field :contact_name, class: "form-control", placeholder: "Joe Schmoe" %>
   </div>
   <div class="mb-3">
+    <%= form.label :title, class: "form-label"%>
+    <%= form.text_field :title, class: "form-control", placeholder: "Your Title"  %>
+  </div>
+  <div class="mb-3">
     <%= form.label :email, class: "form-label" %>
     <%= form.text_field :email, class: "form-control", placeholder: "name@example.com" %>
   </div>
   <div class="mb-3">
-    <%= form.label :title, class: "form-label"%>
-    <%= form.text_field :title, class: "form-control", placeholder: "Your Title"  %>
+    <%= form.label :phone_number, class: "form-label"%>
+    <%= form.text_field :phone_Number, class: "form-control", placeholder: "555-555-5555"  %>
   </div>
   <div class="mb-3">
     <%= form.label :project_details,class: "form-label" %>
