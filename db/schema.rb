@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_22_203842) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_01_024502) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -241,6 +241,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_22_203842) do
     t.string "supporting_doc_filename"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "phone_number"
   end
 
   create_table "roles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
