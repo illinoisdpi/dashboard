@@ -17,11 +17,9 @@
     <%# TODO: add user photo  %>
     <div class="mb-3">
       <%= form.label :subject_id, class: "form-label" %>
-      <%# form.collection_select :subject_id, @cohort.enrollments.all.default_order, :id, :to_s, { prompt: "Select a subject" }, class: "form-control" %>
-      <input type="search" data-search-subject-target="inputField" data-action="input->search-subject#test">
-      <%# search_field "search_field", data: {search_subject_target: "inputField", action: "input->search-subject#test" } %>
-      <%= form.hidden_field :subject_id %>
-      <div id="search"></div>
+      <%= form.hidden_field :subject_id, data: { search_subject_target: "hiddenField" } %>
+      <input type="search" data-search-subject-target="inputField" data-action="input->search-subject#search" class="form-control">
+      <div id="search" data-search-subject-target="optionsList" style="display: none" class="options-list"></div>
     </div>
   
     <div class="mb-3" data-controller="emoji-input">

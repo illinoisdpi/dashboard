@@ -8,8 +8,7 @@
         <% @subjects.each do |subject| %>
           <div data-action="click->search-subject#select">
             <i class="fa-regular fa-user"></i>
-            <%= highlight(subject.user_id, params.dig(:title_search)) %>
-            <%= highlight(subject.user.full_name, params.dig(:title_search)) %>
+            <span data-subject-id="<%= subject.id %>"><%= highlight(subject.user.full_name, params.dig(:subject_search)) %></span>
           </div>
         <% end %>
       </div>
