@@ -49,4 +49,8 @@ class EnrollmentPolicy < ApplicationPolicy
   def snapshot?
     true
   end
+
+  def search?
+    self.new?
+  end
 end
