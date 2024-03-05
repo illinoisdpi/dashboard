@@ -43,6 +43,7 @@ class Cohort::ImpressionsController < ApplicationController
 
   # POST /impressions or /impressions.json
   def create
+    debugger
     @impression = current_user.authored_impressions.new(impression_params)
 
     respond_to do |format|
