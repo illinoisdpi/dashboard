@@ -2,14 +2,14 @@
 #
 # Table name: rfp_idea_submissions
 #
-#  id           :uuid             not null, primary key
-#  contact_name :string
-#  details      :text
-#  email        :string
-#  phone_number :string
-#  title        :string
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
+#  id            :uuid             not null, primary key
+#  contact_email :string
+#  contact_name  :string
+#  contact_phone :string
+#  details       :text
+#  title         :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
 #
 require 'rails_helper'
 
