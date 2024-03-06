@@ -4,16 +4,16 @@
     <%= form.label :contact_name, class: "form-label", for: "floating-contact-input" %>
   </div>
   <div class="form-floating mb-3">
-    <%= form.text_field :title, class: "form-control", id:"floating-title-input", placeholder: "Your Title"  %>
-    <%= form.label :title, class: "form-label", for: "floating-title-input"%>
+    <%= form.email_field :contact_email, class: "form-control", id: "floating-email-input", placeholder: "name@example.com" %>
+    <%= form.label :contact_email, class: "form-label", for: "floating-email-input" %>
   </div>
   <div class="form-floating mb-3">
-    <%= form.email_field :email, class: "form-control", id: "floating-email-input", placeholder: "name@example.com" %>
-    <%= form.label :email, class: "form-label", for: "floating-email-input" %>
-  </div>
-  <div class="form-floating mb-3">
-    <%= form.text_field :phone_number, class: "form-control", id:"floating-phone-input", placeholder: "555-555-5555"  %>
+    <%= form.text_field :contact_phone, class: "form-control", id:"floating-phone-input", placeholder: "555-555-5555"  %>
     <%= form.label :phone_number, "Phone number (optional)", class: "form-label", for: "floating-phone-input"%>
+  </div>
+  <div class="form-floating mb-3">
+    <%= form.text_field :title, class: "form-control", id:"floating-title-input", placeholder: "Your Title"  %>
+    <%= form.label :project_title, class: "form-label", for: "floating-title-input"%>
   </div>
   <div class="form-floating mb-3">
     <%= form.text_area :details, class: "form-control", id: "floatingPassword", placeholder: "Password", style: "height: 120px" %>
