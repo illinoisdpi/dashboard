@@ -18,7 +18,11 @@
     <div class="mb-3">
       <%= form.label :subject_id, class: "form-label" %>
       <%= form.hidden_field :subject_id, data: { search_subject_target: "hiddenField" } %>
-      <input type="search" data-search-subject-target="inputField" data-action="input->search-subject#search" class="form-control">
+      <input 
+        type="search"  
+        data-search-subject-target="inputField"
+        data-action="input->search-subject#search blur->search-subject#hideWhenEmpty" 
+        class="form-control">
       <div id="search" data-search-subject-target="optionsList" style="display: none" class="options-list"></div>
     </div>
   

@@ -6,9 +6,11 @@
     <% else %>
       <div>
         <% @subjects.each do |subject| %>
-          <div data-action="click->search-subject#select">
+          <div class="option" data-action="click->search-subject#select" data-subject-id="<%= subject.id %>" data-subject-name="<%= subject.user.full_name %>">
             <i class="fa-regular fa-user"></i>
-            <span data-subject-id="<%= subject.id %>"><%= highlight(subject.user.full_name, params.dig(:subject_search)) %></span>
+            
+              <%= highlight(subject.user.full_name, params.dig(:subject_search)) %>
+  
           </div>
         <% end %>
       </div>
