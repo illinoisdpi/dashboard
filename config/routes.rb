@@ -25,13 +25,12 @@ Rails.application.routes.draw do
           get 'snapshot'
         end
       end
-
       resources :impressions, module: :cohort
       resources :piazza_activity_reports
     end
 
     resources :impressions
-    
+
     root "dashboard#index", as: "dashboard_root"
   end
 
