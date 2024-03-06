@@ -3,7 +3,6 @@ class RfpIdeaSubmissionsController < ApplicationController
   skip_before_action :authenticate_user!
   skip_after_action :verify_policy_scoped
   before_action { authorize(:rfp_idea_submissions) }
-  before_action :set_rfp_idea_submission, only: %i[ show edit update destroy ]
   
 
   # GET /rfp_idea_submissions/new
@@ -28,11 +27,6 @@ class RfpIdeaSubmissionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_rfp_idea_submission
-      @rfp_idea_submission = RfpIdeaSubmission.find(params[:id])
-    end
-
     # Only allow a list of trusted parameters through.
     def rfp_idea_submission_params
       params.require(:rfp_idea_submission).permit(:contact_name, :contact_email, :title, :details, :contact_phone)
