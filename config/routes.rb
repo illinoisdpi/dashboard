@@ -40,7 +40,7 @@ Rails.application.routes.draw do
   
   constraints subdomain: "rfp" do
     root "rfp#index", as: "rfp_root"
-    resources :rfp_idea_submissions
+    resources :rfp_idea_submissions, only: [:new, :create]
   end
 
 end
