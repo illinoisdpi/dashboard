@@ -35,6 +35,6 @@ class RfpIdeaSubmissionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def rfp_idea_submission_params
-      params.require(:rfp_idea_submission).permit(:contact_name, :email, :title, :details, :phone_number)
+      params.require(:rfp_idea_submission).permit(:contact_name, :contact_email, :title, :details, :contact_phone)
     end
 end
