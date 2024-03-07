@@ -1,0 +1,25 @@
+<%= render "rfp/navbar" %>
+<!-- Alerts -->
+<% if notice.present? %>
+  <%= render partial: "shared/flashes", locals: { message: notice, css_class: "success" }%>
+<% end %>
+<% if alert.present? %>
+  <%= render partial: "shared/flashes", locals: { message: alert, css_class: "danger" }%>
+<% end %>
+<!-- Hero Section & Form -->
+<div class="container col-xl-12 px-4 py-5">
+  <div class="row align-items-center g-lg-2 py-2">
+    <div class="col text-start text-lg-start">
+      <h1 class="fs-4 fw-semibold lh-1 mb-3">Who We Are</h1>
+      <p class="col-lg-10 fs-5">
+        The Discovery Partner's Institute Pritzker Tech Talent Labs Software Development Trainee program focuses on providing aspiring engineers with practical experience to prepare them for their future careers. 
+        <h1 class="fs-4 fw-semibold lh-1 mb-3">Have a Project Idea?</h1>
+        <p class="col-lg-10 fs-5">
+          Do you have a project in mind? We welcome project proposals from individuals and organizations alike. Submit your project idea to provide our trainees with real-world coding experience. This is an opportunity to empower tech newcomers while bringing innovative projects to life.
+        </p>
+      </div>
+      <div class="col-md-12 mx-auto col-lg-6">
+        <%= render "form", rfp_idea_submission: @rfp_idea_submission %>
+      </div>
+    </div>
+  </div>

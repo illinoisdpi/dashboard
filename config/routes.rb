@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       resources :impressions, module: :cohort
       resources :piazza_activity_reports
     end
+
     resources :impressions
 
     root "dashboard#index", as: "dashboard_root"
@@ -40,5 +41,6 @@ Rails.application.routes.draw do
 
   constraints subdomain: "rfp" do
     root "rfp#index", as: "rfp_root"
+    resources :rfp_idea_submissions, only: [:new, :create]
   end
 end
