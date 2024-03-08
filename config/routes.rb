@@ -31,7 +31,9 @@ Rails.application.routes.draw do
       resources :impressions, module: :cohort
       resources :piazza_activity_reports
     end
-    resources :impressions
+    resources :impressions do
+      get :search, to: "impressions#search", on: :collection
+    end
 
     root "dashboard#index", as: "dashboard_root"
   end

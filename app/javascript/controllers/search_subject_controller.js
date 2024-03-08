@@ -2,24 +2,44 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="search-subject"
 export default class extends Controller {
-  static targets = ["inputField", "optionsList", "hiddenField"]
+  static targets = ["inputField", "optionsList", "hiddenField", "overlay"]
   static values = { cohort: String }
 
+ 
   
   search() {
-    this.optionsListTarget.style.display = "block";
     const inputFieldValue = this.inputFieldTarget.value
-    // Append the subject_search parameter as a query string
-    const url = `/cohorts/${this.cohortValue}/enrollments/search?subject_search=${encodeURIComponent(inputFieldValue)}`
+    var url = `/impressions/search?subject_search=${encodeURIComponent(inputFieldValue)}`
+    
+    if (window.location.pathname.includes('cohort')) {
+      url += `&cohort_id=${this.cohortValue}`
+    }
 
-    fetch(url, {
-      headers: {
-        'Accept': 'text/vnd.turbo-stream.html'
-      }
-    }).then(response => response.text())
-      .then(html => Turbo.renderStreamMessage(html))
+    clearTimeout(this.timeout)
+    this.timeout = setTimeout(() => {
+
+      this.optionsListTarget.style.display = "block";
+      this.overlayTarget.style.display = "block";
+      
+      fetch(url, {
+        headers: {
+          'Accept': 'text/vnd.turbo-stream.html'
+        }
+      }).then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error, status: ${response.status}`);
+        }
+        return response.text();
+      }).then(html => Turbo.renderStreamMessage(html))
+      .catch(error => {
+        console.error('Fetch error:', error);
+        
+        this.optionsListTarget.innerHTML = '<div class="option">Search failed. Please try again.</div>';
+      });
+
+    }, 250)
+    
   }
-  
 
   select(event) {
     this.inputFieldTarget.value = event.target.dataset.subjectName
@@ -29,16 +49,23 @@ export default class extends Controller {
   }
 
   toggleListVisibility() { 
-    this.optionsListIsNotVisible() ? this.optionsListTarget.style.display = "block" : this.optionsListTarget.style.display = "none"
-  }
+    if (this.optionsListIsNotVisible()) {
 
-  hideWhenEmpty() {
-    if (this.inputFieldTarget.value === "" && this.inputFieldTarget !== document.activeElement) {
-      this.toggleListVisibility()
+      this.optionsListTarget.style.display = "block"
+      this.overlayTarget.style.display = "block" 
+
+     } else {
+
+        this.optionsListTarget.style.display = "none"
+        this.overlayTarget.style.display = "none"
     }
   }
 
+  hideWhenEmpty() {
+    this.toggleListVisibility()
+  }
+
   optionsListIsNotVisible() {
-    return !this.optionsListTarget.display === "none"
+    return !this.optionsListTarget.style.display === "none"
   }
 }

@@ -40,4 +40,8 @@ class ImpressionPolicy < ApplicationPolicy
   def download_csv?
     user.admin? || user.instructor?
   end
+
+  def search?
+    self.new?
+  end
 end
