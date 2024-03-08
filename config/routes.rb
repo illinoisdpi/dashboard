@@ -20,9 +20,6 @@ Rails.application.routes.draw do
     resources :cohorts do
       resources :canvas_gradebook_snapshots
       resources :enrollments, module: :cohort do
-        collection do
-          get :search
-        end
         member do
           get 'overview'
           get 'snapshot'
