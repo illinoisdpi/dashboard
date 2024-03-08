@@ -57,6 +57,27 @@ class ImpressionsController < ApplicationController
     end
   end
 
+  def search
+    
+    # checks if request is coming from Cohort::Impressions
+    @comes_from_cohort = params[:cohort_id].present?
+    
+    if params[:subject_search].present?
+      
+      if @comes_from_cohort
+        @subjects = Enrollment.filter_by_name(params[:subject_search]).where(cohort_id: params[:cohort_id])
+      else
+        @subjects = Enrollment.filter_by_name(params[:subject_search])
+      end
+   
+    else 
+      @subjects = []
+    end
+  
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
   private
 
   # Use callbacks to share common setup or constraints between actions.

@@ -84,20 +84,6 @@ class Cohort::EnrollmentsController < ApplicationController
     render layout: "navbarless"
   end
 
-  def search
-    if params[:subject_search].present?
-      @subjects = Enrollment.joins(:user)
-      .where("CONCAT(users.first_name, ' ', users.last_name) ILIKE ?", "%#{params[:subject_search]}%")
-      .order('enrollments.created_at DESC')
-      .includes(:user)
-    else 
-      @subjects = []
-    end
-  
-    respond_to do |format|
-      format.turbo_stream
-    end
-  end
   private
 
   # Use callbacks to share common setup or constraints between actions.

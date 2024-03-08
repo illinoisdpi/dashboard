@@ -1,5 +1,9 @@
 <div data-controller="search-subject" data-search-subject-cohort-value = "<%= @cohort.id %>">
-  
+  <div data-search-subject-target="overlay" 
+    data-action="touchstart->search-subject#hideWhenEmpty click->search-subject#hideWhenEmpty" 
+    style="display:none; position:fixed; top:0; left:0; right:0; bottom:0;">
+  </div>
+
   <%= form_for impression do |form| %>
     <% if impression.errors.any? %>
       <div style="color: red">
@@ -21,7 +25,7 @@
       <input 
         type="search"  
         data-search-subject-target="inputField"
-        data-action="input->search-subject#search blur->search-subject#hideWhenEmpty" 
+        data-action="input->search-subject#search" 
         class="form-control">
       <div id="search" data-search-subject-target="optionsList" style="display: none" class="options-list"></div>
     </div>

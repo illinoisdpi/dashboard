@@ -50,7 +50,4 @@ class EnrollmentPolicy < ApplicationPolicy
     true
   end
 
-  def search?
-    self.new?
-  end
 end
