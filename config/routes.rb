@@ -25,7 +25,11 @@ Rails.application.routes.draw do
           get 'snapshot'
         end
       end
-      resources :impressions, module: :cohort
+      resources :impressions, module: :cohort do
+        collection do
+          get :search
+        end
+      end
       resources :piazza_activity_reports
     end
     resources :impressions do

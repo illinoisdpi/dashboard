@@ -1,7 +1,7 @@
 <div data-controller="search-subject">
   <div data-search-subject-target="overlay" 
-    data-action="touchstart->search-subject#hideWhenEmpty click->search-subject#hideWhenEmpty" 
-    style="display:none; position:fixed; top:0; left:0; right:0; bottom:0;">
+    data-action="touchstart->search-subject#toggleListVisibility click->search-subject#toggleListVisibility" 
+    class="options-list-overlay">
   </div>
 
   <%= form_with(model: impression) do |form| %>
@@ -17,16 +17,18 @@
       </div>
     <% end %>
 
-    <%# TODO: make a search / autocomplete %>
     <%# TODO: add user photo  %>
     <div class="mb-3">
       <%= form.label :subject_id, class: "form-label" %>
-      <%= form.hidden_field :subject_id, data: { search_subject_target: "hiddenField" } %>
+      <%= form.hidden_field :subject_id, 
+        value: @impression.subject_id.blank? ? "" : @impression.subject_id, 
+        data: { search_subject_target: "hiddenField" } %>
       <input 
         type="search"  
         data-search-subject-target="inputField"
-        data-action="input->search-subject#search" 
-        class="form-control">
+        data-action="input->search-subject#search click->search-subject#search" 
+        class="form-control"
+        value="<%= @impression.subject_id.blank? ? "" : Enrollment.find(@impression.subject_id).user.full_name %>">
       <div id="search" data-search-subject-target="optionsList" style="display: none" class="options-list"></div>
     </div>
 

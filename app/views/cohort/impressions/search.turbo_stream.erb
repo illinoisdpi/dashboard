@@ -1,5 +1,4 @@
 <turbo-stream action="update" target="search">
-  
   <template>
     <% if @subjects.length == 0 %>
       <%= "No subjects found" %>
@@ -9,12 +8,9 @@
           <div class="option" data-action="click->search-subject#select" data-subject-id="<%= subject.id %>" data-subject-name="<%= subject.user.full_name %>">
             <i class="fa-regular fa-user"></i>
             <%= highlight(subject.user.full_name, params.dig(:subject_search)) %>
-              -
-            <%= subject.cohort.to_s %>
           </div>
         <% end %>
-      </div>  
+      </div>
     <% end %>
   </template>
-
 </turbo-stream>

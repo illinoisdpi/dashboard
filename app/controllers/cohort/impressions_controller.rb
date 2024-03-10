@@ -35,6 +35,7 @@ class Cohort::ImpressionsController < ApplicationController
   # GET /impressions/new
   def new
     @impression = current_user.authored_impressions.new
+    pp @impression
   end
 
   # GET /impressions/1/edit
@@ -43,7 +44,6 @@ class Cohort::ImpressionsController < ApplicationController
 
   # POST /impressions or /impressions.json
   def create
-  
     @impression = current_user.authored_impressions.new(impression_params)
 
     respond_to do |format|
@@ -77,6 +77,18 @@ class Cohort::ImpressionsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to impressions_url, notice: "Impression was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+
+  def search
+    if params[:subject_search].present?
+      @subjects = @cohort.enrollments.filter_by_name(params[:subject_search])
+    else 
+      @subjects = []
+    end
+  
+    respond_to do |format|
+      format.turbo_stream
     end
   end
 
