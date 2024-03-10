@@ -49,5 +49,4 @@ class EnrollmentPolicy < ApplicationPolicy
   def snapshot?
     true
   end
-
 end

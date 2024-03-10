@@ -5,15 +5,23 @@ export default class extends Controller {
   static targets = ["inputField", "optionsList", "hiddenField", "overlay"]
   static values = { cohort: String }
 
- 
-  
   search() {
-    const inputFieldValue = this.inputFieldTarget.value
-    var url = `/impressions/search?subject_search=${encodeURIComponent(inputFieldValue)}`
     
-    if (window.location.pathname.includes('cohort')) {
-      url += `&cohort_id=${this.cohortValue}`
+    // clear hiddenField when input is empty to trigger validation if blank form is submitted
+    if (this.inputFieldTarget.value === "") {
+      this.hiddenFieldTarget.value = ""
     }
+    
+    // conditionally set the search url based on the current route
+    var url = ""
+    const inputFieldValue = this.inputFieldTarget.value
+    if (window.location.pathname.includes('cohorts')) {
+      url = `/cohorts/${this.cohortValue}/impressions/search?subject_search=${encodeURIComponent(inputFieldValue)}`
+    }
+    else {
+      url = `/impressions/search?subject_search=${encodeURIComponent(inputFieldValue)}`
+    }
+
 
     clearTimeout(this.timeout)
     this.timeout = setTimeout(() => {
@@ -42,27 +50,26 @@ export default class extends Controller {
   }
 
   select(event) {
-    this.inputFieldTarget.value = event.target.dataset.subjectName
-    this.hiddenFieldTarget.value = event.target.dataset.subjectId
-    this.toggleListVisibility()
-    this.inputFieldTarget.blur()
+    // ensure the click is registered on the option element,
+    // even if user clicks on the icon inside the option
+    const optionElement = event.target.closest('.option');
+
+    if (optionElement) {
+      this.inputFieldTarget.value = optionElement.dataset.subjectName;
+      this.hiddenFieldTarget.value = optionElement.dataset.subjectId;
+      this.toggleListVisibility();
+      this.inputFieldTarget.blur();
+    }
   }
 
   toggleListVisibility() { 
     if (this.optionsListIsNotVisible()) {
-
       this.optionsListTarget.style.display = "block"
       this.overlayTarget.style.display = "block" 
-
-     } else {
-
-        this.optionsListTarget.style.display = "none"
-        this.overlayTarget.style.display = "none"
+    } else {
+      this.optionsListTarget.style.display = "none"
+      this.overlayTarget.style.display = "none"
     }
-  }
-
-  hideWhenEmpty() {
-    this.toggleListVisibility()
   }
 
   optionsListIsNotVisible() {

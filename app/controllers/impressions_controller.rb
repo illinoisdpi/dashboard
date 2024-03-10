@@ -78,6 +78,7 @@ class ImpressionsController < ApplicationController
       format.turbo_stream
     end
   end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.
