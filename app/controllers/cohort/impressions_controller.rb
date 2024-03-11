@@ -79,6 +79,14 @@ class Cohort::ImpressionsController < ApplicationController
     end
   end
 
+  def search
+    @subjects = @cohort.enrollments.filter_by_name(params[:subject_search])
+
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
+
   private
 
   def set_cohort
