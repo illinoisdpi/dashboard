@@ -1,0 +1,26 @@
+<%= form_with(model: RfpIdeaSubmission.new, url: rfp_idea_submissions_path, local: true, html: { class: "p-4 p-md-6 border rounded-3 bg-light" }) do |form| %>
+  <div class="form-floating mb-3">
+    <%= form.text_field :contact_name, class: "form-control", id:"floating-contact-input", placeholder: "Joe Schmoe" %>
+    <%= form.label :contact_name, class: "form-label", for: "floating-contact-input" %>
+  </div>
+  <div class="form-floating mb-3">
+    <%= form.email_field :contact_email, class: "form-control", id: "floating-email-input", placeholder: "name@example.com" %>
+    <%= form.label :contact_email, class: "form-label", for: "floating-email-input" %>
+  </div>
+  <div class="form-floating mb-3">
+    <%= form.text_field :contact_phone, class: "form-control", id:"floating-phone-input", placeholder: "555-555-5555"  %>
+    <%= form.label :phone_number, "Phone number (optional)", class: "form-label", for: "floating-phone-input"%>
+  </div>
+  <div class="form-floating mb-3">
+    <%= form.text_field :title, class: "form-control", id:"floating-title-input", placeholder: "Your Title"  %>
+    <%= form.label :project_title, class: "form-label", for: "floating-title-input"%>
+  </div>
+  <div class="form-floating mb-3">
+    <%= form.text_area :details, class: "form-control", id: "floatingPassword", placeholder: "Password", style: "height: 120px" %>
+    <%= form.label :details, "Project details", class: "form-label", for: "floatingPassword" %>
+  </div>
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <%= form.submit "Submit Project Idea", class: "w-100 btn btn-lg btn-primary btn-dpi-primary" %>
+  </div>
+</div>
+<% end %>

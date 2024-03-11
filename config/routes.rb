@@ -32,9 +32,11 @@ Rails.application.routes.draw do
       end
       resources :piazza_activity_reports
     end
+    
     resources :impressions do
       get :search, to: "impressions#search", on: :collection
     end
+
 
     root "dashboard#index", as: "dashboard_root"
   end
@@ -46,5 +48,6 @@ Rails.application.routes.draw do
 
   constraints subdomain: "rfp" do
     root "rfp#index", as: "rfp_root"
+    resources :rfp_idea_submissions, only: [:new, :create]
   end
 end
