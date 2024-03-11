@@ -81,12 +81,8 @@ class Cohort::ImpressionsController < ApplicationController
   end
 
   def search
-    if params[:subject_search].present?
-      @subjects = @cohort.enrollments.filter_by_name(params[:subject_search])
-    else 
-      @subjects = []
-    end
-  
+    @subjects = @cohort.enrollments.filter_by_name(params[:subject_search])
+
     respond_to do |format|
       format.turbo_stream
     end
