@@ -63,10 +63,12 @@ class Enrollment < ApplicationRecord
   scope :default_order, -> { joins(:user).order(User.arel_table[:first_name].asc) }
   scope :student, -> { where(role: "student") }
   scope :not_student, -> { where.not(role: "student") }
-  scope :filter_by_name, ->(name) { joins(:user)
-    .where("CONCAT(users.first_name, ' ', users.last_name) ILIKE ?", "%#{name}%")
-    .order('enrollments.created_at DESC')
-    .includes(:user) }
+  scope :filter_by_name, ->(name) {
+    joins(:user)
+      .where("CONCAT(users.first_name, ' ', users.last_name) ILIKE ?", "%#{name}%")
+      .order("enrollments.created_at DESC")
+      .includes(:user)
+  }
 
   delegate :education,
     :github_username,
