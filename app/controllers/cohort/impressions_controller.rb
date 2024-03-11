@@ -35,7 +35,6 @@ class Cohort::ImpressionsController < ApplicationController
   # GET /impressions/new
   def new
     @impression = current_user.authored_impressions.new
-    pp @impression
   end
 
   # GET /impressions/1/edit
