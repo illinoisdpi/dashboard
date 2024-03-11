@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       end
       resources :piazza_activity_reports
     end
+
     resources :impressions do
       get :search, to: "impressions#search", on: :collection
     end
