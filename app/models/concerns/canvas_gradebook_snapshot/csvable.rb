@@ -2,6 +2,7 @@ module CanvasGradebookSnapshot::Csvable
   extend ActiveSupport::Concern
 
   class InvalidCanvasShortnameError < StandardError; end
+  class MissingCsvFileError < StandardError; end
 
   included do
     attr_accessor :csv_file
@@ -32,11 +33,14 @@ module CanvasGradebookSnapshot::Csvable
   private
 
   def process_csv_filename
+    raise MissingCsvFileError.new("Please select a CSV file") if self.csv_file.blank?
     self.csv_filename = csv_file.original_filename
     self.downloaded_at = CanvasGradebookSnapshot.extract_downloaded_at(csv_filename)
     validate_canvas_shortname
   rescue InvalidCanvasShortnameError => e
     errors.add(:csv_filename, e.message)
+  rescue MissingCsvFileError => e
+    errors.add(:csv_file, e.message)
   rescue Date::Error
     errors.add(:csv_filename, "Invalid format for downloaded_at in CSV filename. Expected format: 'YYYY-MM-DDTHHMM'")
   end
@@ -82,7 +86,8 @@ module CanvasGradebookSnapshot::Csvable
             user = User.find_by_email(email)
 
             if user.blank?
-              user = User.create(email:, password: SecureRandom.hex(16), canvas_full:)
+              last_name, first_name = canvas_full.split(", ")
+              user = User.create(email:, password: SecureRandom.hex(16), canvas_full:, first_name:, last_name:)
             end
 
             # test student has invalid email and doesn't save
