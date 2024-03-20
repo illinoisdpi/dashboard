@@ -25,9 +25,6 @@ export default class extends Controller {
 
     clearTimeout(this.timeout)
     this.timeout = setTimeout(() => {
-
-      this.optionsListTarget.style.display = "block";
-      this.overlayTarget.style.display = "block";
       
       fetch(url, {
         headers: {
@@ -38,11 +35,16 @@ export default class extends Controller {
           throw new Error(`HTTP error, status: ${response.status}`);
         }
         return response.text();
-      }).then(html => Turbo.renderStreamMessage(html))
+      }).then(html => {
+        Turbo.renderStreamMessage(html)
+        this.optionsListTarget.style.display = "block";
+        this.overlayTarget.style.display = "block";
+      })
       .catch(error => {
         console.error('Fetch error:', error);
-        
         this.optionsListTarget.innerHTML = '<div class="option">Search failed. Please try again.</div>';
+        this.optionsListTarget.style.display = "block";
+        this.overlayTarget.style.display = "block";
       });
 
     }, 250)
