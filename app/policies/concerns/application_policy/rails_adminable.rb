@@ -8,7 +8,7 @@ module ApplicationPolicy::RailsAdminable
   def export?
     user.admin? || user.instructor?
   end
-  
+
   def history?
     user.admin?
   end
