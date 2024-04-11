@@ -6,9 +6,21 @@ namespace :one_offs do
       .or(User.where.not(canvas_full: nil).where(last_name: nil))
     puts "There are #{users.count} users to update."
 
-    users.each do |user|
-      puts "updating user #{users.index(user) + 1} with canvas_full: '#{user.canvas_full}'"
+    printf "\033[31mWARNING -  press 'y' to continue: \033[0m"
+    prompt = gets.chomp.downcase
+    return unless prompt == "y"
+
+    users.each_with_index do |user, i|
+      puts "#{i}. updating user #{user.id} with canvas_full: '#{user.canvas_full}'"
+
       last_name, first_name = user.canvas_full.split(", ")
+
+      puts "#{i}. updating user #{user.id} to first_name: '#{first_name}', last_name: '#{last_name}'"
+
+      printf "\033[31mWARNING -  press 'y' to continue: \033[0m"
+      prompt = gets.chomp.downcase
+      next unless prompt == "y"
+
       user.update(first_name: first_name, last_name: last_name)
       puts "updated to first_name: '#{user.first_name}', last_name: '#{user.last_name}', user_id: '#{user.id}'"
       puts "-----------------"
