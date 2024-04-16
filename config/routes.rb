@@ -2,7 +2,6 @@ require 'sidekiq/web'
 require 'sidekiq/cron/web'
 
 Rails.application.routes.draw do
-  resources :tasks
   constraints subdomain: "dashboard" do
     authenticate :user, ->(user) { ApplicationPolicy.new(user, nil).admin_panel_accessible? } do
       mount RailsAdmin::Engine, at: "admin", as: "rails_admin"
