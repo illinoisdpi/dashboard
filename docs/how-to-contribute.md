@@ -48,3 +48,12 @@ Add this to your `/etc/hosts` file so you can access subdomains in your dev envi
 127.0.0.1 dashboard.dpi.local
 127.0.0.1 rfp.dpi.local
 ```
+
+## PostgreSQL
+
+Here's what you'll need to do to install PostgresQL. 
+
+1. Install PostgreSQL using Homebrew: `brew install postgresql`
+2. Start PostgreSQL service: `brew services start postgresql`
+3. Access PostgreSQL with your macOS username: `psql your-macOS-username` 
+
