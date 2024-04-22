@@ -1,2 +1,0 @@
-class RfpIdeaSubmissionsMailer < ApplicationMailer
-end
