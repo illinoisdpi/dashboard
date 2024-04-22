@@ -16,7 +16,7 @@ class RfpIdeaSubmissionsController < ApplicationController
     respond_to do |format|
       if @rfp_idea_submission.save
         # RfpMailer to send submission notification email after save
-        RfpMailer.new_rfp_idea_submitted.deliver_now
+        RfpMailer.confirmation.deliver_now
 
         format.html { redirect_to new_rfp_idea_submission_path, notice: "Your project idea was submitted successfully." }
         format.json { render :show, status: :created, location: @rfp_idea_submission }
