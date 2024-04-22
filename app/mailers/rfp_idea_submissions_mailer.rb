@@ -1,0 +1,2 @@
+class RfpIdeaSubmissionsMailer < ApplicationMailer
+end
