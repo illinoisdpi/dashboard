@@ -6,9 +6,8 @@ class RfpMailer < ApplicationMailer
   #
 
   def confirmation
-    @rfp_idea_submission = params[:rfp_idea_submission]
     @greeting = "Hi"
 
-    mail(to: @rfp_idea_submission.contact_email, subject: "New RFP Idea Submitted")
+    mail(to: "amompremier@gmail.com", subject: "New RFP Idea Submitted")
   end
 end
