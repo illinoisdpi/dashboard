@@ -1,5 +1,4 @@
 class RfpMailer < ApplicationMailer
-
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
@@ -8,6 +7,6 @@ class RfpMailer < ApplicationMailer
   def new_rfp_idea_submitted
     @greeting = "Hi"
 
-    mail to: "to@example.org"
+    mail(to: "amompremier@gmail.com", subject: "New RFP Idea Submitted")
   end
 end
