@@ -12,7 +12,8 @@ class Cohort::ImpressionsController < ApplicationController
       {content: "Impressions", href: cohort_impressions_path(@cohort)}
     ]
 
-    @impressions = policy_scope(@cohort.impressions.default_order)
+    @q = policy_scope(@cohort.impressions.includes(subject: :user)).ransack(params[:q])
+    @impressions = @q.result.default_order
 
     respond_to do |format|
       format.html do

@@ -1,17 +1,30 @@
 <%= render "cohorts/tabs" %>
-<%# TODO: make this a ransack sortable/searchable table with pagination %>
+
 <div class="row">
   <div class="col">
-    <div class="d-flex align-items-center flex-row-reverse mb-2">
-      <% if policy(Impression).download_csv? %>
-        <%= link_to "Download CSV", cohort_impressions_path(@cohort, format: :csv), class: 'btn btn-outline-secondary' %>
+    <div class="d-flex align-items-center justify-content-between mb-2"> 
+      <%= search_form_for(@q, url: cohort_impressions_path) do |f| %>
+        <div class="mb-3">
+          <%= f.label :subject_user_first_name_cont, class: "form-label" %>
+          <%= f.search_field :subject_user_first_name_cont, class: "form-control" %>
+        </div>
+        <div class="mb-3">
+          <%= f.label :subject_user_last_name_cont, class: "form-label" %>
+          <%= f.search_field :subject_user_last_name_cont, class: "form-control" %>
+        </div>
+
+        <%= f.submit class: "btn btn-primary" %>
       <% end %>
+
     </div>
     <div class="card">
       <div class="card-header d-flex align-items-center">
         <h1 class="h6 mb-0 me-auto">Impressions</h1>
 
         <div>
+          <% if policy(Impression).download_csv? %>
+            <%= link_to "Download CSV", cohort_impressions_path(@cohort, format: :csv), class: 'btn btn-outline-secondary me-2' %>
+          <% end %>
           <%= link_to new_cohort_impression_path(@cohort) do %>
             <i class="fa-solid fa-plus fa-fw"></i>
           <% end %>
