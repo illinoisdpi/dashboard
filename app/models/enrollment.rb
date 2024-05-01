@@ -49,8 +49,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Enrollment < ApplicationRecord
-  include Adminable
-  include Endorsable
+  include Adminable, Endorsable, Ransackable
 
   has_paper_trail skip: [:created_at, :updated_at]
 
@@ -82,7 +81,7 @@ class Enrollment < ApplicationRecord
     :email,
     :to_s,
     to: :user
-  
+
   enum role: {
     instructor: 'instructor',
     staff: 'staff',
