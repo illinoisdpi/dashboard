@@ -3,7 +3,9 @@ module Impression::Ransackable
 
   class_methods do
     def ransackable_attributes(auth_object = nil)
-      []
+      [
+        "content"
+      ]
     end
 
     def ransackable_associations(auth_object = nil)
