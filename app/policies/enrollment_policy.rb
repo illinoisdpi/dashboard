@@ -1,6 +1,6 @@
 class EnrollmentPolicy < ApplicationPolicy
   def show?
-    user.admin? || user.instructor? || user.teaching_assistant? || record.user == user
+    user.admin? || user.instructor? || user.teaching_assistant?
   end
 
   def index?
