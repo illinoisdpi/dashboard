@@ -1,0 +1,17 @@
+<%= search_form_for(q, url: cohort_impressions_path) do |f| %>
+  <div class="mb-3">
+    <%= f.label :subject_user_first_name_cont, class: "form-label" %>
+    <%= f.search_field :subject_user_first_name_cont, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :subject_user_last_name_cont, class: "form-label" %>
+    <%= f.search_field :subject_user_last_name_cont, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :content_cont, class: "form-label" %>
+    <%= f.search_field :content_cont, class: "form-control" %>
+  </div>
+
+  <%= f.submit class: "btn btn-primary" %>
+<% end %>
