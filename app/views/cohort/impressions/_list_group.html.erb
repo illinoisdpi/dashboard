@@ -1,0 +1,24 @@
+<div class="list-group list-group-flush">
+  <% impressions.each do |impression| %>
+    <%= link_to cohort_impression_path(cohort, impression), class: "list-group-item" do %>
+      <div class="d-flex">
+        <div class="me-auto d-flex align-items-baseline">
+          <span class="badge bg-secondary font-monospace me-2">
+            <%= impression.emoji %>
+          </span>
+          
+          <%= impression.subject %>
+
+          <span class="text-secondary ms-1">
+            from <%= impression.author %> <%= time_ago_in_words(impression.created_at) %> ago
+          </span>
+        </div>
+
+        <div>
+          <i class="fa-solid fa-chevron-right fa-fw"></i>
+        </div>
+      </div>
+      
+    <% end %>
+  <% end %>
+</div>
