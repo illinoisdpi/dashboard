@@ -6,12 +6,17 @@
           <span class="badge bg-secondary font-monospace me-2">
             <%= impression.emoji %>
           </span>
-          
-          <%= impression.subject %>
-
-          <span class="text-secondary ms-1">
-            from <%= impression.author %> <%= time_ago_in_words(impression.created_at) %> ago
-          </span>
+          <div>
+            <div>
+              <%= impression.subject %>
+              <span class="text-secondary ms-1">
+                from <%= impression.author %> <%= time_ago_in_words(impression.created_at) %> ago
+              </span>
+            </div>
+            <div>
+              <%= impression.content.truncate_words(20) %>
+            </div>
+          </div>
         </div>
 
         <div>
