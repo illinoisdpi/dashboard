@@ -8,7 +8,7 @@ class EnrollmentPolicy < ApplicationPolicy
   end
 
   def edit?
-    user.admin? || user.instructor? || record.user == user
+    update?
   end
 
   def edit_role?
@@ -20,7 +20,7 @@ class EnrollmentPolicy < ApplicationPolicy
   end
 
   def update?
-    show?
+    user.admin? || user.instructor? || record.user == user
   end
 
   def create?
