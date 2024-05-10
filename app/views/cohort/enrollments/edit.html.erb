@@ -5,6 +5,10 @@
 <br>
 
 <div>
-  <%= link_to "Show this enrollment", cohort_enrollment_path(@cohort, @enrollment) %> |
-  <%= link_to "Back to enrollments", cohort_enrollments_path(@cohort) %>
+  <% if policy(@enrollment).show? %>
+    <%= link_to "Show this enrollment", cohort_enrollment_path(@cohort, @enrollment) %> |
+  <% end %>
+  <% if policy(@enrollment).index? %>
+    <%= link_to "Back to enrollments", cohort_enrollments_path(@cohort) %>
+  <% end %>
 </div>
