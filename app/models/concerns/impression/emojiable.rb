@@ -11,7 +11,7 @@ module Impression::Emojiable
 
   EMOJIS = {
     🧥: "workplace appearance",
-    🕴️: "workplace culture and policy",
+    💼: "workplace culture and policy",
     🙌: "follow-through",
     💯: "quality of work",
     ▶️: "taking initiative",
