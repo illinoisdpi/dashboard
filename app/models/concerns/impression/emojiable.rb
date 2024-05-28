@@ -22,7 +22,7 @@ module Impression::Emojiable
     🤔: "problem solving",
     💪: "resilience",
     🪞: "self-awareness",
-    🤗: "attitude"
+    🤗: "attitude",
     👍: "positive",
     👎: "negative",
     🙋: "asking questions",
