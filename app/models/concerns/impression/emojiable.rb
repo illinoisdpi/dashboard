@@ -17,7 +17,7 @@ module Impression::Emojiable
     ▶️: "taking initiative",
     🗣️: "communication skills",
     🫡: "response to supervision",
-    🙏 : "teamwork",
+    🙏: "teamwork",
     🛜: "networking",
     🤔: "problem solving",
     💪: "resilience",
