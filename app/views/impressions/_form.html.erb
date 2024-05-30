@@ -43,7 +43,7 @@
             <div class="card-header text-success fw-bold fs-5">Positive Impression</div>
             <div class="card-body">
               <div id="emoji-buttons" class="d-flex flex-wrap">
-                <% Impression::EMOJIS.each do |emoji, description| %>
+                <% Impression::POSITIVE_EMOJIS.each do |emoji, description| %>
                   <button type="button" class="emoji-btn" data-emoji="<%= emoji %>" data-action="click->emoji-input#addEmoji">
                     <%= emoji %>
                     <%= description %>
