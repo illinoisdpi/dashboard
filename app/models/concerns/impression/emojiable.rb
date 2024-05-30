@@ -14,30 +14,40 @@ module Impression::Emojiable
   end
 
   POSITIVE_EMOJIS = {
+    👍: "positive",
     🧥: "workplace appearance",
     💼: "workplace culture and policy",
     🙌: "follow-through",
     💯: "quality of work",
     ⚡️: "taking initiative",
     🗣️: "communication skills",
-    🫡: "response to supervision",
+    🫡: "positive response to supervision",
     👯‍♂️: "teamwork",
     🛜: "networking",
     🤔: "problem solving",
     💪: "resilience",
     🪞: "self-awareness",
-    🤗: "attitude",
-    👍: "positive",
+    🤗: "positive attitude",
     🙋: "asking questions",
     😇: "helping others",
-    🥳: "growth",
-    👎: "negative",
-    😬: "unprofessional",
-    🚧: "conflict/lack of collaboration",
-    ⏰: "time management"
+    🥳: "growth"
   }.freeze
 
-  NEGATIVE_EMOJIS = {}.freeze
+  NEGATIVE_EMOJIS = {
+    👎: "negative",
+    🧢: "unprofessional workplace appearance",
+    😡: "poor workplace culture and policy",
+    🤷: "lack of follow-through",
+    🫤: "low quality of work",
+    🦥: "lack of initiative",
+    🙊: "poor communication skills",
+    💢: "negative response to supervision",
+    🥊: "conflict/lack of collaboration",
+    😯: "lacking self-awareness",
+    👿: "negative attitude",
+    😬: "unprofessional",
+    ⏰: "poor time management"
+  }.freeze
 
   EMOJIS = POSITIVE_EMOJIS.merge(NEGATIVE_EMOJIS).freeze
 end
