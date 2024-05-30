@@ -9,10 +9,6 @@ module Impression::Emojiable
     Impression::EMOJIS[emoji.to_sym] || Emoji.find_by_unicode(emoji).name
   end
 
-  def emoji_name
-    Impression::EMOJIS[emoji.to_sym] || Emoji.find_by_unicode(emoji).name
-  end
-
   POSITIVE_EMOJIS = {
     👍: "general comment",
     🧥: "workplace appearance",
