@@ -9,7 +9,11 @@ module Impression::Emojiable
     Impression::EMOJIS[emoji.to_sym] || Emoji.find_by_unicode(emoji).name
   end
 
-  EMOJIS = {
+  def emoji_name
+    Impression::EMOJIS[emoji.to_sym] || Emoji.find_by_unicode(emoji).name
+  end
+
+  POSITIVE_EMOJIS = {
     🧥: "workplace appearance",
     💼: "workplace culture and policy",
     🙌: "follow-through",
@@ -24,12 +28,16 @@ module Impression::Emojiable
     🪞: "self-awareness",
     🤗: "attitude",
     👍: "positive",
-    👎: "negative",
     🙋: "asking questions",
     😇: "helping others",
     🥳: "growth",
+    👎: "negative",
     😬: "unprofessional",
-    ⏰: "time management",
-    🚧: "conflict/lack of collaboration"
+    🚧: "conflict/lack of collaboration",
+    ⏰: "time management"
   }.freeze
+
+  NEGATIVE_EMOJIS = {}.freeze
+
+  EMOJIS = POSITIVE_EMOJIS.merge(NEGATIVE_EMOJIS).freeze
 end
