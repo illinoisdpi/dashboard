@@ -3,12 +3,10 @@
     data-action="touchstart->search-subject#toggleListVisibility click->search-subject#toggleListVisibility" 
     class="options-list-overlay">
   </div>
-
   <%= form_with(model: impression) do |form| %>
     <% if impression.errors.any? %>
       <div style="color: red">
         <h2><%= pluralize(impression.errors.count, "error") %> prohibited this impression from being saved:</h2>
-
         <ul>
           <% impression.errors.each do |error| %>
             <li><%= error.full_message %></li>
@@ -16,7 +14,6 @@
         </ul>
       </div>
     <% end %>
-
     <%# TODO: add user photo  %>
     <div class="mb-3">
       <%= form.label :subject_id, class: "form-label" %>
@@ -27,11 +24,10 @@
         type="search"  
         data-search-subject-target="inputField"
         data-action="input->search-subject#search click->search-subject#search" 
-        class="form-control"
-        value="<%= @impression.subject_id.blank? ? "" : Enrollment.find(@impression.subject_id).user.full_name %>">
+      class="form-control"
+      value="<%= @impression.subject_id.blank? ? "" : Enrollment.find(@impression.subject_id).user.full_name %>">
       <div id="search" data-search-subject-target="optionsList" style="display: none" class="options-list"></div>
     </div>
-
     <div class="mb-3" data-controller="emoji-input">
       <%= form.label :emoji, class: "form-label" %>
       <%= form.text_field :emoji, class: "form-control", "aria-described-by": "emoji-help", "data-emoji-input-target": "textInput" %>
@@ -40,26 +36,51 @@
         macOS (control ⌃ + command ⌘ + spacebar)<br/>
         Windows (Windows logo key + .)<br/>
       </div>
-      <div id="emoji-buttons" class="d-flex flex-wrap">
-        <% Impression::EMOJIS.each do |emoji, description| %>
-          <button type="button" class="emoji-btn" data-emoji="<%= emoji %>" data-action="click->emoji-input#addEmoji">
-            <%= emoji %>
-            <%= description %>
-          </button>
-        <% end %>
+      <div class="container">
+        <div class="row">
+          <%# Positive impression emoji buttons%>
+          <div class="col-md-6">
+            <div class="card border-success text-bg-light mb-3">
+              <div class="card-header text-success fw-bold">Positive Impression</div>
+              <div class="card-body">
+                <div id="emoji-buttons" class="d-flex flex-wrap">
+                  <% Impression::EMOJIS.each do |emoji, description| %>
+                    <button type="button" class="emoji-btn" data-emoji="<%= emoji %>" data-action="click->emoji-input#addEmoji">
+                      <%= emoji %>
+                      <%= description %>
+                    </button>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%# Negative impression emoji buttons%>
+          <div class="col-md-6">
+            <div class="card border-danger text-bg-light mb-3">
+              <div class="card-header text-danger fw-bold">Negative Impression</div>
+              <div class="card-body">
+                <div id="emoji-buttons" class="d-flex flex-wrap">
+                  <% Impression::EMOJIS.each do |emoji, description| %>
+                    <button type="button" class="emoji-btn" data-emoji="<%= emoji %>" data-action="click->emoji-input#addEmoji">
+                      <%= emoji %>
+                      <%= description %>
+                    </button>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-
-    <div class="mb-3">
-      <%= form.label :content, class: "form-label" %>
-      <%= form.text_area :content, class: "form-control", rows: "10", "aria-described-by": "content-help" %>
-      <div id="content-help" class="form-text">
-        This impression may be shared with the subject.
+      <div class="mb-3">
+        <%= form.label :content, class: "form-label" %>
+        <%= form.text_area :content, class: "form-control", rows: "10", "aria-described-by": "content-help" %>
+        <div id="content-help" class="form-text">
+          This impression may be shared with the subject.
+        </div>
       </div>
-    </div>
-
-    <div class="d-grid gap-2 mt-2">
-      <%= form.submit class: "btn btn-secondary" %>
-    </div>
-  <% end %>
-</div>
+      <div class="d-grid gap-2 mt-2">
+        <%= form.submit class: "btn btn-secondary" %>
+      </div>
+    <% end %>
+  </div>
