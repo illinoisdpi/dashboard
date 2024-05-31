@@ -41,6 +41,7 @@
         <%# Positive impression emoji buttons%>
         <%= render 'emoji_button_card', card_header: 'Positive Impression', emoji_buttons: Impression::POSITIVE_EMOJIS %>
         <%# Negative impression emoji buttons%>
+        <%= render 'emoji_button_card', card_header: 'Negative Impression', emoji_buttons: Impression::NEGATIVE_EMOJIS %>
       </div>
       <div class="mb-3">
         <%= form.label :content, class: "form-label" %>
