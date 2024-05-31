@@ -10,7 +10,7 @@ module Impression::Emojiable
   end
 
   POSITIVE_EMOJIS = {
-    👍: "general comment",
+    👍: "positive",
     🧥: "workplace appearance",
     💼: "workplace culture and policy",
     🙌: "follow-through",
@@ -30,7 +30,7 @@ module Impression::Emojiable
   }.freeze
 
   NEGATIVE_EMOJIS = {
-    👎: "general comment",
+    👎: "negative",
     🧢: "unprofessional workplace appearance",
     😡: "poor workplace culture and policy",
     🤷: "lack of follow-through",
