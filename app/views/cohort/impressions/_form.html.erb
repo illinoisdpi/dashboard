@@ -39,23 +39,8 @@
       <%# Positive & Negative Emoji Impression cards%>
       <div class="row">
         <%# Positive impression emoji buttons%>
-        <%= render 'shared/emoji_button_card', card_header: 'Positive Impression', emoji_buttons: Impression::POSITIVE_EMOJIS %>
+        <%= render 'emoji_button_card', card_header: 'Positive Impression', emoji_buttons: Impression::POSITIVE_EMOJIS %>
         <%# Negative impression emoji buttons%>
-        <div class="col-md-6">
-          <div class="card border-danger text-bg-light mb-3">
-            <div class="card-header text-danger fw-bold fs-5">Negative Impression</div>
-            <div class="card-body">
-              <div id="emoji-buttons" class="d-flex flex-wrap">
-                <% Impression::NEGATIVE_EMOJIS.each do |emoji, description| %>
-                  <button type="button" class="emoji-btn" data-emoji="<%= emoji %>" data-action="click->emoji-input#addEmoji">
-                    <%= emoji %>
-                    <%= description %>
-                  </button>
-                <% end %>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
       <div class="mb-3">
         <%= form.label :content, class: "form-label" %>
