@@ -24,8 +24,8 @@
         type="search"  
         data-search-subject-target="inputField"
         data-action="input->search-subject#search click->search-subject#search" 
-      class="form-control"
-      value="<%= @impression.subject_id.blank? ? "" : Enrollment.find(@impression.subject_id).user.full_name %>">
+        class="form-control"
+        value="<%= @impression.subject_id.blank? ? "" : Enrollment.find(@impression.subject_id).user.full_name %>">
       <div id="search" data-search-subject-target="optionsList" style="display: none" class="options-list"></div>
     </div>
     <div class="mb-3" data-controller="emoji-input">
