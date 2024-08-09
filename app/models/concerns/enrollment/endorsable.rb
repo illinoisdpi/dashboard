@@ -51,7 +51,7 @@ module Enrollment::Endorsable
       :emerging
     end
   end
-  
+
   def communication_rating
     if communication_total >= 10.5
       :excellent
@@ -62,13 +62,9 @@ module Enrollment::Endorsable
     end
   end
 
-  def technical_rating
-    if technical_score >= 0.9
-      :excellent
-    elsif technical_score >= 0.7
-      :proficient
-    else
-      :emerging
-    end
-  end
+  enum technical_rating: {
+    emerging: "emerging",
+    proficient: "proficient",
+    excellent: "excellent"
+  }
 end
