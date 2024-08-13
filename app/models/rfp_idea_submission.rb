@@ -12,6 +12,8 @@
 #  updated_at    :datetime         not null
 #
 class RfpIdeaSubmission < ApplicationRecord
+  include RfpIdeaSubmission::Slackable
+
   validates :contact_name, presence: true
   validates :contact_email, presence: true
   validates :title, presence: true
