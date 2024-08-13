@@ -20,8 +20,9 @@ module User::Adminable
           :skills_and_projects,
           :career_highlights,
           :headshot,
-          :devto_username
-        
+          :devto_username,
+          :canvas_full
+
         field :roles do
           visible do
             bindings[:controller].current_user.admin?
@@ -41,6 +42,6 @@ module User::Adminable
   end
 
   def name
-    self.to_s
+    to_s
   end
 end
