@@ -4,9 +4,12 @@ class RfpIdeaSubmissionsMailer < ApplicationMailer
   #
   #   en.rfp_idea_submissions_mailer.confimration.subject
   #
-  def confirmation
-    @greeting = "Hi"
+  def confirmation(rfp_idea_submission)
+    @rfp_idea_submission = rfp_idea_submission
 
-    mail(to: "amompremier@gmail.com", subject: "RFP Idea Submission Received")
+    mail(
+      to: @rfp_idea_submission.contact_email,
+      subject: "Your RFP Idea Submission Received"
+    )
   end
 end
