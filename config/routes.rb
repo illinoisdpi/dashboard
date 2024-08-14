@@ -1,7 +1,8 @@
-require 'sidekiq/web'
-require 'sidekiq/cron/web'
+require "sidekiq/web"
+require "sidekiq/cron/web"
 
 Rails.application.routes.draw do
+  get "impression_comments/create"
   constraints subdomain: "dashboard" do
     authenticate :user, ->(user) { ApplicationPolicy.new(user, nil).admin_panel_accessible? } do
       mount RailsAdmin::Engine, at: "admin", as: "rails_admin"
@@ -21,8 +22,8 @@ Rails.application.routes.draw do
       resources :canvas_gradebook_snapshots
       resources :enrollments, module: :cohort do
         member do
-          get 'overview'
-          get 'snapshot'
+          get "overview"
+          get "snapshot"
         end
       end
       resources :impressions, module: :cohort do
@@ -34,6 +35,7 @@ Rails.application.routes.draw do
     end
 
     resources :impressions do
+      resources :impression_comments, only: [:create, :edit, :update, :destroy]
       get :search, to: "impressions#search", on: :collection
     end
 

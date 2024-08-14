@@ -21,12 +21,15 @@
 #  fk_rails_...  (subject_id => enrollments.id)
 #
 class Impression < ApplicationRecord
-  include Emojiable, Ransackable, Slackable
+  include Slackable
+  include Ransackable
+  include Emojiable
 
   has_paper_trail skip: [:created_at, :updated_at]
 
-  belongs_to :author, class_name: "User", foreign_key: "author_id"
-  belongs_to :subject, class_name: "Enrollment", foreign_key: "subject_id"
+  belongs_to :author, class_name: "User"
+  belongs_to :subject, class_name: "Enrollment"
+  has_many :impression_comments, dependent: :destroy
 
   validates :content, presence: true
 

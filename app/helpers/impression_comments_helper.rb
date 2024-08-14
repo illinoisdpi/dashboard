@@ -1,0 +1,2 @@
+module ImpressionCommentsHelper
+end

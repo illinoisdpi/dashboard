@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_22_203842) do
+ActiveRecord::Schema[7.0].define(version: 2024_08_14_152917) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -177,6 +177,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_22_203842) do
     t.index ["id_from_canvas"], name: "index_enrollments_on_id_from_canvas"
     t.index ["user_id", "cohort_id"], name: "index_enrollments_on_user_id_and_cohort_id", unique: true
     t.index ["user_id"], name: "index_enrollments_on_user_id"
+  end
+
+  create_table "impression_comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "impression_id", null: false
+    t.uuid "user_id", null: false
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["impression_id"], name: "index_impression_comments_on_impression_id"
+    t.index ["user_id"], name: "index_impression_comments_on_user_id"
   end
 
   create_table "impressions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
