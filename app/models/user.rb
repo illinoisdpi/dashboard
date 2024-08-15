@@ -36,7 +36,10 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class User < ApplicationRecord
-  include Adminable, Blogable, Ransackable, Roleable
+  include Roleable
+  include Ransackable
+  include Blogable
+  include Adminable
 
   mount_uploader :headshot, HeadshotUploader
 
@@ -50,6 +53,7 @@ class User < ApplicationRecord
   has_many :enrollments, dependent: :destroy
   has_many :cohorts, through: :enrollments, source: :cohort
   has_many :authored_impressions, class_name: "Impression", foreign_key: "author_id"
+  has_many :shoutouts, foreign_key: "author_id", dependent: :destroy
 
   scope :default_order, -> { order(:first_name) }
 
