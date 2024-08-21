@@ -2,7 +2,10 @@ require "sidekiq/web"
 require "sidekiq/cron/web"
 
 Rails.application.routes.draw do
-  # get 'shoutouts/create'
+  # Define Devise routes globally
+  devise_for :users, path: "", path_names: {sign_in: "sign_in", sign_out: "sign_out"}
+
+  # Routes for the dashboard subdomain with authentication
   constraints subdomain: "dashboard" do
     authenticate :user, ->(user) { ApplicationPolicy.new(user, nil).admin_panel_accessible? } do
       mount RailsAdmin::Engine, at: "admin", as: "rails_admin"
@@ -15,8 +18,6 @@ Rails.application.routes.draw do
     authenticate :user, ->(user) { ApplicationPolicy.new(user, nil).blazer_panel_accessible? } do
       mount Blazer::Engine, at: "blazer"
     end
-
-    devise_for :users
 
     resources :cohorts do
       resources :canvas_gradebook_snapshots
@@ -41,20 +42,25 @@ Rails.application.routes.draw do
     root "dashboard#index", as: "dashboard_root"
   end
 
+  # Routes for the news subdomain (publicly accessible)
   constraints subdomain: "news" do
     root "news#index", as: "news_root"
     get "/rss", to: "news#rss"
   end
 
+  # Routes for the RFP subdomain (publicly accessible)
   constraints subdomain: "rfp" do
     root "rfp#index", as: "rfp_root"
     resources :rfp_idea_submissions, only: [:new, :create]
   end
 
+  # Routes for the shoutouts subdomain with authentication
   constraints subdomain: "shoutouts" do
-    root "shoutouts#index", as: "shoutouts_root"
-    resources :shoutouts do
-      resources :shoutout_subjects, only: [:create, :destroy]
+    authenticate :user do
+      root "shoutouts#index", as: "shoutouts_root"
+      resources :shoutouts do
+        resources :shoutout_subjects, only: [:create, :destroy]
+      end
     end
   end
 end
