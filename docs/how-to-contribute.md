@@ -11,8 +11,7 @@
 make contributions.
 
 1. Create an issue for work to be done (no matter how small)
-2. Create a branch with that issue number, your initials, and a brief
-   description (`1-ih-add-readme`)
+2. Create a branch with that issue number, your initials, and a brief description (`1-ih-add-readme`)
 3. Create a pull request in GitHub including "resolves"
 4. Pushing the tip commit to main closes the PR and the Issue.
 
@@ -28,8 +27,7 @@ Get the `config/credentials/development.key` from the team lead.
 
 `EDITOR="code --wait" rails credentials:edit --environment development`
 
-This will create `config/credentials/development.yml.enc` and
-`config/credentials/development.key` unless they already exist.
+This will create `config/credentials/development.yml.enc` and `config/credentials/development.key` unless they already exist.
 
 Same for `production` (just swap --environment)
 
@@ -45,8 +43,7 @@ You can access the sidekiq web ui at /sidekiq (if you have admin role)
 
 ## Subdomains
 
-Add this to your `/etc/hosts` file so you can access subdomains in your dev
-environment.
+Add this to your `/etc/hosts` file so you can access subdomains in your dev environment.
 
 ```
 127.0.0.1 news.dpi.local
@@ -65,7 +62,7 @@ To maintain formatting consistency across the repo:
 ```
 {
   "editor.tabSize": 2,
-  "editor.detectIndentation": false,
-  "editor.formatOnSave": true,
+  "editor.detectIndentation": true,
+  "editor.formatOnSave": false,
 }
 ```

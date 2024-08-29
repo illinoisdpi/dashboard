@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
     ])
   end
 
-  def set_time_zone(&)
-    Time.use_zone("America/Chicago", &)
+  def set_time_zone(&block)
+    Time.use_zone("America/Chicago", &block)
   end
 end
