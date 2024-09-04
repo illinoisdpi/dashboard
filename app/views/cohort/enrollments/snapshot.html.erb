@@ -9,7 +9,7 @@
   <div class="row my-2">
     <div class="col-4">
       <% if @enrollment.user.headshot.present? %>
-        <div class="snapshot-bound border-5 border-dpi-primary">
+        <div class="headshot-bound border-5 border-dpi-primary">
           <%= image_tag(@enrollment.user.headshot.url, class: "img-fluid") %>
         </div>
       <% end %>
