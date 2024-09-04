@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_22_203842) do
+ActiveRecord::Schema[7.0].define(version: 2024_09_04_181154) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -173,10 +173,21 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_22_203842) do
     t.text "staff_strengths"
     t.text "staff_areas_for_growth"
     t.text "skills_development"
+    t.integer "technical_rating"
     t.index ["cohort_id"], name: "index_enrollments_on_cohort_id"
     t.index ["id_from_canvas"], name: "index_enrollments_on_id_from_canvas"
     t.index ["user_id", "cohort_id"], name: "index_enrollments_on_user_id_and_cohort_id", unique: true
     t.index ["user_id"], name: "index_enrollments_on_user_id"
+  end
+
+  create_table "impression_comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "impression_id", null: false
+    t.uuid "user_id", null: false
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["impression_id"], name: "index_impression_comments_on_impression_id"
+    t.index ["user_id"], name: "index_impression_comments_on_user_id"
   end
 
   create_table "impressions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -253,6 +264,24 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_22_203842) do
     t.index ["name"], name: "index_roles_on_name"
   end
 
+  create_table "shoutout_subjects", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "shoutout_id", null: false
+    t.uuid "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["shoutout_id"], name: "index_shoutout_subjects_on_shoutout_id"
+    t.index ["user_id"], name: "index_shoutout_subjects_on_user_id"
+  end
+
+  create_table "shoutouts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "author_id"
+    t.text "content"
+    t.uuid "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_shoutouts_on_user_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.citext "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -316,4 +345,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_22_203842) do
   add_foreign_key "piazza_activity_breakdowns", "piazza_activity_reports"
   add_foreign_key "piazza_activity_reports", "cohorts"
   add_foreign_key "piazza_activity_reports", "users"
+  add_foreign_key "shoutout_subjects", "shoutouts"
+  add_foreign_key "shoutout_subjects", "users"
+  add_foreign_key "shoutouts", "users"
 end
