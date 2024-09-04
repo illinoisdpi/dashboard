@@ -93,7 +93,7 @@
           <!-- (this will only show up for users with at least 1 cohort enrollment) -->
           <%= f.fields_for :enrollments do |e| %>
             <div class="mb-3">
-              <%= e.label :skills_development, "Real-time DPI skill development", class: "form-label" %>
+              <%= e.label :skills_development, "Real-time DPI skill development (#{e.object.cohort.name})", class: "form-label" %>
               <%= e.text_area :skills_development, class: "form-control" %>
               <small class="form-text text-muted">
                 Separate each skill with a comma.
