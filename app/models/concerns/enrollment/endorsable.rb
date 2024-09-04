@@ -1,6 +1,5 @@
 module Enrollment::Endorsable
   extend ActiveSupport::Concern
-  include ActiveRecord::Enum
 
   included do
     before_validation :set_career_total
