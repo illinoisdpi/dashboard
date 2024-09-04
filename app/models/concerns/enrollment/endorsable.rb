@@ -1,9 +1,16 @@
 module Enrollment::Endorsable
   extend ActiveSupport::Concern
+  include ActiveRecord::Enum
 
   included do
     before_validation :set_career_total
     before_validation :set_communication_total
+
+    enum technical_rating: {
+      emerging: "emerging",
+      proficient: "proficient",
+      excellent: "excellent"
+    }
   end
 
   def set_career_total
@@ -61,10 +68,4 @@ module Enrollment::Endorsable
       :emerging
     end
   end
-
-  enum technical_rating: {
-    emerging: "emerging",
-    proficient: "proficient",
-    excellent: "excellent"
-  }
 end
