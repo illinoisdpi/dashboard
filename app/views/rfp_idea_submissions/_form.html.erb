@@ -1,3 +1,6 @@
+<%= javascript_include_tag 'https://www.google.com/recaptcha/api.js' %>
+
+
 <%= form_with(model: RfpIdeaSubmission.new, url: rfp_idea_submissions_path, local: true, html: { class: "p-4 p-md-6 border rounded-3 bg-light" }) do |form| %>
   <div class="form-floating mb-3">
     <%= form.text_field :contact_name, class: "form-control", id:"floating-contact-input", placeholder: "Joe Schmoe" %>
@@ -19,8 +22,14 @@
     <%= form.text_area :details, class: "form-control", id: "floatingPassword", placeholder: "Password", style: "height: 120px" %>
     <%= form.label :details, "Project details", class: "form-label", for: "floatingPassword" %>
   </div>
+
+  <div class="mb-3">
+    <%= recaptcha_tags %>
+  </div>
+
   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
     <%= form.submit "Submit Project Idea", class: "w-100 btn btn-lg btn-primary btn-dpi-primary" %>
   </div>
+
 </div>
 <% end %>
