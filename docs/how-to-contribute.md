@@ -7,24 +7,22 @@
 
 ## Git flow
 
-[Use this Git flow](https://thoughtbot.com/playbook/developing/code-reviews) to
-make contributions.
+[Use this Git flow](https://thoughtbot.com/playbook/developing/code-reviews) to make contributions.
 
 1. Create an issue for work to be done (no matter how small)
 2. Create a branch with that issue number, your initials, and a brief description (`1-ih-add-readme`)
 3. Create a pull request in GitHub including "resolves"
 4. Pushing the tip commit to main closes the PR and the Issue.
 
+
 ## Credentials
 
 Get the `config/credentials/development.key` from the team lead.
 
 ### Show
-
 `rails credentials:show --environment development`
 
 ### Edit
-
 `EDITOR="code --wait" rails credentials:edit --environment development`
 
 This will create `config/credentials/development.yml.enc` and `config/credentials/development.key` unless they already exist.
@@ -32,7 +30,6 @@ This will create `config/credentials/development.yml.enc` and `config/credential
 Same for `production` (just swap --environment)
 
 ## Sidekiq
-
 Here's what you'll need to work with jobs in your development environment.
 
 1. Install redis on your dev machine `brew install redis`
@@ -40,6 +37,7 @@ Here's what you'll need to work with jobs in your development environment.
 3. Start sidekiq by running `bundle exec sidekiq`
 
 You can access the sidekiq web ui at /sidekiq (if you have admin role)
+
 
 ## Subdomains
 
