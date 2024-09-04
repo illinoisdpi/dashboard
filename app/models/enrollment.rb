@@ -31,7 +31,7 @@
 #  staff_strengths                :text
 #  technical_good_questions       :integer          default(0)
 #  technical_progress             :integer          default(0)
-#  technical_rating               :integer
+#  technical_rating               :string
 #  created_at                     :datetime         not null
 #  updated_at                     :datetime         not null
 #  cohort_id                      :uuid             not null
