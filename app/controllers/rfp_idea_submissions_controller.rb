@@ -4,8 +4,6 @@ class RfpIdeaSubmissionsController < ApplicationController
   skip_after_action :verify_policy_scoped
   before_action { authorize(RfpIdeaSubmission) }
 
-  skip_after_action :verify_policy_scoped
-  before_action { authorize(:rfp_idea_submissions) }
 
   # GET /rfp_idea_submissions/new
   def new
@@ -28,11 +26,6 @@ class RfpIdeaSubmissionsController < ApplicationController
   end
 
   private
-
-  # Only allow a list of trusted parameters through.
-  def rfp_idea_submission_params
-    params.require(:rfp_idea_submission).permit(:contact_name, :contact_email, :title, :details, :contact_phone)
-  end
 
   # Only allow a list of trusted parameters through.
   def rfp_idea_submission_params
