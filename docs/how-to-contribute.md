@@ -42,6 +42,8 @@ You can access the sidekiq web ui at /sidekiq (if you have admin role)
 ## Subdomains
 
 Add this to your `/etc/hosts` file so you can access subdomains in your dev environment.
+WSL users: if your browser is installed on Windows, the hosts file will be at `\Windows\System32\drivers\etc`
+           if your browser is installed on the Linux subsystem, `\etc\` is at the root of the Linux directory, but you may need to edit `\etc\wsl.conf` to ensure that changes to the `hosts` file will persist.
 
 ```
 127.0.0.1 news.dpi.local
