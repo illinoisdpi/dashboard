@@ -16,4 +16,6 @@ class RfpIdeaSubmission < ApplicationRecord
   validates :contact_email, presence: true
   validates :title, presence: true
   validates :details, presence: true
+  # Send confirmation email to the submitter
+  after_create_commit -> { RfpIdeaSubmissionsMailer.confirmation(self).deliver_now }
 end
