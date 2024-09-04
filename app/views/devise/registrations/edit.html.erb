@@ -90,7 +90,7 @@
               Separate each skill or project with a comma.
             </small>
           </div>
-        <!-- (this will only show up for users with at least 1 cohort enrollment) -->
+          <!-- (this will only show up for users with at least 1 cohort enrollment) -->
           <%= f.fields_for :enrollments do |e| %>
             <div class="mb-3">
               <%= e.label :skills_development, "Real-time DPI skill development", class: "form-label" %>
@@ -253,9 +253,9 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="card-footer">
-      <%= link_to "Cancel my account", registration_path(resource_name), data: { "turbo-method": :delete, "turbo-confirm": "Are you sure? This is NOT reversible" }, class: "btn btn-block btn-link", method: :delete %>
-    </div>
+  <div class="card-footer">
+    <%= link_to "Cancel my account", registration_path(resource_name), data: { "turbo-method": :delete, "turbo-confirm": "Are you sure? This is NOT reversible" }, class: "btn btn-block btn-link", method: :delete %>
   </div>
 </div>

@@ -50,19 +50,3 @@ Add this to your `/etc/hosts` file so you can access subdomains in your dev envi
 127.0.0.1 dashboard.dpi.local
 127.0.0.1 rfp.dpi.local
 ```
-
-## VSCode formatting settings
-
-To maintain formatting consistency across the repo:
-
-1. Create a `.vscode` folder at the root
-2. Create a `settings.json` file in `.vscode/`
-3. In `.vscode/settings.json`, add the following:
-
-```
-{
-  "editor.tabSize": 2,
-  "editor.detectIndentation": true,
-  "editor.formatOnSave": false,
-}
-```
