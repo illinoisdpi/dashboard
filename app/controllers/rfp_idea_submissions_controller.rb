@@ -18,8 +18,7 @@ class RfpIdeaSubmissionsController < ApplicationController
         format.html { redirect_to new_rfp_idea_submission_path, notice: "Your project idea was submitted successfully." }
         format.json { render :show, status: :created, location: @rfp_idea_submission }
       else
-        flash[:alert] = "Error submitting idea. Please complete all required fields and try again."
-        format.html { redirect_to new_rfp_idea_submission_path }
+        format.html { redirect_to new_rfp_idea_submission_path, alert: "Error submitting idea. Please complete all required fields and try again." }
         format.json { render json: @rfp_idea_submission.errors, status: :unprocessable_entity }
       end
     end
