@@ -17,6 +17,8 @@ class ApplicationController < ActionController::Base
       :last_name, 
       :middle_name, 
       :github_username, 
+      :discord_id,
+      :discord_username,
       :languages, 
       :personal_website, 
       :quote, 
