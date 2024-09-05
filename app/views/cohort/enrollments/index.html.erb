@@ -19,6 +19,17 @@
                 <% unless enrollment.devto_username.present? %>
                   <span class="badge rounded-pill text-bg-danger ms-2">Dev.to</span>
                 <% end %>
+                <% unless enrollment.discord_id.present? || enrollment.discord_username.present? %>
+                  <span class="badge rounded-pill text-bg-danger ms-2">Discord Id/Username</span>
+                <% else %>
+                  <% unless enrollment.discord_id.present? %>
+                    <span class="badge rounded-pill text-bg-danger ms-2">Discord Id</span>
+                  <% end %>
+
+                  <% unless enrollment.discord_username.present? %>
+                    <span class="badge rounded-pill text-bg-danger ms-2">Discord Username</span>
+                  <% end %>
+                <% end %>
               </div>
               <div>
                 <i class="fa-solid fa-chevron-right fa-fw"></i>
