@@ -48,18 +48,3 @@
     </div>
   </div>
 <% end %>
-
-<% if policy(@cohort).canvas_cumulative_points? %>
-  <div class="row mb-3">
-    <div class="col-lg-12">
-      <div class="card">
-        <div class="card-header">
-          <h2 class="h6 mb-0">Canvas: Total Points (cumulative)</h2>
-        </div>
-        <div class="card-body">
-          <%= column_chart canvas_cumulative_points_cohort_path(@cohort) %>
-        </div>
-      </div>
-    </div>
-  </div>
-<% end %>

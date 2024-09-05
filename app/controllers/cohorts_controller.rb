@@ -74,24 +74,10 @@ class CohortsController < ApplicationController
   end
 
   def canvas_point_total_most_recent
-    render json: @cohort
+    render json:  @cohort
       .enrollments
-      .joins(:user, canvas_submissions: { canvas_gradebook_snapshot: :user })
-      .where('canvas_gradebook_snapshots.created_at = (SELECT MAX(created_at) FROM canvas_gradebook_snapshots)')
-      .group('users.id', 'users.first_name', 'users.last_name')
-      .order('SUM(canvas_submissions.points) DESC')
-      .pluck('users.first_name', 'users.last_name', 'SUM(canvas_submissions.points)')
-      .map { |first_name, last_name, point_total| ["#{first_name} #{last_name}", point_total] }
-  end
-
-  def canvas_cumulative_points
-    render json: @cohort
-      .enrollments
-      .joins(:user, :canvas_submissions)
-      .group('enrollments.id', 'users.first_name', 'users.last_name')
-      .order('SUM(canvas_submissions.points) DESC')
-      .pluck('users.first_name', 'users.last_name', 'SUM(canvas_submissions.points)')
-      .map { |first_name, last_name, point_total| ["#{first_name} #{last_name}", point_total]}
+      .with_recent_canvas_points
+      .map { |enrollment| [enrollment.to_s, enrollment.total_points] }
   end
 
   private
