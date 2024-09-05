@@ -3,20 +3,20 @@ module Cohort::ImpressionsController::Csvable
 
   def export_to_csv(impressions)
     headers = [
-      'ID',
-      'Created At',
-      'Updated At',
-      'Content',
-      'Emoji',
-      'Emoji Name',
-      'Author ID',
-      'Author Email',
-      'Author First Name',
-      'Author Last Name',
-      'Subject ID',
-      'Subject Email',
-      'Subject First Name',
-      'Subject Last Name'
+      "ID",
+      "Created At",
+      "Updated At",
+      "Content",
+      "Emoji",
+      "Emoji Name",
+      "Author ID",
+      "Author Email",
+      "Author First Name",
+      "Author Last Name",
+      "Subject ID",
+      "Subject Email",
+      "Subject First Name",
+      "Subject Last Name"
     ]
 
     csv_string = CSV.generate(headers: true) do |csv|

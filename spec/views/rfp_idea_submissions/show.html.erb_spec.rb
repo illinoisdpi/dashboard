@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "rfp_idea_submissions/show", type: :view do
-  before(:each) do
+  before do
     assign(:rfp_idea_submission, RfpIdeaSubmission.create!(
       contact_name: "Contact Name",
       email: "Email",

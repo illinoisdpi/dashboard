@@ -2,7 +2,7 @@ module User::Blogable
   extend ActiveSupport::Concern
 
   included do
-    scope :bloggers, -> { where.not(devto_username: nil)}
+    scope :bloggers, -> { where.not(devto_username: nil) }
     has_many :devto_articles, class_name: "DevtoArticle", foreign_key: "author_id"
     before_save { self.devto_username = devto_username.downcase if devto_username.present? }
   end

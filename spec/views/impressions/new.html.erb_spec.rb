@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "impressions/new", type: :view do
-  before(:each) do
+  before do
     assign(:impression, Impression.new(
       author: nil,
       subject: nil,
@@ -14,7 +14,6 @@ RSpec.describe "impressions/new", type: :view do
     render
 
     assert_select "form[action=?][method=?]", impressions_path, "post" do
-
       assert_select "input[name=?]", "impression[author_id]"
 
       assert_select "input[name=?]", "impression[subject_id]"

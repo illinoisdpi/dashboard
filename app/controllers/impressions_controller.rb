@@ -1,12 +1,12 @@
 class ImpressionsController < ApplicationController
-  before_action :set_impression, only: %i[ show edit update destroy ]
+  before_action :set_impression, only: %i[show edit update destroy]
   before_action { authorize(@impression || Impression) }
 
   # GET /impressions/1 or /impressions/1.json
   def show
     @breadcrumbs = [
       {content: "Dashboard", href: dashboard_root_path},
-      {content: @impression.to_s, href: impression_path(@impression)},
+      {content: @impression.to_s, href: impression_path(@impression)}
     ]
   end
 

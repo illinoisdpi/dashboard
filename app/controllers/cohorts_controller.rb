@@ -76,11 +76,11 @@ class CohortsController < ApplicationController
   def canvas_point_total_most_recent
     render json: @cohort
       .enrollments
-      .joins(:user, canvas_submissions: { canvas_gradebook_snapshot: :user })
-      .where('canvas_gradebook_snapshots.created_at = (SELECT MAX(created_at) FROM canvas_gradebook_snapshots)')
-      .group('users.id', 'users.first_name', 'users.last_name')
-      .order('SUM(canvas_submissions.points) DESC')
-      .pluck('users.first_name', 'users.last_name', 'SUM(canvas_submissions.points)')
+      .joins(:user, canvas_submissions: {canvas_gradebook_snapshot: :user})
+      .where("canvas_gradebook_snapshots.created_at = (SELECT MAX(created_at) FROM canvas_gradebook_snapshots)")
+      .group("users.id", "users.first_name", "users.last_name")
+      .order("SUM(canvas_submissions.points) DESC")
+      .pluck("users.first_name", "users.last_name", "SUM(canvas_submissions.points)")
       .map { |first_name, last_name, point_total| ["#{first_name} #{last_name}", point_total] }
   end
 
@@ -88,10 +88,10 @@ class CohortsController < ApplicationController
     render json: @cohort
       .enrollments
       .joins(:user, :canvas_submissions)
-      .group('enrollments.id', 'users.first_name', 'users.last_name')
-      .order('SUM(canvas_submissions.points) DESC')
-      .pluck('users.first_name', 'users.last_name', 'SUM(canvas_submissions.points)')
-      .map { |first_name, last_name, point_total| ["#{first_name} #{last_name}", point_total]}
+      .group("enrollments.id", "users.first_name", "users.last_name")
+      .order("SUM(canvas_submissions.points) DESC")
+      .pluck("users.first_name", "users.last_name", "SUM(canvas_submissions.points)")
+      .map { |first_name, last_name, point_total| ["#{first_name} #{last_name}", point_total] }
   end
 
   private

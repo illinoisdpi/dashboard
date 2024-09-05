@@ -4,7 +4,6 @@ class RfpIdeaSubmissionsController < ApplicationController
   skip_after_action :verify_policy_scoped
   before_action { authorize(RfpIdeaSubmission) }
 
-
   # GET /rfp_idea_submissions/new
   def new
     @rfp_idea_submission = RfpIdeaSubmission.new
