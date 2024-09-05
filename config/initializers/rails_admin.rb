@@ -47,12 +47,4 @@ RailsAdmin.config do |config|
     history_index
     history_show
   end
-
-  ## Change Column Name: Discord to Discord Id
-  config.model "User" do
-    configure :discord_id do
-      label "Discord Id"
-    end
-  end
-
 end
