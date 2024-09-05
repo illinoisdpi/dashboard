@@ -72,6 +72,7 @@ class Enrollment < ApplicationRecord
 
   delegate :education,
     :github_username,
+    :devto_username,
     :languages,
     :most_recent_role,
     :personal_website,
