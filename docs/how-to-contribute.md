@@ -55,5 +55,3 @@ Here's what you'll need to do to install PostgresQL.
 
 1. Install PostgreSQL using Homebrew: `brew install postgresql`
 2. Start PostgreSQL service: `brew services start postgresql`
-3. Access PostgreSQL with your macOS username: `psql your-macOS-username` 
-
