@@ -10,23 +10,23 @@ module Impression::Emojiable
   end
 
   POSITIVE_EMOJIS = {
-    👍: "positive",
-    🧥: "workplace appearance",
-    💼: "workplace culture and policy",
-    🙌: "follow-through",
-    💯: "quality of work",
-    🚀: "taking initiative",
-    📣: "communication skills",
-    🫡: "positive response to supervision",
-    🤝: "teamwork",
-    🛜: "networking",
-    🤔: "problem solving",
-    💪: "resilience",
-    🪞: "self-awareness",
-    🤗: "positive attitude",
-    🙋: "asking questions",
-    😇: "helping others",
-    🥳: "growth"
+    # 👍: ["misc", "positive"],
+    # 🤔: ["misc", "problem solving"],
+    # 😇: ["misc", "helping others"],
+    # 🙋: ["misc", "asking questions"],
+    # 🥳: ["misc", "growth"],
+    🧥: ["Consistency", "Attendance and Punctuality"],
+    💼: ["Consistency", "Workplace Appearance"],
+    🙌: ["Committed", "Follow-through"],
+    💯: ["Committed", "Quality of Work"],
+    🚀: ["Confidence", "Taking Initiative"],
+    🤝: ["Collaboration", "Teamwork"],
+    🛜: ["Collaboration", "Networking"],
+    💪: ["Character", "Resilience"],
+    🪞: ["Character", "Self-awareness"],
+    🤗: ["Character", "Positive Attitude"],
+    📣: ["Communication", "communication skills"],
+    🫡: ["Communication", "positive response to supervision"],
   }.freeze
 
   NEGATIVE_EMOJIS = {
