@@ -4,10 +4,10 @@
     </div>
     <div class="card-body">
       <div id="emoji-buttons" class="d-flex flex-wrap">
-        <% emoji_buttons.each do |emoji, description| %>
-          <button type="button" class="emoji-btn" data-emoji="<%= emoji %>" data-action="click->emoji-input#addEmoji">
+        <% emoji_buttons.each do |emoji, impression| %>
+          <button type="button" class="emoji-btn" data-emoji="<%= emoji %>" data-action="click->emoji-input#addEmoji"  title=<%= impression[:category] %>>
             <%= emoji %>
-            <%= description %>
+            <%= impression[:description] %>
           </button>
         <% end %>
       </div>
