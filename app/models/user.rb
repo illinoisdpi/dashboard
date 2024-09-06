@@ -6,6 +6,7 @@
 #  canvas_full            :string
 #  career_highlights      :text
 #  devto_username         :string
+#  discord_username       :string
 #  education              :text
 #  email                  :citext           default(""), not null
 #  encrypted_password     :string           default(""), not null
@@ -28,6 +29,7 @@
 #  strengths              :text
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  discord_id             :string
 #
 # Indexes
 #

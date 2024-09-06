@@ -4,6 +4,12 @@ module Enrollment::Endorsable
   included do
     before_validation :set_career_total
     before_validation :set_communication_total
+
+    enum technical_rating: {
+      emerging: "emerging",
+      proficient: "proficient",
+      excellent: "excellent"
+    }
   end
 
   def set_career_total
@@ -51,21 +57,11 @@ module Enrollment::Endorsable
       :emerging
     end
   end
-  
+
   def communication_rating
     if communication_total >= 10.5
       :excellent
     elsif communication_total >= 8.5
-      :proficient
-    else
-      :emerging
-    end
-  end
-
-  def technical_rating
-    if technical_score >= 0.9
-      :excellent
-    elsif technical_score >= 0.7
       :proficient
     else
       :emerging
