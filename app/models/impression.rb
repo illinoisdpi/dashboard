@@ -32,6 +32,10 @@ class Impression < ApplicationRecord
 
   scope :default_order, -> { order(created_at: :desc) }
 
+  scope :for_subject, ->(user) { where(subject: user.enrollments) }
+  scope :positive_for_subject, ->(user) { positive.for_subject(user) }
+  scope :negative_for_subject, ->(user) { negative.for_subject(user) }
+
   def summary
     "#{author} authored a #{emoji} impression of #{subject}"
   end
