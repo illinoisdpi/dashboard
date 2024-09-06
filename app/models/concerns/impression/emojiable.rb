@@ -56,5 +56,7 @@ module Impression::Emojiable
   EMOJIS = POSITIVE_EMOJIS.merge(NEGATIVE_EMOJIS).merge(DEPRECATED_EMOJIS).freeze
   POSITIVE_EMOJI_KEYS = POSITIVE_EMOJIS.keys.map(&:to_s).freeze
   NEGATIVE_EMOJI_KEYS = NEGATIVE_EMOJIS.keys.map(&:to_s).freeze
-  
+  POSITIVE_CATEGORIES = POSITIVE_EMOJIS.transform_values { |v| v[:category] }.freeze
+  NEGATIVE_CATEGORIES = NEGATIVE_EMOJIS.transform_values { |v| v[:category] }.freeze
+
 end

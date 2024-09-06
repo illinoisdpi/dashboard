@@ -35,6 +35,12 @@ class Impression < ApplicationRecord
   scope :for_subject, ->(user) { where(subject: user.enrollments) }
   scope :positive_for_subject, ->(user) { positive.for_subject(user) }
   scope :negative_for_subject, ->(user) { negative.for_subject(user) }
+  scope :positive_by_category, ->(user, category) {
+    for_subject(user).where(emoji: POSITIVE_CATEGORIES.select { |k, v| v == category }.keys)
+  }
+  scope :negative_by_category, ->(user, category) {
+    for_subject(user).where(emoji: NEGATIVE_CATEGORIES.select { |k, v| v == category }.keys)
+  }
 
   def summary
     "#{author} authored a #{emoji} impression of #{subject}"
