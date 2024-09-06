@@ -10,39 +10,33 @@ module Impression::Emojiable
   end
 
   POSITIVE_EMOJIS = {
-    # 👍: ["misc", "positive"],
-    # 🤔: ["misc", "problem solving"],
-    # 😇: ["misc", "helping others"],
-    # 🙋: ["misc", "asking questions"],
-    # 🥳: ["misc", "growth"],
-    🧥: ["Consistency", "Attendance and Punctuality"],
-    💼: ["Consistency", "Workplace Appearance"],
-    🙌: ["Committed", "Follow-through"],
-    💯: ["Committed", "Quality of Work"],
-    🚀: ["Confidence", "Taking Initiative"],
-    🤝: ["Collaboration", "Teamwork"],
-    🛜: ["Collaboration", "Networking"],
-    💪: ["Character", "Resilience"],
-    🪞: ["Character", "Self-awareness"],
-    🤗: ["Character", "Positive Attitude"],
-    📣: ["Communication", "communication skills"],
-    🫡: ["Communication", "positive response to supervision"],
+    🧥: {category: "Consistency", description: "Attendance and Punctuality"},
+    💼: {category: "Consistency", description: "Workplace Appearance"},
+    🙌: {category: "Committed", description: "Follow-through"},
+    💯: {category: "Committed", description: "Quality of Work"},
+    🚀: {category: "Confidence", description: "Taking Initiative"},
+    🤝: {category: "Collaboration", description: "Teamwork"},
+    🛜: {category: "Collaboration", description: "Networking"},
+    💪: {category: "Character", description: "Resilience"},
+    🪞: {category: "Character", description: "Self-awareness"},
+    🤗: {category: "Character", description: "Positive Attitude"},
+    📣: {category: "Communication", description: "Communication Skills"},
+    🫡: {category: "Communication", description: "Positive Response to Supervision"}
   }.freeze
 
   NEGATIVE_EMOJIS = {
-    👎: "negative",
-    🧢: "unprofessional workplace appearance",
-    😡: "poor workplace culture and policy",
-    🤷: "lack of follow-through",
-    🫤: "low quality of work",
-    🦥: "lack of initiative",
-    🙊: "poor communication skills",
-    💢: "negative response to supervision",
-    🥊: "conflict/lack of collaboration",
-    😯: "lacking self-awareness",
-    👿: "negative attitude",
-    😬: "unprofessional",
-    ⏰: "poor time management"
+    ⏰: {category: "Consistency", description: "Poor Time Management"},
+    🧢: {category: "Consistency", description: "Unprofessional Workplace Appearance"},
+    🤷: {category: "Committed", description: "Lack of Follow-through"},
+    🫤: {category: "Committed", description: "Low Quality of Work"},
+    🦥: {category: "Confidence", description: "Lack of Initiative"},
+    🥊: {category: "Collaboration", description: "Conflict/Lack of Collaboration"},
+    🙈: {category: "Collaboration", description: "Lack of Networking"},
+    😬: {category: "Character", description: "Lack of Resilience"},
+    😯: {category: "Character", description: "Lacking Self-awareness"},
+    👿: {category: "Character", description: "Negative Attitude"},
+    🙊: {category: "Communication", description: "Poor Communication Skills"},
+    💢: {category: "Communication", description: "Negative Response to Supervision"}
   }.freeze
 
   EMOJIS = POSITIVE_EMOJIS.merge(NEGATIVE_EMOJIS).freeze
