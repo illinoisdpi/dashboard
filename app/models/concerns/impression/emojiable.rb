@@ -5,8 +5,12 @@ module Impression::Emojiable
     validates :emoji, emoji: true
   end
 
-  def emoji_name
-    Impression::EMOJIS[emoji.to_sym] || Emoji.find_by_unicode(emoji).name
+  def emoji_category
+    Impression::EMOJIS[emoji.to_sym]&.fetch(:category, "Unknown Category")
+  end
+
+  def emoji_description
+    Impression::EMOJIS[emoji.to_sym]&.fetch(:description, "Description not available")
   end
 
   POSITIVE_EMOJIS = {
@@ -39,5 +43,15 @@ module Impression::Emojiable
     💢: {category: "Communication", description: "Negative Response to Supervision"}
   }.freeze
 
-  EMOJIS = POSITIVE_EMOJIS.merge(NEGATIVE_EMOJIS).freeze
+  DEPRECATED_EMOJIS = {
+      '👍': {category: "Miscellaneous", description: "Positive"},
+      '👎': {category: "Miscellaneous", description: "Negative"},
+      '😡': {category: "Miscellaneous", description: "Poor Workplace Culture and Policy"},
+      '🙋': {category: "Miscellaneous", description: "Asking Questions"},
+      '😇': {category: "Miscellaneous", description: "Helping Others"},
+      '🥳': {category: "Miscellaneous", description: "Growth"},
+      '🤔': {category: "Miscellaneous", description: "Problem Solving"}
+    }.freeze
+
+  EMOJIS = POSITIVE_EMOJIS.merge(NEGATIVE_EMOJIS).merge(DEPRECATED_EMOJIS).freeze
 end
