@@ -1,6 +1,8 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dpi-primary">
   <div class="container-fluid">
-    <span class="text-light me-auto fw-bold">MEET THE DPI APPRENTICES</span>
+    <span class="text-light me-auto fw-bold">
+      MEET THE DPI APPRENTICES
+    </span>
     <%= image_tag 'logo', height: "40px" %>
   </div>
 </nav>
@@ -41,7 +43,9 @@
         </h5>
         <ul class="text-dpi-primary">
           <% @enrollment.skills_development.split(",").take(6).each do |skill| %>
-            <li><%= skill %></li>
+            <li>
+              <%= skill %>
+            </li>
           <% end %>
         </ul>
       <% end %>
@@ -54,28 +58,27 @@
       </div>
       <% if false # TODO: refactor endorsements then policy(Enrollment).view_rating? %>
         <div class="my-5">
-          <h5 class="text-dpi-secondary fw-bold">DPI Endorsements</h5>
+          <h5 class="text-dpi-secondary fw-bold">
+            DPI Endorsements
+          </h5>
           <ul class="px-0 list-unstyled text-dpi-primary">
             <li>
               Career Readiness:
-              <span
-              class="fw-bold lead text-<%= rating_class(@enrollment.career_rating)%>"
-              ><%= @enrollment.career_rating.upcase %></span
-            >
+              <span class="fw-bold lead text-<%= rating_class(@enrollment.career_rating)%>">
+                <%= @enrollment.career_rating.upcase %>
+              </span>
             </li>
             <li>
               Communication:
-              <span
-              class="fw-bold lead text-<%= rating_class(@enrollment.communication_rating)%>"
-              ><%= @enrollment.communication_rating.upcase %></span
-            >
+              <span class="fw-bold lead text-<%= rating_class(@enrollment.communication_rating)%>">
+                <%= @enrollment.communication_rating.upcase %>
+              </span>
             </li>
             <li>
               Technical:
-              <span
-              class="fw-bold lead text-<%= rating_class(@enrollment.technical_rating)%>"
-              ><%= @enrollment.technical_rating.upcase %></span
-            >
+              <span class="fw-bold lead text-<%= rating_class(@enrollment.technical_rating)%>">
+                <%= @enrollment.technical_rating.upcase %>
+              </span>
             </li>
           </ul>
         </div>
@@ -83,31 +86,44 @@
     </div>
   </div>
   <div class="row mx-2 mt-2">
-    <hr class="border-dpi-primary border-2 opacity-100" />
+    <hr class="border-dpi-primary border-2 opacity-100">
     <div class="col-4 border-top-0 border-start-0 border-bottom-0 border-dpi-primary border-3 opacity-100">
-      <h5 class="text-dpi-secondary fw-bold">Career Highlights</h5>
+      <h5 class="text-dpi-secondary fw-bold">
+        Career Highlights
+      </h5>
       <% if @enrollment.user.career_highlights.present? %>
         <ul class="px-0 list-unstyled text-dpi-primary">
-          <% @enrollment.user.career_highlights.split(",").take(3).each do
-        |highlight| %>
-          <li><%= highlight %></li>
+          <% @enrollment.user.career_highlights.split(",").take(3).each do |highlight| %>
+            <li>
+              <%= highlight %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="text-dpi-primary">
+          <%= @enrollment.user.most_recent_role %>
+        </p>
+      <% end %>
+    </div>
+    <div class="col-4 border-top-0 border-start-0 border-bottom-0 border-dpi-primary border-3 opacity-100">
+      <h5 class="text-dpi-secondary fw-bold">
+        Education
+      </h5>
+      <ul class="px-0 list-unstyled text-dpi-primary">
+        <% if @enrollment.user.education.present? %>
+          <% @enrollment.user.education.split(",").take(3).each do |education| %>
+            <li>
+              <%= education %>
+            </li>
+          <% end %>
         <% end %>
       </ul>
-    <% else %>
-      <p class="text-dpi-primary"><%= @enrollment.user.most_recent_role %></p>
-    <% end %>
-  </div>
-  <div class="col-4 border-top-0 border-start-0 border-bottom-0 border-dpi-primary border-3 opacity-100">
-    <h5 class="text-dpi-secondary fw-bold">Education</h5>
-    <ul class="px-0 list-unstyled text-dpi-primary">
-      <% if @enrollment.user.education.present? %> <%
-        @enrollment.user.education.split(",").take(3).each do |education| %>
-          <li><%= education %></li>
-        <% end %>
-      <% end %>
-    </ul>
-  </div>
-  <div class="col-4">
-    <h5 class="text-dpi-secondary fw-bold">Fun Fact</h5>
-    <p class="text-dpi-primary"><%= @enrollment.user.fun_fact %></p>
-  </div>
+    </div>
+    <div class="col-4">
+      <h5 class="text-dpi-secondary fw-bold">
+        Fun Fact
+      </h5>
+      <p class="text-dpi-primary">
+        <%= @enrollment.user.fun_fact %>
+      </p>
+    </div>
