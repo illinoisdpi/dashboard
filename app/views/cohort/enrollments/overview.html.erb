@@ -86,10 +86,9 @@
             <h4 class="h6 flex-grow-0 m-0 h-25">
               Impressions
             </h4>
-
             <div class="flex-grow-1 d-flex align-items-center justify-content-center">
               <div class="d-flex align-items-center">
-                <p class="lead text-<%= rating_class(@enrollment.career_rating)%> m-0 me-3 display-4">
+                <p class="lead text-<%= rating_class(@enrollment.career_rating) %> m-0 me-3 display-4">
                   <%= Impression.positive_for_subject(@enrollment.user).count %>
                 </p>
                 <div class="vr mx-3"></div>
@@ -98,6 +97,10 @@
                 </p>
               </div>
             </div>
+            <%= render 'cohort/enrollments/impressions_modal', enrollment: @enrollment %>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#impressionsModal">
+              View Impressions
+            </button>
           </div>
         </div>
       </div>
