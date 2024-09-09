@@ -58,5 +58,6 @@ module Impression::Emojiable
   NEGATIVE_EMOJI_KEYS = NEGATIVE_EMOJIS.keys.map(&:to_s).freeze
   POSITIVE_CATEGORIES = POSITIVE_EMOJIS.transform_values { |v| v[:category] }.freeze
   NEGATIVE_CATEGORIES = NEGATIVE_EMOJIS.transform_values { |v| v[:category] }.freeze
+  CATEGORIES = (POSITIVE_EMOJIS.values.map { |v| v[:category] } + NEGATIVE_EMOJIS.values.map { |v| v[:category] }).uniq.freeze
 
 end
