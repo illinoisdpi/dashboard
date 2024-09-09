@@ -1,0 +1,35 @@
+<div class="modal fade" id="impressionsModal" tabindex="-1" aria-labelledby="impressionsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="impressionsModalLabel">Impressions Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-body">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Category</th>
+                    <th scope="col">Positive Impressions</th>
+                    <th scope="col">Negative Impressions</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <% Impression::CATEGORIES.each do |category| %>
+                        <tr>
+                        <td><%= category %></td>
+                        <td><%= Impression.positive_by_category(@enrollment.user, category).count %></td>
+                        <td><%= Impression.negative_by_category(@enrollment.user, category).count %></td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
