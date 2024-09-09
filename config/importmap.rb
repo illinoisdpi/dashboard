@@ -8,3 +8,4 @@ pin_all_from "app/javascript/controllers", under: "controllers"
 
 pin "chartkick", to: "chartkick.js"
 pin "Chart.bundle", to: "Chart.bundle.js"
+pin "recaptcha", to: "https://www.google.com/recaptcha/api.js"
