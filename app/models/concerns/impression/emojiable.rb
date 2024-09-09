@@ -4,32 +4,46 @@ module Impression::Emojiable
   included do
     validates :emoji, emoji: true
   end
-  
+
   def emoji_name
     Impression::EMOJIS[emoji.to_sym] || Emoji.find_by_unicode(emoji).name
   end
 
-  EMOJIS = {
+  POSITIVE_EMOJIS = {
     👍: "positive",
-    👎: "negative",
+    🧥: "workplace appearance",
+    💼: "workplace culture and policy",
+    🙌: "follow-through",
+    💯: "quality of work",
+    🚀: "taking initiative",
+    📣: "communication skills",
+    🫡: "positive response to supervision",
+    🤝: "teamwork",
+    🛜: "networking",
+    🤔: "problem solving",
+    💪: "resilience",
+    🪞: "self-awareness",
+    🤗: "positive attitude",
     🙋: "asking questions",
     😇: "helping others",
-    🥳: "growth",
-    😬: "unprofessional",
-    😠: "lashing out",
-    🤩: "all star",
-    😶: "lack communication",
-    😑: "lack progress",
-    ⏰: "time management",
-    ✅: "consistent",
-    ❌: "inconsistent",
-    🏁: "commited",
-    🚷: "lack of follow-through",
-    😎: "confident",
-    🙈: "lack of confidence",
-    💬: "good communication",
-    🤐: "lacking communication",
-    🤝: "collaboration",
-    🚧: "conflict/lack of collaboration"
+    🥳: "growth"
   }.freeze
+
+  NEGATIVE_EMOJIS = {
+    👎: "negative",
+    🧢: "unprofessional workplace appearance",
+    😡: "poor workplace culture and policy",
+    🤷: "lack of follow-through",
+    🫤: "low quality of work",
+    🦥: "lack of initiative",
+    🙊: "poor communication skills",
+    💢: "negative response to supervision",
+    🥊: "conflict/lack of collaboration",
+    😯: "lacking self-awareness",
+    👿: "negative attitude",
+    😬: "unprofessional",
+    ⏰: "poor time management"
+  }.freeze
+
+  EMOJIS = POSITIVE_EMOJIS.merge(NEGATIVE_EMOJIS).freeze
 end

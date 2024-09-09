@@ -1,5 +1,5 @@
 class CohortsController < ApplicationController
-  before_action :set_cohort, only: %i[show edit update destroy]
+  before_action :set_cohort, only: %i[show edit update destroy canvas_highest_position_submission_count canvas_point_total_most_recent canvas_cumulative_points]
   before_action { authorize(@cohort || Cohort) }
 
   # GET /cohorts or /cohorts.json
@@ -64,6 +64,20 @@ class CohortsController < ApplicationController
       format.html { redirect_to cohorts_url, notice: "Cohort was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def canvas_highest_position_submission_count
+    render json: @cohort
+      .canvas_assignments
+      .group_by_highest_position_submission_count
+      .map { |canvas_assignment| [canvas_assignment.name, canvas_assignment.student_count] }
+  end
+
+  def canvas_point_total_most_recent
+    render json:  @cohort
+      .enrollments
+      .with_recent_canvas_points
+      .map { |enrollment| [enrollment.to_s, enrollment.total_points] }
   end
 
   private
