@@ -1,4 +1,4 @@
-class ImpressionCommentPolicy < ApplicationPolicy
+class CommentPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       if user.admin? || user.instructor?
