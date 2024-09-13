@@ -21,12 +21,14 @@
 #  fk_rails_...  (subject_id => enrollments.id)
 #
 class Impression < ApplicationRecord
-  include Emojiable, Ransackable, Slackable
+  include Slackable
+  include Ransackable
+  include Emojiable
 
   has_paper_trail skip: [:created_at, :updated_at]
 
-  belongs_to :author, class_name: "User", foreign_key: "author_id"
-  belongs_to :subject, class_name: "Enrollment", foreign_key: "subject_id"
+  belongs_to :author, class_name: "User"
+  belongs_to :subject, class_name: "Enrollment"
 
   validates :content, presence: true
 
@@ -50,7 +52,7 @@ class Impression < ApplicationRecord
   }
 
   def summary
-    "#{emoji} #{author} authored a #{emoji_category} (#{emoji_description}) impression of #{subject} #{emoji}"
+    "#{author} provided a #{emoji_type} #{emoji_category} impression (#{emoji_description}) for #{subject} #{emoji}".titleize
   end
 
   def to_s

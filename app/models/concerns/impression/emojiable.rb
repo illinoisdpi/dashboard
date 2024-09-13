@@ -96,4 +96,16 @@ module Impression::Emojiable
   def emoji_description
     EMOJI_DESCRIPTIONS[emoji] || "Description not available"
   end
+
+  def emoji_type
+    if POSITIVE_EMOJIS.include?(emoji)
+      "positive"
+    elsif NEGATIVE_EMOJIS.include?(emoji)
+      "negative"
+    elsif DEPRECATED_EMOJIS.include?(emoji)
+      "deprecated"
+    else
+      "unknown"
+    end
+  end
 end
