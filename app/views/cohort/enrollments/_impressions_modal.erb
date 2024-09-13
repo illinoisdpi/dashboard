@@ -18,7 +18,7 @@
                 <tbody>
                     <% Impression::CATEGORIES.each do |category| %>
                         <tr>
-                        <td><%= category %></td>
+                        <td><%= category.titleize %></td>
                         <td><%= Impression.positive_by_category(@enrollment.user, category).count %></td>
                         <td><%= Impression.negative_by_category(@enrollment.user, category).count %></td>
                         </tr>
