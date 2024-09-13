@@ -29,7 +29,7 @@ module Cohort::ImpressionsController::Csvable
           impression.author.last_name,
           impression.subject.first_name,
           impression.subject.last_name,
-          "#{request.base_url}/impressions/#{impression.id}",
+          Rails.application.routes.url_helpers.url_for(impression)
         ]
       end
     end
