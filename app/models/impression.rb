@@ -32,28 +32,22 @@ class Impression < ApplicationRecord
 
   scope :default_order, -> { order(created_at: :desc) }
 
-  scope :positive, -> { where(emoji: POSITIVE_EMOJI_KEYS) }
-  scope :negative, -> { where(emoji: NEGATIVE_EMOJI_KEYS) }
+  scope :positive, -> { where(emoji: POSITIVE_EMOJIS) }
+  scope :negative, -> { where(emoji: NEGATIVE_EMOJIS) }
 
   scope :for_subject, ->(user) { where(subject_id: user.enrollments.pluck(:id)) }
-  
   scope :positive_for_subject, ->(user) { positive.for_subject(user) }
   scope :negative_for_subject, ->(user) { negative.for_subject(user) }
 
   scope :positive_by_category, ->(user, category) {
-    for_subject(user).where(emoji: POSITIVE_CATEGORIES.select { |k, v| v == category }.keys)
+    emojis_in_category = Impression::Emojiable::EMOJI_CATEGORIES.select { |_, cat| cat == category }.keys
+    where(emoji: emojis_in_category & Impression::Emojiable::POSITIVE_EMOJIS).for_subject(user)
   }
+
   scope :negative_by_category, ->(user, category) {
-    for_subject(user).where(emoji: NEGATIVE_CATEGORIES.select { |k, v| v == category }.keys)
+    emojis_in_category = Impression::Emojiable::EMOJI_CATEGORIES.select { |_, cat| cat == category }.keys
+    where(emoji: emojis_in_category & Impression::Emojiable::NEGATIVE_EMOJIS).for_subject(user)
   }
-
-  def emoji_category
-    EMOJIS[emoji.to_sym]&.fetch(:category, "Unknown Category")
-  end
-
-  def emoji_description
-    EMOJIS[emoji.to_sym]&.fetch(:description, "No Description Available")
-  end
 
   def summary
     "#{emoji} #{author} authored a #{emoji_category} (#{emoji_description}) impression of #{subject} #{emoji}"
