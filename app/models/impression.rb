@@ -47,8 +47,16 @@ class Impression < ApplicationRecord
     for_subject(user).where(emoji: NEGATIVE_CATEGORIES.select { |k, v| v == category }.keys)
   }
 
+  def emoji_category
+    EMOJIS[emoji.to_sym]&.fetch(:category, "Unknown Category")
+  end
+
+  def emoji_description
+    EMOJIS[emoji.to_sym]&.fetch(:description, "No Description Available")
+  end
+
   def summary
-    "#{author} authored a #{emoji} impression of #{subject}"
+    "#{emoji} #{author} authored a #{emoji_category} (#{emoji_description}) impression of #{subject} #{emoji}"
   end
 
   def to_s
