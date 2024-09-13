@@ -3,8 +3,8 @@ module ImpressionsHelper
     emoji_array.map do |emoji|
       {
         emoji: emoji,
-        category: Impression::Emojiable::EMOJI_CATEGORIES[emoji],
-        description: Impression::Emojiable::EMOJI_DESCRIPTIONS[emoji]
+        category: Impression::Emojiable::EMOJIS[emoji][:category],
+        description: Impression::Emojiable::EMOJIS[emoji][:description]
       }
     end
   end

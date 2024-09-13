@@ -2,110 +2,60 @@ module Impression::Emojiable
   extend ActiveSupport::Concern
 
   included do
-    validates :emoji, emoji: true
+    validates :emoji, presence: true, inclusion: {in: EMOJIS.keys, message: "%{value} is not a valid emoji"}
   end
 
-  EMOJI_CATEGORIES = {
-    "💼" => "consistency",
-    "🧥" => "consistency",
-    "🙌" => "committed",
-    "💯" => "committed",
-    "🚀" => "confidence",
-    "🤝" => "collaboration",
-    "🛜" => "collaboration",
-    "💪" => "character",
-    "🪞" => "character",
-    "🤗" => "character",
-    "📣" => "communication",
-    "🫡" => "communication",
-    "⏰" => "consistency",
-    "🧢" => "consistency",
-    "🤷" => "committed",
-    "🫤" => "committed",
-    "🦥" => "confidence",
-    "🥊" => "collaboration",
-    "🙈" => "collaboration",
-    "😬" => "character",
-    "😯" => "character",
-    "👿" => "character",
-    "🙊" => "communication",
-    "💢" => "communication",
-    "👍" => "miscellaneous",
-    "👎" => "miscellaneous",
-    "😡" => "miscellaneous",
-    "🙋" => "miscellaneous",
-    "😇" => "miscellaneous",
-    "🥳" => "miscellaneous",
-    "🤔" => "miscellaneous"
+  EMOJIS = {
+    "💼" => {sentiment: :positive, category: "consistency", description: "workplace appearance"},
+    "🧥" => {sentiment: :positive, category: "consistency", description: "attendance and punctuality"},
+    "🙌" => {sentiment: :positive, category: "committed", description: "follow-through"},
+    "💯" => {sentiment: :positive, category: "committed", description: "quality of work"},
+    "🚀" => {sentiment: :positive, category: "confidence", description: "taking initiative"},
+    "🤝" => {sentiment: :positive, category: "collaboration", description: "teamwork"},
+    "🛜" => {sentiment: :positive, category: "collaboration", description: "networking"},
+    "💪" => {sentiment: :positive, category: "character", description: "resilience"},
+    "🪞" => {sentiment: :positive, category: "character", description: "self-awareness"},
+    "🤗" => {sentiment: :positive, category: "character", description: "positive attitude"},
+    "📣" => {sentiment: :positive, category: "communication", description: "communication skills"},
+    "🫡" => {sentiment: :positive, category: "communication", description: "positive response to supervision"},
+    "⏰" => {sentiment: :negative, category: "consistency", description: "poor time management"},
+    "🧢" => {sentiment: :negative, category: "consistency", description: "unprofessional workplace appearance"},
+    "🤷" => {sentiment: :negative, category: "committed", description: "lack of follow-through"},
+    "🫤" => {sentiment: :negative, category: "committed", description: "low quality of work"},
+    "🦥" => {sentiment: :negative, category: "confidence", description: "lack of initiative"},
+    "🥊" => {sentiment: :negative, category: "collaboration", description: "conflict/lack of collaboration"},
+    "🙈" => {sentiment: :negative, category: "collaboration", description: "lack of networking"},
+    "😬" => {sentiment: :negative, category: "character", description: "lack of resilience"},
+    "😯" => {sentiment: :negative, category: "character", description: "lacking self-awareness"},
+    "👿" => {sentiment: :negative, category: "character", description: "negative attitude"},
+    "🙊" => {sentiment: :negative, category: "communication", description: "poor communication skills"},
+    "💢" => {sentiment: :negative, category: "communication", description: "negative response to supervision"},
+    "👍" => {sentiment: :positive, category: "miscellaneous", description: "positive"},
+    "👎" => {sentiment: :negative, category: "miscellaneous", description: "negative"},
+    "😡" => {sentiment: :negative, category: "miscellaneous", description: "poor workplace culture and policy"},
+    "🙋" => {sentiment: :positive, category: "miscellaneous", description: "asking questions"},
+    "😇" => {sentiment: :positive, category: "miscellaneous", description: "helping others"},
+    "🥳" => {sentiment: :positive, category: "miscellaneous", description: "growth"},
+    "🤔" => {sentiment: :positive, category: "miscellaneous", description: "problem solving"}
   }.freeze
 
-  EMOJI_DESCRIPTIONS = {
-    "🧥" => "attendance and punctuality",
-    "💼" => "workplace appearance",
-    "🙌" => "follow-through",
-    "💯" => "quality of work",
-    "🚀" => "taking initiative",
-    "🤝" => "teamwork",
-    "🛜" => "networking",
-    "💪" => "resilience",
-    "🪞" => "self-awareness",
-    "🤗" => "positive attitude",
-    "📣" => "communication skills",
-    "🫡" => "positive response to supervision",
-    "⏰" => "poor time management",
-    "🧢" => "unprofessional workplace appearance",
-    "🤷" => "lack of follow-through",
-    "🫤" => "low quality of work",
-    "🦥" => "lack of initiative",
-    "🥊" => "conflict/lack of collaboration",
-    "🙈" => "lack of networking",
-    "😬" => "lack of resilience",
-    "😯" => "lacking self-awareness",
-    "👿" => "negative attitude",
-    "🙊" => "poor communication skills",
-    "💢" => "negative response to supervision",
-    "👍" => "positive",
-    "👎" => "negative",
-    "😡" => "poor workplace culture and policy",
-    "🙋" => "asking questions",
-    "😇" => "helping others",
-    "🥳" => "growth",
-    "🤔" => "problem solving"
-  }.freeze
+  POSITIVE_EMOJIS = EMOJIS.select { |_, v| v[:sentiment] == :positive }.keys.freeze
+  NEGATIVE_EMOJIS = EMOJIS.select { |_, v| v[:sentiment] == :negative }.keys.freeze
+  DEPRECATED_EMOJIS = EMOJIS.select { |_, v| v[:category] == "miscellaneous" }.keys.freeze
 
-  POSITIVE_EMOJIS = [
-    "🧥", "💼", "🙌", "💯", "🚀", "🤝", "🛜", "💪", "🪞", "🤗", "📣", "🫡"
-  ].freeze
+  ALL_EMOJIS = EMOJIS.keys.freeze
 
-  NEGATIVE_EMOJIS = [
-    "⏰", "🧢", "🤷", "🫤", "🦥", "🥊", "🙈", "😬", "😯", "👿", "🙊", "💢"
-  ].freeze
-
-  DEPRECATED_EMOJIS = [
-    "👍", "👎", "😡", "🙋", "😇", "🥳", "🤔"
-  ].freeze
-
-  ALL_EMOJIS = POSITIVE_EMOJIS + NEGATIVE_EMOJIS + DEPRECATED_EMOJIS
-
-  CATEGORIES = EMOJI_CATEGORIES.values.uniq.freeze
+  CATEGORIES = EMOJIS.values.map { |v| v[:category] }.uniq.freeze
 
   def emoji_category
-    EMOJI_CATEGORIES[emoji] || "Unknown Category"
+    EMOJIS[emoji][:category] || "Unknown Category"
   end
 
   def emoji_description
-    EMOJI_DESCRIPTIONS[emoji] || "Description not available"
+    EMOJIS[emoji][:description] || "Description not available"
   end
 
-  def emoji_type
-    if POSITIVE_EMOJIS.include?(emoji)
-      "positive"
-    elsif NEGATIVE_EMOJIS.include?(emoji)
-      "negative"
-    elsif DEPRECATED_EMOJIS.include?(emoji)
-      "deprecated"
-    else
-      "unknown"
-    end
+  def emoji_sentiment
+    EMOJIS[emoji][:sentiment] || :unknown
   end
 end

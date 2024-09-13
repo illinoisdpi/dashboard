@@ -23,7 +23,7 @@
 class Impression < ApplicationRecord
   include Slackable
   include Ransackable
-  include Emojiable
+  include Impression::Emojiable
 
   has_paper_trail skip: [:created_at, :updated_at]
 
@@ -42,17 +42,17 @@ class Impression < ApplicationRecord
   scope :negative_for_subject, ->(user) { negative.for_subject(user) }
 
   scope :positive_by_category, ->(user, category) {
-    emojis_in_category = Impression::Emojiable::EMOJI_CATEGORIES.select { |_, cat| cat == category }.keys
-    where(emoji: emojis_in_category & Impression::Emojiable::POSITIVE_EMOJIS).for_subject(user)
+    emojis_in_category = Impression::Emojiable::EMOJIS.select { |_, v| v[:category].casecmp?(category) && v[:sentiment] == :positive }.keys
+    where(emoji: emojis_in_category).for_subject(user)
   }
 
   scope :negative_by_category, ->(user, category) {
-    emojis_in_category = Impression::Emojiable::EMOJI_CATEGORIES.select { |_, cat| cat == category }.keys
-    where(emoji: emojis_in_category & Impression::Emojiable::NEGATIVE_EMOJIS).for_subject(user)
+    emojis_in_category = Impression::Emojiable::EMOJIS.select { |_, v| v[:category].casecmp?(category) && v[:sentiment] == :negative }.keys
+    where(emoji: emojis_in_category).for_subject(user)
   }
 
   def summary
-    "#{author} provided a #{emoji_type} #{emoji_category} impression (#{emoji_description}) for #{subject} #{emoji}".titleize
+    "#{author} authored a #{emoji_sentiment} #{emoji_category} impression (#{emoji_description}) for #{subject} #{emoji}"
   end
 
   def to_s
