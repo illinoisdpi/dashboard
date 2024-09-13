@@ -3,21 +3,16 @@ module Cohort::ImpressionsController::Csvable
 
   def export_to_csv(impressions)
     headers = [
-      'ID',
       'Created At',
-      'Updated At',
-      'Content',
       'Emoji',
-      'Emoji Category',
-      'Emoji Description',
-      'Author ID',
-      'Author Email',
+      'Category',
+      'Description',
+      'Content',
       'Author First Name',
       'Author Last Name',
-      'Subject ID',
-      'Subject Email',
       'Subject First Name',
-      'Subject Last Name'
+      'Subject Last Name',
+      'URL'
     ]
 
     csv_string = CSV.generate(headers: true) do |csv|
@@ -25,21 +20,16 @@ module Cohort::ImpressionsController::Csvable
 
       impressions.each do |impression|
         csv << [
-          impression.id,
           impression.created_at.strftime("%c"),
-          impression.updated_at.strftime("%c"),
-          impression.content,
           impression.emoji,
           impression.emoji_category,
           impression.emoji_description,
-          impression.author_id,
-          impression.author.email,
+          impression.content,
           impression.author.first_name,
           impression.author.last_name,
-          impression.subject_id,
-          impression.subject.email,
           impression.subject.first_name,
-          impression.subject.last_name
+          impression.subject.last_name,
+          "#{request.base_url}/impressions/#{impression.id}",
         ]
       end
     end
