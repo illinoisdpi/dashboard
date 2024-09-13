@@ -5,59 +5,95 @@ module Impression::Emojiable
     validates :emoji, emoji: true
   end
 
+  EMOJI_CATEGORIES = {
+    "💼" => "consistency",
+    "🧥" => "consistency",
+    "🙌" => "committed",
+    "💯" => "committed",
+    "🚀" => "confidence",
+    "🤝" => "collaboration",
+    "🛜" => "collaboration",
+    "💪" => "character",
+    "🪞" => "character",
+    "🤗" => "character",
+    "📣" => "communication",
+    "🫡" => "communication",
+    "⏰" => "consistency",
+    "🧢" => "consistency",
+    "🤷" => "committed",
+    "🫤" => "committed",
+    "🦥" => "confidence",
+    "🥊" => "collaboration",
+    "🙈" => "collaboration",
+    "😬" => "character",
+    "😯" => "character",
+    "👿" => "character",
+    "🙊" => "communication",
+    "💢" => "communication",
+    "👍" => "miscellaneous",
+    "👎" => "miscellaneous",
+    "😡" => "miscellaneous",
+    "🙋" => "miscellaneous",
+    "😇" => "miscellaneous",
+    "🥳" => "miscellaneous",
+    "🤔" => "miscellaneous"
+  }.freeze
+
+  EMOJI_DESCRIPTIONS = {
+    "🧥" => "attendance and punctuality",
+    "💼" => "workplace appearance",
+    "🙌" => "follow-through",
+    "💯" => "quality of work",
+    "🚀" => "taking initiative",
+    "🤝" => "teamwork",
+    "🛜" => "networking",
+    "💪" => "resilience",
+    "🪞" => "self-awareness",
+    "🤗" => "positive attitude",
+    "📣" => "communication skills",
+    "🫡" => "positive response to supervision",
+    "⏰" => "poor time management",
+    "🧢" => "unprofessional workplace appearance",
+    "🤷" => "lack of follow-through",
+    "🫤" => "low quality of work",
+    "🦥" => "lack of initiative",
+    "🥊" => "conflict/lack of collaboration",
+    "🙈" => "lack of networking",
+    "😬" => "lack of resilience",
+    "😯" => "lacking self-awareness",
+    "👿" => "negative attitude",
+    "🙊" => "poor communication skills",
+    "💢" => "negative response to supervision",
+    "👍" => "positive",
+    "👎" => "negative",
+    "😡" => "poor workplace culture and policy",
+    "🙋" => "asking questions",
+    "😇" => "helping others",
+    "🥳" => "growth",
+    "🤔" => "problem solving"
+  }.freeze
+
+  POSITIVE_EMOJIS = [
+    "🧥", "💼", "🙌", "💯", "🚀", "🤝", "🛜", "💪", "🪞", "🤗", "📣", "🫡"
+  ].freeze
+
+  NEGATIVE_EMOJIS = [
+    "⏰", "🧢", "🤷", "🫤", "🦥", "🥊", "🙈", "😬", "😯", "👿", "🙊", "💢"
+  ].freeze
+
+  DEPRECATED_EMOJIS = [
+    "👍", "👎", "😡", "🙋", "😇", "🥳", "🤔"
+  ].freeze
+
+  ALL_EMOJIS = POSITIVE_EMOJIS + NEGATIVE_EMOJIS + DEPRECATED_EMOJIS
+
+  CATEGORIES = EMOJI_CATEGORIES.values.uniq.freeze
+
   def emoji_category
-    Impression::EMOJIS[emoji.to_sym]&.fetch(:category, "Unknown Category")
+    EMOJI_CATEGORIES[emoji] || "Unknown Category"
   end
 
   def emoji_description
-    Impression::EMOJIS[emoji.to_sym]&.fetch(:description, "Description not available")
+    EMOJI_DESCRIPTIONS[emoji] || "Description not available"
   end
-
-  POSITIVE_EMOJIS = {
-    🧥: {category: "Consistency", description: "Attendance and Punctuality"},
-    💼: {category: "Consistency", description: "Workplace Appearance"},
-    🙌: {category: "Committed", description: "Follow-through"},
-    💯: {category: "Committed", description: "Quality of Work"},
-    🚀: {category: "Confidence", description: "Taking Initiative"},
-    🤝: {category: "Collaboration", description: "Teamwork"},
-    🛜: {category: "Collaboration", description: "Networking"},
-    💪: {category: "Character", description: "Resilience"},
-    🪞: {category: "Character", description: "Self-awareness"},
-    🤗: {category: "Character", description: "Positive Attitude"},
-    📣: {category: "Communication", description: "Communication Skills"},
-    🫡: {category: "Communication", description: "Positive Response to Supervision"}
-  }.freeze
-
-  NEGATIVE_EMOJIS = {
-    ⏰: {category: "Consistency", description: "Poor Time Management"},
-    🧢: {category: "Consistency", description: "Unprofessional Workplace Appearance"},
-    🤷: {category: "Committed", description: "Lack of Follow-through"},
-    🫤: {category: "Committed", description: "Low Quality of Work"},
-    🦥: {category: "Confidence", description: "Lack of Initiative"},
-    🥊: {category: "Collaboration", description: "Conflict/Lack of Collaboration"},
-    🙈: {category: "Collaboration", description: "Lack of Networking"},
-    😬: {category: "Character", description: "Lack of Resilience"},
-    😯: {category: "Character", description: "Lacking Self-awareness"},
-    👿: {category: "Character", description: "Negative Attitude"},
-    🙊: {category: "Communication", description: "Poor Communication Skills"},
-    💢: {category: "Communication", description: "Negative Response to Supervision"}
-  }.freeze
-
-  DEPRECATED_EMOJIS = {
-      '👍': {category: "Miscellaneous", description: "Positive"},
-      '👎': {category: "Miscellaneous", description: "Negative"},
-      '😡': {category: "Miscellaneous", description: "Poor Workplace Culture and Policy"},
-      '🙋': {category: "Miscellaneous", description: "Asking Questions"},
-      '😇': {category: "Miscellaneous", description: "Helping Others"},
-      '🥳': {category: "Miscellaneous", description: "Growth"},
-      '🤔': {category: "Miscellaneous", description: "Problem Solving"}
-    }.freeze
-
-  EMOJIS = POSITIVE_EMOJIS.merge(NEGATIVE_EMOJIS).merge(DEPRECATED_EMOJIS).freeze
-  POSITIVE_EMOJI_KEYS = POSITIVE_EMOJIS.keys.map(&:to_s).freeze
-  NEGATIVE_EMOJI_KEYS = NEGATIVE_EMOJIS.keys.map(&:to_s).freeze
-  POSITIVE_CATEGORIES = POSITIVE_EMOJIS.transform_values { |v| v[:category] }.freeze
-  NEGATIVE_CATEGORIES = NEGATIVE_EMOJIS.transform_values { |v| v[:category] }.freeze
-  CATEGORIES = (POSITIVE_EMOJIS.values.map { |v| v[:category] } + NEGATIVE_EMOJIS.values.map { |v| v[:category] }).uniq.freeze
-
 end
