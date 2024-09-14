@@ -1,6 +1,7 @@
 module ImpressionsHelper
-  def formatted_emoji_buttons(emoji_array)
-    emoji_array.map do |emoji|
+  def formatted_emoji_buttons_by_sentiment(sentiment)
+    emojis = Impression.emojis_by_sentiment(sentiment)
+    emojis.map do |emoji|
       {
         emoji: emoji,
         category: Impression::Emojiable::EMOJIS[emoji][:category],

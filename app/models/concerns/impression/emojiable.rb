@@ -39,13 +39,13 @@ module Impression::Emojiable
     "🤔" => {sentiment: :positive, category: "miscellaneous", description: "problem solving"}
   }.freeze
 
-  POSITIVE_EMOJIS = EMOJIS.select { |_, v| v[:sentiment] == :positive }.keys.freeze
-  NEGATIVE_EMOJIS = EMOJIS.select { |_, v| v[:sentiment] == :negative }.keys.freeze
-  DEPRECATED_EMOJIS = EMOJIS.select { |_, v| v[:category] == "miscellaneous" }.keys.freeze
-
-  ALL_EMOJIS = EMOJIS.keys.freeze
-
   CATEGORIES = EMOJIS.values.map { |v| v[:category] }.uniq.freeze
+
+  class_methods do
+    def emojis_by_sentiment(sentiment)
+      EMOJIS.select { |_, data| data[:sentiment] == sentiment }.keys
+    end
+  end
 
   def emoji_category
     EMOJIS[emoji][:category] || "Unknown Category"

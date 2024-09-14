@@ -39,9 +39,9 @@
       <%# Positive & Negative Emoji Impression cards%>
       <div class="row">
         <%# Positive impression emoji buttons%>
-        <%= render 'impressions/emoji_button_card', card_header: 'Positive Impression', emoji_buttons: Impression::POSITIVE_EMOJIS, bs_border_class: "border-success", bs_text_class: "text-success" %>
+        <%= render 'impressions/emoji_button_card', card_header: 'Positive Impression', emoji_buttons: formatted_emoji_buttons_by_sentiment(:positive), bs_border_class: "border-success", bs_text_class: "text-success" %>
         <%# Negative impression emoji buttons%>
-        <%= render 'impressions/emoji_button_card', card_header: 'Negative Impression', emoji_buttons: Impression::NEGATIVE_EMOJIS, bs_border_class: "border-danger", bs_text_class: "text-danger"  %>
+        <%= render 'impressions/emoji_button_card', card_header: 'Negative Impression', emoji_buttons: formatted_emoji_buttons_by_sentiment(:negative), bs_border_class: "border-danger", bs_text_class: "text-danger"  %>
       </div>
       <div class="mb-3">
         <%= form.label :content, class: "form-label" %>
