@@ -1,11 +1,13 @@
 <div class="col-md-6">
   <div class="card <%= bs_border_class %> text-bg-light mb-3">
-    <div class="card-header <%= bs_text_class %> fw-bold fs-5"> <%= card_header %>
-    </div>
+    <div class="card-header <%= bs_text_class %> fw-bold fs-5"><%= card_header %></div>
     <div class="card-body">
       <div id="emoji-buttons" class="d-flex flex-wrap">
-        <% emoji_buttons.each do | button | %>
-          <button type="button" class="emoji-btn" data-emoji="<%= button[:emoji] %>" data-action="click->emoji-input#addEmoji"  title=<%= button[:category].titleize %>>
+        <% formatted_emoji_buttons(emoji_buttons).each do |button| %>
+          <button type="button" class="emoji-btn" 
+                  data-emoji="<%= button[:emoji] %>" 
+                  data-action="click->emoji-input#addEmoji"  
+                  title="<%= button[:category].titleize %>">
             <%= button[:emoji] %>
             <%= button[:description].titleize %>
           </button>
