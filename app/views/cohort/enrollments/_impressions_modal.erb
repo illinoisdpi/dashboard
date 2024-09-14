@@ -7,24 +7,24 @@
       </div>
       <div class="modal-body">
         <div class="modal-body">
-            <table class="table table-striped">
-                <thead>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Category</th>
+                <th scope="col">Positive Impressions</th>
+                <th scope="col">Negative Impressions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% Impression::CATEGORIES.each do |category| %>
                 <tr>
-                    <th scope="col">Category</th>
-                    <th scope="col">Positive Impressions</th>
-                    <th scope="col">Negative Impressions</th>
+                  <td><%= category.titleize %></td>
+                  <td><%= Impression.positive_by_category(@enrollment.user, category).count %></td>
+                  <td><%= Impression.negative_by_category(@enrollment.user, category).count %></td>
                 </tr>
-                </thead>
-                <tbody>
-                    <% Impression::CATEGORIES.each do |category| %>
-                        <tr>
-                        <td><%= category.titleize %></td>
-                        <td><%= Impression.positive_by_category(@enrollment.user, category).count %></td>
-                        <td><%= Impression.negative_by_category(@enrollment.user, category).count %></td>
-                        </tr>
-                    <% end %>
-                </tbody>
-            </table>
+              <% end %>
+            </tbody>
+          </table>
         </div>
       </div>
       <div class="modal-footer">
