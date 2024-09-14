@@ -21,9 +21,7 @@
 #  fk_rails_...  (subject_id => enrollments.id)
 #
 class Impression < ApplicationRecord
-  include Slackable
-  include Ransackable
-  include Impression::Emojiable
+  include Emojiable, Ransackable, Slackable
 
   has_paper_trail skip: [:created_at, :updated_at]
 
@@ -34,21 +32,9 @@ class Impression < ApplicationRecord
 
   scope :default_order, -> { order(created_at: :desc) }
 
-  scope :positive, -> { where(emoji: POSITIVE_EMOJIS) }
-  scope :negative, -> { where(emoji: NEGATIVE_EMOJIS) }
-
-  scope :for_subject, ->(user) { where(subject_id: user.enrollments.pluck(:id)) }
-  scope :positive_for_subject, ->(user) { positive.for_subject(user) }
-  scope :negative_for_subject, ->(user) { negative.for_subject(user) }
-
-  scope :positive_by_category, ->(user, category) {
-    emojis_in_category = Impression::Emojiable::EMOJIS.select { |_, v| v[:category].casecmp?(category) && v[:sentiment] == :positive }.keys
-    where(emoji: emojis_in_category).for_subject(user)
-  }
-
-  scope :negative_by_category, ->(user, category) {
-    emojis_in_category = Impression::Emojiable::EMOJIS.select { |_, v| v[:category].casecmp?(category) && v[:sentiment] == :negative }.keys
-    where(emoji: emojis_in_category).for_subject(user)
+  scope :for_category, ->(category) {
+    emojis_in_category = Impression::Emojiable::EMOJIS.select { |_, v| v[:category].casecmp?(category) }.keys
+    where(emoji: emojis_in_category)
   }
 
   def summary
