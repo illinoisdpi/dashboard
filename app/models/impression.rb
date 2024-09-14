@@ -40,6 +40,10 @@ class Impression < ApplicationRecord
     where(emoji: emojis_in_category)
   }
 
+  def self.emojis_by_sentiment(sentiment)
+    EMOJIS.select { |_, data| data[:sentiment] == sentiment }.keys
+  end
+
   def summary
     "#{author} authored a #{emoji_sentiment} #{emoji_category} impression (#{emoji_description}) for #{subject} #{emoji}"
   end

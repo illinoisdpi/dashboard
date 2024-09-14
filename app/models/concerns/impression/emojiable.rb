@@ -41,12 +41,6 @@ module Impression::Emojiable
 
   CATEGORIES = EMOJIS.values.map { |v| v[:category] }.uniq.freeze
 
-  class_methods do
-    def emojis_by_sentiment(sentiment)
-      EMOJIS.select { |_, data| data[:sentiment] == sentiment }.keys
-    end
-  end
-
   def emoji_category
     EMOJIS[emoji][:category] || "Unknown Category"
   end
