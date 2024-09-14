@@ -36,17 +36,12 @@
         macOS (control ⌃ + command ⌘ + spacebar)<br/>
         Windows (Windows logo key + .)<br/>
       </div>
+      <%# Positive & Negative Emoji Impression cards%>
       <div class="row">
-        <%= render 'emoji_button_card', 
-          card_header: 'Positive Impression', 
-          emoji_buttons: formatted_emoji_buttons(Impression::POSITIVE_EMOJIS), 
-          bs_border_class: "border-success", 
-          bs_text_class: "text-success" %>
-        <%= render 'emoji_button_card', 
-          card_header: 'Negative Impression', 
-          emoji_buttons: formatted_emoji_buttons(Impression::NEGATIVE_EMOJIS), 
-          bs_border_class: "border-danger", 
-          bs_text_class: "text-danger"  %>
+        <%# Positive impression emoji buttons%>
+        <%= render 'impressions/emoji_button_card', card_header: 'Positive Impression', emoji_buttons: Impression::POSITIVE_EMOJIS, bs_border_class: "border-success", bs_text_class: "text-success" %>
+        <%# Negative impression emoji buttons%>
+        <%= render 'impressions/emoji_button_card', card_header: 'Negative Impression', emoji_buttons: Impression::NEGATIVE_EMOJIS, bs_border_class: "border-danger", bs_text_class: "text-danger"  %>
       </div>
     </div>
     <div class="mb-3">
