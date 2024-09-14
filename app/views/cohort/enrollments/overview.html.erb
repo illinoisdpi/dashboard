@@ -87,13 +87,13 @@
               Impressions
             </h4>
             <div class="flex-grow-1 d-flex align-items-center justify-content-center">
-              <div class="d-flex align-items-center">
-                <p class="lead text-<%= rating_class(@enrollment.career_rating) %> m-0 me-3 display-4">
-                  <%= Impression.positive_for_subject(@enrollment.user).count %>
+              <div class="d-flex align-items-center py-3">
+                <p class="lead text-primary m-0 me-3 display-4">
+                  <%= @enrollment.user.impressions.positive.count %>
                 </p>
                 <div class="vr mx-3"></div>
                 <p class="lead text-danger m-0 ms-3 display-4">
-                  <%= Impression.negative_for_subject(@enrollment.user).count %>
+                  <%= @enrollment.user.impressions.negative.count %>
                 </p>
               </div>
             </div>
