@@ -6,6 +6,7 @@
 #  canvas_full            :string
 #  career_highlights      :text
 #  devto_username         :string
+#  discord_username       :string
 #  education              :text
 #  email                  :citext           default(""), not null
 #  encrypted_password     :string           default(""), not null
@@ -28,6 +29,7 @@
 #  strengths              :text
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  discord_id             :string
 #
 # Indexes
 #
@@ -54,6 +56,8 @@ class User < ApplicationRecord
   has_many :cohorts, through: :enrollments, source: :cohort
   has_many :authored_impressions, class_name: "Impression", foreign_key: "author_id"
   has_many :shoutouts, foreign_key: "author_id", dependent: :destroy
+
+  accepts_nested_attributes_for :enrollments
 
   scope :default_order, -> { order(:first_name) }
 

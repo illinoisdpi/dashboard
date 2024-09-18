@@ -18,3 +18,33 @@
     </div>
   </div>
 </div>
+
+<% if policy(@cohort).canvas_highest_position_submission_count? %>
+  <div class="row mb-3">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="h6 mb-0">Canvas: Highest Position Submission Count</h2>
+        </div>
+        <div class="card-body">
+          <%= column_chart canvas_highest_position_submission_count_cohort_path(@cohort) %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if policy(@cohort).canvas_point_total_most_recent? %>
+  <div class="row mb-3">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="h6 mb-0">Canvas: Total Points (most recent snapshot)</h2>
+        </div>
+        <div class="card-body">
+          <%= column_chart canvas_point_total_most_recent_cohort_path(@cohort) %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

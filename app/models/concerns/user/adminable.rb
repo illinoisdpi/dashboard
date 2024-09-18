@@ -3,6 +3,11 @@ module User::Adminable
 
   included do
     rails_admin do
+
+      configure :discord_id do
+        label "Discord Id"
+      end
+
       edit do
         include_fields :education,
           :email,
@@ -20,8 +25,11 @@ module User::Adminable
           :skills_and_projects,
           :career_highlights,
           :headshot,
-          :devto_username
-        
+          :devto_username,
+          :canvas_full,
+          :discord_id,  
+          :discord_username
+
         field :roles do
           visible do
             bindings[:controller].current_user.admin?
@@ -41,6 +49,6 @@ module User::Adminable
   end
 
   def name
-    self.to_s
+    to_s
   end
 end
