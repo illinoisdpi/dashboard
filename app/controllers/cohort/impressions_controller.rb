@@ -18,7 +18,7 @@ class Cohort::ImpressionsController < ApplicationController
 
     respond_to do |format|
       format.html { @impressions = @impressions.page(params[:page]) }
-      format.csv  { send_data Impression::Csvable.to_csv(@impressions), filename: "cohort-#{@cohort.canvas_shortname}-impressions-#{Date.today}.csv" }
+      format.csv  { send_data Impression.to_csv(@impressions), filename: "cohort-#{@cohort.canvas_shortname}-impressions-#{Date.today}.csv" }
     end
   end
 
