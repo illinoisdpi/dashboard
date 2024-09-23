@@ -1,4 +1,4 @@
-<%= search_form_for(q, url: cohort_impressions_path) do |f| %>
+<%= search_form_for @q, url: cohort_impressions_path(@cohort), method: :get do |f| %>
   <div class="mb-3">
     <%= f.label :subject_user_first_name_cont, class: "form-label" %>
     <%= f.search_field :subject_user_first_name_cont, class: "form-control" %>
