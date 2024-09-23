@@ -21,7 +21,7 @@
 #  fk_rails_...  (subject_id => enrollments.id)
 #
 class Impression < ApplicationRecord
-  include Emojiable, Ransackable, Slackable  
+  include Emojiable, Ransackable, Slackable
 
   has_paper_trail skip: [:created_at, :updated_at]
 
@@ -32,7 +32,7 @@ class Impression < ApplicationRecord
 
   scope :default_order, -> { order(created_at: :desc) }
 
-  scope :positive, -> { where(emoji: emojis_by_sentiment(:positive)) } 
+  scope :positive, -> { where(emoji: emojis_by_sentiment(:positive)) }
   scope :negative, -> { where(emoji: emojis_by_sentiment(:negative)) }
 
   scope :for_category, ->(category) {
