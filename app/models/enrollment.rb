@@ -69,9 +69,31 @@ class Enrollment < ApplicationRecord
       .order("enrollments.created_at DESC")
       .includes(:user)
   }
+  scope :with_user_info, -> {
+    joins(:user)
+      .select('enrollments.id, enrollments.cohort_id, users.id AS user_id, users.first_name, users.last_name')
+  }
+  scope :recent_gradebook_snapshot, -> {
+    joins(canvas_submissions: :canvas_gradebook_snapshot)
+      .where('canvas_gradebook_snapshots.created_at = (SELECT MAX(created_at) FROM canvas_gradebook_snapshots)')
+  }
+  scope :with_recent_canvas_points, -> {
+    with_user_info
+      .recent_gradebook_snapshot
+      .select('enrollments.id, users.id AS user_id, users.first_name, users.last_name, SUM(canvas_submissions.points) AS total_points')
+      .group('enrollments.id, users.id, users.first_name, users.last_name')
+      .order('total_points DESC')
+  }
+
+  def total_points
+    canvas_submissions.sum(:points)
+  end
 
   delegate :education,
     :github_username,
+    :devto_username,
+    :discord_id,
+    :discord_username,
     :languages,
     :most_recent_role,
     :personal_website,
@@ -84,10 +106,10 @@ class Enrollment < ApplicationRecord
     to: :user
 
   enum role: {
-    instructor: 'instructor',
-    staff: 'staff',
-    student: 'student',
-    teaching_assistant: 'teaching assistant'
+    instructor: "instructor",
+    staff: "staff",
+    student: "student",
+    teaching_assistant: "teaching assistant"
   }, _default: :student
 
   def completed_assignments

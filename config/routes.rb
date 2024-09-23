@@ -18,6 +18,11 @@ Rails.application.routes.draw do
     devise_for :users
 
     resources :cohorts do
+      member do
+        get "canvas_highest_position_submission_count"
+        get "canvas_point_total_most_recent"
+        get "canvas_cumulative_points"
+      end
       resources :canvas_gradebook_snapshots
       resources :enrollments, module: :cohort do
         member do
