@@ -1,7 +1,5 @@
-module Cohort::ImpressionsController::Csvable
-  extend ActiveSupport::Concern
-
-  def export_to_csv(impressions)
+module Impression::Csvable
+  def self.to_csv(impressions)
     headers = [
       'Created At',
       'Emoji',
@@ -15,7 +13,7 @@ module Cohort::ImpressionsController::Csvable
       'URL'
     ]
 
-    csv_string = CSV.generate(headers: true) do |csv|
+    CSV.generate(headers: true) do |csv|
       csv << headers
 
       impressions.each do |impression|
@@ -33,7 +31,5 @@ module Cohort::ImpressionsController::Csvable
         ]
       end
     end
-
-    send_data csv_string, filename: "cohort-#{@cohort.canvas_shortname}-impressions-#{Date.today}.csv"
   end
 end
