@@ -3,6 +3,8 @@ class Cohort::ImpressionsController < ApplicationController
   before_action :set_impression, only: %i[ show edit update destroy ]
   before_action { authorize(@impression || Impression) }
 
+  helper_method :ransack_params
+
   # GET /impressions or /impressions.json
   def index
     @breadcrumbs = [
@@ -11,7 +13,7 @@ class Cohort::ImpressionsController < ApplicationController
       {content: "Impressions", href: cohort_impressions_path(@cohort)}
     ]
 
-    @q = policy_scope(@cohort.impressions.includes(subject: :user)).ransack(params[:q])
+    @q = policy_scope(@cohort.impressions.includes(subject: :user)).ransack(ransack_params)
     @impressions = @q.result.default_order
 
     respond_to do |format|
@@ -99,5 +101,9 @@ class Cohort::ImpressionsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def impression_params
     params.require(:impression).permit(:author_id, :subject_id, :content, :emoji)
+  end
+
+  def ransack_params
+    params.fetch(:q, {}).permit(:subject_user_first_name_cont, :subject_user_last_name_cont, :content_cont)
   end
 end
