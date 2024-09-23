@@ -1,5 +1,5 @@
 module ImpressionsHelper
-  def formatted_emoji_buttons_by_sentiment(sentiment)
+  def formatted_emojis_by_sentiment(sentiment)
     emojis = Impression.emojis_by_sentiment(sentiment)
     emojis.map do |emoji|
       {
