@@ -57,3 +57,17 @@ Here's what you'll need to do to install PostgresQL.
 
 1. Install PostgreSQL using Homebrew: `brew install postgresql`
 2. Start PostgreSQL service: `brew services start postgresql`
+
+  *Note - Mac users may need to run this command before starting the PostgreSQL service:*
+
+`bundle config build.pg --with-pg-config=/opt/homebrew/opt/libpq/bin/pg_config`
+
+Some options for GUI PostgreSQL clients on Mac:
+- [Postgres.app](https://postgresapp.com/)
+- [Postico](https://eggerapps.at/postico/v1.php)
+
+
+## Sample data
+
+If you need sample data to work on your issue, run `rails dev:prime` after setting up the database.
+If you run `rails dev:reprime`, make sure to remove `erd.png` from your commit before pushing.
