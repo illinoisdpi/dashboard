@@ -1,6 +1,6 @@
 class Cohort::ImpressionsController < ApplicationController
   before_action :set_cohort
-  before_action :set_impression, only: %i[ show edit update destroy ]
+  before_action :set_impression, only: %i[show edit update destroy]
   before_action { authorize(@impression || Impression) }
 
   helper_method :ransack_params
@@ -18,7 +18,10 @@ class Cohort::ImpressionsController < ApplicationController
 
     respond_to do |format|
       format.html { @impressions = @impressions.page(params[:page]) }
-      format.csv  { send_data Impression.to_csv(@impressions), filename: "cohort-#{@cohort.canvas_shortname}-impressions-#{Date.today}.csv" }
+      format.csv do
+        filename = "#{Time.zone.today}_impressions_#{ransack_params.values.reject(&:empty?).join("_")}.csv"
+        send_data(Impression.to_csv(@impressions), filename:)
+      end
     end
   end
 
