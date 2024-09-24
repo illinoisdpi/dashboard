@@ -38,7 +38,7 @@ class ImpressionPolicy < ApplicationPolicy
   end
 
   def download_csv?
-    user.admin? || user.instructor?
+    user.admin? || user.instructor? || user.teaching_assistant? || user.staff?
   end
 
   def search?
