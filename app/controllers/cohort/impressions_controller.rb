@@ -104,6 +104,6 @@ class Cohort::ImpressionsController < ApplicationController
   end
 
   def ransack_params
-    params.fetch(:q, {}).permit(:subject_user_first_name_cont, :subject_user_last_name_cont, :content_cont)
+    params.fetch(:q, {}).permit(:subject_user_first_name_cont, :subject_user_last_name_cont, :content_cont, :filter_by_time_period)
   end
 end

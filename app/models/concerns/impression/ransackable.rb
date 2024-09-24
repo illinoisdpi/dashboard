@@ -4,7 +4,8 @@ module Impression::Ransackable
   class_methods do
     def ransackable_attributes(auth_object = nil)
       [
-        "content"
+        "content",
+        "created_at"
       ]
     end
 
@@ -12,6 +13,21 @@ module Impression::Ransackable
       [
         "subject"
       ]
+    end
+
+    def ransackable_scopes(auth_object = nil)
+      %i[filter_by_time_period]
+    end
+
+    def filter_by_time_period(time_period)
+      case time_period
+      when 'last_week'
+        last_week
+      when 'last_month'
+        last_month
+      else
+        all_time
+      end
     end
   end
 end
