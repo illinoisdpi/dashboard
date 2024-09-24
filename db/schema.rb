@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_05_182548) do
+ActiveRecord::Schema[7.0].define(version: 2024_09_23_210950) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -128,6 +128,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_05_182548) do
     t.date "started_on"
   end
 
+  create_table "companies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "logo"
+    t.text "about"
+    t.string "name"
+    t.string "website"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "devto_articles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "devto_id"
     t.string "title"
@@ -191,6 +200,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_05_182548) do
     t.index ["subject_id"], name: "index_impressions_on_subject_id"
   end
 
+  create_table "job_descriptions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.uuid "company_id"
+    t.string "role_category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "piazza_activity_breakdowns", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "enrollment_id", null: false
     t.string "name"
@@ -232,6 +250,18 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_05_182548) do
     t.uuid "user_id", null: false
     t.index ["cohort_id"], name: "index_piazza_activity_reports_on_cohort_id"
     t.index ["user_id"], name: "index_piazza_activity_reports_on_user_id"
+  end
+
+  create_table "placements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.date "start_date"
+    t.date "end_date"
+    t.uuid "cohort_id"
+    t.uuid "job_description_id"
+    t.uuid "user_id"
+    t.uuid "company_id"
+    t.string "salary"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "rfp_idea_submissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

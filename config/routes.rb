@@ -1,5 +1,5 @@
-require 'sidekiq/web'
-require 'sidekiq/cron/web'
+require "sidekiq/web"
+require "sidekiq/cron/web"
 
 Rails.application.routes.draw do
   constraints subdomain: "dashboard" do
@@ -26,8 +26,8 @@ Rails.application.routes.draw do
       resources :canvas_gradebook_snapshots
       resources :enrollments, module: :cohort do
         member do
-          get 'overview'
-          get 'snapshot'
+          get "overview"
+          get "snapshot"
         end
       end
       resources :impressions, module: :cohort do
@@ -53,5 +53,12 @@ Rails.application.routes.draw do
   constraints subdomain: "rfp" do
     root "rfp#index", as: "rfp_root"
     resources :rfp_idea_submissions, only: [:new, :create]
+  end
+
+  constraints subdomain: "outcomes" do
+    root "placements#index", as: "placements_root"
+    resources :placements, only: [:index, :show, :update, :create, :destroy]
+    resources :job_descriptions
+    resources :companies
   end
 end

@@ -49,6 +49,7 @@ WSL users: if your browser is installed on Windows, the hosts file will be at `\
 127.0.0.1 news.dpi.local
 127.0.0.1 dashboard.dpi.local
 127.0.0.1 rfp.dpi.local
+127.0.0.1 outcomes.dpi.local
 ```
 
 ## PostgreSQL
