@@ -37,7 +37,6 @@ class Impression < ApplicationRecord
 
   scope :last_week, -> { where(created_at: 1.week.ago.beginning_of_day..Time.current.end_of_day) }
   scope :last_month, -> { where(created_at: 1.month.ago.beginning_of_day..Time.current.end_of_day) }
-  scope :all_time, -> { all }
 
   scope :for_category, ->(category) {
     emojis_in_category = Impression::Emojiable::EMOJIS.select { |_, v| v[:category].casecmp?(category) }.keys

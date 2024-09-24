@@ -21,12 +21,12 @@ module Impression::Ransackable
 
     def filter_by_time_period(time_period)
       case time_period
-      when 'last_week'
+      when "last_week"
         last_week
-      when 'last_month'
+      when "last_month"
         last_month
       else
-        all_time
+        all
       end
     end
   end
