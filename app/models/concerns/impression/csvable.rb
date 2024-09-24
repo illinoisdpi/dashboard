@@ -4,16 +4,16 @@ module Impression::Csvable
   class_methods do
     def to_csv(impressions)
       headers = [
-        'Created At',
-        'Sentiment',
-        'Category',
-        'Description',
-        'Content',
-        'Author First Name',
-        'Author Last Name',
-        'Subject First Name',
-        'Subject Last Name',
-        'URL'
+        "Created At",
+        "Sentiment",
+        "Category",
+        "Description",
+        "Content",
+        "Author First Name",
+        "Author Last Name",
+        "Subject First Name",
+        "Subject Last Name",
+        "URL"
       ]
 
       CSV.generate(headers: true) do |csv|
