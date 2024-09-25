@@ -56,7 +56,7 @@
             <%= f.label :career_highlights, class: "form-label" %>
             <%= f.text_area :career_highlights, class: "form-control" %>
             <small class="form-text text-muted">
-              Separate each highlight with a comma.
+              Use Markdown Syntax for formatting.
             </small>
           </div>
 
@@ -64,7 +64,7 @@
             <%= f.label :education, class: "form-label" %>
             <%= f.text_field :education, class: "form-control" %>
             <small class="form-text text-muted">
-              Separate each degree or certificate with a comma.
+              Use Markdown Syntax for formatting.
             </small>
           </div>
 
@@ -72,7 +72,7 @@
             <%= f.label :languages, class: "form-label" %>
             <%= f.text_area :languages, class: "form-control" %>
             <small class="form-text text-muted">
-              Separate each language with a comma.
+              Use Markdown Syntax for formatting.
             </small>
           </div>
 
@@ -87,7 +87,7 @@
             <%= f.label :skills_and_projects, class: "form-label" %>
             <%= f.text_area :skills_and_projects, class: "form-control" %>
             <small class="form-text text-muted">
-              Separate each skill or project with a comma.
+              Use Markdown Syntax for formatting.
             </small>
           </div>
           <!-- (this will only show up for users with at least 1 cohort enrollment) -->
@@ -96,7 +96,7 @@
               <%= e.label :skills_development, "Real-time DPI skill development (#{e.object.cohort.name})", class: "form-label" %>
               <%= e.text_area :skills_development, class: "form-control" %>
               <small class="form-text text-muted">
-                Separate each skill with a comma.
+                Use Markdown Syntax for formatting.
               </small>
             </div>
           <% end %>
