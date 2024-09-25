@@ -17,7 +17,7 @@
       <p class="text-dpi-primary"><%= @enrollment.user.one_liner %></p>
       <% if @enrollment.user.skills_and_projects.present? %>
         <h5 class="text-dpi-secondary fw-bold">Skills and Projects</h5>
-        <ul class="text-dpi-primary">
+        <ul class="text-dpi-primary  ps-0">
           <% if @enrollment.user.skills_and_projects.present? %>
             <%= render_markdown(@enrollment.user.skills_and_projects) %>
           <% end %>
@@ -25,7 +25,7 @@
       <% end %>
       <% if @enrollment.skills_development.present? %>
         <h5 class="text-dpi-secondary fw-bold">Real-Time DPI Skill Development</h5>
-        <ul class="text-dpi-primary">
+        <ul class="text-dpi-primary ps-0">
           <% if @enrollment.skills_development.present? %>
             <%= render_markdown(@enrollment.skills_development) %>
           <% end %>
@@ -51,9 +51,9 @@
   <div class="row mx-2 mt-2">
     <hr class="border-dpi-primary border-2 opacity-100" />
     <div class="col-4 border-top-0 border-start-0 border-bottom-0 border-dpi-primary border-3 opacity-100">
-      <h5 class="text-dpi-secondary fw-bold">Career Highlights</h5>
+      <h5 class="text-dpi-secondary fw-bold">Career Highlights</h5
       <% if @enrollment.user.career_highlights.present? %>
-        <ul class="px-0 list-unstyled text-dpi-primary">
+        <ul class="text-dpi-primary ps-0">
           <% if @enrollment.user.career_highlights.present? %>
             <%= render_markdown @enrollment.user.career_highlights %>
           <% end %>
@@ -64,7 +64,7 @@
     </div>
     <div class="col-4 border-top-0 border-start-0 border-bottom-0 border-dpi-primary border-3 opacity-100">
       <h5 class="text-dpi-secondary fw-bold">Education</h5>
-      <ul class="px-0 list-unstyled text-dpi-primary">
+      <ul class="text-dpi-primary  ps-0">
         <% if @enrollment.user.education.present? %>
           <%= render_markdown @enrollment.user.education %>
         <% end %>
