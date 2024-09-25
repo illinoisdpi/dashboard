@@ -80,21 +80,26 @@ class Enrollment < ApplicationRecord
       .where("canvas_gradebook_snapshots.created_at = (SELECT MAX(created_at) FROM canvas_gradebook_snapshots)")
   }
   scope :with_recent_canvas_points, -> {
-    with_user_info
-      .recent_gradebook_snapshot
-      .select("enrollments.id, users.id AS user_id, users.first_name, users.last_name, SUM(canvas_submissions.points) AS total_points")
-      .group("enrollments.id, users.id, users.first_name, users.last_name")
-      .order("total_points DESC")
+    joins(canvas_submissions: :canvas_gradebook_snapshot)
+      .where("canvas_gradebook_snapshots.created_at = (SELECT MAX(created_at) FROM canvas_gradebook_snapshots)")
+      .select("enrollments.id, SUM(canvas_submissions.points) AS total_points")
+      .group("enrollments.id")
   }
 
+  # Sum of points for recent canvas submissions
   def total_points
-    canvas_submissions.sum(:points)
+    canvas_submissions
+      .joins(:canvas_gradebook_snapshot)
+      .where("canvas_gradebook_snapshots.created_at = (SELECT MAX(created_at) FROM canvas_gradebook_snapshots)")
+      .sum(:points)
   end
 
+  # Sum of points possible for included canvas assignments
   def total_points_possible
     cohort.canvas_assignments.included.sum(:points_possible)
   end
 
+  # Check if the student has completed their training
   def completed_training?
     total_points >= total_points_possible
   end
