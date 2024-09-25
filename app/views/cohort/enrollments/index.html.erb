@@ -18,6 +18,9 @@
             <div class="d-flex align-items-center" data-bs-toggle="collapse" data-bs-target="#enrollment-<%= enrollment.id %>-links" aria-expanded="false" aria-controls="enrollment-<%= enrollment.id %>-links">
               <div class="me-auto d-flex align-items-baseline font-monospace">
                 <%= enrollment.to_s %>
+                <% if enrollment.completed_training? %>
+                  ✅
+                <% end  %>
                 <% unless enrollment.github_username.present? %>
                   <span class="badge rounded-pill text-bg-danger ms-2">GitHub</span>
                 <% end %>

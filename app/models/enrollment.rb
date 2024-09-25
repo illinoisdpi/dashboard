@@ -50,7 +50,9 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Enrollment < ApplicationRecord
-  include Adminable, Endorsable, Ransackable
+  include Ransackable
+  include Endorsable
+  include Adminable
 
   has_paper_trail skip: [:created_at, :updated_at]
 
@@ -71,22 +73,30 @@ class Enrollment < ApplicationRecord
   }
   scope :with_user_info, -> {
     joins(:user)
-      .select('enrollments.id, enrollments.cohort_id, users.id AS user_id, users.first_name, users.last_name')
+      .select("enrollments.id, enrollments.cohort_id, users.id AS user_id, users.first_name, users.last_name")
   }
   scope :recent_gradebook_snapshot, -> {
     joins(canvas_submissions: :canvas_gradebook_snapshot)
-      .where('canvas_gradebook_snapshots.created_at = (SELECT MAX(created_at) FROM canvas_gradebook_snapshots)')
+      .where("canvas_gradebook_snapshots.created_at = (SELECT MAX(created_at) FROM canvas_gradebook_snapshots)")
   }
   scope :with_recent_canvas_points, -> {
     with_user_info
       .recent_gradebook_snapshot
-      .select('enrollments.id, users.id AS user_id, users.first_name, users.last_name, SUM(canvas_submissions.points) AS total_points')
-      .group('enrollments.id, users.id, users.first_name, users.last_name')
-      .order('total_points DESC')
+      .select("enrollments.id, users.id AS user_id, users.first_name, users.last_name, SUM(canvas_submissions.points) AS total_points")
+      .group("enrollments.id, users.id, users.first_name, users.last_name")
+      .order("total_points DESC")
   }
 
   def total_points
     canvas_submissions.sum(:points)
+  end
+
+  def total_points_possible
+    cohort.canvas_assignments.included.sum(:points_possible)
+  end
+
+  def completed_training?
+    total_points >= total_points_possible
   end
 
   delegate :education,
@@ -105,12 +115,12 @@ class Enrollment < ApplicationRecord
     :to_s,
     to: :user
 
-  enum role: {
+  enum :role, {
     instructor: "instructor",
     staff: "staff",
     student: "student",
     teaching_assistant: "teaching assistant"
-  }, _default: :student
+  }, default: :student
 
   def completed_assignments
     results = []
