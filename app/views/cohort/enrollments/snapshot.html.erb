@@ -19,17 +19,15 @@
         <h5 class="text-dpi-secondary fw-bold">Skills and Projects</h5>
         <ul class="text-dpi-primary">
           <% if @enrollment.user.skills_and_projects.present? %>
-            <% @enrollment.user.skills_and_projects.split(",").take(6).each do |strength| %>
-              <li><%= strength %></li>
-            <% end %>
+            <%= render_markdown(@enrollment.user.skills_and_projects) %>
           <% end %>
         </ul>
       <% end %>
       <% if @enrollment.skills_development.present? %>
         <h5 class="text-dpi-secondary fw-bold">Real-Time DPI Skill Development</h5>
         <ul class="text-dpi-primary">
-          <% @enrollment.skills_development.split(",").take(6).each do |skill| %>
-            <li><%= skill %></li>
+          <% if @enrollment.skills_development.present? %>
+            <%= render_markdown(@enrollment.skills_development) %>
           <% end %>
         </ul>
       <% end %>
@@ -56,8 +54,8 @@
       <h5 class="text-dpi-secondary fw-bold">Career Highlights</h5>
       <% if @enrollment.user.career_highlights.present? %>
         <ul class="px-0 list-unstyled text-dpi-primary">
-          <% @enrollment.user.career_highlights.split(",").take(3).each do |highlight| %>
-            <li><%= highlight %></li>
+          <% if @enrollment.user.career_highlights.present? %>
+            <%= render_markdown @enrollment.user.career_highlights %>
           <% end %>
         </ul>
       <% else %>
@@ -68,9 +66,7 @@
       <h5 class="text-dpi-secondary fw-bold">Education</h5>
       <ul class="px-0 list-unstyled text-dpi-primary">
         <% if @enrollment.user.education.present? %>
-          <% @enrollment.user.education.split(",").take(3).each do |education| %>
-            <li><%= education %></li>
-          <% end %>
+          <%= render_markdown @enrollment.user.education %>
         <% end %>
       </ul>
     </div>
