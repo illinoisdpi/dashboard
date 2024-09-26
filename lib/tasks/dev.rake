@@ -12,10 +12,11 @@ namespace :dev do
   desc "Hydrate the database with sample data"
   task prime: :environment do
     Time.use_zone("America/Chicago") do
+      puts "Creating initial users..."
       usernames = %w[alice bob carol]
 
       users = []
-
+      # not clear why these users are being created - the users that matter are being created in seeds.rb, right?
       usernames.each do |username|
         users << User.create(
           email: "#{username}@example.com",
@@ -23,7 +24,8 @@ namespace :dev do
           github_username: username
         )
       end
-
+      puts "Initial users created!"
+      puts "Creating two sample cohorts..."
       cohort = Cohort.create(
         year: 2022,
         generation: 1,
@@ -32,6 +34,7 @@ namespace :dev do
         canvas_shortname: "WE-2022-1.2-SDF",
         started_on: "September 19th, 2022"
       )
+      puts "Faker-based Sample Cohort created!"
 
       if cohort.errors.any?
         ap cohort.errors.full_messages
@@ -39,7 +42,7 @@ namespace :dev do
       end
 
       sample_cohort_enrollment_file = ActionDispatch::Http::UploadedFile.new(
-        tempfile: Rails.root.join("lib", "sample_data", "sample-cohort-enrollment.csv").open,
+        tempfile: Rails.root.join("lib/sample_data/sample-cohort-enrollment.csv").open,
         filename: "sample-cohort-enrollment.csv",
         type: "text/plain"
       )
@@ -57,8 +60,8 @@ namespace :dev do
           strengths: Array.new(3) { Faker::Superhero.power }.to_sentence,
           education: Faker::Educator.degree,
           fun_fact: Faker::Lorem.sentence(word_count: 10),
-          first_name: row.fetch(:name).split(' ').at(0),
-          last_name: row.fetch(:name).split(' ').at(1),
+          first_name: row.fetch(:name).split(" ").at(0),
+          last_name: row.fetch(:name).split(" ").at(1),
           one_liner: "Passionate professional with expertise in #{Faker::Job.title}.",
           skills_and_projects: Array.new(3) { Faker::ProgrammingLanguage.unique.name }.to_sentence
         )
@@ -67,7 +70,7 @@ namespace :dev do
           ap user.errors.full_messages
           ap user
         end
-        
+
         enrollment = cohort.enrollments.create(
           user:,
           id_from_canvas: row.fetch(:id_from_canvas),
@@ -103,9 +106,13 @@ namespace :dev do
         end
 
         user.devto_articles.create(title: Faker::Book.title, description: Faker::Lorem.sentence, published_at: Faker::Time.between(from: DateTime.now - 365, to: DateTime.now))
+        puts "Generating Sample Cohort user data..."
       end
+      puts "First Sample Cohort data populated"
 
       cohort_start_date = Date.parse("2023-01-30")
+
+      puts "Uploading Piazza files..."
 
       6.times do |i|
         uploaded_file = ActionDispatch::Http::UploadedFile.new(
@@ -120,8 +127,9 @@ namespace :dev do
           csv_file: uploaded_file,
           user: users.sample
         )
+        puts "Uploaded Piazza file #{i}"
       end
-
+      puts "Uploading gradebook snapshots for Sample Cohort..."
       1.upto(4) do |i|
         filename = "2022-0#{i}-01T1#{i}00_Grades-WE-2022-1.2-SDF.csv"
         csv_file = ActionDispatch::Http::UploadedFile.new(
@@ -133,9 +141,11 @@ namespace :dev do
         cohort.canvas_gradebook_snapshots.create(
           downloaded_at: cohort_start_date + (i + 1).weeks,
           user: users.sample,
-          csv_file:,
+          csv_file:
         )
+        puts "Uploaded gradebook snapshot #{i}"
       end
     end
+    puts "Sample data task complete!!!"
   end
 end

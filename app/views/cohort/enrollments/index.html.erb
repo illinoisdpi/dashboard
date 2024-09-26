@@ -18,9 +18,9 @@
             <div class="d-flex align-items-center" data-bs-toggle="collapse" data-bs-target="#enrollment-<%= enrollment.id %>-links" aria-expanded="false" aria-controls="enrollment-<%= enrollment.id %>-links">
               <div class="me-auto d-flex align-items-baseline font-monospace">
                 <%= enrollment.to_s %>
-                <% if enrollment.completed_training? %>
-                  ✅
-                <% end  %>
+                <% if enrollment.canvas_full_points? %>
+                  💯
+                <% end %>
                 <% unless enrollment.github_username.present? %>
                   <span class="badge rounded-pill text-bg-danger ms-2">GitHub</span>
                 <% end %>
@@ -45,7 +45,6 @@
             </div>
             <div class="collapse" id="enrollment-<%= enrollment.id %>-links">
               <ul class="list-unstyled my-2 ms-2">
-                <li>Points on Canvas out of total possible: <%= enrollment.total_points %>/<%= enrollment.total_points_possible %></li>
                 <% if policy(enrollment).overview? %>
                   <li>
                     <%= link_to "Overview", overview_cohort_enrollment_path(@cohort, enrollment), class: "text-black" %>
