@@ -39,7 +39,7 @@ namespace :dev do
       end
 
       sample_cohort_enrollment_file = ActionDispatch::Http::UploadedFile.new(
-        tempfile: Rails.root.join("lib", "sample_data", "sample-cohort-enrollment.csv").open,
+        tempfile: Rails.root.join("lib/sample_data/sample-cohort-enrollment.csv").open,
         filename: "sample-cohort-enrollment.csv",
         type: "text/plain"
       )
@@ -57,8 +57,8 @@ namespace :dev do
           strengths: Array.new(3) { Faker::Superhero.power }.to_sentence,
           education: Faker::Educator.degree,
           fun_fact: Faker::Lorem.sentence(word_count: 10),
-          first_name: row.fetch(:name).split(' ').at(0),
-          last_name: row.fetch(:name).split(' ').at(1),
+          first_name: row.fetch(:name).split(" ").at(0),
+          last_name: row.fetch(:name).split(" ").at(1),
           one_liner: "Passionate professional with expertise in #{Faker::Job.title}.",
           skills_and_projects: Array.new(3) { Faker::ProgrammingLanguage.unique.name }.to_sentence
         )
@@ -67,7 +67,9 @@ namespace :dev do
           ap user.errors.full_messages
           ap user
         end
-        
+
+        users << user
+
         enrollment = cohort.enrollments.create(
           user:,
           id_from_canvas: row.fetch(:id_from_canvas),
@@ -133,8 +135,47 @@ namespace :dev do
         cohort.canvas_gradebook_snapshots.create(
           downloaded_at: cohort_start_date + (i + 1).weeks,
           user: users.sample,
-          csv_file:,
+          csv_file:
         )
+      end
+
+      # Create sample companies
+      companies = []
+      5.times do
+        companies << Company.create(
+          name: Faker::Company.name,
+          about: Faker::Company.bs,
+          website: Faker::Internet.url
+        )
+      end
+
+      # Create sample job descriptions
+      job_descriptions = []
+      14.times do
+        job_descriptions << JobDescription.create(
+          title: Faker::Job.title,
+          description: Faker::Lorem.paragraph,
+          role_category: Faker::Job.field,
+          company: companies.sample
+        )
+      end
+
+      # Create sample placements
+      14.times do
+        placement = Placement.create(
+          start_date: Faker::Date.between(from: 1.year.ago, to: Date.today),
+          end_date: Faker::Date.between(from: Date.today, to: 1.year.from_now),
+          salary: Faker::Number.within(range: 30000..100000).to_s,
+          cohort: cohort,
+          company: companies.sample,
+          job_description: job_descriptions.sample,
+          user: users.sample
+        )
+
+        if placement.errors.any?
+          ap placement.errors.full_messages
+          ap placement
+        end
       end
     end
   end

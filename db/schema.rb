@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_26_165506) do
+ActiveRecord::Schema[7.0].define(version: 2024_09_23_210950) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -183,7 +183,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_26_165506) do
     t.text "staff_areas_for_growth"
     t.text "skills_development"
     t.string "technical_rating"
-    t.boolean "canvas_full_points", default: false, null: false
     t.index ["cohort_id"], name: "index_enrollments_on_cohort_id"
     t.index ["id_from_canvas"], name: "index_enrollments_on_id_from_canvas"
     t.index ["user_id", "cohort_id"], name: "index_enrollments_on_user_id_and_cohort_id", unique: true

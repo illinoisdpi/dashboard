@@ -14,4 +14,8 @@ class DashboardPolicy < ApplicationPolicy
   def recent_articles?
     true
   end
+
+  def placements?
+    user.admin? || user.instructor? || user.teaching_assistant? || user.staff?
+  end
 end

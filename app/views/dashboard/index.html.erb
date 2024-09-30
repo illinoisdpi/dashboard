@@ -18,20 +18,21 @@
                   <span class="badge bg-secondary font-monospace me-2">
                     <%= cohort.code %>
                   </span>
-                  
+
                   <%= cohort.name %>
                 </div>
-    
+
                 <div>
                   <i class="fa-solid fa-chevron-right fa-fw"></i>
                 </div>
               </div>
-              
+
             <% end %>
           <% end %>
         </div>
       </div>
     <% end %>
+
     <% if policy(:dashboard).authored_impressions? %>
       <div class="card mb-2">
         <div class="card-header d-flex align-items-center">
@@ -50,7 +51,7 @@
                   <span class="badge bg-secondary font-monospace me-2">
                     <%= impression.emoji %>
                   </span>
-                  
+
                   <%= impression.subject.user %>
                 </div>
                 <div>
@@ -63,34 +64,65 @@
       </div>
     <% end %>
   </div>
-  <% if policy(:dashboard).recent_articles? %>
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-header d-flex align-items-center">
-          <h2 class="h6 mb-0 me-auto">Recent Articles</h2>
-          <div>
-            <%= link_to news_root_url do %>
-              See More
-            <% end %>
+
+  <div class="col-md-6">
+    <div class="row">
+      <% if policy(:dashboard).recent_articles? %>
+        <div class="col-md-6">
+          <div class="card mb-2">
+            <div class="card-header d-flex align-items-center">
+              <h2 class="h6 mb-0 me-auto">Recent Articles</h2>
+              <div>
+                <%= link_to news_root_url do %>
+                  See More
+                <% end %>
+              </div>
+            </div>
+            <div class="list-group list-group-flush">
+              <% @articles.each do |article| %>
+                <%= link_to article.url, class: "list-group-item", target: "_blank" do %>
+                  <div class="d-flex align-items-center">
+                    <div class="me-auto">
+                      <h5><%= article.title %></h5>
+                      <div>By <%= article.author %></div>
+                      <small class="text-secondary">Published on <%= article.published_at.strftime("%Y-%m-%d") %></small>
+                    </div>
+                    <div>
+                      <i class="fa-solid fa-chevron-right fa-fw"></i>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
           </div>
         </div>
-        <div class="list-group list-group-flush">
-          <% @articles.each do |article| %>
-            <%= link_to article.url, class: "list-group-item", target: "_blank" do %>
-              <div class="d-flex align-items-center">
-                <div class="me-auto">
-                  <h5><%= article.title %></h5>
-                  <div>By <%= article.author %></div>
-                  <small class="text-secondary">Published on <%= article.published_at.strftime("%Y-%m-%d") %></small>
-                </div>
-                <div>
-                  <i class="fa-solid fa-chevron-right fa-fw"></i>
-                </div>
-              </div>
-            <% end %>
-          <% end %>
+      <% end %>
+
+      <% if policy(:dashboard).placements? %>
+        <div class="col-md-6">
+          <div class="card mb-2">
+            <div class="card-header d-flex align-items-center">
+              <h2 class="h6 mb-0 me-auto">Recent Placements</h2>
+            </div>
+            <div class="list-group list-group-flush">
+              <% @placements.each do |placement| %>
+                <%= link_to placement, class: "list-group-item", target: "_blank" do %>
+                  <div class="d-flex align-items-center">
+                    <div class="me-auto">
+                      <h5><%= placement.company.name %></h5>
+                      <div><%= placement.user.name %></div>
+                      <small class="text-secondary"><%= placement.job_description.title %></small>
+                    </div>
+                    <div>
+                      <i class="fa-solid fa-chevron-right fa-fw"></i>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
-  <% end %>
+  </div>
 </div>

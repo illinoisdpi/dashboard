@@ -9,5 +9,6 @@ class DashboardController < ApplicationController
     @cohorts = policy_scope(Cohort).all.default_order
     @impressions = policy_scope(current_user.authored_impressions).default_order.take(5)
     @articles = policy_scope(DevtoArticle).default_order.take(5)
+    @placements = policy_scope(Placement).take(5)
   end
 end

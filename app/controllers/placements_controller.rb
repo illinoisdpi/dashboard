@@ -5,6 +5,7 @@ class PlacementsController < ApplicationController
   before_action { authorize(:placement) }
   def index
     @placements = Placement.all
+    @user = current_user
   end
 
   # GET /placements/1

@@ -3,7 +3,6 @@
 # Table name: enrollments
 #
 #  id                             :uuid             not null, primary key
-#  canvas_full_points             :boolean          default(FALSE), not null
 #  career_attendance              :integer          default(0)
 #  career_calendar_management     :integer          default(0)
 #  career_customer_service        :integer          default(0)
