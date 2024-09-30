@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     devise_for :users
 
     resources :cohorts do
+      resources :placements, module: :cohort
       member do
         get "canvas_highest_position_submission_count"
         get "canvas_point_total_most_recent"

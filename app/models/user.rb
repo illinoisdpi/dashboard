@@ -58,6 +58,12 @@ class User < ApplicationRecord
 
   scope :default_order, -> { order(:first_name) }
 
+  def self.placements_for_cohort(cohort_id)
+    joins(:enrollments)
+      .where(enrollments: { cohort_id: cohort_id })
+      .flat_map(&:placements)
+  end
+
   def to_s
     return full_name if full_name.present?
 

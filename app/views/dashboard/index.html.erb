@@ -103,6 +103,11 @@
           <div class="card mb-2">
             <div class="card-header d-flex align-items-center">
               <h2 class="h6 mb-0 me-auto">Recent Placements</h2>
+              <div>
+                <%= link_to placements_root_url do %>
+                  See More
+                <% end %>
+              </div>
             </div>
             <div class="list-group list-group-flush">
               <% @placements.each do |placement| %>

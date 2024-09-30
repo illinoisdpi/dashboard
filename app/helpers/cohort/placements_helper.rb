@@ -1,0 +1,2 @@
+module Cohort::PlacementsHelper
+end
