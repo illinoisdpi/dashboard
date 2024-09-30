@@ -1,26 +1,31 @@
 <%= render "cohorts/tabs" %>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
 
 <div class="row">
   <div class="col">
-    <div class="mb-2"> 
-      <%= render "search", q: @q %>
-    </div>
-    <div class="card">
-      <div class="card-header d-flex align-items-center">
-        <h1 class="h6 mb-0 me-auto">Impressions</h1>
-
-        <div>
-          <% if policy(Impression).download_csv? %>
-            <%= link_to "Download CSV", cohort_impressions_path(@cohort, format: :csv), class: 'btn btn-outline-secondary me-2' %>
-          <% end %>
-          <%= link_to new_cohort_impression_path(@cohort) do %>
-            <i class="fa-solid fa-plus fa-fw"></i>
-          <% end %>
+    <div class="mb-2">
+      <button class="btn btn-outline-secondary mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        Search <i class="bi bi-chevron-down"></i>
+      </button>
+      <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+          <%= render "search", q: @q %>
         </div>
       </div>
-
-      <%= render "list_group", cohort: @cohort, impressions: @impressions %>
     </div>
   </div>
-  <%= paginate @impressions, theme: 'bootstrap-5', nav_class: "d-flex my-2", pagination_class: "mx-auto" %>
 </div>
+
+<div class="mb-2">
+  <% if policy(Impression).download_csv? %>
+    <%= link_to "Download CSV", cohort_impressions_path(@cohort, format: :csv), class: 'btn btn-outline-secondary me-2' %>
+  <% end %>
+  <%= link_to "Write new impression", new_cohort_impression_path(@cohort), class: 'btn btn-outline-secondary me-2' %>
+</div>
+<div class="card">
+  <div class="card-header d-flex align-items-center">
+    <h1 class="h6 mb-0 me-auto">Impressions</h1>
+  </div>
+  <%= render "list_group", cohort: @cohort, impressions: @impressions %>
+</div>
+<%= paginate @impressions, theme: 'bootstrap-5', nav_class: "d-flex my-2", pagination_class: "mx-auto" %>
