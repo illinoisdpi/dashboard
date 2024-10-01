@@ -41,20 +41,17 @@ module Impression::Emojiable
 
   CATEGORIES = EMOJIS.values.map { |v| v[:category] }.uniq.freeze
 
-  def emoji_category
-    EMOJIS[emoji][:category] || "Unknown Category"
+  %i[category description sentiment].each do |attribute|
+    define_method("emoji_#{attribute}") do
+      EMOJIS[emoji][attribute] || "Unknown #{attribute.capitalize}"
+    end
   end
 
-  def emoji_description
-    EMOJIS[emoji][:description] || "Description not available"
-  end
-
-  def emoji_sentiment
-    EMOJIS[emoji][:sentiment] || :unknown
-  end
-
-  # TODO: make this a meta method?
-  def self.emojis_by_sentiment(sentiment)
-    EMOJIS.keys.filter { |emoji| EMOJIS[emoji][:sentiment] == sentiment }
+  %i[positive negative].each do |sentiment|
+    define_singleton_method("#{sentiment}_emojis") do
+      EMOJIS.keys.filter do |emoji|
+        EMOJIS[emoji][:sentiment] == sentiment && EMOJIS[emoji][:category] != "miscellaneous"
+      end
+    end
   end
 end
