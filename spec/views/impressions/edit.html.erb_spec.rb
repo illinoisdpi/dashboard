@@ -10,7 +10,7 @@ RSpec.describe "impressions/edit", type: :view do
     )
   }
 
-  before(:each) do
+  before do
     assign(:impression, impression)
   end
 
@@ -18,7 +18,6 @@ RSpec.describe "impressions/edit", type: :view do
     render
 
     assert_select "form[action=?][method=?]", impression_path(impression), "post" do
-
       assert_select "input[name=?]", "impression[author_id]"
 
       assert_select "input[name=?]", "impression[subject_id]"

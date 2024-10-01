@@ -18,7 +18,6 @@ RSpec.describe RfpIdeaSubmissionsController, type: :routing do
       expect(get: "/rfp_idea_submissions/1/edit").to route_to("rfp_idea_submissions#edit", id: "1")
     end
 
-
     it "routes to #create" do
       expect(post: "/rfp_idea_submissions").to route_to("rfp_idea_submissions#create")
     end
