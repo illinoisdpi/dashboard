@@ -11,7 +11,7 @@ class NewsController < ApplicationController
   def rss
     @articles = policy_scope(DevtoArticle).default_order.take(50)
     respond_to do |format|
-      format.xml { render :layout => false }
+      format.xml { render layout: false }
     end
   end
 end
