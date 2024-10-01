@@ -1,30 +1,28 @@
 <%= render "cohorts/tabs" %>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
 
-<div class="row">
-  <div class="col">
-    <div class="mb-2">
-      <button class="btn btn-outline-secondary mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-        Search <i class="bi bi-chevron-down"></i>
-      </button>
-      <div class="collapse" id="collapseExample">
-        <div class="card card-body">
-          <%= render "search", q: @q %>
-        </div>
+<div class="card">
+  <div class="card-header">
+    <div class="d-flex align-items-center justify-content-end">
+      <h1 class="h6 mb-0 me-auto">Impressions</h1>
+      <div>
+        <button class="btn btn-outline-primary me-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSearch" aria-expanded="<%= params[:q].present? %>" aria-controls="collapseSearch">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+        <% if policy(Impression).download_csv? %>
+          <%= link_to cohort_impressions_path(@cohort, format: :csv), class: 'btn btn-outline-primary me-2' do %>
+            <i class="fa-solid fa-file-csv"></i>
+          <% end %>
+        <% end %>
+        <% if policy(Impression).new? %>
+          <%= link_to new_cohort_impression_path(@cohort), class: 'btn btn-outline-primary me-2' do %>
+            <i class="fa-solid fa-plus"></i>
+          <% end %>
+        <% end %>
       </div>
     </div>
-  </div>
-</div>
-
-<div class="mb-2">
-  <% if policy(Impression).download_csv? %>
-    <%= link_to "Download CSV", cohort_impressions_path(@cohort, format: :csv), class: 'btn btn-outline-secondary me-2' %>
-  <% end %>
-  <%= link_to "Write new impression", new_cohort_impression_path(@cohort), class: 'btn btn-outline-secondary me-2' %>
-</div>
-<div class="card">
-  <div class="card-header d-flex align-items-center">
-    <h1 class="h6 mb-0 me-auto">Impressions</h1>
+    <div class="collapse my-2 <%= "show" if params[:q].present? %>" id="collapseSearch">
+      <%= render "search", q: @q %>
+    </div>
   </div>
   <%= render "list_group", cohort: @cohort, impressions: @impressions %>
 </div>
