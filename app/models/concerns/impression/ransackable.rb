@@ -16,18 +16,7 @@ module Impression::Ransackable
     end
 
     def ransackable_scopes(auth_object = nil)
-      %i[filter_by_time_period]
-    end
-
-    def filter_by_time_period(time_period)
-      case time_period
-      when "last_week"
-        last_week
-      when "last_month"
-        last_month
-      else
-        all
-      end
+      %i[by_time_period]
     end
   end
 end
