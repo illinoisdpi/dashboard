@@ -52,4 +52,9 @@ module Impression::Emojiable
   def emoji_sentiment
     EMOJIS[emoji][:sentiment] || :unknown
   end
+
+  # TODO: make this a meta method?
+  def self.emojis_by_sentiment(sentiment)
+    EMOJIS.keys.filter { |emoji| EMOJIS[emoji][:sentiment] == sentiment }
+  end
 end
