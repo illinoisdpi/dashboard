@@ -24,7 +24,7 @@
           <% @canvas_gradebook_snapshot.enrollments.each do |enrollment| %>
             <% canvas_submissions = @canvas_gradebook_snapshot.canvas_submissions.where(enrollment:).index_by(&:canvas_assignment_id) %>
             <tr>
-              <td><%= enrollment.user.piazza_full %></td>
+              <td><%= enrollment.user %></td>
               <td><%= enrollment.role %></td>
               <% canvas_assignments.map(&:id).each do |canvas_assignment_id| %>
                 <td><%= canvas_submissions[canvas_assignment_id]&.points %></td>

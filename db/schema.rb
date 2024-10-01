@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_04_181154) do
+ActiveRecord::Schema[7.0].define(version: 2024_09_05_182548) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -280,6 +280,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_04_181154) do
     t.text "career_highlights"
     t.string "headshot"
     t.string "devto_username"
+    t.string "discord_id"
+    t.string "discord_username"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["github_username"], name: "index_users_on_github_username", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

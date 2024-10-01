@@ -26,7 +26,8 @@ class ApplicationController < ActionController::Base
       :one_liner,
       :most_recent_role,
       :career_highlights,
-      :education
+      :education,
+      enrollments_attributes: [:id, :skills_development]
     ])
   end
 
