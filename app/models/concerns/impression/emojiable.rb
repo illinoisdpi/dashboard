@@ -54,4 +54,8 @@ module Impression::Emojiable
       end
     end
   end
+
+  def self.emojis_for_category(category)
+    EMOJIS.select { |_, v| v[:category].casecmp?(category) }.keys
+  end
 end

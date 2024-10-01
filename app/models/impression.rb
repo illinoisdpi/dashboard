@@ -40,8 +40,12 @@ class Impression < ApplicationRecord
   scope :by_time_period, ->(time_period) { respond_to?(time_period) ? send(time_period) : all }
 
   scope :for_category, ->(category) {
-    emojis_in_category = Impression::Emojiable::EMOJIS.select { |_, v| v[:category].casecmp?(category) }.keys
+    emojis_in_category = EMOJIS.select { |_, v| v[:category].casecmp?(category) }.keys
     where(emoji: emojis_in_category)
+  }
+
+  scope :for_category, ->(category) {
+    where(emoji: Emojiable.emojis_for_category(category))
   }
 
   def self.emojis_by_sentiment(sentiment)
