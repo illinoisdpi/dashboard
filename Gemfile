@@ -52,8 +52,6 @@ group :development, :test do
   gem "pry-rails"
   gem "rack-mini-profiler"
   gem "rspec-rails"
-  gem "rubocop-rails", require: false
-  gem "rubocop-rspec", require: false
   gem "standard", require: false
   gem "web-console"
   gem "rubocop-rails-omakase", require: false
