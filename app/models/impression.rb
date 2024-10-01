@@ -32,8 +32,8 @@ class Impression < ApplicationRecord
 
   scope :default_order, -> { order(created_at: :desc) }
 
-  scope :positive, -> { where(emoji: emojis_by_sentiment(:positive)) }
-  scope :negative, -> { where(emoji: emojis_by_sentiment(:negative)) }
+  scope :positive, -> { where(emoji: Emojiable.positive_emojis) }
+  scope :negative, -> { where(emoji: Emojiable.negative_emojis) }
 
   scope :last_week, -> { where(created_at: 1.week.ago.beginning_of_day..Time.current.end_of_day) }
   scope :last_month, -> { where(created_at: 1.month.ago.beginning_of_day..Time.current.end_of_day) }
@@ -47,10 +47,6 @@ class Impression < ApplicationRecord
   scope :for_category, ->(category) {
     where(emoji: Emojiable.emojis_for_category(category))
   }
-
-  def self.emojis_by_sentiment(sentiment)
-    EMOJIS.select { |_, data| data[:sentiment] == sentiment }.keys
-  end
 
   def summary
     "#{author} authored a #{emoji_sentiment} #{emoji_category} impression (#{emoji_description}) for #{subject} #{emoji}"

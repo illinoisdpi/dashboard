@@ -50,7 +50,7 @@ module Impression::Emojiable
   %i[positive negative].each do |sentiment|
     define_singleton_method("#{sentiment}_emojis") do
       EMOJIS.keys.filter do |emoji|
-        EMOJIS[emoji][:sentiment] == sentiment && EMOJIS[emoji][:category] != "miscellaneous"
+        EMOJIS[emoji][:sentiment] == sentiment
       end
     end
   end
