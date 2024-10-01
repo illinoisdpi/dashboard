@@ -3,8 +3,6 @@ class Cohort::ImpressionsController < ApplicationController
   before_action :set_impression, only: %i[show edit update destroy]
   before_action { authorize(@impression || Impression) }
 
-  helper_method :ransack_params
-
   # GET /impressions or /impressions.json
   def index
     @breadcrumbs = [
@@ -13,13 +11,14 @@ class Cohort::ImpressionsController < ApplicationController
       {content: "Impressions", href: cohort_impressions_path(@cohort)}
     ]
 
-    @q = policy_scope(@cohort.impressions.includes(subject: :user)).ransack(ransack_params)
+    @ransack_params = ransack_params
+    @q = policy_scope(@cohort.impressions.includes(subject: :user)).ransack(@ransack_params)
     @impressions = @q.result.default_order
 
     respond_to do |format|
       format.html { @impressions = @impressions.page(params[:page]) }
       format.csv do
-        filename = "#{Time.zone.today}_impressions_#{ransack_params.values.reject(&:empty?).join("_")}.csv"
+        filename = "#{Time.zone.today}-impressions-#{@ransack_params.values.reject(&:empty?).join("-")}.csv"
         send_data(Impression.to_csv(@impressions), filename:)
       end
     end
@@ -107,6 +106,6 @@ class Cohort::ImpressionsController < ApplicationController
   end
 
   def ransack_params
-    params.fetch(:q, {}).permit(:subject_user_first_name_cont, :subject_user_last_name_cont, :content_cont, :filter_by_time_period)
+    params.fetch(:q, {}).permit(:subject_user_first_name_cont, :subject_user_last_name_cont, :content_cont, :by_time_period)
   end
 end

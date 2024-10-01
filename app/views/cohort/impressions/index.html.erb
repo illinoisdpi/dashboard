@@ -11,7 +11,7 @@
 
         <div>
           <% if policy(Impression).download_csv? %>
-            <%= link_to "Download CSV", cohort_impressions_path(@cohort, format: :csv, q: ransack_params.to_h), class: 'btn btn-outline-secondary me-2' %>
+            <%= link_to "Download CSV", cohort_impressions_path(@cohort, format: :csv, q: @ransack_params.to_h), class: 'btn btn-outline-secondary me-2' %>
           <% end %>
           <%= link_to new_cohort_impression_path(@cohort) do %>
             <i class="fa-solid fa-plus fa-fw"></i>
