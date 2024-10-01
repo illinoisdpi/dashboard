@@ -76,7 +76,7 @@ class CohortsController < ApplicationController
   def canvas_point_total_most_recent
     render json:  @cohort
       .enrollments
-      .with_recent_canvas_points
+      .with_recent_canvas_points(@cohort)
       .map { |enrollment| [enrollment.to_s, enrollment.total_points] }
   end
 
