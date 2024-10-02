@@ -11,16 +11,12 @@ class Cohort::ImpressionsController < ApplicationController
       {content: "Impressions", href: cohort_impressions_path(@cohort)}
     ]
 
-    @ransack_params = ransack_params
-    @q = policy_scope(@cohort.impressions.includes(subject: :user)).ransack(@ransack_params)
+    @q = policy_scope(@cohort.impressions.includes(subject: :user)).ransack(params[:q])
     @impressions = @q.result.default_order
 
     respond_to do |format|
       format.html { @impressions = @impressions.page(params[:page]) }
-      format.csv do
-        filename = "#{Time.zone.today}-impressions-#{@ransack_params.values.reject(&:empty?).join("-")}.csv"
-        send_data(Impression.to_csv(@impressions), filename:)
-      end
+      format.csv { send_data(Impression.to_csv(@impressions), filename: csv_filename, type: "text/csv") }
     end
   end
 
@@ -105,7 +101,12 @@ class Cohort::ImpressionsController < ApplicationController
     params.require(:impression).permit(:author_id, :subject_id, :content, :emoji)
   end
 
-  def ransack_params
-    params.fetch(:q, {}).permit(:subject_user_first_name_cont, :subject_user_last_name_cont, :content_cont, :by_time_period)
+
+  def csv_filename
+    return "#{Time.zone.today}-impressions.csv" unless params[:q].present?
+
+    formatted_query_params = params[:q].values.reject(&:blank?).join("-")
+
+    "#{Time.zone.today}-impressions-#{formatted_query_params}.csv"
   end
 end
