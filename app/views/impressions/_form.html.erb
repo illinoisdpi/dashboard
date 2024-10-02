@@ -33,8 +33,8 @@
       <%= form.text_field :emoji, class: "form-control", "aria-described-by": "emoji-help", "data-emoji-input-target": "textInput" %>
       <br/>
       <div class="row">
-        <%= render 'impressions/emoji_button_card', card_header: 'Positive Impression', emojis: non_miscellaneous_emojis(Impression::Emojiable.positive_emojis), bs_border_class: "border-success", bs_text_class: "text-success" %>
-        <%= render 'impressions/emoji_button_card', card_header: 'Negative Impression', emojis: non_miscellaneous_emojis(Impression::Emojiable.negative_emojis), bs_border_class: "border-danger", bs_text_class: "text-danger"  %>
+        <%= render 'impressions/emoji_button_card', card_header: 'Positive Impression', emojis: focused_emojis(Impression::Emojiable.positive_emojis), bs_border_class: "border-success", bs_text_class: "text-success" %>
+        <%= render 'impressions/emoji_button_card', card_header: 'Negative Impression', emojis: focused_emojis(Impression::Emojiable.negative_emojis), bs_border_class: "border-danger", bs_text_class: "text-danger"  %>
       </div>
     </div>
     <div class="mb-3">
