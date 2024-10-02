@@ -6,7 +6,7 @@ class CreateDevtoArticles < ActiveRecord::Migration[7.0]
       t.string :url
       t.datetime :published_at
       t.text :description
-      t.references :author, null: false, foreign_key: { to_table: :users }, type: :uuid
+      t.references :author, null: false, foreign_key: {to_table: :users}, type: :uuid
 
       t.timestamps
     end

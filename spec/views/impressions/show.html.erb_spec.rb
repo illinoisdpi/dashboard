@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "impressions/show", type: :view do
-  before(:each) do
+  before do
     assign(:impression, Impression.create!(
       author: nil,
       subject: nil,

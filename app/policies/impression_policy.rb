@@ -42,6 +42,6 @@ class ImpressionPolicy < ApplicationPolicy
   end
 
   def search?
-    self.new?
+    new?
   end
 end

@@ -5,6 +5,11 @@
     <div class="card">
       <div class="card-header d-flex align-items-center">
         <h1 class="h6 mb-0 me-auto">Students</h1>
+        <% if policy(Enrollment).create? %>
+          <%= link_to new_cohort_enrollment_path(@cohort) do %>
+            <i class="fa-solid fa-plus fa-fw"></i>
+          <% end %>
+        <% end %>
       </div>
 
       <div class="list-group list-group-flush">
@@ -14,20 +19,19 @@
               <div class="me-auto d-flex align-items-baseline font-monospace">
                 <%= enrollment.to_s %>
                 <% unless enrollment.github_username.present? %>
-                  <span class="badge rounded-pill text-bg-danger ms-2">GitHub</span>
+                  <span class="badge bg-danger text-bg-danger ms-2" title="Missing GitHub"><i class="fa-brands fa-github"></i></span>
                 <% end %>
                 <% unless enrollment.devto_username.present? %>
-                  <span class="badge rounded-pill text-bg-danger ms-2">Dev.to</span>
+                  <span class="badge bg-danger text-bg-danger ms-2" title="Missing Dev.to"><i class="fa-brands fa-dev"></i></span>
                 <% end %>
                 <% unless enrollment.discord_id.present? || enrollment.discord_username.present? %>
-                  <span class="badge rounded-pill text-bg-danger ms-2">Discord Id/Username</span>
-                <% else %>
+                  <span class="badge bg-danger ms-2" title="Missing Discord ID and Username"><i class="fa-brands fa-discord"></i></span>
+                  <% else %>
                   <% unless enrollment.discord_id.present? %>
-                    <span class="badge rounded-pill text-bg-danger ms-2">Discord Id</span>
+                    <span class="badge bg-danger ms-2" title="Missing Discord ID"><i class="fa-brands fa-discord"></i></span>
                   <% end %>
-
                   <% unless enrollment.discord_username.present? %>
-                    <span class="badge rounded-pill text-bg-danger ms-2">Discord Username</span>
+                    <span class="badge bg-danger ms-2" title="Missing Discord Username"><i class="fa-brands fa-discord"></i></span>
                   <% end %>
                 <% end %>
               </div>
