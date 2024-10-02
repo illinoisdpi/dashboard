@@ -53,11 +53,11 @@ class CanvasGradebookSnapshot < ApplicationRecord
     total_points_for(enrollment) >= total_points_possible_for(enrollment)
   end
 
-  def update_canvas_full_points_for_all_enrollments
-    enrollments.each do |enrollment|
-      enrollment.update_column(:canvas_full_points, full_points?(enrollment))
-    end
-  end
+  after_create_commit :enqueue_update_canvas_full_points_job
 
-  after_save :update_canvas_full_points_for_all_enrollments
+  private
+
+  def enqueue_update_canvas_full_points_job
+    UpdateCanvasFullPointsForAllEnrollmentsJob.perform_later(id)
+  end
 end
