@@ -45,6 +45,14 @@ class CohortPolicy < ApplicationPolicy
     user.admin? || user.cohort_instructor?(record) || user.cohort_teaching_assistant?(record)
   end
 
+  def most_recent_submission_by_student?
+    user.admin? || user.cohort_instructor?(record) || user.cohort_teaching_assistant?(record)
+  end
+
+  def inactive_enrollments?
+    user.admin? || user.cohort_instructor?(record) || user.cohort_teaching_assistant?(record)
+  end
+
   def piazza_post_views?
     user.admin? || user.cohort_instructor?(record) || user.cohort_teaching_assistant?(record)
   end

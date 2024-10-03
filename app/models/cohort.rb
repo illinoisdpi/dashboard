@@ -42,4 +42,14 @@ class Cohort < ApplicationRecord
   def code
     "#{year}-#{generation}.#{number}"
   end
+
+  def inactive_enrollments
+    enrollments
+      .joins(:user)
+      .left_joins(:canvas_submissions)
+      .where(enrollments: { role: "student" })
+      .where("canvas_submissions.id IS NULL OR (canvas_submissions.points <= 0 AND canvas_submissions.created_at < ?)", 4.weeks.ago)
+      .select("users.first_name || ' ' || users.last_name AS full_name")
+      .group("users.id")
+  end
 end

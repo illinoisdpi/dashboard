@@ -22,6 +22,8 @@ Rails.application.routes.draw do
         get "canvas_highest_position_submission_count"
         get "canvas_point_total_most_recent"
         get "canvas_cumulative_points"
+        get "inactive_enrollments"
+        get "most_recent_submission_by_student"
       end
       resources :canvas_gradebook_snapshots
       resources :enrollments, module: :cohort do

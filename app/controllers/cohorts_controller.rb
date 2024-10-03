@@ -17,6 +17,9 @@ class CohortsController < ApplicationController
       {content: "Cohorts", href: cohorts_path},
       {content: @cohort.to_s, href: cohort_path(@cohort)}
     ]
+    @cohort = Cohort.find(params[:id])
+    @inactive_enrollments = @cohort.inactive_enrollments
+    @most_recent_submission_by_student = Enrollment.most_recent_user_submissions(@cohort.id)
   end
 
   # GET /cohorts/new
@@ -78,6 +81,16 @@ class CohortsController < ApplicationController
       .enrollments
       .with_recent_canvas_points(@cohort)
       .map { |enrollment| [enrollment.to_s, enrollment.total_points] }
+  end
+
+  def most_recent_submission_by_student
+    @cohort = Cohort.find(params[:id])
+    @highest_assignments = @cohort.enrollments.with_highest_assignment(@cohort.id)
+
+    respond_to do |format|
+      format.html # Render the corresponding view
+      format.json { render json: @highest_assignments }
+    end
   end
 
   private
