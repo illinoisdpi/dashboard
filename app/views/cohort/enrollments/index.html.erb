@@ -19,19 +19,19 @@
               <div class="me-auto d-flex align-items-baseline font-monospace">
                 <%= enrollment.to_s %>
                 <% if enrollment.github_username.present? %>
-                  <span class="badge bg-black text-bg-black ms-2" title="Missing GitHub"><i class="fa-brands fa-github"></i></span>
+                  <span class="badge bg-black text-bg-black ms-2" title="GitHub Connected"><i class="fa-brands fa-github"></i></span>
                 <% end %>
                 <% if enrollment.devto_username.present? %>
-                  <span class="badge bg-black text-bg-black ms-2" title="Missing Dev.to"><i class="fa-brands fa-dev"></i></span>
+                  <span class="badge bg-black text-bg-black ms-2" title="Dev.to Connected"><i class="fa-brands fa-dev"></i></span>
                 <% end %>
                 <% if enrollment.discord_id.present? || enrollment.discord_username.present? %>
-                  <span class="badge bg-black ms-2" title="Missing Discord ID and Username"><i class="fa-brands fa-discord"></i></span>
+                  <span class="badge bg-black ms-2" title="Discord ID and Username Connected"><i class="fa-brands fa-discord"></i></span>
                   <% else %>
                   <% if enrollment.discord_id.present? %>
-                    <span class="badge bg-black ms-2" title="Missing Discord ID"><i class="fa-brands fa-discord"></i></span>
+                    <span class="badge bg-black ms-2" title="Discord ID Connected"><i class="fa-brands fa-discord"></i></span>
                   <% end %>
                   <% if enrollment.discord_username.present? %>
-                    <span class="badge bg-black ms-2" title="Missing Discord Username"><i class="fa-brands fa-discord"></i></span>
+                    <span class="badge bg-black ms-2" title="Discord Username Connected"><i class="fa-brands fa-discord"></i></span>
                   <% end %>
                 <% end %>
               </div>
