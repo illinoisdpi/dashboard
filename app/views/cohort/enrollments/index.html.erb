@@ -18,7 +18,9 @@
             <div class="d-flex align-items-center" data-bs-toggle="collapse" data-bs-target="#enrollment-<%= enrollment.id %>-links" aria-expanded="false" aria-controls="enrollment-<%= enrollment.id %>-links">
               <div class="me-auto d-flex align-items-baseline font-monospace">
                 <%= enrollment.to_s %>
-                <% if enrollment.github_username.present? %>
+              </div>
+              <div>
+              <% if enrollment.github_username.present? %>
                   <span class="badge bg-black text-bg-black ms-2" title="GitHub Connected"><i class="fa-brands fa-github"></i></span>
                 <% end %>
                 <% if enrollment.devto_username.present? %>
@@ -34,8 +36,6 @@
                     <span class="badge bg-black ms-2" title="Discord Username Connected"><i class="fa-brands fa-discord"></i></span>
                   <% end %>
                 <% end %>
-              </div>
-              <div>
                 <i class="fa-solid fa-chevron-right fa-fw"></i>
               </div>
             </div>
