@@ -53,9 +53,7 @@ class CanvasGradebookSnapshot < ApplicationRecord
     total_points_for(enrollment) >= total_points_possible_for(enrollment)
   end
 
-  after_create_commit :update_canvas_full_points
-
-  private
+  after_create_commit UpdateCanvasFullPointsForAllEnrollmentsJob.perform_later(self)
 
   def update_canvas_full_points(canvas_gradebook_snapshot_id)
     canvas_gradebook_snapshot = CanvasGradebookSnapshot.find(canvas_gradebook_snapshot_id)
