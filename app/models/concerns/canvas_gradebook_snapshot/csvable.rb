@@ -56,60 +56,97 @@ module CanvasGradebookSnapshot::Csvable
   def process_csv
     ActiveRecord::Base.transaction do
       csv = SmarterCSV.process(csv_file)
+      Rails.logger.info "CSV processed. Total rows: #{csv.size}"
+  
+      existing_assignments = cohort.canvas_assignments.index_by(&:id_from_canvas)
+      existing_users = User.pluck(:email, :id).to_h #Maybe we can make this relevant to the file with enrollments
+      existing_enrollments = cohort.enrollments.index_by(&:id_from_canvas) #This should be a hash
 
-      csv.each_with_index do |row, i|
-        if i.zero?
-          row.to_a.each_with_index do |(assignment_name_raw, points_possible), position|
-            # This is a O(m) operation, where m is the number of columns in the CSV
-            next unless points_possible.is_a?(Numeric)
+      
+  
+      assignments_data = []
+      users_data = []
+      enrollments_data = []
+      submissions_data = []
 
-            name = CanvasGradebookSnapshot.extract_assignment_name(assignment_name_raw)
-            id_from_canvas = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw)
+      
+  
+      # Step 2: Process the first row of the CSV to handle assignments
+      first_row = csv.first #@Why do we have dates in the first row?
+      first_row.to_a.each_with_index do |(assignment_name_raw, points_possible), position| #Convert this to an array of arrays [assignment_name_raw, points_possible] but sometimes is says read_only????
+        next unless points_possible.is_a?(Numeric) #Handle the case where points_possible is not a number
+  
+        id_from_canvas = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw)
+        name = CanvasGradebookSnapshot.extract_assignment_name(assignment_name_raw)
+  
+        unless existing_assignments[id_from_canvas]
+          assignments_data << {
+            id_from_canvas: id_from_canvas,
+            name: name,
+            points_possible: points_possible,
+            position: position,
+            cohort_id: cohort.id,
+            created_at: Time.current,
+            updated_at: Time.current
+          }
+        end
+      end  
+       
+      # Step 3: Process remaining rows to handle users, enrollments, and submissions
+      csv.drop(1).each do |row|
+        id_from_canvas = row.fetch(:id)
+        email = row.fetch(:sis_login_id, nil)
+  
+        # Handle Users
+        unless existing_users[email]
+          canvas_full = row.fetch(:student, "None provided")
+          last_name, first_name = canvas_full.split(", ")
+          first_name ||= "Unknown"
+          last_name ||= "Unknown"
+  
+          users_data << {
+            email: email,
+            encrypted_password: Devise::Encryptor.digest(User, SecureRandom.hex(16)),
+            first_name: first_name,
+            last_name: last_name,
+            created_at: Time.current,
+            updated_at: Time.current
+          }
+        end
 
-            cohort.canvas_assignments.find_or_create_by(id_from_canvas:) do |assignment|
-              assignment.name = name
-              assignment.points_possible = points_possible
-              assignment.position = position
-            end
-          end
-        else
-          enrollment = cohort.enrollments.find_by_id_from_canvas(row.fetch(:id))
-
-          if enrollment.blank?
-            id_from_canvas = row.fetch(:id)
-
-            next unless row.has_key?(:sis_login_id)
-
-            email = row.fetch(:sis_login_id)
-
-            canvas_full = row.fetch(:student, "None provided")
-
-            user = User.find_by_email(email)
-
-            if user.blank?
-              last_name, first_name = canvas_full.split(", ")
-              user = User.create(email:, password: SecureRandom.hex(16), canvas_full:, first_name:, last_name:)
-            end
-
-            # test student has invalid email and doesn't save
-            next unless user.valid?
-
-            enrollment = Enrollment.find_or_create_by(user: user, cohort: cohort) do |e|
-              e.role = "student"
-              e.id_from_canvas = id_from_canvas
-            end
-          end
-
-          row.each do |assignment_name_raw, points|
-            # This is a O(n) operation, where n is the number of rows in the CSV
-            id_from_canvas = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw)
-            canvas_assignment = CanvasAssignment.find_by_id_from_canvas id_from_canvas
-            next if canvas_assignment.nil?
-
-            canvas_submissions.create(enrollment:, canvas_assignment:, points:)
+        # Handle Enrollments
+        unless existing_enrollments[id_from_canvas]
+          enrollments_data << {
+            id_from_canvas: id_from_canvas,
+            cohort_id: cohort.id,
+            role: "student",
+            user_email: email,  # Temporarily store email to associate user later
+            created_at: Time.current,
+            updated_at: Time.current
+          }
+        end
+  
+        # Handle Submissions for each assignment
+        row.each do |assignment_name_raw, points|
+          next unless points.is_a?(Numeric)
+  
+          assignment_id_from_canvas = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw)
+          canvas_assignment = existing_assignments[assignment_id_from_canvas] #if it doesnt exist we need to create it?
+  
+          debugger
+          if canvas_assignment
+            submissions_data << {
+              enrollment_id: existing_enrollments[id_from_canvas.to_s]&.id, #its not a hash here :(
+              canvas_assignment_id: canvas_assignment.id,
+              canvas_gradebook_snapshot_id: self.id,
+              points: points,
+              created_at: Time.current,
+              updated_at: Time.current
+            }
           end
         end
       end
     end
   end
+  
 end
