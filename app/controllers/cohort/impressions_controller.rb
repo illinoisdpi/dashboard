@@ -1,7 +1,7 @@
 class Cohort::ImpressionsController < ApplicationController
   include Csvable
   before_action :set_cohort
-  before_action :set_impression, only: %i[ show edit update destroy ]
+  before_action :set_impression, only: %i[show edit update destroy]
   before_action { authorize(@impression || Impression) }
 
   # GET /impressions or /impressions.json

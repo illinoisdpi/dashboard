@@ -71,13 +71,13 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address => 'smtp.sendgrid.net',
-    :port => 587,
-    :domain => 'dpi.dev',
-    :authentication => :plain,
-    :enable_starttls_auto => true,
-    :user_name => 'apikey',
-    :password => Rails.application.credentials.dig(:sendgrid, :api_key)
+    address: "smtp.sendgrid.net",
+    port: 587,
+    domain: "dpi.dev",
+    authentication: :plain,
+    enable_starttls_auto: true,
+    user_name: "apikey",
+    password: Rails.application.credentials.dig(:sendgrid, :api_key)
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to

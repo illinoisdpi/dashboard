@@ -13,7 +13,6 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/rfp_idea_submissions", type: :request do
-  
   # This should return the minimal set of attributes required to create a valid
   # RfpIdeaSubmission. As you add validations to RfpIdeaSubmission, be sure to
   # adjust the attributes here as well.
@@ -60,12 +59,12 @@ RSpec.describe "/rfp_idea_submissions", type: :request do
     context "with valid parameters" do
       it "creates a new RfpIdeaSubmission" do
         expect {
-          post rfp_idea_submissions_url, params: { rfp_idea_submission: valid_attributes }
+          post rfp_idea_submissions_url, params: {rfp_idea_submission: valid_attributes}
         }.to change(RfpIdeaSubmission, :count).by(1)
       end
 
       it "redirects to the created rfp_idea_submission" do
-        post rfp_idea_submissions_url, params: { rfp_idea_submission: valid_attributes }
+        post rfp_idea_submissions_url, params: {rfp_idea_submission: valid_attributes}
         expect(response).to redirect_to(rfp_idea_submission_url(RfpIdeaSubmission.last))
       end
     end
@@ -73,16 +72,14 @@ RSpec.describe "/rfp_idea_submissions", type: :request do
     context "with invalid parameters" do
       it "does not create a new RfpIdeaSubmission" do
         expect {
-          post rfp_idea_submissions_url, params: { rfp_idea_submission: invalid_attributes }
-        }.to change(RfpIdeaSubmission, :count).by(0)
+          post rfp_idea_submissions_url, params: {rfp_idea_submission: invalid_attributes}
+        }.not_to change(RfpIdeaSubmission, :count)
       end
 
-    
       it "renders a response with 422 status (i.e. to display the 'new' template)" do
-        post rfp_idea_submissions_url, params: { rfp_idea_submission: invalid_attributes }
+        post rfp_idea_submissions_url, params: {rfp_idea_submission: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
-    
     end
   end
 
@@ -94,27 +91,25 @@ RSpec.describe "/rfp_idea_submissions", type: :request do
 
       it "updates the requested rfp_idea_submission" do
         rfp_idea_submission = RfpIdeaSubmission.create! valid_attributes
-        patch rfp_idea_submission_url(rfp_idea_submission), params: { rfp_idea_submission: new_attributes }
+        patch rfp_idea_submission_url(rfp_idea_submission), params: {rfp_idea_submission: new_attributes}
         rfp_idea_submission.reload
         skip("Add assertions for updated state")
       end
 
       it "redirects to the rfp_idea_submission" do
         rfp_idea_submission = RfpIdeaSubmission.create! valid_attributes
-        patch rfp_idea_submission_url(rfp_idea_submission), params: { rfp_idea_submission: new_attributes }
+        patch rfp_idea_submission_url(rfp_idea_submission), params: {rfp_idea_submission: new_attributes}
         rfp_idea_submission.reload
         expect(response).to redirect_to(rfp_idea_submission_url(rfp_idea_submission))
       end
     end
 
     context "with invalid parameters" do
-    
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
         rfp_idea_submission = RfpIdeaSubmission.create! valid_attributes
-        patch rfp_idea_submission_url(rfp_idea_submission), params: { rfp_idea_submission: invalid_attributes }
+        patch rfp_idea_submission_url(rfp_idea_submission), params: {rfp_idea_submission: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
-    
     end
   end
 

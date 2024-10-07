@@ -1,26 +1,29 @@
 <%= render "cohorts/tabs" %>
 
-<div class="row">
-  <div class="col">
-    <div class="mb-2"> 
+<div class="card">
+  <div class="card-header">
+    <div class="d-flex align-items-center justify-content-end">
+      <h1 class="h6 mb-0 me-auto">Impressions</h1>
+      <div>
+        <button class="btn btn-outline-primary me-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSearch" aria-expanded="<%= params[:q].present? %>" aria-controls="collapseSearch">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+        <% if policy(Impression).download_csv? %>
+          <%= link_to cohort_impressions_path(@cohort, format: :csv), class: 'btn btn-outline-primary me-2' do %>
+            <i class="fa-solid fa-file-csv"></i>
+          <% end %>
+        <% end %>
+        <% if policy(Impression).new? %>
+          <%= link_to new_cohort_impression_path(@cohort), class: 'btn btn-outline-primary me-2' do %>
+            <i class="fa-solid fa-plus"></i>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="collapse my-2 <%= "show" if params[:q].present? %>" id="collapseSearch">
       <%= render "search", q: @q %>
     </div>
-    <div class="card">
-      <div class="card-header d-flex align-items-center">
-        <h1 class="h6 mb-0 me-auto">Impressions</h1>
-
-        <div>
-          <% if policy(Impression).download_csv? %>
-            <%= link_to "Download CSV", cohort_impressions_path(@cohort, format: :csv), class: 'btn btn-outline-secondary me-2' %>
-          <% end %>
-          <%= link_to new_cohort_impression_path(@cohort) do %>
-            <i class="fa-solid fa-plus fa-fw"></i>
-          <% end %>
-        </div>
-      </div>
-
-      <%= render "list_group", cohort: @cohort, impressions: @impressions %>
-    </div>
   </div>
-  <%= paginate @impressions, theme: 'bootstrap-5', nav_class: "d-flex my-2", pagination_class: "mx-auto" %>
+  <%= render "list_group", cohort: @cohort, impressions: @impressions %>
 </div>
+<%= paginate @impressions, theme: 'bootstrap-5', nav_class: "d-flex my-2", pagination_class: "mx-auto" %>

@@ -11,7 +11,7 @@ RSpec.describe "rfp_idea_submissions/edit", type: :view do
     )
   }
 
-  before(:each) do
+  before do
     assign(:rfp_idea_submission, rfp_idea_submission)
   end
 
@@ -19,7 +19,6 @@ RSpec.describe "rfp_idea_submissions/edit", type: :view do
     render
 
     assert_select "form[action=?][method=?]", rfp_idea_submission_path(rfp_idea_submission), "post" do
-
       assert_select "input[name=?]", "rfp_idea_submission[contact_name]"
 
       assert_select "input[name=?]", "rfp_idea_submission[email]"

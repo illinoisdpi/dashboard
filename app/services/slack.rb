@@ -1,5 +1,5 @@
-require 'net/http'
-require 'json'
+require "net/http"
+require "json"
 
 class Slack
   def initialize(webhook_url:)
@@ -12,15 +12,15 @@ class Slack
     http.use_ssl = true
 
     request = Net::HTTP::Post.new(uri.path)
-    request['Content-Type'] = 'application/json'
-    request.body = { text: text }.to_json
+    request["Content-Type"] = "application/json"
+    request.body = {text: text}.to_json
 
     response = http.request(request)
 
     if response.is_a?(Net::HTTPSuccess)
-      puts 'Message sent successfully!'
+      puts "Message sent successfully!"
     else
-      raise 'Failed to send the message!'
+      raise "Failed to send the message!"
     end
   end
 end

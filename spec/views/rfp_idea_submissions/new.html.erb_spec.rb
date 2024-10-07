@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "rfp_idea_submissions/new", type: :view do
-  before(:each) do
+  before do
     assign(:rfp_idea_submission, RfpIdeaSubmission.new(
       contact_name: "MyString",
       email: "MyString",
@@ -15,7 +15,6 @@ RSpec.describe "rfp_idea_submissions/new", type: :view do
     render
 
     assert_select "form[action=?][method=?]", rfp_idea_submissions_path, "post" do
-
       assert_select "input[name=?]", "rfp_idea_submission[contact_name]"
 
       assert_select "input[name=?]", "rfp_idea_submission[email]"

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "rfp_idea_submissions/index", type: :view do
-  before(:each) do
+  before do
     assign(:rfp_idea_submissions, [
       RfpIdeaSubmission.create!(
         contact_name: "Contact Name",
@@ -22,7 +22,7 @@ RSpec.describe "rfp_idea_submissions/index", type: :view do
 
   it "renders a list of rfp_idea_submissions" do
     render
-    cell_selector = Rails::VERSION::STRING >= '7' ? 'div>p' : 'tr>td'
+    cell_selector = (Rails::VERSION::STRING >= '7') ? 'div>p' : 'tr>td'
     assert_select cell_selector, text: Regexp.new("Contact Name".to_s), count: 2
     assert_select cell_selector, text: Regexp.new("Email".to_s), count: 2
     assert_select cell_selector, text: Regexp.new("Title".to_s), count: 2

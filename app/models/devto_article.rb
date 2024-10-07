@@ -23,7 +23,7 @@
 class DevtoArticle < ApplicationRecord
   include Ransackable
 
-  belongs_to :author, class_name: "User", foreign_key: "author_id"
+  belongs_to :author, class_name: "User"
 
   scope :default_order, -> { order(published_at: :desc) }
 end

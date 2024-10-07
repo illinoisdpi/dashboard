@@ -13,7 +13,6 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/impressions", type: :request do
-  
   # This should return the minimal set of attributes required to create a valid
   # Impression. As you add validations to Impression, be sure to
   # adjust the attributes here as well.
@@ -60,12 +59,12 @@ RSpec.describe "/impressions", type: :request do
     context "with valid parameters" do
       it "creates a new Impression" do
         expect {
-          post impressions_url, params: { impression: valid_attributes }
+          post impressions_url, params: {impression: valid_attributes}
         }.to change(Impression, :count).by(1)
       end
 
       it "redirects to the created impression" do
-        post impressions_url, params: { impression: valid_attributes }
+        post impressions_url, params: {impression: valid_attributes}
         expect(response).to redirect_to(impression_url(Impression.last))
       end
     end
@@ -73,16 +72,14 @@ RSpec.describe "/impressions", type: :request do
     context "with invalid parameters" do
       it "does not create a new Impression" do
         expect {
-          post impressions_url, params: { impression: invalid_attributes }
-        }.to change(Impression, :count).by(0)
+          post impressions_url, params: {impression: invalid_attributes}
+        }.not_to change(Impression, :count)
       end
 
-    
       it "renders a response with 422 status (i.e. to display the 'new' template)" do
-        post impressions_url, params: { impression: invalid_attributes }
+        post impressions_url, params: {impression: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
-    
     end
   end
 
@@ -94,27 +91,25 @@ RSpec.describe "/impressions", type: :request do
 
       it "updates the requested impression" do
         impression = Impression.create! valid_attributes
-        patch impression_url(impression), params: { impression: new_attributes }
+        patch impression_url(impression), params: {impression: new_attributes}
         impression.reload
         skip("Add assertions for updated state")
       end
 
       it "redirects to the impression" do
         impression = Impression.create! valid_attributes
-        patch impression_url(impression), params: { impression: new_attributes }
+        patch impression_url(impression), params: {impression: new_attributes}
         impression.reload
         expect(response).to redirect_to(impression_url(impression))
       end
     end
 
     context "with invalid parameters" do
-    
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
         impression = Impression.create! valid_attributes
-        patch impression_url(impression), params: { impression: invalid_attributes }
+        patch impression_url(impression), params: {impression: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
-    
     end
   end
 

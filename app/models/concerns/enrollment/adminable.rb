@@ -3,7 +3,6 @@ module Enrollment::Adminable
 
   included do
     rails_admin do
-
       list do
         field :role
 
