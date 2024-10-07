@@ -60,6 +60,7 @@ module CanvasGradebookSnapshot::Csvable
       csv.each_with_index do |row, i|
         if i.zero?
           row.to_a.each_with_index do |(assignment_name_raw, points_possible), position|
+            # This is a O(m) operation, where m is the number of columns in the CSV
             next unless points_possible.is_a?(Numeric)
 
             name = CanvasGradebookSnapshot.extract_assignment_name(assignment_name_raw)
@@ -100,6 +101,7 @@ module CanvasGradebookSnapshot::Csvable
           end
 
           row.each do |assignment_name_raw, points|
+            # This is a O(n) operation, where n is the number of rows in the CSV
             id_from_canvas = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw)
             canvas_assignment = CanvasAssignment.find_by_id_from_canvas id_from_canvas
             next if canvas_assignment.nil?
