@@ -20,20 +20,20 @@
                 <%= enrollment.to_s %>
               </div>
               <div>
-              <% if enrollment.github_username.present? %>
-                  <span class="badge bg-black text-bg-black ms-2" title="GitHub Connected"><i class="fa-brands fa-github"></i></span>
+                <% if enrollment.github_username.present? %>
+                  <a href="https://github.com/<%= enrollment.github_username %>" class="badge bg-black text-bg-black ms-2" title="GitHub Connected" target="_blank"><i class="fa-brands fa-github"></i></a>
                 <% end %>
                 <% if enrollment.devto_username.present? %>
-                  <span class="badge bg-black text-bg-black ms-2" title="Dev.to Connected"><i class="fa-brands fa-dev"></i></span>
+                  <a href="https://dev.to/<%= enrollment.devto_username %>" class="badge bg-black text-bg-black ms-2" title="Dev.to Connected" target="_blank"><i class="fa-brands fa-dev"></i></a>
                 <% end %>
                 <% if enrollment.discord_id.present? || enrollment.discord_username.present? %>
-                  <span class="badge bg-black ms-2" title="Discord ID and Username Connected"><i class="fa-brands fa-discord"></i></span>
-                  <% else %>
+                  <a href="https://discord.com/users/<%= enrollment.discord_id %>" class="badge bg-black ms-2" title="Discord ID and Username Connected" target="_blank"><i class="fa-brands fa-discord"></i></a>
+                <% else %>
                   <% if enrollment.discord_id.present? %>
-                    <span class="badge bg-black ms-2" title="Discord ID Connected"><i class="fa-brands fa-discord"></i></span>
+                    <a href="https://discord.com/users/<%= enrollment.discord_id %>" class="badge bg-black ms-2" title="Discord ID Connected" target="_blank"><i class="fa-brands fa-discord"></i></a>
                   <% end %>
                   <% if enrollment.discord_username.present? %>
-                    <span class="badge bg-black ms-2" title="Discord Username Connected"><i class="fa-brands fa-discord"></i></span>
+                    <a href="https://discord.com/users/<%= enrollment.discord_username %>" class="badge bg-black ms-2" title="Discord Username Connected" target="_blank"><i class="fa-brands fa-discord"></i></a>
                   <% end %>
                 <% end %>
                 <i class="fa-solid fa-chevron-right fa-fw"></i>
