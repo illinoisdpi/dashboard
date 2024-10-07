@@ -29,14 +29,7 @@ module Impression::Emojiable
     "😯" => {sentiment: :negative, category: "character", description: "lacking self-awareness"},
     "👿" => {sentiment: :negative, category: "character", description: "negative attitude"},
     "🙊" => {sentiment: :negative, category: "communication", description: "poor communication skills"},
-    "💢" => {sentiment: :negative, category: "communication", description: "negative response to supervision"},
-    "👍" => {sentiment: :positive, category: "miscellaneous", description: "positive"},
-    "👎" => {sentiment: :negative, category: "miscellaneous", description: "negative"},
-    "😡" => {sentiment: :negative, category: "miscellaneous", description: "poor workplace culture and policy"},
-    "🙋" => {sentiment: :positive, category: "miscellaneous", description: "asking questions"},
-    "😇" => {sentiment: :positive, category: "miscellaneous", description: "helping others"},
-    "🥳" => {sentiment: :positive, category: "miscellaneous", description: "growth"},
-    "🤔" => {sentiment: :positive, category: "miscellaneous", description: "problem solving"}
+    "💢" => {sentiment: :negative, category: "communication", description: "negative response to supervision"}
   }.freeze
 
   CATEGORIES = EMOJIS.values.map { |v| v[:category] }.uniq.freeze
