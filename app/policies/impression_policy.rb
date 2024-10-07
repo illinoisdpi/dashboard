@@ -14,7 +14,7 @@ class ImpressionPolicy < ApplicationPolicy
   end
 
   def show?
-    user.admin? || user.instructor? || (record.is_a?(Impression) && user == record.author)
+    user.admin? || user.instructor? || (record.is_a?(Impression) && user == record.author) || user.teaching_assistant? || user.staff?
   end
 
   def create?
