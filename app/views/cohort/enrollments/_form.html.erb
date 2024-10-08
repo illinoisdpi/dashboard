@@ -31,6 +31,7 @@
         data-search-user-target="inputField"
         data-action="input->search-user#search click->search-user#search" 
         class="form-control"
+        placeholder="Search for a user by name..."
         value="<%= @enrollment.user_id.present? ? User.find(@enrollment.user_id).full_name : '' %>">
       <div id="search" data-search-user-target="optionsList" style="display: none" class="options-list"></div>
     </div>
