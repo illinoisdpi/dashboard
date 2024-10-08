@@ -53,60 +53,103 @@ module CanvasGradebookSnapshot::Csvable
     end
   end
 
+
   def process_csv
     ActiveRecord::Base.transaction do
-      csv = SmarterCSV.process(csv_file)
+      begin
+        csv = SmarterCSV.process(csv_file)
 
-      csv.each_with_index do |row, i|
-        if i.zero?
-          row.to_a.each_with_index do |(assignment_name_raw, points_possible), position|
-            next unless points_possible.is_a?(Numeric)
-
-            name = CanvasGradebookSnapshot.extract_assignment_name(assignment_name_raw)
-            id_from_canvas = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw)
-
-            cohort.canvas_assignments.find_or_create_by(id_from_canvas:) do |assignment|
-              assignment.name = name
-              assignment.points_possible = points_possible
-              assignment.position = position
+        existing_assignments = cohort.canvas_assignments.index_by(&:id_from_canvas)
+        existing_users = User.where(email: csv.map { |row| row[:sis_login_id] }.compact.uniq).index_by(&:email)
+        existing_enrollments = cohort.enrollments.index_by(&:user_id)
+  
+        header_row = csv.first
+        assignment_headers = header_row.to_a.each_with_object([]) do |(assignment_name_raw, points_possible), assignments|
+          next unless points_possible.is_a?(Numeric)
+  
+          id_from_canvas = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw)
+          name = CanvasGradebookSnapshot.extract_assignment_name(assignment_name_raw)
+  
+          assignments << { id_from_canvas: id_from_canvas, name: name, points_possible: points_possible }
+          unless existing_assignments.key?(id_from_canvas)
+            begin
+              new_assignment = cohort.canvas_assignments.create!(
+                id_from_canvas: id_from_canvas,
+                name: name,
+                points_possible: points_possible
+              )
+              existing_assignments[id_from_canvas] = new_assignment
+            rescue ActiveRecord::RecordInvalid => e
+              Rails.logger.error "Failed to create CanvasAssignment: #{e.message}"
             end
           end
-        else
-          enrollment = cohort.enrollments.find_by_id_from_canvas(row.fetch(:id))
+        end
+  
+        new_users = []
+        new_enrollments = []
+        submissions = []
+        snapshot_id = self.id 
+  
+        csv.each_with_index do |row, index|
+          next if index.zero? 
 
-          if enrollment.blank?
-            id_from_canvas = row.fetch(:id)
-
-            next unless row.has_key?(:sis_login_id)
-
-            email = row.fetch(:sis_login_id)
-
-            canvas_full = row.fetch(:student, "None provided")
-
-            user = User.find_by_email(email)
-
-            if user.blank?
-              last_name, first_name = canvas_full.split(", ")
-              user = User.create(email:, password: SecureRandom.hex(16), canvas_full:, first_name:, last_name:)
+          email = row[:sis_login_id]
+          user = existing_users[email] || begin
+            canvas_full = row[:student] || "Unknown"
+            last_name, first_name = canvas_full.split(", ")
+            begin
+              new_user = User.create!(
+                email: email,
+                password: SecureRandom.hex(16),
+                first_name: first_name,
+                last_name: last_name
+              )
+              existing_users[email] = new_user
+              new_user
+            rescue ActiveRecord::RecordInvalid => e
+              Rails.logger.error "Failed to create User: #{e.message} - Data: #{row.inspect}"
+              next
             end
+          end
 
-            # test student has invalid email and doesn't save
-            next unless user.valid?
-
-            enrollment = Enrollment.find_or_create_by(user: user, cohort: cohort) do |e|
-              e.role = "student"
-              e.id_from_canvas = id_from_canvas
+          enrollment = existing_enrollments[user.id] || begin
+            begin
+              new_enrollment = cohort.enrollments.create!(
+                user: user,
+                role: "student",
+                id_from_canvas: row[:id]
+              )
+              existing_enrollments[user.id] = new_enrollment
+              new_enrollment
+            rescue ActiveRecord::RecordInvalid => e
+              Rails.logger.error "Failed to create Enrollment: #{e.message} - User ID: #{user.id}, Cohort ID: #{cohort.id}"
+              next
             end
           end
 
           row.each do |assignment_name_raw, points|
-            id_from_canvas = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw)
-            canvas_assignment = CanvasAssignment.find_by_id_from_canvas id_from_canvas
-            next if canvas_assignment.nil?
+            next if [:id, :student, :sis_login_id, :sis_user_id, :section].include?(assignment_name_raw)
 
-            canvas_submissions.create(enrollment:, canvas_assignment:, points:)
+            assignment_id = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw)
+            canvas_assignment = existing_assignments[assignment_id]
+            next unless canvas_assignment
+
+            submissions << {
+              enrollment_id: enrollment.id,
+              canvas_assignment_id: canvas_assignment.id,
+              points: points,
+              canvas_gradebook_snapshot_id: snapshot_id,
+              created_at: Time.current,
+              updated_at: Time.current
+            }
           end
         end
+
+        CanvasSubmission.insert_all!(submissions) unless submissions.empty?
+
+      rescue => e
+        Rails.logger.error "Transaction failed with error: #{e.message}"
+        raise ActiveRecord::Rollback
       end
     end
   end
