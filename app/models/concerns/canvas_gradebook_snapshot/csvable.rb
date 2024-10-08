@@ -53,7 +53,6 @@ module CanvasGradebookSnapshot::Csvable
     end
   end
 
-
   def process_csv
     ActiveRecord::Base.transaction do
       begin
@@ -62,14 +61,14 @@ module CanvasGradebookSnapshot::Csvable
         existing_assignments = cohort.canvas_assignments.index_by(&:id_from_canvas)
         existing_users = User.where(email: csv.map { |row| row[:sis_login_id] }.compact.uniq).index_by(&:email)
         existing_enrollments = cohort.enrollments.index_by(&:user_id)
-  
+
         header_row = csv.first
         assignment_headers = header_row.to_a.each_with_object([]) do |(assignment_name_raw, points_possible), assignments|
           next unless points_possible.is_a?(Numeric)
-  
+
           id_from_canvas = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw)
           name = CanvasGradebookSnapshot.extract_assignment_name(assignment_name_raw)
-  
+
           assignments << { id_from_canvas: id_from_canvas, name: name, points_possible: points_possible }
           unless existing_assignments.key?(id_from_canvas)
             begin
@@ -84,12 +83,12 @@ module CanvasGradebookSnapshot::Csvable
             end
           end
         end
-  
+
         new_users = []
         new_enrollments = []
         submissions = []
         snapshot_id = self.id 
-  
+
         csv.each_with_index do |row, index|
           next if index.zero? 
 
