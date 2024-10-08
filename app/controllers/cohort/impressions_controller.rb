@@ -32,11 +32,23 @@ class Cohort::ImpressionsController < ApplicationController
 
   # GET /impressions/new
   def new
+    @breadcrumbs = [
+      {content: "Cohorts", href: cohorts_path},
+      {content: @cohort.to_s, href: cohort_path(@cohort)},
+      {content: "Impressions", href: cohort_impressions_path(@cohort)},
+      {content: "New"}
+    ]
     @impression = current_user.authored_impressions.new
   end
 
   # GET /impressions/1/edit
   def edit
+    @breadcrumbs = [
+      {content: "Cohorts", href: cohorts_path},
+      {content: @cohort.to_s, href: cohort_path(@cohort)},
+      {content: "Impressions", href: cohort_impressions_path(@cohort)},
+      {content: "Edit"}
+    ]
   end
 
   # POST /impressions or /impressions.json
@@ -100,7 +112,6 @@ class Cohort::ImpressionsController < ApplicationController
   def impression_params
     params.require(:impression).permit(:author_id, :subject_id, :content, :emoji)
   end
-
 
   def csv_filename
     return "#{Time.zone.today}-impressions.csv" unless params[:q].present?
