@@ -30,4 +30,8 @@ class UserPolicy < ApplicationPolicy
   def change_password?
     user.admin? || (record.is_a?(User) && user == record)
   end
+
+  def search?
+    user.admin?
+  end
 end

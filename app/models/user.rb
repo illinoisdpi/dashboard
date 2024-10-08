@@ -70,4 +70,8 @@ class User < ApplicationRecord
   def name
     to_s
   end
+
+  def self.filter_by_name(name)
+    where("first_name ILIKE :name OR last_name ILIKE :name", name: "%#{name}%")
+  end
 end
