@@ -56,98 +56,131 @@ module CanvasGradebookSnapshot::Csvable
   def process_csv
     ActiveRecord::Base.transaction do
       csv = SmarterCSV.process(csv_file)
-      Rails.logger.info "CSV processed. Total rows: #{csv.size}"
   
-      existing_assignments = cohort.canvas_assignments.index_by(&:id_from_canvas) # Hash key "id_from_canvas" is a string
-      existing_users = User.pluck(:email, :id).to_h # Hash key "email" is a string value is the id string 
-      existing_enrollments = cohort.enrollments.index_by { |e| e.id_from_canvas.to_s } # Hash key "id_from_canvas" is a string value is the enrollment object
-      
-      #Create empty arrays to store data
-      assignments_data = []
-      users_data = []
-      enrollments_data = []
-      submissions_data = []
+      header_row = csv.first
   
-      # Step 2: Process the first row of the CSV to handle assignments
-      first_row = csv.first #Hash with keys as symbols abd values as strings or numbers
-      first_row.to_a.each_with_index do |(assignment_name_raw, points_possible), position| 
-        next unless points_possible.is_a?(Numeric) #Handle the case where points_possible is not a number
+      assignment_headers = []
+      header_row.to_a.each_with_index do |(assignment_name_raw, points_possible), position|
+        next unless points_possible.is_a?(Numeric)
   
-        id_from_canvas = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw.to_s).to_s #string value
-        name = CanvasGradebookSnapshot.extract_assignment_name(assignment_name_raw.to_s) # string value of assignment name
+        id_from_canvas = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw)
+        name = CanvasGradebookSnapshot.extract_assignment_name(assignment_name_raw)
+        assignment_headers << {
+          id_from_canvas: id_from_canvas,
+          name: name,
+          points_possible: points_possible,
+          position: position,
+          cohort_id: cohort.id,
+          created_at: Time.current,
+          updated_at: Time.current
+        }
+      end
   
-        debugger
-
-
-        unless existing_assignments[id_from_canvas]
-          debugger #this iss not running
-          assignments_data.push({
-            id_from_canvas: id_from_canvas,
-            name: name,
-            points_possible: points_possible,
-            position: position,
-            cohort_id: cohort.id,
-            created_at: Time.current,
-            updated_at: Time.current
-          })
-        end
-      end  
-
-       
-      # Step 3: Process remaining rows to handle users, enrollments, and submissions
-      csv.drop(1).each do |row|
-        id_from_canvas = row.fetch(:id).to_s
-        email = row.fetch(:sis_login_id, nil)
+      assignment_ids = assignment_headers.map { |a| a[:id_from_canvas] }
+      existing_assignments = cohort.canvas_assignments
+                                   .where(id_from_canvas: assignment_ids)
+                                   .index_by(&:id_from_canvas)
   
-        # Handle Users
-        unless existing_users[email]
-          canvas_full = row.fetch(:student, "None provided")
-          last_name, first_name = canvas_full.split(", ")
-          first_name ||= "Unknown"
-          last_name ||= "Unknown"
+      new_assignments = assignment_headers.reject do |assignment|
+        existing_assignments.key?(assignment[:id_from_canvas])
+      end
   
-          users_data.push({
-            email: email,
-            encrypted_password: Devise::Encryptor.digest(User, SecureRandom.hex(16)),
-            first_name: first_name,
-            last_name: last_name,
-            created_at: Time.current,
-            updated_at: Time.current
-          })
-        end
-
-        # Handle Enrollments
-        unless existing_enrollments[id_from_canvas]
-          enrollments_data.push({
-            id_from_canvas: id_from_canvas,
-            cohort_id: cohort.id,
-            role: "student",
-            user_email: email,  # Temporarily store email to associate user later
-            created_at: Time.current,
-            updated_at: Time.current
-          })
-        end
+      CanvasAssignment.insert_all(new_assignments) unless new_assignments.empty?
   
-        # Handle Submissions for each assignment
+      existing_assignments = cohort.canvas_assignments
+                                   .where(id_from_canvas: assignment_ids)
+                                   .index_by(&:id_from_canvas)
+  
+      student_rows = csv[1..-1] # Exclude header row
+  
+      emails = student_rows.map { |row| row[:sis_login_id] }.compact.uniq
+  
+      existing_users = User.where(email: emails).index_by(&:email)
+  
+      new_users = []
+      student_rows.each do |row|
+        email = row[:sis_login_id]
+        next unless email
+        next if existing_users.key?(email)
+  
+        canvas_full = row.fetch(:student, "None provided")
+        last_name, first_name = canvas_full.split(", ")
+        new_users << {
+          email: email,
+          password: SecureRandom.hex(16),
+          canvas_full: canvas_full,
+          first_name: first_name,
+          last_name: last_name,
+          created_at: Time.current,
+          updated_at: Time.current
+        }
+      end
+  
+      User.insert_all(new_users) unless new_users.empty?
+  
+      existing_users = User.where(email: emails).index_by(&:email)
+  
+      user_ids = existing_users.values.map(&:id)
+      existing_enrollments = cohort.enrollments
+                                   .where(user_id: user_ids)
+                                   .index_by(&:user_id)
+  
+      new_enrollments = []
+      student_rows.each do |row|
+        email = row[:sis_login_id]
+        next unless email
+  
+        user = existing_users[email]
+        next unless user
+        next if existing_enrollments.key?(user.id)
+  
+        new_enrollments << {
+          user_id: user.id,
+          cohort_id: cohort.id,
+          role: "student",
+          id_from_canvas: row[:id],
+          created_at: Time.current,
+          updated_at: Time.current
+        }
+      end
+  
+      Enrollment.insert_all(new_enrollments) unless new_enrollments.empty?
+  
+      existing_enrollments = cohort.enrollments
+                                   .where(user_id: user_ids)
+                                   .index_by(&:user_id)
+  
+      # **Include the canvas_gradebook_snapshot_id**
+      snapshot_id = self.id 
+  
+      submissions = []
+      student_rows.each do |row|
+        email = row[:sis_login_id]
+        next unless email
+  
+        user = existing_users[email]
+        enrollment = existing_enrollments[user.id]
+        next unless enrollment
+  
         row.each do |assignment_name_raw, points|
-          next unless points.is_a?(Numeric)
+          next if [:id, :student, :sis_login_id, :sis_user_id, :section].include?(assignment_name_raw)
   
-          assignment_id_from_canvas = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw).to_s
-          canvas_assignment = existing_assignments[assignment_id_from_canvas] #if it doesnt exist we need to create it?
+          assignment_id = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw)
+          canvas_assignment = existing_assignments[assignment_id]
+          next unless canvas_assignment
   
-          
-          if canvas_assignment
-            submissions_data.push({
-              enrollment_id: existing_enrollments[id_from_canvas]&.id, #its not a hash here :(
-              canvas_assignment_id: canvas_assignment.id,
-              canvas_gradebook_snapshot_id: self.id,
-              points: points,
-              created_at: Time.current,
-              updated_at: Time.current
-            })
-          end
+          submissions << {
+            enrollment_id: enrollment.id,
+            canvas_assignment_id: canvas_assignment.id,
+            points: points,
+            canvas_gradebook_snapshot_id: snapshot_id,
+            created_at: Time.current,
+            updated_at: Time.current
+          }
         end
       end
+  
+      CanvasSubmission.insert_all(submissions) unless submissions.empty?
     end
   end
   
