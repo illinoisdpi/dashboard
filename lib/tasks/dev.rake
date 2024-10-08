@@ -67,7 +67,7 @@ namespace :dev do
           ap user.errors.full_messages
           ap user
         end
-        
+
         enrollment = cohort.enrollments.create(
           user:,
           id_from_canvas: row.fetch(:id_from_canvas),
@@ -103,6 +103,18 @@ namespace :dev do
         end
 
         user.devto_articles.create(title: Faker::Book.title, description: Faker::Lorem.sentence, published_at: Faker::Time.between(from: DateTime.now - 365, to: DateTime.now))
+
+        User.with_role(:admin).each do |admin|
+          5.times do |i|
+            Impression.create(
+              author_id: admin.id,
+              subject_id: enrollment.id,
+              content: Faker::Lorem.sentence,
+              emoji: Impression::EMOJIS.keys.sample,
+              created_at: rand(1..5).week.ago
+            )
+          end
+        end  
       end
 
       cohort_start_date = Date.parse("2023-01-30")
@@ -133,7 +145,7 @@ namespace :dev do
         cohort.canvas_gradebook_snapshots.create(
           downloaded_at: cohort_start_date + (i + 1).weeks,
           user: users.sample,
-          csv_file:,
+          csv_file:
         )
       end
     end

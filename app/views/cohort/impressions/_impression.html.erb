@@ -2,7 +2,7 @@
   <div class="card-header">
     <div class="d-flex justify-content-between align-items-center">
       <h1 class="me-auto mb-0 h6">
-        <%= impression.author %> authored a <%= impression.emoji %> impression of <%= link_to impression.subject, cohort_enrollment_path(@cohort, @impression.subject) %>
+        <%= impression.summary %>
       </h1>
       <% if policy(impression).edit? %>
         <%= link_to edit_cohort_impression_path(@cohort, @impression), class: "me-2" do %>
