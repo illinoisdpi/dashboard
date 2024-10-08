@@ -58,29 +58,30 @@ module CanvasGradebookSnapshot::Csvable
       csv = SmarterCSV.process(csv_file)
       Rails.logger.info "CSV processed. Total rows: #{csv.size}"
   
-      existing_assignments = cohort.canvas_assignments.index_by(&:id_from_canvas)
-      existing_users = User.pluck(:email, :id).to_h #Maybe we can make this relevant to the file with enrollments
-      existing_enrollments = cohort.enrollments.index_by(&:id_from_canvas) #This should be a hash
-
+      existing_assignments = cohort.canvas_assignments.index_by(&:id_from_canvas) # Hash key "id_from_canvas" is a string
+      existing_users = User.pluck(:email, :id).to_h # Hash key "email" is a string value is the id string 
+      existing_enrollments = cohort.enrollments.index_by { |e| e.id_from_canvas.to_s } # Hash key "id_from_canvas" is a string value is the enrollment object
       
-  
+      #Create empty arrays to store data
       assignments_data = []
       users_data = []
       enrollments_data = []
       submissions_data = []
-
-      
   
       # Step 2: Process the first row of the CSV to handle assignments
-      first_row = csv.first #@Why do we have dates in the first row?
-      first_row.to_a.each_with_index do |(assignment_name_raw, points_possible), position| #Convert this to an array of arrays [assignment_name_raw, points_possible] but sometimes is says read_only????
+      first_row = csv.first #Hash with keys as symbols abd values as strings or numbers
+      first_row.to_a.each_with_index do |(assignment_name_raw, points_possible), position| 
         next unless points_possible.is_a?(Numeric) #Handle the case where points_possible is not a number
   
-        id_from_canvas = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw)
-        name = CanvasGradebookSnapshot.extract_assignment_name(assignment_name_raw)
+        id_from_canvas = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw.to_s).to_s #string value
+        name = CanvasGradebookSnapshot.extract_assignment_name(assignment_name_raw.to_s) # string value of assignment name
   
+        debugger
+
+
         unless existing_assignments[id_from_canvas]
-          assignments_data << {
+          debugger #this iss not running
+          assignments_data.push({
             id_from_canvas: id_from_canvas,
             name: name,
             points_possible: points_possible,
@@ -88,13 +89,14 @@ module CanvasGradebookSnapshot::Csvable
             cohort_id: cohort.id,
             created_at: Time.current,
             updated_at: Time.current
-          }
+          })
         end
       end  
+
        
       # Step 3: Process remaining rows to handle users, enrollments, and submissions
       csv.drop(1).each do |row|
-        id_from_canvas = row.fetch(:id)
+        id_from_canvas = row.fetch(:id).to_s
         email = row.fetch(:sis_login_id, nil)
   
         # Handle Users
@@ -104,45 +106,45 @@ module CanvasGradebookSnapshot::Csvable
           first_name ||= "Unknown"
           last_name ||= "Unknown"
   
-          users_data << {
+          users_data.push({
             email: email,
             encrypted_password: Devise::Encryptor.digest(User, SecureRandom.hex(16)),
             first_name: first_name,
             last_name: last_name,
             created_at: Time.current,
             updated_at: Time.current
-          }
+          })
         end
 
         # Handle Enrollments
         unless existing_enrollments[id_from_canvas]
-          enrollments_data << {
+          enrollments_data.push({
             id_from_canvas: id_from_canvas,
             cohort_id: cohort.id,
             role: "student",
             user_email: email,  # Temporarily store email to associate user later
             created_at: Time.current,
             updated_at: Time.current
-          }
+          })
         end
   
         # Handle Submissions for each assignment
         row.each do |assignment_name_raw, points|
           next unless points.is_a?(Numeric)
   
-          assignment_id_from_canvas = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw)
+          assignment_id_from_canvas = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw).to_s
           canvas_assignment = existing_assignments[assignment_id_from_canvas] #if it doesnt exist we need to create it?
   
-          debugger
+          
           if canvas_assignment
-            submissions_data << {
-              enrollment_id: existing_enrollments[id_from_canvas.to_s]&.id, #its not a hash here :(
+            submissions_data.push({
+              enrollment_id: existing_enrollments[id_from_canvas]&.id, #its not a hash here :(
               canvas_assignment_id: canvas_assignment.id,
               canvas_gradebook_snapshot_id: self.id,
               points: points,
               created_at: Time.current,
               updated_at: Time.current
-            }
+            })
           end
         end
       end
