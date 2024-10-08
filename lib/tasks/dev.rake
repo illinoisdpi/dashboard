@@ -26,7 +26,7 @@ namespace :dev do
 
       cohort = Cohort.create(
         year: 2022,
-        generation: 1,
+        month: 1,
         number: 2,
         name: "Sample Cohort",
         canvas_shortname: "WE-2022-1.2-SDF",
@@ -67,7 +67,7 @@ namespace :dev do
           ap user.errors.full_messages
           ap user
         end
-        
+
         enrollment = cohort.enrollments.create(
           user:,
           id_from_canvas: row.fetch(:id_from_canvas),

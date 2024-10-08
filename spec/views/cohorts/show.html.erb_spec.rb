@@ -5,7 +5,7 @@ RSpec.describe "cohorts/show" do
     assign(:cohort, Cohort.create!(
       name: "Name",
       year: 2,
-      generation: 3,
+      month: 3,
       number: 4,
       piazza_course_number: "Piazza Course Number"
     ))
