@@ -53,7 +53,6 @@ group :development, :test do
   gem "rack-mini-profiler"
   gem "rspec-rails"
   gem "standard", require: false
-  gem "web-console"
   gem "rubocop-rails-omakase", require: false
 end
 
@@ -63,4 +62,5 @@ group :development do
   gem "letter_opener"
   gem "rails_db", ">= 2.3.1"
   gem "rails-erd"
+  gem "web-console"
 end
