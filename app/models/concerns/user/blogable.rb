@@ -25,6 +25,7 @@ module User::Blogable
       devto_article.description = article["description"]
       devto_article.url = article["url"]
       devto_article.published_at = article["published_timestamp"]
+      devto_article.social_image = article["social_image"]
       devto_article.save
     end
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_05_182548) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_10_181133) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -137,6 +137,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_05_182548) do
     t.uuid "author_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "social_image"
     t.index ["author_id"], name: "index_devto_articles_on_author_id"
   end
 

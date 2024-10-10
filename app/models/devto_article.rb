@@ -5,6 +5,7 @@
 #  id           :uuid             not null, primary key
 #  description  :text
 #  published_at :datetime
+#  social_image :string
 #  title        :string
 #  url          :string
 #  created_at   :datetime         not null
@@ -22,6 +23,8 @@
 #
 class DevtoArticle < ApplicationRecord
   include Ransackable
+
+  mount_uploader :social_image, SocialImageUploader
 
   belongs_to :author, class_name: "User"
 

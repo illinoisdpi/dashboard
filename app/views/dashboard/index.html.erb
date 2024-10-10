@@ -81,7 +81,7 @@
         } %>
             <%= link_to "#{article.url}?#{utm_params.to_query}", class: "list-group-item", target: "_blank" do %>
               <div class="d-flex align-items-center">
-                <img class="news-avatar" src="<%= article.author.headshot %>">
+                <img class="news-avatar" src="<%= article.social_image %>">
                 <div class="me-auto">
                   <h5><%= article.title %></h5>
                   <div>By <%= article.author %></div>
