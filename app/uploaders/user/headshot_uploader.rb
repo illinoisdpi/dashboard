@@ -6,9 +6,9 @@ class User::HeadshotUploader < CarrierWave::Uploader::Base
   end
 
   # Sets folder in cloudinary
-  def public_id
-    store_dir
-  end
+def public_id
+  "#{store_dir}/#{SecureRandom.uuid}"
+end
 
   process tags: ["headshot"]
 end

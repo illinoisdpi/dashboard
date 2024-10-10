@@ -38,6 +38,8 @@ namespace :dev do
         ap cohort
       end
 
+      headshot_images = Dir[Rails.root.join("lib", "tasks", "sample_data_images", "*.png")]
+
       sample_cohort_enrollment_file = ActionDispatch::Http::UploadedFile.new(
         tempfile: Rails.root.join("lib", "sample_data", "sample-cohort-enrollment.csv").open,
         filename: "sample-cohort-enrollment.csv",
@@ -50,6 +52,7 @@ namespace :dev do
           canvas_full: row.fetch(:name),
           password: "password",
           github_username: row.fetch(:name).gsub(/[^a-z0-9]/i, ""),
+          headshot: File.open(headshot_images.sample),
           quote: Faker::Quote.matz,
           personal_website: Faker::Internet.url,
           most_recent_role: Faker::Job.title,
@@ -114,7 +117,7 @@ namespace :dev do
               created_at: rand(1..5).week.ago
             )
           end
-        end  
+        end
       end
 
       cohort_start_date = Date.parse("2023-01-30")

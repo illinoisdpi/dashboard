@@ -25,8 +25,9 @@
 
       <div class="list-group list-group-flush">
         <% @articles.each do |article| %>
-         <%= link_to article.url, class: "list-group-item", target: "_blank" do %>
+          <%= link_to article.url, class: "list-group-item", target: "_blank" do %>
             <div class="d-flex align-items-center">
+              <img class="news-avatar" src="<%= article.author.headshot %>">
               <div class="me-auto">
                 <h5><%= article.title %></h5>
                 <div>By <%= article.author %></div>
