@@ -32,7 +32,7 @@ module Impression::Emojiable
     "💢" => { sentiment: :negative, category: "communication", description: "negative response to supervision" }
   }.freeze
 
-  CATEGORIES = EMOJIS.values.map { |v| v[:category] }.uniq.freeze
+  CATEGORIES = EMOJIS.values.pluck(:category).uniq.freeze
 
   %i[category description sentiment].each do |attribute|
     define_method("emoji_#{attribute}") do

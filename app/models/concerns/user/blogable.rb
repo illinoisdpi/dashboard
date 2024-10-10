@@ -17,7 +17,7 @@ module User::Blogable
   end
 
   def fetch_devto_articles
-    return unless devto_username.present?
+    return if devto_username.blank?
 
     DevtoService.fetch_articles({ username: devto_username })&.each do |article|
       devto_article = devto_articles.find_or_initialize_by(devto_id: article["id"])

@@ -114,9 +114,9 @@ class Cohort::ImpressionsController < ApplicationController
   end
 
   def csv_filename
-    return "#{Time.zone.today}-impressions.csv" unless params[:q].present?
+    return "#{Time.zone.today}-impressions.csv" if params[:q].blank?
 
-    formatted_query_params = params[:q].values.reject(&:blank?).join("-")
+    formatted_query_params = params[:q].values.compact_blank.join("-")
 
     "#{Time.zone.today}-impressions-#{formatted_query_params}.csv"
   end

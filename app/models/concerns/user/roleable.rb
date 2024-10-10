@@ -6,34 +6,34 @@ module User::Roleable
   end
 
   def cohort_staff?(cohort)
-    enrollments.where(cohort:, role: :staff).exists?
+    enrollments.exists?(cohort:, role: :staff)
   end
 
   def cohort_student?(cohort)
-    enrollments.where(cohort:, role: :student).exists?
+    enrollments.exists?(cohort:, role: :student)
   end
 
   def cohort_instructor?(cohort)
-    enrollments.where(cohort:, role: :instructor).exists?
+    enrollments.exists?(cohort:, role: :instructor)
   end
 
   def cohort_teaching_assistant?(cohort)
-    enrollments.where(cohort:, role: :teaching_assistant).exists?
+    enrollments.exists?(cohort:, role: :teaching_assistant)
   end
 
   def staff?
-    enrollments.where(role: :staff).exists?
+    enrollments.exists?(role: :staff)
   end
 
   def student?
-    enrollments.where(role: :student).exists?
+    enrollments.exists?(role: :student)
   end
 
   def instructor?
-    enrollments.where(role: :instructor).exists?
+    enrollments.exists?(role: :instructor)
   end
 
   def teaching_assistant?
-    enrollments.where(role: :teaching_assistant).exists?
+    enrollments.exists?(role: :teaching_assistant)
   end
 end

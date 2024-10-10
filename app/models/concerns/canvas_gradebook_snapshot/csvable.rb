@@ -72,7 +72,7 @@ module CanvasGradebookSnapshot::Csvable
             end
           end
         else
-          enrollment = cohort.enrollments.find_by_id_from_canvas(row.fetch(:id))
+          enrollment = cohort.enrollments.find_by(id_from_canvas: row.fetch(:id))
 
           if enrollment.blank?
             id_from_canvas = row.fetch(:id)
@@ -83,7 +83,7 @@ module CanvasGradebookSnapshot::Csvable
 
             canvas_full = row.fetch(:student, "None provided")
 
-            user = User.find_by_email(email)
+            user = User.find_by(email: email)
 
             if user.blank?
               last_name, first_name = canvas_full.split(", ")
@@ -101,7 +101,7 @@ module CanvasGradebookSnapshot::Csvable
 
           row.each do |assignment_name_raw, points|
             id_from_canvas = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw)
-            canvas_assignment = CanvasAssignment.find_by_id_from_canvas id_from_canvas
+            canvas_assignment = CanvasAssignment.find_by id_from_canvas: id_from_canvas
             next if canvas_assignment.nil?
 
             canvas_submissions.create(enrollment:, canvas_assignment:, points:)
