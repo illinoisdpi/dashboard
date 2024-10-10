@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_05_182548) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_10_205619) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -234,6 +234,18 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_05_182548) do
     t.index ["user_id"], name: "index_piazza_activity_reports_on_user_id"
   end
 
+  create_table "projects", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "github_url"
+    t.string "url"
+    t.text "description"
+    t.string "image"
+    t.uuid "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_projects_on_user_id"
+  end
+
   create_table "rfp_idea_submissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.text "details"
@@ -319,4 +331,5 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_05_182548) do
   add_foreign_key "piazza_activity_breakdowns", "piazza_activity_reports"
   add_foreign_key "piazza_activity_reports", "cohorts"
   add_foreign_key "piazza_activity_reports", "users"
+  add_foreign_key "projects", "users"
 end
