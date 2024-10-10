@@ -5,7 +5,7 @@ module Enrollment::Endorsable
     before_validation :set_career_total
     before_validation :set_communication_total
 
-    enum technical_rating: {
+    enum :technical_rating, {
       emerging: "emerging",
       proficient: "proficient",
       excellent: "excellent"

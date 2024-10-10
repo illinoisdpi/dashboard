@@ -6,9 +6,9 @@ class Cohort::EnrollmentsController < ApplicationController
   # GET /enrollments or /enrollments.json
   def index
     @breadcrumbs = [
-      {content: "Cohorts", href: cohorts_path},
-      {content: @cohort.to_s, href: cohort_path(@cohort)},
-      {content: "Enrollments", href: cohort_enrollments_path(@cohort)}
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Enrollments", href: cohort_enrollments_path(@cohort) }
     ]
 
     @enrollments = policy_scope(@cohort.enrollments)
@@ -17,10 +17,10 @@ class Cohort::EnrollmentsController < ApplicationController
   # GET /enrollments/1 or /enrollments/1.json
   def show
     @breadcrumbs = [
-      {content: "Cohorts", href: cohorts_path},
-      {content: @cohort.to_s, href: cohort_path(@cohort)},
-      {content: "Enrollments", href: cohort_enrollments_path(@cohort)},
-      {content: @enrollment.to_s}
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Enrollments", href: cohort_enrollments_path(@cohort) },
+      { content: @enrollment.to_s }
     ]
   end
 
@@ -73,10 +73,10 @@ class Cohort::EnrollmentsController < ApplicationController
 
   def overview
     @breadcrumbs = [
-      {content: "Cohorts", href: cohorts_path},
-      {content: @cohort.to_s, href: cohort_path(@cohort)},
-      {content: "Enrollments", href: cohort_enrollments_path(@cohort)},
-      {content: @enrollment.to_s}
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Enrollments", href: cohort_enrollments_path(@cohort) },
+      { content: @enrollment.to_s }
     ]
   end
 

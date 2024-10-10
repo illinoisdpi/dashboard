@@ -6,9 +6,9 @@ class Cohort::ImpressionsController < ApplicationController
   # GET /impressions or /impressions.json
   def index
     @breadcrumbs = [
-      {content: "Cohorts", href: cohorts_path},
-      {content: @cohort.to_s, href: cohort_path(@cohort)},
-      {content: "Impressions", href: cohort_impressions_path(@cohort)}
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Impressions", href: cohort_impressions_path(@cohort) }
     ]
 
     @q = policy_scope(@cohort.impressions.includes(subject: :user)).ransack(params[:q])
@@ -23,20 +23,20 @@ class Cohort::ImpressionsController < ApplicationController
   # GET /impressions/1 or /impressions/1.json
   def show
     @breadcrumbs = [
-      {content: "Cohorts", href: cohorts_path},
-      {content: @cohort.to_s, href: cohort_path(@cohort)},
-      {content: "Impressions", href: cohort_impressions_path(@cohort)},
-      {content: @impression}
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Impressions", href: cohort_impressions_path(@cohort) },
+      { content: @impression }
     ]
   end
 
   # GET /impressions/new
   def new
     @breadcrumbs = [
-      {content: "Cohorts", href: cohorts_path},
-      {content: @cohort.to_s, href: cohort_path(@cohort)},
-      {content: "Impressions", href: cohort_impressions_path(@cohort)},
-      {content: "New"}
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Impressions", href: cohort_impressions_path(@cohort) },
+      { content: "New" }
     ]
     @impression = current_user.authored_impressions.new
   end
@@ -44,10 +44,10 @@ class Cohort::ImpressionsController < ApplicationController
   # GET /impressions/1/edit
   def edit
     @breadcrumbs = [
-      {content: "Cohorts", href: cohorts_path},
-      {content: @cohort.to_s, href: cohort_path(@cohort)},
-      {content: "Impressions", href: cohort_impressions_path(@cohort)},
-      {content: "Edit"}
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Impressions", href: cohort_impressions_path(@cohort) },
+      { content: "Edit" }
     ]
   end
 

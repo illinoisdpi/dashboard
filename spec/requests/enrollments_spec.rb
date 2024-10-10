@@ -59,12 +59,12 @@ RSpec.describe "/enrollments" do
     context "with valid parameters" do
       it "creates a new Enrollment" do
         expect {
-          post enrollments_url, params: {enrollment: valid_attributes}
+          post enrollments_url, params: { enrollment: valid_attributes }
         }.to change(Enrollment, :count).by(1)
       end
 
       it "redirects to the created enrollment" do
-        post enrollments_url, params: {enrollment: valid_attributes}
+        post enrollments_url, params: { enrollment: valid_attributes }
         expect(response).to redirect_to(enrollment_url(Enrollment.last))
       end
     end
@@ -72,12 +72,12 @@ RSpec.describe "/enrollments" do
     context "with invalid parameters" do
       it "does not create a new Enrollment" do
         expect {
-          post enrollments_url, params: {enrollment: invalid_attributes}
+          post enrollments_url, params: { enrollment: invalid_attributes }
         }.not_to change(Enrollment, :count)
       end
 
       it "renders a response with 422 status (i.e. to display the 'new' template)" do
-        post enrollments_url, params: {enrollment: invalid_attributes}
+        post enrollments_url, params: { enrollment: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -91,14 +91,14 @@ RSpec.describe "/enrollments" do
 
       it "updates the requested enrollment" do
         enrollment = Enrollment.create! valid_attributes
-        patch enrollment_url(enrollment), params: {enrollment: new_attributes}
+        patch enrollment_url(enrollment), params: { enrollment: new_attributes }
         enrollment.reload
         skip("Add assertions for updated state")
       end
 
       it "redirects to the enrollment" do
         enrollment = Enrollment.create! valid_attributes
-        patch enrollment_url(enrollment), params: {enrollment: new_attributes}
+        patch enrollment_url(enrollment), params: { enrollment: new_attributes }
         enrollment.reload
         expect(response).to redirect_to(enrollment_url(enrollment))
       end
@@ -107,7 +107,7 @@ RSpec.describe "/enrollments" do
     context "with invalid parameters" do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
         enrollment = Enrollment.create! valid_attributes
-        patch enrollment_url(enrollment), params: {enrollment: invalid_attributes}
+        patch enrollment_url(enrollment), params: { enrollment: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end

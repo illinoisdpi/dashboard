@@ -13,7 +13,7 @@ class Slack
 
     request = Net::HTTP::Post.new(uri.path)
     request["Content-Type"] = "application/json"
-    request.body = {text: text}.to_json
+    request.body = { text: text }.to_json
 
     response = http.request(request)
 

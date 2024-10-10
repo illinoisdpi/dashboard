@@ -18,15 +18,15 @@ module CanvasGradebookSnapshot::Csvable
     def extract_assignment_name(assignment_name_raw)
       name_array = assignment_name_raw.to_s.split("_")
 
-      name_array.take(name_array.length - 1).join(' ')
+      name_array.take(name_array.length - 1).join(" ")
     end
 
     def extract_id_from_canvas(assignment_name_raw)
-      assignment_name_raw.to_s.split("_").pop.gsub(/\D/, '')
+      assignment_name_raw.to_s.split("_").pop.gsub(/\D/, "")
     end
 
     def extract_downloaded_at(csv_filename)
-      DateTime.strptime(csv_filename.split("_").at(0), '%Y-%m-%dT%H%M')
+      DateTime.strptime(csv_filename.split("_").at(0), "%Y-%m-%dT%H%M")
     end
   end
 

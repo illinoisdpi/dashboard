@@ -52,7 +52,7 @@
 class Enrollment < ApplicationRecord
   include Adminable, Endorsable, Ransackable
 
-  has_paper_trail skip: [:created_at, :updated_at]
+  has_paper_trail skip: [ :created_at, :updated_at ]
 
   belongs_to :user
   belongs_to :cohort

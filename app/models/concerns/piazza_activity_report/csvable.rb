@@ -13,7 +13,7 @@ module PiazzaActivityReport::Csvable
     ActiveRecord::Base.transaction do
       self.update(csv_filename: csv_file.original_filename)
 
-      options = {key_mapping: {"live_q&a_upvotes": :live_qa_upvotes}}
+      options = { key_mapping: { "live_q&a_upvotes": :live_qa_upvotes } }
 
       csv = SmarterCSV.process(csv_file, options)
 
@@ -21,7 +21,7 @@ module PiazzaActivityReport::Csvable
         emails = row.fetch(:emails).split(";").map(&:strip)
 
         user = User.where(email: emails).first
-        
+
         if user.blank?
           # TODO: throw error?
           user = User.new(email: emails.first, password: SecureRandom.hex(16))

@@ -24,7 +24,7 @@
 class PiazzaActivityReport < ApplicationRecord
   include Csvable
 
-  has_paper_trail skip: [:created_at, :updated_at]
+  has_paper_trail skip: [ :created_at, :updated_at ]
 
   belongs_to :cohort
   belongs_to :user
@@ -34,7 +34,7 @@ class PiazzaActivityReport < ApplicationRecord
   validates :activity_from, presence: true
   validates :activity_until,
     presence: true,
-    uniqueness: {scope: [:activity_from, :cohort]}
+    uniqueness: { scope: [ :activity_from, :cohort ] }
 
   scope :default_order, -> { order(activity_until: :desc) }
 
