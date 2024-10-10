@@ -107,6 +107,18 @@ namespace :dev do
 
         user.devto_articles.create(title: Faker::Book.title, description: Faker::Lorem.sentence, published_at: Faker::Time.between(from: DateTime.now - 365, to: DateTime.now))
         puts "Generating Sample Cohort user data..."
+
+        User.with_role(:admin).each do |admin|
+          5.times do |i|
+            Impression.create(
+              author_id: admin.id,
+              subject_id: enrollment.id,
+              content: Faker::Lorem.sentence,
+              emoji: Impression::EMOJIS.keys.sample,
+              created_at: rand(1..5).week.ago
+            )
+          end
+        end  
       end
       puts "First Sample Cohort data populated"
 
