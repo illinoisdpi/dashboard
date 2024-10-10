@@ -1,9 +1,7 @@
 require:
-  - standard
   - rubocop-rails
 
 inherit_gem:
-  standard: config/base.yml
   rubocop-rails-omakase: rubocop.yml
 
 AllCops:
