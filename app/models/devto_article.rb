@@ -25,5 +25,12 @@ class DevtoArticle < ApplicationRecord
   include Ransackable
   belongs_to :author, class_name: "User"
 
+  def utm_params
+    {
+      utm_source: "news.dpi.dev"
+      # - other utm stuff as needed - #
+    }
+  end
+
   scope :default_order, -> { order(published_at: :desc) }
 end
