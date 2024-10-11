@@ -23,9 +23,6 @@
 #
 class DevtoArticle < ApplicationRecord
   include Ransackable
-
-  mount_uploader :social_image, SocialImageUploader
-
   belongs_to :author, class_name: "User"
 
   scope :default_order, -> { order(published_at: :desc) }
