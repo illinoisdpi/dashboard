@@ -54,7 +54,7 @@
 
           <div class="mb-3">
             <%= f.label :career_highlights, class: "form-label" %>
-            <%= f.text_area :career_highlights, class: "form-control" %>
+            <%= f.text_area :career_highlights, class: "form-control easymde" %>
             <small class="form-text text-muted">
               Use Markdown Syntax for formatting.
             </small>
@@ -62,7 +62,7 @@
 
           <div class="mb-3">
             <%= f.label :education, class: "form-label" %>
-            <%= f.text_field :education, class: "form-control" %>
+            <%= f.text_area :education, class: "form-control easymde" %>
             <small class="form-text text-muted">
               Use Markdown Syntax for formatting.
             </small>
@@ -70,7 +70,7 @@
 
           <div class="mb-3">
             <%= f.label :languages, class: "form-label" %>
-            <%= f.text_area :languages, class: "form-control" %>
+            <%= f.text_area :languages, class: "form-control easymde" %>
             <small class="form-text text-muted">
               Use Markdown Syntax for formatting.
             </small>
@@ -80,21 +80,22 @@
 
           <div class="mb-3">
             <%= f.label :quote, class: "form-label" %>
-            <%= f.text_area :quote, class: "form-control" %>
+            <%= f.text_area :quote, class: "form-control easymde" %>
           </div>
 
           <div class="mb-3">
             <%= f.label :skills_and_projects, class: "form-label" %>
-            <%= f.text_area :skills_and_projects, class: "form-control" %>
+            <%= f.text_area :skills_and_projects, class: "form-control easymde" %>
             <small class="form-text text-muted">
               Use Markdown Syntax for formatting.
             </small>
           </div>
+
           <!-- (this will only show up for users with at least 1 cohort enrollment) -->
           <%= f.fields_for :enrollments do |e| %>
             <div class="mb-3">
               <%= e.label :skills_development, "Real-time DPI skill development (#{e.object.cohort.name})", class: "form-label" %>
-              <%= e.text_area :skills_development, class: "form-control" %>
+              <%= e.text_area :skills_development, class: "form-control easymde" %>
               <small class="form-text text-muted">
                 Use Markdown Syntax for formatting.
               </small>
@@ -103,7 +104,7 @@
 
           <div class="mb-3">
             <%= f.label :strengths, class: "form-label" %>
-            <%= f.text_area :strengths, class: "form-control" %>
+            <%= f.text_area :strengths, class: "form-control easymde" %>
             <small class="form-text text-muted">
               Separate each strength with a comma.
             </small>
@@ -111,137 +112,15 @@
 
           <div class="mb-3">
             <%= f.label :fun_fact, class: "form-label" %>
-            <%= f.text_area :fun_fact, class: "form-control" %>
+            <%= f.text_area :fun_fact, class: "form-control easymde" %>
           </div>
 
           <div class="mb-3">
             <%= f.label :one_liner, class: "form-label" %>
-            <%= f.text_area :one_liner, class: "form-control" %>
+            <%= f.text_area :one_liner, class: "form-control easymde" %>
           </div>
 
           <hr>
-
-          <div class="mb-3">
-            <% email_was_invalid = resource.errors.include?(:email) %>
-
-            <% email_class = "form-control" %>
-
-            <% if was_validated %>
-              <% if email_was_invalid %>
-                <% email_class << " is-invalid" %>
-              <% else %>
-                <% email_class << " is-valid" %>
-              <% end %>
-            <% end %>
-
-            <%= f.label :email, class: "form-label" %>
-
-            <%= f.email_field :email, class: email_class %>
-
-            <% if email_was_invalid %>
-              <% resource.errors.full_messages_for(:email).each do |message| %>
-                <div class="invalid-feedback d-flex">
-                  <%= message %>
-                </div>
-              <% end %>
-            <% end %>
-
-            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-              <small class="form-text text-muted">
-                Currently awaiting confirmation for <%= resource.unconfirmed_email %>.
-              </small>
-            <% end %>
-          </div>
-
-          <div class="mb-3">
-            <% password_was_invalid = resource.errors.include?(:password) %>
-
-            <% password_class = "form-control" %>
-
-            <% if was_validated %>
-              <% if password_was_invalid %>
-                <% password_class << " is-invalid" %>
-              <% else %>
-                <% password_class << " is-valid" %>
-              <% end %>
-            <% end %>
-
-            <%= f.label :password, class: "form-label" %>
-
-            <%= f.password_field :password, class: password_class, autocomplete: "off" %>
-
-            <% if password_was_invalid %>
-              <% resource.errors.full_messages_for(:password).each do |message| %>
-                <div class="invalid-feedback d-flex">
-                  <%= message %>
-                </div>
-              <% end %>
-            <% end %>
-
-            <small class="form-text text-muted">
-              Leave blank if you don't want to change it.
-
-              <% if @minimum_password_length %>
-                <%= @minimum_password_length %> characters minimum.
-              <% end %>
-            </small>
-          </div>
-
-          <div class="mb-3">
-            <% password_confirmation_was_invalid = resource.errors.include?(:password_confirmation) %>
-
-            <% password_confirmation_class = "form-control" %>
-
-            <% if was_validated %>
-              <% if password_confirmation_was_invalid %>
-                <% password_confirmation_class << " is-invalid" %>
-              <% else %>
-                <% password_confirmation_class << " is-valid" %>
-              <% end %>
-            <% end %>
-
-            <%= f.label :password_confirmation, class: "form-label" %>
-
-            <%= f.password_field :password_confirmation, class: password_confirmation_class, autocomplete: "off" %>
-
-            <% if password_confirmation_was_invalid %>
-              <% resource.errors.full_messages_for(:password_confirmation).each do |message| %>
-                <div class="invalid-feedback d-flex">
-                  <%= message %>
-                </div>
-              <% end %>
-            <% end %>
-          </div>
-
-          <div class="mb-3">
-            <% current_password_was_invalid = resource.errors.include?(:current_password) %>
-
-            <% current_password_class = "form-control" %>
-
-            <% if was_validated %>
-              <% if current_password_was_invalid %>
-                <% current_password_class << " is-invalid" %>
-              <% else %>
-                <% current_password_class << " is-valid" %>
-              <% end %>
-            <% end %>
-
-            <%= f.label :current_password, class: "form-label" %>
-
-            <%= f.password_field :current_password, class: current_password_class, autocomplete: "off" %>
-
-            <% if current_password_was_invalid %>
-              <% resource.errors.full_messages_for(:current_password).each do |message| %>
-                <div class="invalid-feedback d-flex">
-                  <%= message %>
-                </div>
-              <% end %>
-            <% end %>
-
-            <small class="form-text text-muted">
-              We need your current password to confirm your changes.
-            </small>
-          </div>
 
           <div class="d-grid gap-2">
             <%= f.submit "Update", class: "btn btn-outline-primary" %>

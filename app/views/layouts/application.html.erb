@@ -12,6 +12,9 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
 
@@ -23,10 +26,27 @@
 
     <div class="container-fluid mb-5">
       <%= render "shared/breadcrumbs" %>
-
       <%= render "shared/toasts" %>
-
       <%= yield %>
     </div>
+
+    <script>
+      document.addEventListener("turbo:load", function() {
+        document.querySelectorAll('.easymde').forEach(function(textarea) {
+          new EasyMDE({ 
+            element: textarea,
+            autoDownloadFontAwesome: false,
+            toolbar: [
+              "bold", "italic", "heading", "|", 
+              "quote", "unordered-list", "ordered-list", "|", 
+              "link", "image", "|", 
+              "preview", "side-by-side", "fullscreen", "|", 
+              "guide"
+            ],
+            spellChecker: false
+          });
+        });
+      });
+    </script>
   </body>
 </html>
