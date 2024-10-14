@@ -150,4 +150,14 @@ class Enrollment < ApplicationRecord
   def most_advanced_completed_project_for(skill)
     completed_assignments.max { |a, b| a.send(skill).to_i <=> b.send(skill).to_i }
   end
+
+scope :inactive_since, ->(date) {
+        joins(:user)
+          .left_joins(:canvas_submissions)
+          .where(role: "student")
+          .where("canvas_submissions.id IS NULL OR (canvas_submissions.points <= 0 AND canvas_submissions.created_at < ?)", date)
+          .select("users.id, users.first_name || ' ' || users.last_name AS full_name")
+          .group("users.id, users.first_name, users.last_name")
+          .order("full_name ASC")
+      }
 end

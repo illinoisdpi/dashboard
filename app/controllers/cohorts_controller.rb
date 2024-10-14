@@ -18,7 +18,7 @@ class CohortsController < ApplicationController
       {content: @cohort.to_s, href: cohort_path(@cohort)}
     ]
     @cohort = Cohort.find(params[:id])
-    @inactive_enrollments = @cohort.inactive_enrollments
+    @inactive_enrollments = @cohort.enrollments.inactive_since(4.weeks.ago)
     @most_recent_submission_by_student = Enrollment.most_recent_user_submissions(@cohort.id)
   end
 
