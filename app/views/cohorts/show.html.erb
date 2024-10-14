@@ -23,11 +23,13 @@
   <div class="row mb-3">
     <div class="col-lg-12">
       <div class="card">
-        <div class="card-header">
-          <h2 class="h6 mb-0">Canvas: Highest Position Submission Count</h2>
+        <div class="card-header" role="button" data-bs-toggle="collapse" href="#highestPositionSubmissionCollapse" aria-expanded="false" aria-controls="highestPositionSubmissionCollapse">
+          <h5 class="mb-0">Canvas: Highest Position Submission Count</h5>
         </div>
-        <div class="card-body">
-          <%= column_chart canvas_highest_position_submission_count_cohort_path(@cohort) %>
+        <div id="highestPositionSubmissionCollapse" class="collapse">
+          <div class="card-body">
+            <%= column_chart canvas_highest_position_submission_count_cohort_path(@cohort) %>
+          </div>
         </div>
       </div>
     </div>
@@ -38,69 +40,93 @@
   <div class="row mb-3">
     <div class="col-lg-12">
       <div class="card">
-        <div class="card-header">
-          <h2 class="h6 mb-0">Canvas: Total Points (most recent snapshot)</h2>
+        <div class="card-header" role="button" data-bs-toggle="collapse" href="#totalPointsCollapse" aria-expanded="false" aria-controls="totalPointsCollapse">
+          <h5 class="mb-0">Canvas: Total Points (most recent snapshot)</h5>
         </div>
-        <div class="card-body">
-          <%= column_chart canvas_point_total_most_recent_cohort_path(@cohort) %>
+        <div id="totalPointsCollapse" class="collapse">
+          <div class="card-body">
+            <%= column_chart canvas_point_total_most_recent_cohort_path(@cohort) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<!-- The "most recent submission by user" query on Blazer allows for sorting table columns -->
+<% if @most_recent_submission_by_student.any? %>
+  <div class="row mb-3">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header" role="button" data-bs-toggle="collapse" href="#mostRecentSubmissionCollapse" aria-expanded="false" aria-controls="mostRecentSubmissionCollapse">
+          <h5 class="mb-0">
+            Most Recent Submission by User
+          </h5>
+        </div>
+        <div id="mostRecentSubmissionCollapse" class="collapse">
+          <div class="card-body">
+            <div class="row mb-3">
+              <div class="col-lg-12">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Highest Assignment Name</th>
+                      <th>Highest Assignment Position</th>
+                      <th>Points</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% @most_recent_submission_by_student.each do |submission| %>
+                      <tr>
+                        <td><%= submission.name %></td>
+                        <td><%= submission.highest_assignment_name %></td>
+                        <td><%= submission.highest_assignment_position %></td>
+                        <td><%= submission.points %></td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 <% end %>
 
-<% if @cohort.canvas_shortname.include?("INTRO") %>
-  <h2>Inactive Enrollments</h2>
-  <div class="row my-2">
-    <div class="col-md-6">
-      <ul>
-        <% @inactive_enrollments.each_with_index do |enrollment, index| %>
-          <% if index.even? %>
-            <li><%= enrollment.full_name %></li>
-          <% end %>
-        <% end %>
-      </ul>
-    </div>
-    <div class="col-md-6">
-      <ul>
-        <% @inactive_enrollments.each_with_index do |enrollment, index| %>
-          <% if index.odd? %>
-            <li><%= enrollment.full_name %></li>
-          <% end %>
-        <% end %>
-      </ul>
-    </div>
-  </div>
-<% end %>
-
-
-<!-- Blazer renders this query with jQuery functionality to sort by different columns. Maybe we should just link to that instead? -->
-<% if @most_recent_submission_by_student.any? %>
+<% if policy(@cohort).inactive_enrollments? %>
   <div class="row mb-3">
     <div class="col-lg-12">
-      <h1 class="h2 mb-0">Most Recent Submission by User</h1>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Highest Assignment Name</th>
-            <th>Highest Assignment Position</th>
-            <th>Submission Date</th>
-            <th>Points</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @most_recent_submission_by_student.each do |submission| %>
-            <tr>
-              <td><%= submission.name %></td>
-              <td><%= submission.highest_assignment_name %></td>
-              <td><%= submission.highest_assignment_position %></td>
-              <td><%= submission.submission_date %></td>
-              <td><%= submission.points %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+      <div class="card">
+        <div class="card-header" role="button" data-bs-toggle="collapse" href="#inactiveEnrollmentsCollapse" aria-expanded="false" aria-controls="inactiveEnrollmentsCollapse">
+          <h5 class="mb-0">Students with no submissions in last 4 weeks</h5>
+        </div>
+        <div id="inactiveEnrollmentsCollapse" class="collapse">
+          <div class="card-body">
+            <div class="row my-2">
+              <div class="col-md-6">
+                <ul>
+                  <% @inactive_enrollments.each_with_index do |enrollment, index| %>
+                    <% if index.even? %>
+                      <li><%= enrollment.full_name %></li>
+                    <% end %>
+                  <% end %>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <ul>
+                  <% @inactive_enrollments.each_with_index do |enrollment, index| %>
+                    <% if index.odd? %>
+                      <li><%= enrollment.full_name %></li>
+                    <% end %>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 <% end %>
