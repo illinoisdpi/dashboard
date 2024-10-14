@@ -4,7 +4,7 @@ Rails.application.configure do
   config.hosts += ["news.dpi.local", "dashboard.dpi.local", "rfp.dpi.local"]
 
   # Settings specified here will take precedence over those in config/application.rb.
-  routes.default_url_options = {host: "localhost", port: 3000}
+  routes.default_url_options = {host: "dashboard.dpi.local", port: 3000}
 
   Bullet.enable = true
   Bullet.console = true

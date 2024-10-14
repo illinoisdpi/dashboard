@@ -9,7 +9,8 @@
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
         <% if policy(Impression).download_csv? %>
-          <%= link_to cohort_impressions_path(@cohort, format: :csv), class: 'btn btn-outline-primary me-2' do %>
+          <%# Using `to_unsafe_h` so we can handle ransack params %>
+          <%= link_to cohort_impressions_path(@cohort, format: :csv, q: params[:q]&.to_unsafe_h), class: 'btn btn-outline-primary me-2' do %>
             <i class="fa-solid fa-file-csv"></i>
           <% end %>
         <% end %>
