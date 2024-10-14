@@ -105,23 +105,12 @@
         <div id="inactiveEnrollmentsCollapse" class="collapse">
           <div class="card-body">
             <div class="row my-2">
-              <div class="col-md-6">
-                <ul>
-                  <% @inactive_enrollments.each_with_index do |enrollment, index| %>
-                    <% if index.even? %>
-                      <li><%= enrollment.full_name %></li>
-                    <% end %>
-                  <% end %>
-                </ul>
-              </div>
-              <div class="col-md-6">
-                <ul>
-                  <% @inactive_enrollments.each_with_index do |enrollment, index| %>
-                    <% if index.odd? %>
-                      <li><%= enrollment.full_name %></li>
-                    <% end %>
-                  <% end %>
-                </ul>
+              <div class="d-flex flex-wrap my-2">
+                <% @inactive_enrollments.each do |enrollment| %>
+                  <div class="col-md-3">
+                    <tr><%= enrollment.full_name %></tr>
+                  </div>
+                <% end %>
               </div>
             </div>
           </div>
@@ -129,4 +118,5 @@
       </div>
     </div>
   </div>
+</div>
 <% end %>
