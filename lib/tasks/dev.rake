@@ -38,7 +38,6 @@ namespace :dev do
         ap cohort
       end
 
-      headshot_images = Dir[Rails.root.join("lib", "tasks", "sample_data_images", "*.png")]
 
       sample_cohort_enrollment_file = ActionDispatch::Http::UploadedFile.new(
         tempfile: Rails.root.join("lib", "sample_data", "sample-cohort-enrollment.csv").open,

@@ -76,7 +76,7 @@
         </div>
         <div class="list-group list-group-flush">
           <% @articles.each do |article| %>
-            <%= link_to "#{article.url}?#{article.utm_params.to_query}", class: "list-group-item", target: "_blank" do %>
+            <%= link_to article.url_with_utm, class: "list-group-item", target: "_blank" do %>
               <div class="d-flex align-items-center">
                 <img class="news-avatar" src="<%= article.social_image %>">
                 <div class="me-auto">

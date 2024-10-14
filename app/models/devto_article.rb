@@ -22,15 +22,8 @@
 #  fk_rails_...  (author_id => users.id)
 #
 class DevtoArticle < ApplicationRecord
-  include Ransackable
+  include Ransackable, UTMTrackable
   belongs_to :author, class_name: "User"
-
-  def utm_params
-    {
-      utm_source: "news.dpi.dev"
-      # - other utm stuff as needed - #
-    }
-  end
 
   scope :default_order, -> { order(published_at: :desc) }
 end
