@@ -32,6 +32,6 @@ class UserPolicy < ApplicationPolicy
   end
 
   def search?
-    user.admin?
+    user.admin? || user.instructor? || user.teaching_assistant? || (record.is_a?(User) && user == record)
   end
 end

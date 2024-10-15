@@ -28,6 +28,7 @@ export default class extends Controller {
         })
         .then((html) => {
           Turbo.renderStreamMessage(html);
+          this.toggleListVisibility();
           this.optionsListTarget.style.display = 'block';
           this.overlayTarget.style.display = 'block';
         })
@@ -47,7 +48,6 @@ export default class extends Controller {
     if (optionElement) {
       this.inputFieldTarget.value = optionElement.dataset.userName;
       this.hiddenFieldTarget.value = optionElement.dataset.userId;
-      this.toggleListVisibility();
       this.inputFieldTarget.blur();
     }
   }
