@@ -78,7 +78,7 @@ class Enrollment < ApplicationRecord
 
   scope :recent_gradebook_snapshot, ->(cohort) {
           joins(canvas_submissions: :canvas_gradebook_snapshot)
-            .where("canvas_gradebook_snapshots.cohort_id = ?", cohort.id)
+            .where(canvas_gradebook_snapshots: { cohort_id: cohort.id })
             .where("canvas_gradebook_snapshots.created_at = (
       SELECT MAX(created_at)
       FROM canvas_gradebook_snapshots
