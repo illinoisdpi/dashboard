@@ -15,7 +15,7 @@ class Cohort::ImpressionsController < ApplicationController
     @impressions = @q.result.default_order
 
     respond_to do |format|
-      format.html { @impressions = @impressions.page(params[:page]) }
+      format.html { @impressions = @impressions.page(params[:page]).per(params[:per_page] || 10) }
       format.csv { send_data(Impression.to_csv(@impressions), filename: csv_filename, type: "text/csv") }
     end
   end
