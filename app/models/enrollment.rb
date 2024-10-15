@@ -84,7 +84,7 @@ class Enrollment < ApplicationRecord
       FROM canvas_gradebook_snapshots
       WHERE canvas_gradebook_snapshots.cohort_id = ?
       )", cohort.id)
-    }
+  }
 
   scope :with_recent_canvas_points, ->(cohort) {
     with_user_info
