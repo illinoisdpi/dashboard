@@ -52,7 +52,7 @@
 class Enrollment < ApplicationRecord
   include Adminable, Endorsable, Ransackable
 
-  has_paper_trail skip: [:created_at, :updated_at]
+  has_paper_trail skip: [ :created_at, :updated_at ]
 
   belongs_to :user
   belongs_to :cohort
@@ -65,34 +65,34 @@ class Enrollment < ApplicationRecord
   scope :student, -> { where(role: "student") }
   scope :not_student, -> { where.not(role: "student") }
   scope :filter_by_name, ->(name) {
-          joins(:user)
-            .where("CONCAT(users.first_name, ' ', users.last_name) ILIKE ?", "%#{name}%")
-            .order("enrollments.created_at DESC")
-            .includes(:user)
-        }
+    joins(:user)
+      .where("CONCAT(users.first_name, ' ', users.last_name) ILIKE ?", "%#{name}%")
+      .order("enrollments.created_at DESC")
+      .includes(:user)
+    }
 
   scope :with_user_info, -> {
           joins(:user)
             .select("enrollments.id, enrollments.cohort_id, users.id AS user_id, users.first_name, users.last_name")
-        }
+    }
 
   scope :recent_gradebook_snapshot, ->(cohort) {
-          joins(canvas_submissions: :canvas_gradebook_snapshot)
-            .where(canvas_gradebook_snapshots: { cohort_id: cohort.id })
-            .where("canvas_gradebook_snapshots.created_at = (
+    joins(canvas_submissions: :canvas_gradebook_snapshot)
+      .where("canvas_gradebook_snapshots.cohort_id = ?", cohort.id)
+      .where("canvas_gradebook_snapshots.created_at = (
       SELECT MAX(created_at)
       FROM canvas_gradebook_snapshots
       WHERE canvas_gradebook_snapshots.cohort_id = ?
     )", cohort.id)
-        }
+    }
 
   scope :with_recent_canvas_points, ->(cohort) {
-          with_user_info
-            .recent_gradebook_snapshot(cohort)
-            .select("enrollments.id, users.id AS user_id, users.first_name, users.last_name, SUM(canvas_submissions.points) AS total_points")
-            .group("enrollments.id, users.id, users.first_name, users.last_name")
-            .order("total_points DESC")
-        }
+    with_user_info
+      .recent_gradebook_snapshot(cohort)
+      .select("enrollments.id, users.id AS user_id, users.first_name, users.last_name, SUM(canvas_submissions.points) AS total_points")
+      .group("enrollments.id, users.id, users.first_name, users.last_name")
+      .order("total_points DESC")
+    }
 
   scope :most_recent_user_submissions, ->(cohort_id) {
           select(
@@ -108,21 +108,21 @@ class Enrollment < ApplicationRecord
             .joins(:user)
             .where("canvas_submissions.points > 0 AND enrollments.cohort_id = ?", cohort_id)
             .order("enrollments.user_id, canvas_assignments.position DESC")
-        }
+    }
 
   scope :with_user_details, -> {
-          joins(:user)
-            .select("enrollments.user_id, users.id, users.first_name || ' ' || users.last_name AS full_name")
-            .group("enrollments.user_id, users.id, users.first_name, users.last_name")
-            .order("full_name ASC")
-        }
+    joins(:user)
+      .select("users.id, users.first_name || ' ' || users.last_name AS full_name")
+      .group("users.id, users.first_name, users.last_name")
+      .order("full_name ASC")
+    }
 
   scope :inactive_since, ->(date) {
-          left_joins(:canvas_submissions)
-            .where(role: "student")
-            .where("canvas_submissions.id IS NULL OR (canvas_submissions.points <= 0 AND canvas_submissions.created_at < ?)", date)
-        }
-
+        left_joins(:canvas_submissions)
+          .where(role: "student")
+          .where("canvas_submissions.id IS NULL OR (canvas_submissions.points <= 0 AND canvas_submissions.created_at < ?)", date)
+    }
+    
   def total_points
     canvas_submissions.sum(:points)
   end
