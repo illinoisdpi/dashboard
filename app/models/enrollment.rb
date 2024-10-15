@@ -94,21 +94,21 @@ class Enrollment < ApplicationRecord
       .order("total_points DESC")
     }
 
-  scope :most_recent_user_submissions, ->(cohort_id) {
-          select(
-            "DISTINCT ON (enrollments.user_id)
-     users.first_name || ' ' || users.last_name AS name,
-     users.email,
-     canvas_assignments.name AS highest_assignment_name,
-     DATE(canvas_submissions.created_at) AS submission_date,
-     MAX(canvas_assignments.position) OVER (PARTITION BY enrollments.user_id) AS highest_assignment_position,
-     canvas_submissions.points"
-          )
-            .joins(canvas_submissions: :canvas_assignment)
-            .joins(:user)
-            .where("canvas_submissions.points > 0 AND enrollments.cohort_id = ?", cohort_id)
-            .order("enrollments.user_id, canvas_assignments.position DESC")
-    }
+  scope :with_most_recent_canvas_submission, ->(cohort_id) {
+    select(
+      "DISTINCT ON (enrollments.user_id)
+       users.first_name || ' ' || users.last_name AS name,
+       users.email,
+       canvas_assignments.name AS highest_assignment_name,
+       DATE(canvas_submissions.created_at) AS submission_date,
+       MAX(canvas_assignments.position) OVER (PARTITION BY enrollments.user_id) AS highest_assignment_position,
+       canvas_submissions.points"
+    )
+    .joins(canvas_submissions: :canvas_assignment)
+    .joins(:user)
+    .where("canvas_submissions.points > 0 AND enrollments.cohort_id = ?", cohort_id)
+    .order("enrollments.user_id, canvas_assignments.position DESC")
+  }
 
   scope :with_user_details, -> {
     joins(:user)
