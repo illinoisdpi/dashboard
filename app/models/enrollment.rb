@@ -69,12 +69,12 @@ class Enrollment < ApplicationRecord
       .where("CONCAT(users.first_name, ' ', users.last_name) ILIKE ?", "%#{name}%")
       .order("enrollments.created_at DESC")
       .includes(:user)
-    }
+  }
 
   scope :with_user_info, -> {
     joins(:user)
       .select("enrollments.id, enrollments.cohort_id, users.id AS user_id, users.first_name, users.last_name")
-    }
+  }
 
   scope :recent_gradebook_snapshot, ->(cohort) {
     joins(canvas_submissions: :canvas_gradebook_snapshot)
@@ -83,7 +83,7 @@ class Enrollment < ApplicationRecord
       SELECT MAX(created_at)
       FROM canvas_gradebook_snapshots
       WHERE canvas_gradebook_snapshots.cohort_id = ?
-    )", cohort.id)
+      )", cohort.id)
     }
 
   scope :with_recent_canvas_points, ->(cohort) {
