@@ -72,13 +72,13 @@ class Enrollment < ApplicationRecord
     }
 
   scope :with_user_info, -> {
-          joins(:user)
-            .select("enrollments.id, enrollments.cohort_id, users.id AS user_id, users.first_name, users.last_name")
+    joins(:user)
+      .select("enrollments.id, enrollments.cohort_id, users.id AS user_id, users.first_name, users.last_name")
     }
 
   scope :recent_gradebook_snapshot, ->(cohort) {
     joins(canvas_submissions: :canvas_gradebook_snapshot)
-      .where("canvas_gradebook_snapshots.cohort_id = ?", cohort.id)
+      .where(canvas_gradebook_snapshots: { cohort_id: cohort.id })
       .where("canvas_gradebook_snapshots.created_at = (
       SELECT MAX(created_at)
       FROM canvas_gradebook_snapshots
@@ -122,7 +122,7 @@ class Enrollment < ApplicationRecord
           .where(role: "student")
           .where("canvas_submissions.id IS NULL OR (canvas_submissions.points <= 0 AND canvas_submissions.created_at < ?)", date)
     }
-    
+
   def total_points
     canvas_submissions.sum(:points)
   end
