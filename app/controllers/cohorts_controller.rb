@@ -19,7 +19,7 @@ class CohortsController < ApplicationController
     ]
 
     @inactive_enrollments = @cohort.enrollments.inactive_since(4.weeks.ago).with_user_details
-    @most_recent_submission_by_student = Enrollment.most_recent_user_submissions(@cohort.id)
+    @most_recent_submission_by_student = @cohort.enrollments.with_most_recent_canvas_submission(@cohort.id)
   end
 
   # GET /cohorts/new
