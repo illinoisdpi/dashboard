@@ -1,12 +1,18 @@
 require 'rails_helper'
+require 'smarter_csv'
 
 RSpec.describe CanvasGradebookSnapshot, type: :model do
   describe '#process_csv' do
     let(:cohort) { create(:cohort) }
-    let(:csv_file) { fixture_file_upload('spec/fixtures/Test-WE-2020-9.1-INTRO.csv', 'text/csv') }
+    let(:csv_file_path) { Rails.root.join('spec/fixtures/Test-WE-2020-9.1-INTRO.csv') }
+    let(:csv_file) { fixture_file_upload(csv_file_path, 'text/csv') }
     let(:snapshot) { build(:canvas_gradebook_snapshot, cohort: cohort, csv_file: csv_file) }
 
+    # Process the CSV file to use its actual data
+    let(:mock_csv_data) { SmarterCSV.process(csv_file_path) }
+
     before do
+      # Mock SmarterCSV's behavior with the actual data from the CSV
       allow(SmarterCSV).to receive(:process).and_return(mock_csv_data)
     end
 
