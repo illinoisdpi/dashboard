@@ -57,8 +57,8 @@ namespace :dev do
           strengths: Array.new(3) { Faker::Superhero.power }.to_sentence,
           education: Faker::Educator.degree,
           fun_fact: Faker::Lorem.sentence(word_count: 10),
-          first_name: row.fetch(:name).split(' ').at(0),
-          last_name: row.fetch(:name).split(' ').at(1),
+          first_name: row.fetch(:name).split(" ").at(0),
+          last_name: row.fetch(:name).split(" ").at(1),
           one_liner: "Passionate professional with expertise in #{Faker::Job.title}.",
           skills_and_projects: Array.new(3) { Faker::ProgrammingLanguage.unique.name }.to_sentence
         )
@@ -102,7 +102,12 @@ namespace :dev do
           ap enrollment
         end
 
-        user.devto_articles.create(title: Faker::Book.title, description: Faker::Lorem.sentence, published_at: Faker::Time.between(from: DateTime.now - 365, to: DateTime.now))
+        user.devto_articles.create(
+          title: Faker::Book.title,
+          description: Faker::Lorem.sentence,
+          published_at: Faker::Time.between(from: DateTime.now - 365, to: DateTime.now),
+          social_image: Faker::Avatar.image(set: "set2", bgset: "bg1")
+        )
 
         User.with_role(:admin).each do |admin|
           5.times do |i|
@@ -114,7 +119,7 @@ namespace :dev do
               created_at: rand(1..5).week.ago
             )
           end
-        end  
+        end
       end
 
       cohort_start_date = Date.parse("2023-01-30")
