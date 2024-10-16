@@ -52,7 +52,7 @@
     </div>
   </div>
 <% end %>
-<!-- The "most recent submission by user" query on Blazer allows for sorting table columns -->
+<!-- TODO: figure out why column widths change on sort but stop when viewport is resized -->
 <% if @most_recent_submission_by_student.any? %>
   <div class="row mb-3">
     <div class="col-lg-12">
@@ -64,30 +64,26 @@
         </div>
         <div id="mostRecentSubmissionCollapse" class="collapse">
           <div class="card-body">
-            <div class="row mb-3">
-              <div class="col-lg-12">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Highest Assignment Name</th>
-                      <th>Highest Assignment Position</th>
-                      <th>Points</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <% @most_recent_submission_by_student.each do |submission| %>
-                      <tr>
-                        <td><%= submission.name %></td>
-                        <td><%= submission.highest_assignment_name %></td>
-                        <td><%= submission.highest_assignment_position %></td>
-                        <td><%= submission.points %></td>
-                      </tr>
-                    <% end %>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            <table class="display" id="submissionsTable" data-controller="submissions-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Highest Assignment Name</th>
+                  <th>Highest Assignment Position</th>
+                  <th>Points</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @most_recent_submission_by_student.each do |submission| %>
+                  <tr>
+                    <td><%= submission.name %></td>
+                    <td><%= submission.highest_assignment_name %></td>
+                    <td><%= submission.highest_assignment_position %></td>
+                    <td><%= submission.points %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
