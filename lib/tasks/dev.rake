@@ -38,7 +38,6 @@ namespace :dev do
         ap cohort
       end
 
-
       sample_cohort_enrollment_file = ActionDispatch::Http::UploadedFile.new(
         tempfile: Rails.root.join("lib", "sample_data", "sample-cohort-enrollment.csv").open,
         filename: "sample-cohort-enrollment.csv",

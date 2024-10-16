@@ -1,4 +1,4 @@
-module DevtoArticle::UTMTrackable
+module DevtoArticle::UtmTrackable
   extend ActiveSupport::Concern
 
   def utm_params
