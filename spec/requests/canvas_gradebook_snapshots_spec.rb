@@ -11,18 +11,24 @@ RSpec.describe CanvasGradebookSnapshot, type: :model do
 
     let(:mock_csv_data) { SmarterCSV.process(csv_file_path) }
 
+    let(:header_row) { mock_csv_data.first.keys }
+    let(:assignment_columns) do
+      header_row.select do |column|
+        column.to_s.match(/\(\d{4}\)$/)
+      end
+    end
+
+    let(:expected_assignments_count) { assignment_columns.count }
+    let(:expected_users_count) { mock_csv_data.map { |row| row[:sis_login_id] }.compact.uniq.count }
+    let(:expected_submissions_count) { expected_users_count * expected_assignments_count }
+
     before do
       allow(SmarterCSV).to receive(:process).and_return(mock_csv_data)
     end
 
-    let(:expected_users_count) { mock_csv_data.map { |row| row[:sis_login_id] }.compact.uniq.count }
-    let(:expected_assignments_count) { mock_csv_data.first.keys.count { |key| key.to_s.start_with?('assignment') } }
-    let(:expected_submissions_count) { expected_users_count * expected_assignments_count }
-
     it 'saves the assignments, enrollments, and submissions correctly' do
-      snapshot.save
 
-      expect(CanvasAssignment.count).to eq(expected_assignments_count) 
+      expect(CanvasAssignment.count).to eq(expected_assignments_count)
       expect(User.count).to eq(expected_users_count)
       expect(CanvasSubmission.count).to eq(expected_submissions_count)
     end
