@@ -52,13 +52,14 @@
 class Enrollment < ApplicationRecord
   include Adminable, Endorsable, Ransackable
 
-  has_paper_trail skip: [:created_at, :updated_at]
+  has_paper_trail skip: [ :created_at, :updated_at ]
 
   belongs_to :user
   belongs_to :cohort
   has_many :piazza_activity_breakdowns, dependent: :destroy
   has_many :canvas_submissions, dependent: :destroy
   has_many :impressions, foreign_key: "subject_id", dependent: :destroy
+  has_many :canvas_assignments, through: :canvas_submissions
 
   scope :default_order, -> { joins(:user).order(User.arel_table[:first_name].asc) }
   scope :student, -> { where(role: "student") }
@@ -69,26 +70,58 @@ class Enrollment < ApplicationRecord
       .order("enrollments.created_at DESC")
       .includes(:user)
   }
+
   scope :with_user_info, -> {
     joins(:user)
       .select("enrollments.id, enrollments.cohort_id, users.id AS user_id, users.first_name, users.last_name")
   }
+
   scope :recent_gradebook_snapshot, ->(cohort) {
     joins(canvas_submissions: :canvas_gradebook_snapshot)
-      .where("canvas_gradebook_snapshots.cohort_id = ?", cohort.id)
-      .where('canvas_gradebook_snapshots.created_at = (
+      .where(canvas_gradebook_snapshots: { cohort_id: cohort.id })
+      .where("canvas_gradebook_snapshots.created_at = (
       SELECT MAX(created_at)
       FROM canvas_gradebook_snapshots
       WHERE canvas_gradebook_snapshots.cohort_id = ?
-    )', cohort.id)
+      )", cohort.id)
   }
+
   scope :with_recent_canvas_points, ->(cohort) {
     with_user_info
       .recent_gradebook_snapshot(cohort)
       .select("enrollments.id, users.id AS user_id, users.first_name, users.last_name, SUM(canvas_submissions.points) AS total_points")
       .group("enrollments.id, users.id, users.first_name, users.last_name")
       .order("total_points DESC")
+    }
+
+  scope :with_most_recent_canvas_submission, ->(cohort_id) {
+    select(
+      "DISTINCT ON (enrollments.user_id)
+       users.first_name || ' ' || users.last_name AS name,
+       users.email,
+       canvas_assignments.name AS highest_assignment_name,
+       DATE(canvas_submissions.created_at) AS submission_date,
+       MAX(canvas_assignments.position) OVER (PARTITION BY enrollments.user_id) AS highest_assignment_position,
+       canvas_submissions.points"
+    )
+    .joins(canvas_submissions: :canvas_assignment)
+    .joins(:user)
+    .where("canvas_submissions.points > 0 AND enrollments.cohort_id = ?", cohort_id)
+    .order("enrollments.user_id, canvas_assignments.position DESC")
   }
+
+  scope :with_user_details, -> {
+    joins(:user)
+      .select("users.id, users.first_name || ' ' || users.last_name AS full_name")
+      .group("users.id, users.first_name, users.last_name")
+      .order("full_name ASC")
+    }
+
+  scope :inactive_since, ->(date) {
+        left_joins(:canvas_submissions)
+          .where(role: "student")
+          .where("canvas_submissions.id IS NULL OR (canvas_submissions.points <= 0 AND canvas_submissions.created_at < ?)", date)
+    }
 
   def total_points
     canvas_submissions.sum(:points)
