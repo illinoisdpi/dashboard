@@ -5,6 +5,7 @@
 #  id           :uuid             not null, primary key
 #  description  :text
 #  published_at :datetime
+#  social_image :string
 #  title        :string
 #  url          :string
 #  created_at   :datetime         not null
@@ -21,8 +22,7 @@
 #  fk_rails_...  (author_id => users.id)
 #
 class DevtoArticle < ApplicationRecord
-  include Ransackable
-
+  include Ransackable, UtmTrackable
   belongs_to :author, class_name: "User"
 
   scope :default_order, -> { order(published_at: :desc) }
