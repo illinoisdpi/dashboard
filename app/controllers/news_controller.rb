@@ -4,17 +4,9 @@ class NewsController < ApplicationController
   before_action { authorize(:news) }
 
   def index
-    if params[:search_type].present? && params[:query].present?
-      search_field = params[:search_type]
-      search_query = params[:query]
-      @q = policy_scope(DevtoArticle).ransack(search_field => search_query)
-    else
-      @q = policy_scope(DevtoArticle).ransack(params[:q])
-    end
-  
-    @articles = @q.result.includes(:author).default_order.page(params[:page])
+    @q = policy_scope(DevtoArticle).page(params[:page]).ransack(params[:q])
+    @articles = @q.result.includes(:author).default_order
   end
-  
 
   def rss
     @articles = policy_scope(DevtoArticle).default_order.take(50)

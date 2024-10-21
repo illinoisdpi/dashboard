@@ -3,24 +3,22 @@
   <div class="col">
     <div class="card mb-2">
       <div class="card-header">
-        <%= form_with url: news_root_path, method: :get, class: "d-flex align-items-center" do %>
-
-          <div class="input-group mb-4 flex-grow-1 me-2">
-            <%= text_field_tag :query, params[:query], placeholder: "Enter your search", class: "form-control" %>
-
-            <select class="form-select" name="search_type">
-              <option value="title_or_description_cont">Topic</option>
-              <option value="author_first_name_or_author_last_name_cont">Author</option>
-            </select>
+        <%= search_form_for(@q, url: news_root_path, class: "row") do |f| %>
+          <div class="form-floating col-6 mb-2">
+            <%# TODO: add devto tags for better filtering %>
+            <%= f.text_field :title_or_description_cont, placeholder: "Enter a few characters", class: "form-control" %>
+            <%= f.label :title_or_description_cont, "Topic", class: "ps-3" %>
           </div>
 
-          <button class="btn btn-outline-primary me-2 d-flex align-items-center" type="submit" >
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </button>
+          <div class="form-floating col-6 mb-2">
+            <%= f.text_field :author_first_name_or_author_last_name_cont, placeholder: "Enter author name", class: "form-control" %>
+            <%= f.label :author_first_name_or_author_last_name_cont, "Author", class: "ps-3" %>
+          </div>
 
-          <%= link_to news_root_path, class: "btn btn-outline-secondary d-flex align-items-center" do %>
-            <i class="fa-solid fa-xmark"></i>
-          <% end %>
+          <div class="d-flex align-items-center">
+            <%= f.submit :class => "btn btn-primary d-flex" %>
+            <%= link_to "Clear filter", news_root_path, class: "ms-2" %>
+          </div>
 
         <% end %>
       </div>
