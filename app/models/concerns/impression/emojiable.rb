@@ -43,7 +43,7 @@ module Impression::Emojiable
   %i[positive negative].each do |sentiment|
     define_singleton_method("#{sentiment}_emojis") do
       EMOJIS.keys.filter do |emoji|
-        EMOJIS.dig(emoji.to_sym, sentiment) == sentiment
+        EMOJIS[emoji][:sentiment] == sentiment
       end
     end
   end
