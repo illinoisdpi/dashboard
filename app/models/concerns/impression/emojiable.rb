@@ -36,14 +36,14 @@ module Impression::Emojiable
 
   %i[category description sentiment].each do |attribute|
     define_method("emoji_#{attribute}") do
-      EMOJIS.dig(:emoji, :attribute) || "Unknown #{attribute.capitalize}"
+      EMOJIS.dig(emoji.to_sym, attribute) || "Unknown #{attribute.capitalize}"
     end
   end
 
   %i[positive negative].each do |sentiment|
     define_singleton_method("#{sentiment}_emojis") do
       EMOJIS.keys.filter do |emoji|
-        EMOJIS.dig(:emoji, :sentiment) == sentiment
+        EMOJIS.dig(emoji.to_sym, sentiment) == sentiment
       end
     end
   end
