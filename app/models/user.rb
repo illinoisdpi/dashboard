@@ -57,7 +57,7 @@ class User < ApplicationRecord
 
   # Search for users by first name or last name
   scope :search_by_name, ->(name) {
-    where("first_name ILIKE :name OR last_name ILIKE :name", name: "%#{name}%")
+    where("first_name ILIKE :name OR last_name ILIKE :name", name: name)
   }
 
   def to_s
