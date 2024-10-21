@@ -2,7 +2,7 @@ module Impression::Emojiable
   extend ActiveSupport::Concern
 
   included do
-    validates :emoji, presence: true, inclusion: { in: EMOJIS.keys, message: "%{value} is not a valid emoji" }
+    validates :emoji, presence: true, inclusion: { in: EMOJIS.keys.map(&:to_s), message: "%{value} is not a valid emoji" }
   end
 
   EMOJIS = {
