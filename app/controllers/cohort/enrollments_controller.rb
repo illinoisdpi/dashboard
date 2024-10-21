@@ -37,7 +37,7 @@ class Cohort::EnrollmentsController < ApplicationController
 
   # GET /enrollments/1/edit
   def edit
-        @breadcrumbs = [
+    @breadcrumbs = [
       {content: "Cohorts", href: cohorts_path},
       {content: @cohort.to_s, href: cohort_path(@cohort)},
       {content: "Enrollments", href: cohort_enrollments_path(@cohort)},

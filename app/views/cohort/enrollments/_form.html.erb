@@ -17,27 +17,26 @@
     </div>
   <% end %>
 
-<% if policy(@enrollment).edit_user? %>
-  <div data-controller="search-user">
-    <div data-search-user-target="overlay" 
+  <% if @enrollment.new_record? %>
+    <div data-controller="search-user">
+      <div data-search-user-target="overlay" 
          data-action="touchstart->search-user#toggleListVisibility click->search-user#toggleListVisibility" 
-      class="options-list-overlay">
-    </div>
-    <div class="mb-3">
-      <%= form.label :user_id, class: "form-label" %>
-      <%= form.hidden_field :user_id, value: @enrollment.user_id, data: { search_user_target: "hiddenField" } %>
-      <input 
+        class="options-list-overlay">
+      </div>
+      <div class="mb-3">
+        <%= form.label :user_id, class: "form-label" %>
+        <%= form.hidden_field :user_id, value: @enrollment.user_id, data: { search_user_target: "hiddenField" } %>
+        <input 
         type="search"  
         data-search-user-target="inputField"
         data-action="input->search-user#search click->search-user#search" 
         class="form-control"
         placeholder="Search for a user by name..."
         value="<%= @enrollment.user_id.present? ? User.find(@enrollment.user_id).full_name : '' %>">
-      <div id="search" data-search-user-target="optionsList" style="display: none" class="options-list"></div>
+        <div id="search" data-search-user-target="optionsList" style="display: none" class="options-list"></div>
+      </div>
     </div>
-  </div>
-<% end %>
-
+  <% end %>
 
   <div>
     <%= form.submit class: "btn btn-primary" %>
