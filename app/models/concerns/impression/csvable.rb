@@ -5,6 +5,7 @@ module Impression::Csvable
     def to_csv(impressions)
       headers = [
         "Created At",
+        "Emoji",
         "Sentiment",
         "Category",
         "Description",
@@ -22,6 +23,7 @@ module Impression::Csvable
         impressions.each do |impression|
           csv << [
             impression.created_at.strftime("%c"),
+            impression.emoji,
             impression.emoji_sentiment,
             impression.emoji_category,
             impression.emoji_description,
