@@ -14,7 +14,9 @@ module User::Ransackable
     end
 
     def ransackable_associations(auth_object = nil)
-      []
+      [
+        "user"
+      ]
     end
   end
 end
