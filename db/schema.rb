@@ -146,6 +146,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_23_210950) do
     t.uuid "author_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "social_image"
     t.index ["author_id"], name: "index_devto_articles_on_author_id"
   end
 

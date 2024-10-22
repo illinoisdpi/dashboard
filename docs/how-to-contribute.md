@@ -14,15 +14,20 @@
 3. Create a pull request in GitHub including "resolves"
 4. Pushing the tip commit to main closes the PR and the Issue.
 
+## Pull Request Review
+
+The `.github/CODEOWNERS` file specifies who can approve pull requests. Please have a fellow technical associate review your pull request before getting final approval from @DPI-PTTL/tech-leads.
 
 ## Credentials
 
 Get the `config/credentials/development.key` from the team lead.
 
 ### Show
+
 `rails credentials:show --environment development`
 
 ### Edit
+
 `EDITOR="code --wait" rails credentials:edit --environment development`
 
 This will create `config/credentials/development.yml.enc` and `config/credentials/development.key` unless they already exist.
@@ -30,6 +35,7 @@ This will create `config/credentials/development.yml.enc` and `config/credential
 Same for `production` (just swap --environment)
 
 ## Sidekiq
+
 Here's what you'll need to work with jobs in your development environment.
 
 1. Install redis on your dev machine `brew install redis`
@@ -38,12 +44,9 @@ Here's what you'll need to work with jobs in your development environment.
 
 You can access the sidekiq web ui at /sidekiq (if you have admin role)
 
-
 ## Subdomains
 
 Add this to your `/etc/hosts` file so you can access subdomains in your dev environment.
-WSL users: if your browser is installed on Windows, the hosts file will be at `\Windows\System32\drivers\etc`
-           if your browser is installed on the Linux subsystem, `\etc\` is at the root of the Linux directory, but you may need to edit `\etc\wsl.conf` to ensure that changes to the `hosts` file will persist.
 
 ```
 127.0.0.1 news.dpi.local
@@ -52,21 +55,26 @@ WSL users: if your browser is installed on Windows, the hosts file will be at `\
 127.0.0.1 outcomes.dpi.local
 ```
 
+### WSL (Windows Subsystem for Linux)
+
+- if your browser is installed on Windows, the hosts file will be at `\Windows\System32\drivers\etc`
+- if your browser is installed on the Linux subsystem, `\etc\` is at the root of the Linux directory, but you may need to edit `\etc\wsl.conf` to ensure that changes to the `hosts` file will persist.
+
 ## PostgreSQL
 
-Here's what you'll need to do to install PostgresQL. 
+Here's what you'll need to do to install PostgresQL.
 
 1. Install PostgreSQL using Homebrew: `brew install postgresql`
 2. Start PostgreSQL service: `brew services start postgresql`
 
-  *Note - Mac users may need to run this command before starting the PostgreSQL service:*
+_Note - Mac users may need to run this command before starting the PostgreSQL service:_
 
 `bundle config build.pg --with-pg-config=/opt/homebrew/opt/libpq/bin/pg_config`
 
 Some options for GUI PostgreSQL clients on Mac:
+
 - [Postgres.app](https://postgresapp.com/)
 - [Postico](https://eggerapps.at/postico/v1.php)
-
 
 ## Sample data
 

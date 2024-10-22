@@ -1,6 +1,7 @@
 class ImpressionPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
+      # TODO: Change to limit to cohort_ for TA and staff
       if user.admin? || user.instructor?
         scope.all
       else
@@ -13,8 +14,9 @@ class ImpressionPolicy < ApplicationPolicy
     user.admin? || user.instructor? || user.teaching_assistant? || user.staff?
   end
 
+  # TODO: Change to limit to cohort_
   def show?
-    user.admin? || user.instructor? || (record.is_a?(Impression) && user == record.author)
+    user.admin? || user.instructor? || (record.is_a?(Impression) && user == record.author) || user.teaching_assistant? || user.staff?
   end
 
   def create?
@@ -37,8 +39,9 @@ class ImpressionPolicy < ApplicationPolicy
     user.admin? || (record.is_a?(Impression) && user == record.author)
   end
 
+  # TODO: Change to limit to cohort_
   def download_csv?
-    user.admin? || user.instructor?
+    user.admin? || user.instructor? || user.teaching_assistant? || user.staff?
   end
 
   def search?

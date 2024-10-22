@@ -25,14 +25,17 @@
 
       <div class="list-group list-group-flush">
         <% @articles.each do |article| %>
-         <%= link_to article.url, class: "list-group-item", target: "_blank" do %>
-            <div class="d-flex align-items-center">
-              <div class="me-auto">
+          <%= link_to article.url_with_utm, class: "list-group-item", target: "_blank" do %>
+            <div class="row align-items-center">
+              <div class="col-3 col-sm-2 col-xxl-1">
+                <img class="img-thumbnail rounded-circle" src="<%= article.social_image %>">
+              </div>
+              <div class="col-8 col-sm-9 col-xxl-10">
                 <h5><%= article.title %></h5>
                 <div>By <%= article.author %></div>
                 <small class="text-secondary">Published on <%= article.published_at.strftime("%Y-%m-%d") %></small>
               </div>
-              <div>
+              <div class="col-1">
                 <i class="fa-solid fa-chevron-right fa-fw"></i>
               </div>
             </div>
@@ -40,6 +43,6 @@
         <% end %>
       </div>
     </div>
-    <%= paginate @articles, theme: 'bootstrap-5', nav_class: "d-flex my-2", pagination_class: "mx-auto" %>
+    <%= paginate @articles, theme: 'bootstrap-5', nav_class: "d-flex my-2", pagination_class: "flex-wrap" %>
   </div>
 </div>
