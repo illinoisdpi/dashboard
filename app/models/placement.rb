@@ -14,6 +14,8 @@
 #  user_id            :uuid
 #
 class Placement < ApplicationRecord
+  include Ransackable
+
   belongs_to :user
 
   belongs_to :company

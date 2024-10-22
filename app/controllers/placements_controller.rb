@@ -6,6 +6,8 @@ class PlacementsController < ApplicationController
   def index
     @placements = Placement.all
     @user = current_user
+    @q = policy_scope(Placement).page(params[:page]).ransack(params[:q])
+    @placements = @q.result.includes(:user)
   end
 
   # GET /placements/1

@@ -11,6 +11,7 @@
 #  updated_at :datetime         not null
 #
 class Company < ApplicationRecord
+  include Ransackable
   has_many :job_descriptions
 
   has_many :placements, dependent: :nullify

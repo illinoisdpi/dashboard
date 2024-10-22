@@ -11,6 +11,7 @@
 #  company_id    :uuid
 #
 class JobDescription < ApplicationRecord
+  include Ransackable
   belongs_to :company
 
   has_many :placements, dependent: :nullify

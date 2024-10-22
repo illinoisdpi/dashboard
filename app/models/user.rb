@@ -45,8 +45,6 @@ class User < ApplicationRecord
   has_paper_trail skip: [:created_at, :updated_at]
 
   rolify
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :recoverable, :rememberable, :validatable, :registerable
 
   has_many :enrollments, dependent: :destroy
