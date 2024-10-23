@@ -1,14 +1,13 @@
 class PlacementsController < ApplicationController
   layout "outcomes"
   skip_before_action :authenticate_user!
-  skip_after_action :verify_policy_scoped
   before_action { authorize(:placement) }
-  def index
-    @placements = Placement.all
-    @user = current_user
-    @q = policy_scope(Placement).page(params[:page]).ransack(params[:q])
-    @placements = @q.result.includes(:user)
-  end
+
+def index
+  @q = policy_scope(Placement).page(params[:page]).ransack(params[:q])
+  @placements = @q.result.includes(:user, :job_description, :company).default_order
+end
+
 
   # GET /placements/1
   def show

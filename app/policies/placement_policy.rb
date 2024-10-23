@@ -1,6 +1,6 @@
 class PlacementPolicy < ApplicationPolicy
   def index?
-    true
+    user.admin? || user.instructor? || user.teaching_assistant? || user.staff?
   end
 
   def show?
@@ -25,5 +25,9 @@ class PlacementPolicy < ApplicationPolicy
 
   def destroy?
     user.admin?
+  end
+
+  def search?
+    true
   end
 end

@@ -1,52 +1,51 @@
 <%= render "navbar" %>
-<div class="row my-2"></div>
-<div class="col"></div>
-<div class="card mb-2">
-  <div class="card-header">
-    <%= search_form_for(@q, url: placements_root_url, class: "row") do |f| %>
-      <div class="form-floating col-4 mb-2">
-        <%= f.text_field :job_description_title_cont, placeholder: "Enter a few characters", class: "form-control" %>
-        <%= f.label :job_description_title_cont, "Job Title", class: "ps-4" %>
+<div class="row my-2">
+  <div class="col">
+    <div class="card mb-2">
+      <div class="card-header">
+        <%= search_form_for(@q, url: placements_root_path, class: "row") do |f| %>
+          <div class="form-floating col-4 mb-2">
+            <%= f.text_field :job_description_title_cont, placeholder: "Enter a few characters", class: "form-control" %>
+            <%= f.label :job_description_title_cont, "Job Title", class: "ps-4" %>
+          </div>
+
+          <div class="form-floating col-4 mb-2">
+            <%= f.text_field :user_first_name_or_user_last_name_cont, placeholder: "Enter a name", class: "form-control" %>
+            <%= f.label :user_first_name_or_user_last_name_cont, "Name", class: "ps-4" %>
+          </div>
+
+          <div class="form-floating col-4 mb-2">
+            <%= f.text_field :company_name_cont, placeholder: "Enter a company", class: "form-control" %>
+            <%= f.label :company_name_cont, "Company name", class: "ps-4" %>
+          </div>
+
+          <div class="d-flex align-items-center">
+            <%= f.submit :class => "btn btn-primary d-flex" %>
+            <%= link_to "Clear filter", placements_root_path, class: "ms-2" %>
+          </div>
+        <% end %>
       </div>
 
-      <div class="form-floating col-4 mb-2">
-        <%= f.text_field :user_first_name_or_user_last_name, placeholder: "Enter a name", class: "form-control" %>
-        <%= f.label :user_first_name_or_user_last_name, "Name", class: "ps-4" %>
+      <div class="list-group list-group-flush">
+        <% @placements.each do |placement| %>
+          <%= link_to placement, class: "list-group-item" do %>
+            <div class="row align-items-center">
+              <div class="col-3 col-sm-2 col-xxl-1">
+                <img class="img-thumbnail rounded-circle" src="<%= placement.user.headshot %>">
+              </div>
+              <div class="col-8 col-sm-9 col-xxl-10">
+                <h5><%= placement.job_description.title %> - <%= placement.company.name %></h5>
+                <div><%= placement.user %></div>
+                <small class="text-secondary">Started on <%= placement.start_date.strftime("%Y-%m-%d") %></small>
+              </div>
+              <div class="col-1">
+                <i class="fa-solid fa-chevron-right fa-fw"></i>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
       </div>
-
-      <div class="form-floating col-4 mb-2">
-        <%= f.text_field :company_name, placeholder: "Enter a company", class: "form-control" %>
-        <%= f.label :company_name, "Company name", class: "ps-4" %>
-      </div>
-
-      <div class="d-flex align-items-center">
-        <%= f.submit :class => "btn btn-primary d-flex" %>
-        <%= link_to "Clear filter", placements_root_url, class: "ms-2" %>
-      </div>
-
-    <% end %>
+    </div>
+    <%= paginate @placements, theme: 'bootstrap-5', nav_class: "d-flex my-2", pagination_class: "flex-wrap" %>
   </div>
-
-  <div class="list-group list-group-flush">
-    <% @placements.each do |placement| %>
-      <%= link_to placement, class: "list-group-item", target: "_blank" do %>
-        <div class="row align-items-center">
-          <div class="col-3 col-sm-2 col-xxl-1">
-            <img class="img-thumbnail rounded-circle" src="<%= placement.user.headshot %>">
-          </div>
-          <div class="col-8 col-sm-9 col-xxl-10">
-            <h5><%= placement.job_description.title %></h5>
-            <div>By <%= placement.user %></div>
-            <small class="text-secondary">Started on <%= placement.start_date.strftime("%Y-%m-%d") %></small>
-          </div>
-          <div class="col-1">
-            <i class="fa-solid fa-chevron-right fa-fw"></i>
-          </div>
-        </div>
-      <% end %>
-    <% end %>
-  </div>
-</div>
-<%= paginate @placements, theme: 'bootstrap-5', nav_class: "d-flex my-2", pagination_class: "flex-wrap" %>
-</div>
 </div>

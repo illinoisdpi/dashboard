@@ -17,10 +17,9 @@ class Placement < ApplicationRecord
   include Ransackable
 
   belongs_to :user
-
+  belongs_to :cohort
   belongs_to :company
-
   belongs_to :job_description
 
-  belongs_to :cohort
+  scope :default_order, -> { order(start_date: :desc) }
 end

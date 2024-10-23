@@ -16,14 +16,14 @@ Rails.application.routes.draw do
     end
 
     devise_for :users
-
+    resources :placements
     resources :cohorts do
-      resources :placements, module: :cohort
       member do
         get "canvas_highest_position_submission_count"
         get "canvas_point_total_most_recent"
         get "canvas_cumulative_points"
       end
+      resources :placements, module: :cohort
       resources :canvas_gradebook_snapshots
       resources :enrollments, module: :cohort do
         member do
@@ -58,7 +58,7 @@ Rails.application.routes.draw do
 
   constraints subdomain: "outcomes" do
     root "placements#index", as: "placements_root"
-    resources :placements, only: [:index, :show, :update, :create, :destroy]
+    resources :placements
     resources :job_descriptions
     resources :companies
   end

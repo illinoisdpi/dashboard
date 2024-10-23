@@ -6,11 +6,7 @@ module Placement::Ransackable
       [
         "end_date",
         "salary",
-        "start_date",
-        "job_description_title",
-        "user_first_name",
-        "user_last_name",
-        "company_name"
+        "start_date"
       ]
     end
 

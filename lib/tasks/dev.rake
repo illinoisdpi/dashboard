@@ -20,7 +20,9 @@ namespace :dev do
         users << User.create(
           email: "#{username}@example.com",
           password: "password",
-          github_username: username
+          github_username: username,
+          first_name: username,
+          last_name: "Example"
         )
       end
 
