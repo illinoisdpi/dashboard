@@ -7,18 +7,19 @@
           <div class="form-floating col-6 mb-2">
             <%# TODO: add devto tags for better filtering %>
             <%= f.text_field :title_or_description_cont, placeholder: "Enter a few characters", class: "form-control" %>
-            <%= f.label :title_or_description_cont, "Topic" %>
+            <%= f.label :title_or_description_cont, "Topic", class: "ps-3" %>
           </div>
 
           <div class="form-floating col-6 mb-2">
             <%= f.text_field :author_first_name_or_author_last_name_cont, placeholder: "Enter author name", class: "form-control" %>
-            <%= f.label :author_first_name_or_author_last_name_cont, "Author" %>
+            <%= f.label :author_first_name_or_author_last_name_cont, "Author", class: "ps-3" %>
           </div>
 
           <div class="d-flex align-items-center">
             <%= f.submit :class => "btn btn-primary d-flex" %>
             <%= link_to "Clear filter", news_root_path, class: "ms-2" %>
           </div>
+
         <% end %>
       </div>
 
