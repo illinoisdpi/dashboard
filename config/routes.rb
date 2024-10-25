@@ -30,11 +30,7 @@ Rails.application.routes.draw do
           get "snapshot"
         end
       end
-      resources :placements, module: :cohort do
-        collection do
-          get "(:placement_id)", to: "placements#index", as: :placement_details
-        end
-      end
+      resources :placements, module: :cohort
       resources :impressions, module: :cohort do
         collection do
           get :search
