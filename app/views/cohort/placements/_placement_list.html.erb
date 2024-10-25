@@ -1,0 +1,24 @@
+<div class="list-group list-group-flush">
+  <% @placements.each do |placement| %>
+    <%= turbo_frame_tag "placement_#{placement.id}" do %>
+      <%= link_to cohort_placement_path(@cohort, placement), class: "list-group-item", data: { turbo_frame: "placement_details" } do %>
+        <div class="row align-items-center">
+          <div class="col-3 col-sm-2 col-xxl-1">
+            <img class="img-thumbnail rounded-circle" src="<%= placement.user.headshot %>">
+          </div>
+          <div class="col-8 col-sm-9 col-xxl-10">
+            <h5><%= placement.job_description.title %> - <%= placement.company.name %></h5>
+            <div><%= placement.user %></div>
+            <small class="text-secondary">Started on <%= placement.start_date.strftime("%Y-%m-%d") %></small>
+          </div>
+          <div class="col-1">
+            <i class="fa-solid fa-chevron-right fa-fw"></i>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+<%= paginate @placements, theme: 'bootstrap-5', nav_class: "d-flex my-2", pagination_class: "flex-wrap", 
+    params: { turbo_frame: "placement_list" } %>

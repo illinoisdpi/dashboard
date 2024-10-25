@@ -40,7 +40,8 @@
 class User < ApplicationRecord
   include Adminable, Blogable, Ransackable, Roleable
 
-  mount_uploader :headshot, HeadshotUploader
+  # Temporarily disabled to test with sample_data Faker images
+  # mount_uploader :headshot, HeadshotUploader
 
   has_paper_trail skip: [:created_at, :updated_at]
 

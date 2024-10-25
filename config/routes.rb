@@ -23,12 +23,16 @@ Rails.application.routes.draw do
         get "canvas_point_total_most_recent"
         get "canvas_cumulative_points"
       end
-      resources :placements, module: :cohort
       resources :canvas_gradebook_snapshots
       resources :enrollments, module: :cohort do
         member do
           get "overview"
           get "snapshot"
+        end
+      end
+      resources :placements, module: :cohort do
+        collection do
+          get "(:placement_id)", to: "placements#index", as: :placement_details
         end
       end
       resources :impressions, module: :cohort do

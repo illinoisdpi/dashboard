@@ -3,36 +3,28 @@
 <% if @cohort.placements.any? %>
   <div class="row">
     <div class="col-lg-6">
-      <div class="card">
-        <div class="card-header d-flex align-items-center">
-          <h1 class="h6 mb-0 me-auto">Placements</h1>
-          <% if policy(Placement).create? %>
-            <%= link_to new_placement_path(@placement) do %>
-              <i class="fa-solid fa-plus fa-fw"></i>
+      <%= turbo_frame_tag "placement_list" do %>
+        <div class="card">
+          <div class="card-header d-flex align-items-center">
+            <div class="h6 mb-0 me-auto">Placements</div>
+            <% if policy(Placement).create? %>
+              <%= link_to new_placement_path(@placement) do %>
+                <i class="fa-solid fa-plus fa-fw"></i>
+              <% end %>
             <% end %>
-          <% end %>
+          </div>
+
         </div>
-        <% @cohort.placements.each do |placement| %>
-          <div class="list-group list-group-flush">
-            <%= link_to cohort_placement_path(@cohort, placement), class: "list-group-item" do %>
-              <div class="row align-items-center">
-                <div class="col-3 col-sm-2 col-xxl-1">
-                  <img class="img-thumbnail rounded-circle" src="<%= placement.user.headshot %>">
-                </div>
-                <div class="col-8 col-sm-9 col-xxl-10">
-                  <h5><%= placement.job_description.title %> - <%= placement.company.name %></h5>
-                  <div><%= placement.user %></div>
-                  <small class="text-secondary">Started on <%= placement.start_date.strftime("%Y-%m-%d") %></small>
-                </div>
-                <div class="col-1">
-                  <i class="fa-solid fa-chevron-right fa-fw"></i>
-                </div>
-              </div>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-      <%= paginate @placements, theme: 'bootstrap-5', nav_class: "d-flex my-2", pagination_class: "flex-wrap" %>
+        <%= render "cohort/placements/placement_list" %>
+      <% end %>
+    </div>
+
+    <div class="col-lg-6">
+      <%= turbo_frame_tag "placement_details" do %>
+        <% if @placement %>
+          <%= render "cohort/placements/placement", placement: @placement %>
+        <% end %>
+      <% end %>
     </div>
   </div>
 <% else %>
