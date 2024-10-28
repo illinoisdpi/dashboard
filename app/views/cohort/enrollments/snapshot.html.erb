@@ -64,7 +64,7 @@
     </div>
     <div class="col-4 border-top-0 border-start-0 border-bottom-0 border-dpi-primary border-3 opacity-100">
       <h5 class="text-dpi-secondary fw-bold">Education</h5>
-      <ul class="text-dpi-primary  ps-0">
+      <ul class="text-dpi-primary ps-0">
         <% if @enrollment.user.education.present? %>
           <%= render_markdown @enrollment.user.education %>
         <% end %>
