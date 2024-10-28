@@ -17,7 +17,7 @@
       <p class="text-dpi-primary"><%= @enrollment.user.one_liner %></p>
       <% if @enrollment.user.skills_and_projects.present? %>
         <h5 class="text-dpi-secondary fw-bold">Skills and Projects</h5>
-        <ul class="text-dpi-primary  ps-0">
+        <ul class="text-dpi-primary ps-0">
           <% if @enrollment.user.skills_and_projects.present? %>
             <%= render_markdown(@enrollment.user.skills_and_projects) %>
           <% end %>
