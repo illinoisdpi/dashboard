@@ -17,7 +17,7 @@ class PlacementsController < ApplicationController
 
     @breadcrumbs = [
       { content: "Dashboard", href: dashboard_root_path },
-      { content: "Placements", href: placements_path }
+      { content: "Placements", href: placements_path },
     ]
   end
 
@@ -33,10 +33,21 @@ class PlacementsController < ApplicationController
   # GET /placements/new
   def new
     @placement = Placement.new
+    @breadcrumbs = [
+      { content: "Dashboard", href: dashboard_root_path },
+      { content: "Placements", href: placements_path },
+      { content: "New", href: new_placement_path }
+    ]
   end
 
   # GET /placements/1/edit
   def edit
+    @breadcrumbs = [
+      { content: "Dashboard", href: dashboard_root_path },
+      { content: "Placements", href: placements_path },
+      { content: "#{@placement.user.name} - #{@placement.company.name}", href: placement_path },
+      { content: "Edit", href: edit_placement_path }
+    ]
   end
 
   # POST /placements

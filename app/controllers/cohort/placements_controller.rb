@@ -39,6 +39,7 @@ class Cohort::PlacementsController < ApplicationController
       { content: "Cohorts", href: cohorts_path },
       { content: @cohort.to_s, href: cohort_path(@cohort) },
       { content: "Placements", href: cohort_placements_path(@cohort) },
+      { content: "#{@placement.user.name} - #{@placement.company.name}", href: cohort_placement_path },
       { content: "Edit" }
     ]
   end
