@@ -4,16 +4,16 @@
     <div class="card mb-2">
       <div class="card-header">
         <%= search_form_for(@q, url: outcomes_root_path, class: "row") do |f| %>
-          <div class="form-floating col-4 mb-2">
+          <div class="form-floating col-6 mb-2">
             <%= f.text_field :job_description_title_cont, placeholder: "Enter a job title", class: "form-control" %>
             <%= f.label :job_description_title_cont, "Job Title", class: "ps-4" %>
           </div>
 
-          <div class="form-floating col-4 mb-2">
+          <div class="form-floating col-6 mb-2">
             <%= f.text_field :company_name_cont, placeholder: "Enter a company", class: "form-control" %>
             <%= f.label :company_name_cont, "Company name", class: "ps-4" %>
           </div>
-
+          <!-- TODO: Could add a search bar for role category? -->
           <div class="d-flex align-items-center">
             <%= f.submit :class => "btn btn-primary d-flex" %>
             <%= link_to "Clear filter", outcomes_root_path, class: "ms-2" %>

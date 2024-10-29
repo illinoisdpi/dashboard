@@ -5,14 +5,11 @@
         <div class="d-flex align-items-center">
           <div class="flex-grow-1 d-block text-decoration-none" data-bs-toggle="collapse" href="#collapse_<%= dom_id(placement) %>" role="button" aria-expanded="false" aria-controls="collapse_<%= dom_id(placement) %>">
             <div class="row align-items-center">
-              <div class="col-4 col-sm-2 col-xxl-1">
-                <img class="img-thumbnail rounded-circle" src="<%= placement.user.headshot %>">
-              </div>
-              <div class="col-6 col-sm-9 col-xxl-10">
+              <div class="col">
                 <h5><strong><%= placement.job_description.title %></strong> - <%= placement.company.name %></h5>
                 <div><%= placement.user %></div>
               </div>
-              <div class="col">
+              <div class="col-auto d-flex align-items-center">
                 <i class="fa-solid fa-chevron-down fa-fw"></i>
               </div>
             </div>
