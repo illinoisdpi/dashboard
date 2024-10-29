@@ -1,10 +1,10 @@
 class PlacementPolicy < ApplicationPolicy
   def index?
-    user.admin? || user.instructor? || user.teaching_assistant? || user.staff?
+    true
   end
 
   def show?
-    user.admin? || user.instructor? || user.teaching_assistant? || user.staff?
+    true
   end
 
   def create?

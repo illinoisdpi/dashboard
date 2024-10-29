@@ -1,6 +1,6 @@
 <div class="row my-2">
-  <!-- First column: Cohorts and Authored Impressions -->
-  <div class="col-md-4">
+  <!-- Cohorts and Authored Impressions -->
+  <div class="col-lg-4">
     <div class="card mb-2">
       <div class="card-header d-flex align-items-center">
         <h2 class="h6 mb-0 me-auto">Cohorts</h2>
@@ -62,8 +62,8 @@
     <% end %>
   </div>
 
-  <!-- Second column: Recent Articles -->
-  <div class="col-md-4">
+  <!-- Recent Articles -->
+  <div class="col-lg-4">
     <% if policy(:dashboard).recent_articles? %>
       <div class="card mb-2">
         <div class="card-header d-flex align-items-center">
@@ -97,22 +97,21 @@
     <% end %>
   </div>
 
-  <!-- Third column: Recent Placements -->
-  <div class="col-md-4">
+  <!-- Recent Placements -->
+  <div class="col-lg-4">
     <% if policy(:dashboard).placements? %>
       <div class="card mb-2">
         <div class="card-header d-flex align-items-center">
           <h2 class="h6 mb-0 me-auto">Recent Placements</h2>
           <div>
-            <%= link_to placements_root_url do %>
+            <%= link_to outcomes_root_url do %>
               See More
             <% end %>
           </div>
         </div>
         <div class="list-group list-group-flush">
           <% @placements.each do |placement| %>
-            <%= link_to placement, class: "list-group-item", target: "_blank" do %>
-
+            <%= link_to placement, class: "list-group-item" do %>
               <div class="row align-items-center">
                 <div class="col-3 col-sm-2">
                   <img class="img-thumbnail rounded-circle" src="<%= placement.user.headshot %>">
@@ -120,7 +119,6 @@
                 <div class="col-8 col-sm-9 col-xxl-9">
                   <h5><%= placement.job_description.title %> - <%= placement.company.name %></h5>
                   <div><%= placement.user %></div>
-                  <small class="text-secondary">Started on <%= placement.start_date.strftime("%Y-%m-%d") %></small>
                 </div>
                 <div class="col-1">
                   <i class="fa-solid fa-chevron-right fa-fw"></i>

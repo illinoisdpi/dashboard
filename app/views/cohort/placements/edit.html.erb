@@ -4,11 +4,13 @@
   <div class="col-md-6">
     <div class="card mb-3">
       <h5 class="card-header">
-        Create New Placement from <%= @cohort.name %>
+        Edit Placement
       </h5>
 
       <div class="card-body">
-        <%= form_for(@placement, url: cohort_placements_path(@cohort), html: { method: :post, class: "row g-3 mb-3" }) do |f| %>
+        <% form_html_options = { method: :put, class: "row g-3 mb-3" } %>
+
+        <%= form_for(@placement, url: cohort_placement_path(@cohort, @placement), html: form_html_options) do |f| %>
           <!-- TODO: change user selection to match new enrollment search function -->
           <div class="mb-3">
             <%= f.label :user, class: "form-label" %>
@@ -34,19 +36,19 @@
             <%= f.label :company_id, "Company", class: "form-label" %>
             <%= f.collection_select :company_id, Company.all, :id, :name, prompt: "Select a company", class: "form-select" %>
           </div>
-
+          <!-- TODO: restrict job_description dropdown to only show existing job_descriptions associated with the company the user has selected -->
           <div class="mb-3">
             <%= f.label :job_description_id, "Job Description", class: "form-label" %>
             <%= f.collection_select :job_description_id, JobDescription.all, :id, :title, prompt: "Select a job description", class: "form-select" %>
           </div>
 
           <div class="d-grid gap-2">
-            <%= f.submit "Create Placement", class: "btn btn-outline-primary", data: { turbo: false } %>
+            <%= f.submit "Update Placement", class: "btn btn-outline-primary", data: { turbo: false } %>
           </div>
         <% end %>
 
         <div class="d-grid gap-2">
-          <%= link_to "Back", cohort_placements_path(@cohort), class: "btn btn-outline-secondary" %>
+          <%= link_to "Back", cohort_placements_path(@placement.cohort), class: "btn btn-outline-secondary" %>
         </div>
       </div>
     </div>

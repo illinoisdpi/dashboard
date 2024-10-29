@@ -1,0 +1,30 @@
+<div class="card">
+  <div class="card-header d-flex align-items-center">
+    <div class="h6 mb-0 me-auto"><%= @placement.user %> - <%= @placement.company.name %></div>
+    <% if policy(@placement).edit? %>
+      <%= link_to edit_placement_path(@placement), class: "ms-2 text-decoration-none", data: { turbo: false } do %>
+        <i class="fa-solid fa-pen-to-square"></i>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="list-group list-group-flush ps-3 mt-3 mb-3">
+    <div class="row align-items-center">
+      <div class="col-md-4">
+        <div><img src="<%= @placement.user.headshot %>"></div>
+      </div>
+      <div class="col-md-6">
+        <h3><b><%= @placement.job_description.title %></b></h3>
+        <div><b>Salary:</b></div>
+        <div><%= number_to_currency(@placement.salary) %></div>
+        <div><b>Role Category:</b></div>
+        <div><%= @placement.job_description.role_category %></div>
+        <div><b>Start Date:</b></div>
+        <div><%= @placement.start_date %></div>
+        <div><b>End Date:</b></div>
+        <div><%= @placement.end_date %></div>
+        <div><b>Job Description:</b></div>
+        <div><%= @placement.job_description.description %></div>
+      </div>
+    </div>
+  </div>
+</div>

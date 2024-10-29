@@ -1,19 +1,29 @@
-class PlacementsController < ApplicationController
-  layout -> { action_name == "index" ? "outcomes" : "application" }
+class OutcomesController < ApplicationController
+  layout "outcomes"
   skip_before_action :authenticate_user!
-  before_action :set_placement, only: %i[show edit update destroy]
+  skip_after_action :verify_policy_scoped
   before_action { authorize(:placement) }
 
   def index
     @q = policy_scope(Placement).page(params[:page]).ransack(params[:q])
-    @placements = @q.result.includes(:user, :job_description, :company).default_order
+    @placements = @q.result.includes(:user, :job_description, :company).default_order.page(params[:page]).per(10)
+
+    respond_to do |format|
+      format.html # Renders index.html.erb
+      format.turbo_stream do
+        render turbo_stream: [
+                 turbo_stream.replace("placement_list", partial: "cohort/placements/placement_list", locals: { placements: @placements }),
+                 turbo_stream.replace("placement", partial: "cohort/placements/placement", locals: { placement: @placement }),
+               ]
+      end
+    end
   end
 
   # GET /placements/1
   def show
     @breadcrumbs = [
       { content: "Dashboard", href: dashboard_root_path },
-      { content: "#{@placement.user} - #{@placement.company.name} ", href: placement_path(@placement) }
+      { content: "#{@placement.user} - #{@placement.company.name} ", href: placement_path(@placement) },
     ]
   end
 

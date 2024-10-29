@@ -19,8 +19,37 @@ class Cohort::PlacementsController < ApplicationController
     end
   end
 
+  def show
+  end
+
   def new
     @placement = Placement.new
+  end
+
+  def edit
+    @placement = Placement.find(params[:id])
+    @enrollments = @cohort.users
+  end
+
+  def create
+    @placement = Placement.new(placement_params)
+    @placement.cohort = @cohort
+
+    if @placement.save
+      redirect_to cohort_placements_path(@cohort), notice: "Placement was successfully created."
+    else
+      format.html { render :new, status: :unprocessable_entity }
+      format.json { render json: @cohort.errors, status: :unprocessable_entity }
+    end
+  end
+
+  def update
+    if @placement.update(placement_params)
+      redirect_to cohort_placements_path(@cohort), notice: "Placement was successfully updated."
+    else
+      @enrollments = @cohort.users # Make sure to load users again for the edit form.
+      render :edit
+    end
   end
 
   private
@@ -35,5 +64,9 @@ class Cohort::PlacementsController < ApplicationController
 
   def authorize_cohort
     authorize policy_scope(Cohort).find(@cohort.id)
+  end
+
+  def placement_params
+    params.require(:placement).permit(:start_date, :end_date, :cohort_id, :job_description_id, :user_id, :company_id, :salary)
   end
 end
