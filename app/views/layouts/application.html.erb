@@ -12,11 +12,10 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
-    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <%= yield :easymde %>
 
     <%= render "shared/cdn_assets" %>
   </head>
@@ -29,7 +28,5 @@
       <%= render "shared/toasts" %>
       <%= yield %>
     </div>
-
-    <%= javascript_include_tag "controllers/easymde_init", "data-turbo-track": "reload" %>
   </body>
 </html>

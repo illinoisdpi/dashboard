@@ -1,8 +1,9 @@
 import { Controller } from "@hotwired/stimulus"
-import EasyMDE from "easymde"
-
+import * as EasyMDE from "easymde";
 export default class extends Controller {
   connect() {
+    console.log("EasyMDE controller connected");
+
     this.initializeEasyMDE()
   }
 
