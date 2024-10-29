@@ -55,7 +55,6 @@ group :development, :test do
   gem "standard", require: false
   gem "web-console"
   gem "rubocop-rails-omakase", require: false
-  gem "rails_live_reload"
 end
 
 group :development do
@@ -64,4 +63,5 @@ group :development do
   gem "letter_opener"
   gem "rails_db", ">= 2.3.1"
   gem "rails-erd"
+  gem "rails_live_reload"
 end
