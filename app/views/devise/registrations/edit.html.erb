@@ -1,5 +1,3 @@
-<%= render "shared/easymde_assets" %>
-
 <div class="row">
   <div class="offset-md-3 col-md-6">
     <div class="card mb-3">
@@ -73,7 +71,7 @@
 
           <div class="mb-3">
             <%= f.label :career_highlights, class: "form-label" %>
-            <%= f.text_area :career_highlights, class: "form-control easymde", data: { controller: "easymde" } %>
+            <%= f.rich_text_area :career_highlights, class: "form-control" %>
             <small class="form-text text-muted">
               Use Markdown Syntax for formatting.
             </small>
@@ -81,7 +79,7 @@
 
           <div class="mb-3">
             <%= f.label :education, class: "form-label" %>
-            <%= f.text_area :education, class: "form-control easymde" %>
+            <%= f.rich_text_area :education, class: "form-control" %>
             <small class="form-text text-muted">
               Use Markdown Syntax for formatting.
             </small>
@@ -89,7 +87,7 @@
 
           <div class="mb-3">
             <%= f.label :languages, class: "form-label" %>
-            <%= f.text_area :languages, class: "form-control easymde" %>
+            <%= f.rich_text_area :languages, class: "form-control" %>
             <small class="form-text text-muted">
               Use Markdown Syntax for formatting.
             </small>
@@ -99,7 +97,7 @@
 
           <div class="mb-3">
             <%= f.label :skills_and_projects, class: "form-label" %>
-            <%= f.text_area :skills_and_projects, class: "form-control easymde" %>
+            <%= f.rich_text_area :skills_and_projects, class: "form-control" %>
             <small class="form-text text-muted">
               Use Markdown Syntax for formatting.
             </small>
@@ -109,7 +107,7 @@
           <%= f.fields_for :enrollments do |e| %>
             <div class="mb-3">
               <%= e.label :skills_development, "Real-time DPI skill development (#{e.object.cohort.name})", class: "form-label" %>
-              <%= e.text_area :skills_development, class: "form-control easymde" %>
+              <%= e.rich_text_area :skills_development, class: "form-control" %>
               <small class="form-text text-muted">
                 Use Markdown Syntax for formatting.
               </small>
@@ -118,7 +116,7 @@
 
           <div class="mb-3">
             <%= f.label :strengths, class: "form-label" %>
-            <%= f.text_area :strengths, class: "form-control easymde" %>
+            <%= f.rich_text_area :strengths, class: "form-control" %>
             <small class="form-text text-muted">
               Use Markdown Syntax for formatting.
             </small>

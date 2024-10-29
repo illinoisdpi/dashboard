@@ -19,7 +19,7 @@
         <h5 class="text-dpi-secondary fw-bold">Skills and Projects</h5>
         <ul class="text-dpi-primary ps-0">
           <% if @enrollment.user.skills_and_projects.present? %>
-            <%= render_markdown(@enrollment.user.skills_and_projects) %>
+            <%= @enrollment.user.skills_and_projects.html_safe %>
           <% end %>
         </ul>
       <% end %>
@@ -27,7 +27,7 @@
         <h5 class="text-dpi-secondary fw-bold">Real-Time DPI Skill Development</h5>
         <ul class="text-dpi-primary ps-0">
           <% if @enrollment.skills_development.present? %>
-            <%= render_markdown(@enrollment.skills_development) %>
+            <%= @enrollment.skills_development.html_safe %>
           <% end %>
         </ul>
       <% end %>
@@ -55,7 +55,7 @@
       <% if @enrollment.user.career_highlights.present? %>
         <ul class="text-dpi-primary ps-0">
           <% if @enrollment.user.career_highlights.present? %>
-            <%= render_markdown @enrollment.user.career_highlights %>
+            <%= @enrollment.user.career_highlights.html_safe %>
           <% end %>
         </ul>
       <% else %>
@@ -66,7 +66,7 @@
       <h5 class="text-dpi-secondary fw-bold">Education</h5>
       <ul class="text-dpi-primary ps-0">
         <% if @enrollment.user.education.present? %>
-          <%= render_markdown @enrollment.user.education %>
+          <%= @enrollment.user.education.html_safe %>
         <% end %>
       </ul>
     </div>
