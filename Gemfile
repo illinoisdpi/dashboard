@@ -26,7 +26,6 @@ gem 'pundit'
 gem "ransack"
 gem "rails", "~> 7.0.4", ">= 7.0.4.2"
 gem "rails_admin", "~> 3.1"
-gem "redcarpet"
 gem "redis", "~> 4.0"
 gem "rolify", "~> 6.0"
 gem "rollbar", "~> 3.4"
