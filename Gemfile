@@ -55,6 +55,7 @@ group :development, :test do
   gem "standard", require: false
   gem "web-console"
   gem "rubocop-rails-omakase", require: false
+  gem "rails_live_reload"
 end
 
 group :development do
