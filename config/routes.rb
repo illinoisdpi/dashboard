@@ -59,7 +59,5 @@ Rails.application.routes.draw do
   constraints subdomain: "outcomes" do
     root "outcomes#index", as: "outcomes_root"
     resources :placements
-    resources :job_descriptions
-    resources :companies
   end
 end

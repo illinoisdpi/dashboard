@@ -1,7 +1,7 @@
 class Cohort::PlacementsController < ApplicationController
   before_action :set_cohort
   before_action :set_placement, only: %i[show edit update destroy]
-  before_action :authorize_cohort
+  before_action { authorize(@cohort || Cohort) }
 
   def index
     @q = policy_scope(@cohort.placements).page(params[:page]).ransack(params[:q])
@@ -9,14 +9,15 @@ class Cohort::PlacementsController < ApplicationController
     @placement = Placement.find(params[:placement_id]) if params[:placement_id]
 
     respond_to do |format|
-      format.html # Renders index.html.erb
-      format.turbo_stream do
-        render turbo_stream: [
-                 turbo_stream.replace("placement_list", partial: "cohort/placements/placement_list", locals: { placements: @placements }),
-                 turbo_stream.replace("placement", partial: "cohort/placements/placement", locals: { placement: @placement })
-               ]
-      end
+      format.html
+      format.turbo_stream
     end
+
+    @breadcrumbs = [
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Placements", href: cohort_placements_path(@cohort) }
+    ]
   end
 
   def show
@@ -24,22 +25,33 @@ class Cohort::PlacementsController < ApplicationController
 
   def new
     @placement = Placement.new
+    @breadcrumbs = [
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Placements", href: cohort_placements_path(@cohort) },
+      { content: "New" }
+    ]
   end
 
   def edit
     @placement = Placement.find(params[:id])
-    @enrollments = @cohort.users
+    @breadcrumbs = [
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Placements", href: cohort_placements_path(@cohort) },
+      { content: "Edit" }
+    ]
   end
 
   def create
-    @placement = Placement.new(placement_params)
+    @placement = @cohort.placements.new(placement_params)
     @placement.cohort = @cohort
 
     if @placement.save
       redirect_to cohort_placements_path(@cohort), notice: "Placement was successfully created."
     else
-      format.html { render :new, status: :unprocessable_entity }
-      format.json { render json: @cohort.errors, status: :unprocessable_entity }
+      format.html { render :edit, status: :unprocessable_entity }
+      format.json { render json: @placement.errors, status: :unprocessable_entity }
     end
   end
 
@@ -47,8 +59,9 @@ class Cohort::PlacementsController < ApplicationController
     if @placement.update(placement_params)
       redirect_to cohort_placements_path(@cohort), notice: "Placement was successfully updated."
     else
-      @enrollments = @cohort.users # Make sure to load users again for the edit form.
-      render :edit
+      @users = @cohort.users
+      format.html { render :new, status: :unprocessable_entity }
+      format.json { render json: @placement.errors, status: :unprocessable_entity }
     end
   end
 
@@ -63,7 +76,7 @@ class Cohort::PlacementsController < ApplicationController
   end
 
   def authorize_cohort
-    authorize policy_scope(Cohort).find(@cohort.id)
+    authorize @cohort || Cohort
   end
 
   def placement_params

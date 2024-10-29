@@ -1,0 +1,7 @@
+<%= turbo_stream.replace "placement_list" do %>
+  <%= render partial: "cohort/placements/placement_list", locals: { placements: @placements } %>
+<% end %>
+
+<%= turbo_stream.replace "placement" do %>
+  <%= render partial: "cohort/placements/placement", locals: { placement: @placement } %>
+<% end %>

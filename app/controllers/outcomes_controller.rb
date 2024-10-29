@@ -9,13 +9,8 @@ class OutcomesController < ApplicationController
     @placements = @q.result.includes(:user, :job_description, :company).default_order.page(params[:page]).per(10)
 
     respond_to do |format|
-      format.html # Renders index.html.erb
-      format.turbo_stream do
-        render turbo_stream: [
-                 turbo_stream.replace("placement_list", partial: "cohort/placements/placement_list", locals: { placements: @placements }),
-                 turbo_stream.replace("placement", partial: "cohort/placements/placement", locals: { placement: @placement }),
-               ]
-      end
+      format.html
+      format.turbo_stream
     end
   end
 
@@ -23,7 +18,7 @@ class OutcomesController < ApplicationController
   def show
     @breadcrumbs = [
       { content: "Dashboard", href: dashboard_root_path },
-      { content: "#{@placement.user} - #{@placement.company.name} ", href: placement_path(@placement) },
+      { content: "#{@placement.user} - #{@placement.company.name} ", href: placement_path(@placement) }
     ]
   end
 
@@ -43,7 +38,8 @@ class OutcomesController < ApplicationController
     if @placement.save
       redirect_to @placement, notice: "Placement was successfully created."
     else
-      render :new
+      format.html { render :new, status: :unprocessable_entity }
+      format.json { render json: @placement.errors, status: :unprocessable_entity }
     end
   end
 
@@ -52,7 +48,8 @@ class OutcomesController < ApplicationController
     if @placement.update(placement_params)
       redirect_to @placement, notice: "Placement was successfully updated."
     else
-      render :edit
+      format.html { render :edit, status: :unprocessable_entity }
+      format.json { render json: @placement.errors, status: :unprocessable_entity }
     end
   end
 

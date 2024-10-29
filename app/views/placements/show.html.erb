@@ -2,9 +2,4 @@
   <div class="col-md-6">
     <%= render "placement" %>
   </div>
-  <div class="col-md-6">
-    <% if policy(@placement).new? %>
-      <%= link_to "Create new placement", new_placement_path, class: "btn btn-outline-secondary me-2" %>
-    <% end %>
-  </div>
 </div>

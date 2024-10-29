@@ -14,6 +14,7 @@
           <!-- TODO: change user selection to match new enrollment search function -->
           <div class="mb-3">
             <%= f.label :user, class: "form-label" %>
+            <br>
             <%= f.collection_select :user_id, @cohort.users, :id, :full_name, prompt: "Select a user", class: "form-control" %>
           </div>
 

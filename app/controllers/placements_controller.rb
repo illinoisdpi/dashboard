@@ -1,18 +1,31 @@
 class PlacementsController < ApplicationController
-  layout -> { action_name == "index" ? "outcomes" : "application" }
+  layout "application"
   skip_before_action :authenticate_user!
   before_action :set_placement, only: %i[show edit update destroy]
   before_action { authorize(:placement) }
 
   def index
     @q = policy_scope(Placement).page(params[:page]).ransack(params[:q])
-    @placements = @q.result.includes(:user, :job_description, :company).default_order
+    @placements = @q.result.includes(:user, :job_description, :company).default_order.page(params[:page]).per(5)
+
+    @placement = Placement.find(params[:placement_id]) if params[:placement_id]
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
+
+    @breadcrumbs = [
+      { content: "Dashboard", href: dashboard_root_path },
+      { content: "Placements", href: placements_path }
+    ]
   end
 
   # GET /placements/1
   def show
     @breadcrumbs = [
       { content: "Dashboard", href: dashboard_root_path },
+      { content: "Placements", href: placements_path },
       { content: "#{@placement.user} - #{@placement.company.name} ", href: placement_path(@placement) }
     ]
   end
@@ -33,7 +46,8 @@ class PlacementsController < ApplicationController
     if @placement.save
       redirect_to @placement, notice: "Placement was successfully created."
     else
-      render :new
+      format.html { render :new, status: :unprocessable_entity }
+      format.json { render json: @placement.errors, status: :unprocessable_entity }
     end
   end
 
@@ -42,7 +56,8 @@ class PlacementsController < ApplicationController
     if @placement.update(placement_params)
       redirect_to @placement, notice: "Placement was successfully updated."
     else
-      render :edit
+      format.html { render :edit, status: :unprocessable_entity }
+      format.json { render json: @placement.errors, status: :unprocessable_entity }
     end
   end
 
