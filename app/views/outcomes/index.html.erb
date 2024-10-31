@@ -24,7 +24,7 @@
       <%= turbo_frame_tag "placement_list" do %>
         <%= render "outcomes/placement_list", placements: @placements %>
         <div class="d-flex justify-content-center mt-3">
-          <%= paginate @placements, theme: 'bootstrap-5', nav_class: "d-flex my-2", pagination_class: "flex-wrap",
+          <%= paginate @placements, nav_class: "d-flex my-2", pagination_class: "flex-wrap",
                          params: { turbo_frame: "placement_list" } %>
         </div>
       <% end %>
