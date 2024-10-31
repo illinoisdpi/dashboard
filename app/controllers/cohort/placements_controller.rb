@@ -4,20 +4,20 @@ class Cohort::PlacementsController < ApplicationController
   before_action { authorize(@cohort || Cohort) }
 
   def index
+    @breadcrumbs = [
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Placements", href: cohort_placements_path(@cohort) }
+    ]
     @q = policy_scope(@cohort.placements).page(params[:page]).ransack(params[:q])
     @placements = @q.result.includes(:user, :job_description, :company).default_order.page(params[:page]).per(5)
-    @placement = Placement.find(params[:placement_id]) if params[:placement_id]
+    @placement = Placement.find(params[:placement_id]) if params[:placement_id].present?
 
     respond_to do |format|
       format.html
       format.turbo_stream
     end
 
-    @breadcrumbs = [
-      { content: "Cohorts", href: cohorts_path },
-      { content: @cohort.to_s, href: cohort_path(@cohort) },
-      { content: "Placements", href: cohort_placements_path(@cohort) }
-    ]
   end
 
   def show
@@ -60,7 +60,6 @@ class Cohort::PlacementsController < ApplicationController
     if @placement.update(placement_params)
       redirect_to cohort_placements_path(@cohort), notice: "Placement was successfully updated."
     else
-      @users = @cohort.users
       format.html { render :new, status: :unprocessable_entity }
       format.json { render json: @placement.errors, status: :unprocessable_entity }
     end

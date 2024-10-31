@@ -5,6 +5,10 @@ class PlacementsController < ApplicationController
   before_action { authorize(:placement) }
 
   def index
+    @breadcrumbs = [
+      { content: "Dashboard", href: dashboard_root_path },
+      { content: "Placements", href: placements_path },
+    ]
     @q = policy_scope(Placement).page(params[:page]).ransack(params[:q])
     @placements = @q.result.includes(:user, :job_description, :company).default_order.page(params[:page]).per(5)
 
@@ -15,10 +19,6 @@ class PlacementsController < ApplicationController
       format.turbo_stream
     end
 
-    @breadcrumbs = [
-      { content: "Dashboard", href: dashboard_root_path },
-      { content: "Placements", href: placements_path },
-    ]
   end
 
   # GET /placements/1

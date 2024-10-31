@@ -40,8 +40,7 @@
 class User < ApplicationRecord
   include Adminable, Blogable, Ransackable, Roleable
 
-  # Temporarily disabled to test with sample_data Faker images
-  # mount_uploader :headshot, HeadshotUploader
+  mount_uploader :headshot, HeadshotUploader
 
   has_paper_trail skip: [:created_at, :updated_at]
 
@@ -57,12 +56,6 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :enrollments
 
   scope :default_order, -> { order(:first_name) }
-
-  def self.placements_for_cohort(cohort_id)
-    joins(:enrollments)
-      .where(enrollments: { cohort_id: cohort_id })
-      .flat_map(&:placements)
-  end
 
   def to_s
     return full_name if full_name.present?

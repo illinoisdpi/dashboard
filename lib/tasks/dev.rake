@@ -51,8 +51,6 @@ namespace :dev do
           email: row.fetch(:email),
           canvas_full: row.fetch(:name),
           password: "password",
-          # Temporary for sample_data testing
-          headshot: Faker::Avatar.image(set: "set2", bgset: "bg1"),
           github_username: row.fetch(:name).gsub(/[^a-z0-9]/i, ""),
           quote: Faker::Quote.matz,
           personal_website: Faker::Internet.url,
