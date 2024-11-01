@@ -1,6 +1,5 @@
 namespace :one_offs do
     desc "replace commas with HTML list syntax"
-  
     task oneoff_update_html_format: :environment do
       User.find_each do |user|
         if user.skills_and_projects.present? && !user.skills_and_projects.strip.start_with?("<ul>")
@@ -34,4 +33,3 @@ namespace :one_offs do
       puts "One-off task: All comma-separated fields updated to HTML list format!"
     end
   end
-  
