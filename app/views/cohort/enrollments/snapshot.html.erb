@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dpi-primary">
   <div class="container-fluid">
-    <span class="text-light me-auto fw-bold">MEET THE DPI APPRENTICES</span>
+    <span class="text-light me-auto fw-bold">MEET THE DPI TRAINEES</span>
     <%= image_tag 'logo', height: "40px" %>
   </div>
 </nav>
@@ -19,19 +19,17 @@
       <p class="text-dpi-primary"><%= @enrollment.user.one_liner %></p>
       <% if @enrollment.user.skills_and_projects.present? %>
         <h5 class="text-dpi-secondary fw-bold">Skills and Projects</h5>
-        <ul class="text-dpi-primary">
+        <ul class="text-dpi-primary ps-0">
           <% if @enrollment.user.skills_and_projects.present? %>
-            <% @enrollment.user.skills_and_projects.split(",").take(6).each do |strength| %>
-              <li><%= strength %></li>
-            <% end %>
+            <%= @enrollment.user.skills_and_projects.html_safe %>
           <% end %>
         </ul>
       <% end %>
       <% if @enrollment.skills_development.present? %>
         <h5 class="text-dpi-secondary fw-bold">Real-Time DPI Skill Development</h5>
-        <ul class="text-dpi-primary">
-          <% @enrollment.skills_development.split(",").take(6).each do |skill| %>
-            <li><%= skill %></li>
+        <ul class="text-dpi-primary ps-0">
+          <% if @enrollment.skills_development.present? %>
+            <%= @enrollment.skills_development.html_safe %>
           <% end %>
         </ul>
       <% end %>
@@ -57,9 +55,9 @@
     <div class="col-4 border-top-0 border-start-0 border-bottom-0 border-dpi-primary border-3 opacity-100">
       <h5 class="text-dpi-secondary fw-bold">Career Highlights</h5>
       <% if @enrollment.user.career_highlights.present? %>
-        <ul class="px-0 list-unstyled text-dpi-primary">
-          <% @enrollment.user.career_highlights.split(",").take(3).each do |highlight| %>
-            <li><%= highlight %></li>
+        <ul class="text-dpi-primary ps-0">
+          <% if @enrollment.user.career_highlights.present? %>
+            <%= @enrollment.user.career_highlights.html_safe %>
           <% end %>
         </ul>
       <% else %>
@@ -68,11 +66,9 @@
     </div>
     <div class="col-4 border-top-0 border-start-0 border-bottom-0 border-dpi-primary border-3 opacity-100">
       <h5 class="text-dpi-secondary fw-bold">Education</h5>
-      <ul class="px-0 list-unstyled text-dpi-primary">
+      <ul class="text-dpi-primary ps-0">
         <% if @enrollment.user.education.present? %>
-          <% @enrollment.user.education.split(",").take(3).each do |education| %>
-            <li><%= education %></li>
-          <% end %>
+          <%= @enrollment.user.education.html_safe %>
         <% end %>
       </ul>
     </div>
