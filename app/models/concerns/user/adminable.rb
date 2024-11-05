@@ -3,7 +3,6 @@ module User::Adminable
 
   included do
     rails_admin do
-
       configure :discord_id do
         label "Discord Id"
       end
@@ -27,7 +26,7 @@ module User::Adminable
           :headshot,
           :devto_username,
           :canvas_full,
-          :discord_id,  
+          :discord_id,
           :discord_username
 
         field :roles do
@@ -36,7 +35,7 @@ module User::Adminable
           end
         end
 
-        password_fields = [:password, :password_confirmation]
+        password_fields = [ :password, :password_confirmation ]
         password_fields.each do |field_name|
           field field_name do
             visible do

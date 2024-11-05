@@ -105,7 +105,12 @@ namespace :dev do
           ap enrollment
         end
 
-        user.devto_articles.create(title: Faker::Book.title, description: Faker::Lorem.sentence, published_at: Faker::Time.between(from: DateTime.now - 365, to: DateTime.now))
+        user.devto_articles.create(
+          title: Faker::Book.title,
+          description: Faker::Lorem.sentence,
+          published_at: Faker::Time.between(from: DateTime.now - 365, to: DateTime.now),
+          social_image: Faker::Avatar.image(set: "set2", bgset: "bg1")
+        )
         puts "Generating Sample Cohort user data..."
 
         User.with_role(:admin).each do |admin|
@@ -118,7 +123,7 @@ namespace :dev do
               created_at: rand(1..5).week.ago
             )
           end
-        end  
+        end
       end
       puts "First Sample Cohort data populated"
 

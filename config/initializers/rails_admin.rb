@@ -36,10 +36,10 @@ RailsAdmin.config do |config|
     bulk_delete
     show
     edit do
-      except ["PiazzaActivityReport", "PiazzaActivityBreakdown"]
+      except [ "PiazzaActivityReport", "PiazzaActivityBreakdown" ]
     end
     delete do
-      except ["PiazzaActivityBreakdown"]
+      except [ "PiazzaActivityBreakdown" ]
     end
     show_in_app
 

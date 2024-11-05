@@ -53,7 +53,7 @@
 class Enrollment < ApplicationRecord
   include Adminable, Endorsable, Ransackable
 
-  has_paper_trail skip: [:created_at, :updated_at]
+  has_paper_trail skip: [ :created_at, :updated_at ]
 
   belongs_to :user
   belongs_to :cohort
@@ -74,6 +74,26 @@ class Enrollment < ApplicationRecord
     joins(:user)
       .select("enrollments.id, enrollments.cohort_id, users.id AS user_id, users.first_name, users.last_name")
   }
+  scope :recent_gradebook_snapshot, ->(cohort) {
+    joins(canvas_submissions: :canvas_gradebook_snapshot)
+      .where(canvas_gradebook_snapshots: { cohort_id: cohort.id })
+      .where('canvas_gradebook_snapshots.created_at = (
+      SELECT MAX(created_at)
+      FROM canvas_gradebook_snapshots
+      WHERE canvas_gradebook_snapshots.cohort_id = ?
+    )', cohort.id)
+  }
+  scope :with_recent_canvas_points, ->(cohort) {
+    with_user_info
+      .recent_gradebook_snapshot(cohort)
+      .select("enrollments.id, users.id AS user_id, users.first_name, users.last_name, SUM(canvas_submissions.points) AS total_points")
+      .group("enrollments.id, users.id, users.first_name, users.last_name")
+      .order("total_points DESC")
+  }
+
+  def total_points
+    canvas_submissions.sum(:points)
+  end
 
   delegate :education,
     :github_username,

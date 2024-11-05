@@ -23,7 +23,7 @@
 class CanvasGradebookSnapshot < ApplicationRecord
   include Csvable
 
-  has_paper_trail skip: [:created_at, :updated_at]
+  has_paper_trail skip: [ :created_at, :updated_at ]
 
   belongs_to :cohort
   belongs_to :user
