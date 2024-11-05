@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     end
 
     devise_for :users
-    
+
     resources :users, only: [] do
       collection do
         get :search
