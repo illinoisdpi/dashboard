@@ -15,7 +15,7 @@ Rails.application.routes.draw do
       mount Blazer::Engine, at: "blazer"
     end
 
-    devise_for :users
+    devise_for :users, controllers: { registrations: 'registrations' }
 
     resources :cohorts do
       member do
