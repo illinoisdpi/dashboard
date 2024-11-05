@@ -15,6 +15,11 @@
     <%= f.search_field :content_cont, class: "form-control" %>
   </div>
 
+  <div class="mb-3">
+    <%= f.label :time_period, "Filter by Time Period", class: "form-label" %>
+    <%= f.select :by_time_period, options_for_select([['All Time', ''], ['Last Week', 'last_week'], ['Last Month', 'last_month']], params.dig(:q, :by_time_period)), {}, class: "form-control" %>
+  </div>
+
   <%= f.submit class: "btn btn-primary" %>
 
   <%= link_to "Clear", cohort_impressions_path(@cohort), class: "btn btn-outline-secondary ms-2" %>

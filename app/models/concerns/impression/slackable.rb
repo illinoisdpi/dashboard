@@ -9,7 +9,7 @@ module Impression::Slackable
   def send_slack_message
     webhook_url = Rails.application.credentials.dig(:slack, :impressions_webhook_url)
     # TODO: call in job so we don't need this
-    return unless webhook_url.present?
+    return if webhook_url.blank?
 
     url = Rails.application.routes.url_helpers.url_for(self)
     Slack.new(webhook_url:).send_message("#{summary} #{url}")

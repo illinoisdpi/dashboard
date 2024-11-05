@@ -17,14 +17,16 @@ module User::Blogable
   end
 
   def fetch_devto_articles
-    return unless devto_username.present?
+    return if devto_username.blank?
 
-    DevtoService.fetch_articles({username: devto_username})&.each do |article|
+    DevtoService.fetch_articles({ username: devto_username })&.each do |article|
       devto_article = devto_articles.find_or_initialize_by(devto_id: article["id"])
       devto_article.title = article["title"]
       devto_article.description = article["description"]
       devto_article.url = article["url"]
       devto_article.published_at = article["published_timestamp"]
+      # TODO: Change column name to user_profile_image
+      devto_article.social_image = article.dig("user", "profile_image")
       devto_article.save
     end
   end
