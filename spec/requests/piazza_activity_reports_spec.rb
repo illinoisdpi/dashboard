@@ -59,12 +59,12 @@ RSpec.describe "/piazza_activity_reports" do
     context "with valid parameters" do
       it "creates a new PiazzaActivityReport" do
         expect {
-          post piazza_activity_reports_url, params: {piazza_activity_report: valid_attributes}
+          post piazza_activity_reports_url, params: { piazza_activity_report: valid_attributes }
         }.to change(PiazzaActivityReport, :count).by(1)
       end
 
       it "redirects to the created piazza_activity_report" do
-        post piazza_activity_reports_url, params: {piazza_activity_report: valid_attributes}
+        post piazza_activity_reports_url, params: { piazza_activity_report: valid_attributes }
         expect(response).to redirect_to(piazza_activity_report_url(PiazzaActivityReport.last))
       end
     end
@@ -72,12 +72,12 @@ RSpec.describe "/piazza_activity_reports" do
     context "with invalid parameters" do
       it "does not create a new PiazzaActivityReport" do
         expect {
-          post piazza_activity_reports_url, params: {piazza_activity_report: invalid_attributes}
+          post piazza_activity_reports_url, params: { piazza_activity_report: invalid_attributes }
         }.not_to change(PiazzaActivityReport, :count)
       end
 
       it "renders a response with 422 status (i.e. to display the 'new' template)" do
-        post piazza_activity_reports_url, params: {piazza_activity_report: invalid_attributes}
+        post piazza_activity_reports_url, params: { piazza_activity_report: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -91,14 +91,14 @@ RSpec.describe "/piazza_activity_reports" do
 
       it "updates the requested piazza_activity_report" do
         piazza_activity_report = PiazzaActivityReport.create! valid_attributes
-        patch piazza_activity_report_url(piazza_activity_report), params: {piazza_activity_report: new_attributes}
+        patch piazza_activity_report_url(piazza_activity_report), params: { piazza_activity_report: new_attributes }
         piazza_activity_report.reload
         skip("Add assertions for updated state")
       end
 
       it "redirects to the piazza_activity_report" do
         piazza_activity_report = PiazzaActivityReport.create! valid_attributes
-        patch piazza_activity_report_url(piazza_activity_report), params: {piazza_activity_report: new_attributes}
+        patch piazza_activity_report_url(piazza_activity_report), params: { piazza_activity_report: new_attributes }
         piazza_activity_report.reload
         expect(response).to redirect_to(piazza_activity_report_url(piazza_activity_report))
       end
@@ -107,7 +107,7 @@ RSpec.describe "/piazza_activity_reports" do
     context "with invalid parameters" do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
         piazza_activity_report = PiazzaActivityReport.create! valid_attributes
-        patch piazza_activity_report_url(piazza_activity_report), params: {piazza_activity_report: invalid_attributes}
+        patch piazza_activity_report_url(piazza_activity_report), params: { piazza_activity_report: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end

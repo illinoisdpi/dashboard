@@ -10,7 +10,7 @@ class User::HeadshotUploader < CarrierWave::Uploader::Base
     store_dir
   end
 
-  process tags: ["headshot"]
+  process tags: [ "headshot" ]
 
   # Validate file size before uploading
   def cache!(new_file)

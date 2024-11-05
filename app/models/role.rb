@@ -15,7 +15,7 @@
 #  index_roles_on_name_and_resource_type_and_resource_id  (name,resource_type,resource_id)
 #
 class Role < ApplicationRecord
-  has_paper_trail skip: [:created_at, :updated_at]
+  has_paper_trail skip: [ :created_at, :updated_at ]
 
   has_and_belongs_to_many :users, join_table: :users_roles
 
@@ -24,7 +24,7 @@ class Role < ApplicationRecord
     optional: true
 
   validates :resource_type,
-    inclusion: {in: Rolify.resource_types},
+    inclusion: { in: Rolify.resource_types },
     allow_nil: true
 
   scopify

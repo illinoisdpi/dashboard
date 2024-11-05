@@ -59,12 +59,12 @@ RSpec.describe "/cohorts" do
     context "with valid parameters" do
       it "creates a new Cohort" do
         expect {
-          post cohorts_url, params: {cohort: valid_attributes}
+          post cohorts_url, params: { cohort: valid_attributes }
         }.to change(Cohort, :count).by(1)
       end
 
       it "redirects to the created cohort" do
-        post cohorts_url, params: {cohort: valid_attributes}
+        post cohorts_url, params: { cohort: valid_attributes }
         expect(response).to redirect_to(cohort_url(Cohort.last))
       end
     end
@@ -72,12 +72,12 @@ RSpec.describe "/cohorts" do
     context "with invalid parameters" do
       it "does not create a new Cohort" do
         expect {
-          post cohorts_url, params: {cohort: invalid_attributes}
+          post cohorts_url, params: { cohort: invalid_attributes }
         }.not_to change(Cohort, :count)
       end
 
       it "renders a response with 422 status (i.e. to display the 'new' template)" do
-        post cohorts_url, params: {cohort: invalid_attributes}
+        post cohorts_url, params: { cohort: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -91,14 +91,14 @@ RSpec.describe "/cohorts" do
 
       it "updates the requested cohort" do
         cohort = Cohort.create! valid_attributes
-        patch cohort_url(cohort), params: {cohort: new_attributes}
+        patch cohort_url(cohort), params: { cohort: new_attributes }
         cohort.reload
         skip("Add assertions for updated state")
       end
 
       it "redirects to the cohort" do
         cohort = Cohort.create! valid_attributes
-        patch cohort_url(cohort), params: {cohort: new_attributes}
+        patch cohort_url(cohort), params: { cohort: new_attributes }
         cohort.reload
         expect(response).to redirect_to(cohort_url(cohort))
       end
@@ -107,7 +107,7 @@ RSpec.describe "/cohorts" do
     context "with invalid parameters" do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
         cohort = Cohort.create! valid_attributes
-        patch cohort_url(cohort), params: {cohort: invalid_attributes}
+        patch cohort_url(cohort), params: { cohort: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
