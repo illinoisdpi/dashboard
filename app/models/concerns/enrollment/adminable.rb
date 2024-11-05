@@ -43,12 +43,12 @@ module Enrollment::Adminable
         field :user do
           queryable true
           sticky true
-          searchable [:canvas_full, :piazza_full]
+          searchable [ :canvas_full, :piazza_full ]
         end
 
         field :cohort do
           queryable true
-          searchable [:name]
+          searchable [ :name ]
         end
       end
 

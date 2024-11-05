@@ -9,7 +9,7 @@ xml.rss version: "2.0" do
       xml.item do
         xml.title article.title
         xml.description article.description
-        xml.pubDate article.published_at.to_s(:rfc822)
+        xml.pubDate article.published_at.to_fs(:rfc822)
         xml.link article.url
         xml.guid article.devto_id
       end

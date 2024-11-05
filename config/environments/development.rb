@@ -1,17 +1,17 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
-  config.hosts += ["news.dpi.local", "dashboard.dpi.local", "rfp.dpi.local"]
+  config.hosts += [ "news.dpi.local", "dashboard.dpi.local", "rfp.dpi.local" ]
 
   # Settings specified here will take precedence over those in config/application.rb.
-  routes.default_url_options = {host: "dashboard.dpi.local", port: 3000}
+  routes.default_url_options = { host: "dashboard.dpi.local", port: 3000 }
 
   Bullet.enable = true
   Bullet.console = true
   Bullet.rails_logger = true
   Bullet.add_footer = true
 
-  config.action_mailer.default_url_options = {host: "dashboard.dpi.local", port: 3000}
+  config.action_mailer.default_url_options = { host: "dashboard.dpi.local", port: 3000 }
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true

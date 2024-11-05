@@ -13,7 +13,7 @@ class DevtoService
       JSON.parse(body)
 
     else
-      puts "Failed to fetch articles for username #{params.dig(:username)}. Response code: #{response.status}"
+      Rails.logger.warn { "Failed to fetch articles for username #{params.dig(:username)}. Response code: #{response.status}" }
       nil
     end
   end
