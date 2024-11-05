@@ -18,7 +18,7 @@ class Slack
     response = http.request(request)
 
     if response.is_a?(Net::HTTPSuccess)
-      Rails.logger.debug "Message sent successfully!"
+      Rails.logger.info "Message sent successfully!"
     else
       raise "Failed to send the message!"
     end
