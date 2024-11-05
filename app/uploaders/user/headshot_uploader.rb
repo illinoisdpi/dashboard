@@ -1,4 +1,3 @@
-# app/uploaders/user/headshot_uploader.rb
 class User::HeadshotUploader < CarrierWave::Uploader::Base
   include Cloudinary::CarrierWave
 
@@ -6,7 +5,7 @@ class User::HeadshotUploader < CarrierWave::Uploader::Base
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
-  # Sets folder in Cloudinary
+  # Sets folder in cloudinary
   def public_id
     store_dir
   end
