@@ -19,7 +19,7 @@ emails = %w[
   homar4@uillinois.edu
 ]
 
-user_info = emails.map { |email| {email: email, password: "password"} }
+user_info = emails.map { |email| { email: email, password: "password" } }
 
 users = User.create(user_info)
 

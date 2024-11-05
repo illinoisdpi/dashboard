@@ -42,7 +42,7 @@ class User < ApplicationRecord
 
   mount_uploader :headshot, HeadshotUploader
 
-  has_paper_trail skip: [:created_at, :updated_at]
+  has_paper_trail skip: [ :created_at, :updated_at ]
 
   rolify
   devise :database_authenticatable, :recoverable, :rememberable, :validatable, :registerable

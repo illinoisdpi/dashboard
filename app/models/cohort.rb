@@ -16,7 +16,7 @@
 class Cohort < ApplicationRecord
   include Adminable
 
-  has_paper_trail skip: [:created_at, :updated_at]
+  has_paper_trail skip: [ :created_at, :updated_at ]
 
   has_many :enrollments, dependent: :destroy
   has_many :piazza_activity_reports, dependent: :destroy
@@ -31,7 +31,7 @@ class Cohort < ApplicationRecord
   validates :generation, presence: true
   validates :number,
     presence: true,
-    uniqueness: {scope: ["generation", "year"]}
+    uniqueness: { scope: [ "generation", "year" ] }
   validates :started_on, presence: true
 
   scope :default_order, -> { order(:year, :generation, :number) }

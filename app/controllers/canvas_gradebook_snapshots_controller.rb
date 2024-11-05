@@ -6,9 +6,9 @@ class CanvasGradebookSnapshotsController < ApplicationController
   # GET /canvas_gradebook_snapshots or /canvas_gradebook_snapshots.json
   def index
     @breadcrumbs = [
-      {content: "Cohorts", href: cohorts_path},
-      {content: @cohort.to_s, href: cohort_path(@cohort)},
-      {content: "Canvas gradebook snapshots", href: cohort_canvas_gradebook_snapshots_path(@cohort)}
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Canvas gradebook snapshots", href: cohort_canvas_gradebook_snapshots_path(@cohort) }
     ]
 
     @canvas_gradebook_snapshots = policy_scope(@cohort.canvas_gradebook_snapshots.default_order)
@@ -17,10 +17,10 @@ class CanvasGradebookSnapshotsController < ApplicationController
   # GET /canvas_gradebook_snapshots/new
   def new
     @breadcrumbs = [
-      {content: "Cohorts", href: cohorts_path},
-      {content: @cohort.to_s, href: cohort_path(@cohort)},
-      {content: "Canvas gradebook snapshots", href: cohort_canvas_gradebook_snapshots_path(@cohort)},
-      {content: "New"}
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Canvas gradebook snapshots", href: cohort_canvas_gradebook_snapshots_path(@cohort) },
+      { content: "New" }
     ]
 
     @canvas_gradebook_snapshot = @cohort.canvas_gradebook_snapshots.build

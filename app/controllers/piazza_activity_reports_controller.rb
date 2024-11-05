@@ -6,9 +6,9 @@ class PiazzaActivityReportsController < ApplicationController
   # GET /piazza_activity_reports or /piazza_activity_reports.json
   def index
     @breadcrumbs = [
-      {content: "Cohorts", href: cohorts_path},
-      {content: @cohort.to_s, href: cohort_path(@cohort)},
-      {content: "Piazza activity reports", href: cohort_piazza_activity_reports_path(@cohort)}
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Piazza activity reports", href: cohort_piazza_activity_reports_path(@cohort) }
     ]
 
     @piazza_activity_reports = policy_scope(@cohort.piazza_activity_reports.default_order)
@@ -17,10 +17,10 @@ class PiazzaActivityReportsController < ApplicationController
   # GET /piazza_activity_reports/1 or /piazza_activity_reports/1.json
   def show
     @breadcrumbs = [
-      {content: "Cohorts", href: cohorts_path},
-      {content: @cohort.to_s, href: cohort_path(@cohort)},
-      {content: "Piazza activity reports", href: cohort_piazza_activity_reports_path(@cohort)},
-      {content: @piazza_activity_report.to_s}
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Piazza activity reports", href: cohort_piazza_activity_reports_path(@cohort) },
+      { content: @piazza_activity_report.to_s }
     ]
     @q = @piazza_activity_report.piazza_activity_breakdowns.ransack(params[:q])
     @piazza_activity_breakdowns = @q.result
@@ -29,10 +29,10 @@ class PiazzaActivityReportsController < ApplicationController
   # GET /piazza_activity_reports/new
   def new
     @breadcrumbs = [
-      {content: "Cohorts", href: cohorts_path},
-      {content: @cohort.to_s, href: cohort_path(@cohort)},
-      {content: "Piazza activity reports", href: cohort_piazza_activity_reports_path(@cohort)},
-      {content: "New"}
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Piazza activity reports", href: cohort_piazza_activity_reports_path(@cohort) },
+      { content: "New" }
     ]
 
     @piazza_activity_report = @cohort.piazza_activity_reports.build

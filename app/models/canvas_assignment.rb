@@ -32,7 +32,7 @@
 class CanvasAssignment < ApplicationRecord
   include Adminable
 
-  has_paper_trail skip: [:created_at, :updated_at]
+  has_paper_trail skip: [ :created_at, :updated_at ]
 
   belongs_to :cohort
   has_many :canvas_submissions
@@ -42,7 +42,7 @@ class CanvasAssignment < ApplicationRecord
   scope :included, -> { where(excluded: false) }
   scope :group_by_highest_position_submission_count, -> {
     joins(:canvas_submissions, :enrollments)
-      .where(enrollments: {role: "student"})
+      .where(enrollments: { role: "student" })
       .where("canvas_assignments.position = (SELECT MAX(position) FROM canvas_assignments INNER JOIN canvas_submissions ON canvas_assignments.id = canvas_submissions.canvas_assignment_id WHERE canvas_submissions.points > 0 AND enrollments.id = canvas_submissions.enrollment_id)")
       .group("canvas_assignments.id", "canvas_assignments.name", "canvas_assignments.position")
       .order("canvas_assignments.position ASC")

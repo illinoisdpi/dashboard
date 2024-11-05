@@ -23,7 +23,7 @@
 class Impression < ApplicationRecord
   include Csvable, Emojiable, Ransackable, Slackable
 
-  has_paper_trail skip: [:created_at, :updated_at]
+  has_paper_trail skip: [ :created_at, :updated_at ]
 
   belongs_to :author, class_name: "User"
   belongs_to :subject, class_name: "Enrollment"
