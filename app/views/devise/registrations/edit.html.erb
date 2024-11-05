@@ -39,11 +39,14 @@
           </div>
 
           <div class="col-12 mb-3">
+            <%= f.label :headshot, class: "form-label" %>
             <% if current_user.headshot? %>
               <%= image_tag current_user.headshot.url, class: "img-fluid mb-2" %>
             <% end %>
-            <%= f.label :headshot, class: "form-label" %>
             <%= f.file_field :headshot %>
+            <small class="form-text text-muted">
+              Image size cannot exceed 10MB.
+            </small>
           </div>
 
           <hr>
