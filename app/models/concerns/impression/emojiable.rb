@@ -2,7 +2,7 @@ module Impression::Emojiable
   extend ActiveSupport::Concern
 
   included do
-    validates :emoji, presence: true, inclusion: { in: EMOJIS.keys, message: "%{value} is not a valid emoji" }
+    validates :emoji, presence: true, inclusion: { in: EMOJIS.keys.map(&:to_s), message: "%{value} is not a valid emoji" }
   end
 
   EMOJIS = {
@@ -33,10 +33,11 @@ module Impression::Emojiable
   }.freeze
 
   CATEGORIES = EMOJIS.values.pluck(:category).uniq.freeze
+  CATEGORIES = EMOJIS.values.pluck(:category).uniq.freeze
 
   %i[category description sentiment].each do |attribute|
     define_method("emoji_#{attribute}") do
-      EMOJIS[emoji][attribute] || "Unknown #{attribute.capitalize}"
+      EMOJIS.dig(emoji.to_sym, attribute) || "Unknown #{attribute.capitalize}"
     end
   end
 
