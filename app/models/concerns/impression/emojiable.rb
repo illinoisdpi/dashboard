@@ -32,9 +32,6 @@ module Impression::Emojiable
     "💢": { sentiment: :negative, category: "communication", description: "negative response to supervision" }
   }.freeze
 
-  debugger
-
-  CATEGORIES = EMOJIS.values.pluck(:category).uniq.freeze
   CATEGORIES = EMOJIS.values.pluck(:category).uniq.freeze
 
   %i[category description sentiment].each do |attribute|
