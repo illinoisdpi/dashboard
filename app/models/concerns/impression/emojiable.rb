@@ -37,7 +37,7 @@ module Impression::Emojiable
 
   %i[category description sentiment].each do |attribute|
     define_method("emoji_#{attribute}") do
-      EMOJIS.dig(emoji.to_sym, attribute) || "Unknown #{attribute.capitalize}"
+      EMOJIS.dig(emoji, attribute) || "Unknown #{attribute.capitalize}"
     end
   end
 
