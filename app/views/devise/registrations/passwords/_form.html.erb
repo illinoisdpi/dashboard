@@ -2,8 +2,7 @@
 
 <% was_validated = resource.errors.any? %>
 
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { id: "resource_name}_form" }) do |f| %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { id: "#{resource_name}_form", html: { data: { turbo: false } } }) do |f| %>
   <div class="mb-3">
     <% email_was_invalid = resource.errors.include?(:email) %>
 
