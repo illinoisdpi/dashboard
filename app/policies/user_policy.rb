@@ -30,8 +30,8 @@ class UserPolicy < ApplicationPolicy
   def change_password?
     user.admin? || (record.is_a?(User) && user == record)
   end
-# This is only in the context of creating an enrollment - might need to take another look at this in the future
-  def search?
+
+  def search_by_name?
     user.admin? || user.instructor? || user.teaching_assistant?
   end
 end

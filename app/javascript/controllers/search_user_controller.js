@@ -4,14 +4,16 @@ import { Controller } from '@hotwired/stimulus';
 export default class extends Controller {
   static targets = ['inputField', 'optionsList', 'hiddenField', 'overlay'];
 
-  search() {
+  search_by_name() {
     // Clear hiddenField when input is empty to trigger validation if blank form is submitted
     if (this.inputFieldTarget.value === '') {
       this.hiddenFieldTarget.value = '';
     }
 
     const inputFieldValue = this.inputFieldTarget.value;
-    const url = `/users/search?name=${encodeURIComponent(inputFieldValue)}`;
+    const url = `/users/search_by_name?name=${encodeURIComponent(
+      inputFieldValue
+    )}`;
 
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
@@ -28,16 +30,13 @@ export default class extends Controller {
         })
         .then((html) => {
           Turbo.renderStreamMessage(html);
-          this.toggleListVisibility();
-          this.optionsListTarget.style.display = 'block';
-          this.overlayTarget.style.display = 'block';
+          this.toggleListVisibility(true); // Show the options list
         })
         .catch((error) => {
           console.error('Fetch error:', error);
           this.optionsListTarget.innerHTML =
             '<div class="option">Search failed. Please try again.</div>';
-          this.optionsListTarget.style.display = 'block';
-          this.overlayTarget.style.display = 'block';
+          this.toggleListVisibility(true);
         });
     }, 250);
   }
@@ -48,12 +47,13 @@ export default class extends Controller {
     if (optionElement) {
       this.inputFieldTarget.value = optionElement.dataset.userName;
       this.hiddenFieldTarget.value = optionElement.dataset.userId;
+      this.toggleListVisibility(false);
       this.inputFieldTarget.blur();
     }
   }
 
-  toggleListVisibility() {
-    if (this.optionsListIsNotVisible()) {
+  toggleListVisibility(show = true) {
+    if (show) {
       this.optionsListTarget.style.display = 'block';
       this.overlayTarget.style.display = 'block';
     } else {

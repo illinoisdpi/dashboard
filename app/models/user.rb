@@ -38,7 +38,7 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class User < ApplicationRecord
-  include Adminable, Blogable, Roleable
+  include Adminable, Blogable, Ransackable, Roleable
 
   mount_uploader :headshot, HeadshotUploader
 
@@ -56,11 +56,13 @@ class User < ApplicationRecord
 
   scope :default_order, -> { order(:first_name) }
 
-  # Search for users by first name or last name
-  scope :search, ->(name) {
-    where("CONCAT(first_name, ' ', last_name) ILIKE ?", "%#{sanitize_sql_like(name)}%")
+  scope :search_by_name, ->(name) {
+    where("CONCAT(first_name, ' ', last_name) ILIKE ?", "%#{name}%")
   }
 
+  def name
+    to_s
+  end
   def to_s
     return full_name if full_name.present?
 
@@ -71,7 +73,4 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
-  def name
-    to_s
-  end
 end

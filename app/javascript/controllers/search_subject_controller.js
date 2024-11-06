@@ -22,7 +22,6 @@ export default class extends Controller {
       url = `/impressions/search?subject_search=${encodeURIComponent(inputFieldValue)}`
     }
 
-
     clearTimeout(this.timeout)
     this.timeout = setTimeout(() => {
       
