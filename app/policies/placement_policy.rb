@@ -30,4 +30,8 @@ class PlacementPolicy < ApplicationPolicy
   def search?
     true
   end
+
+  def show_salary?
+    user.admin? || user.instructor? || user.staff?
+  end
 end

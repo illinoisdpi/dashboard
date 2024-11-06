@@ -1,4 +1,4 @@
-class PlacementPolicy < ApplicationPolicy
+class OutcomePolicy < ApplicationPolicy
   def index?
     true
   end

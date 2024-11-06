@@ -23,6 +23,3 @@ class Placement < ApplicationRecord
 
   scope :default_order, -> { order(start_date: :desc) }
 end
-
-
-# TODO: discuss Pundit policies for placements, e.g., who within DPI should and shouldn't be able to see headshots/salary, etc.

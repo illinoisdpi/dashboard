@@ -4,8 +4,10 @@
       <div><img src="<%= placement.user.headshot %>"></div>
     </div>
     <div class="col-md-6">
-      <div><b>Salary:</b></div>
-      <div><%= number_to_currency(placement.salary) %></div>
+      <% if policy(placement).show_salary? %>
+        <div><b>Salary:</b></div>
+        <div><%= number_to_currency(placement.salary) %></div>
+      <% end %>
       <div><b>Role Category:</b></div>
       <div><%= placement.job_description.role_category %></div>
       <div><b>Start Date:</b></div>
