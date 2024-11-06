@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_10_181133) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_08_174316) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -119,7 +119,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_10_181133) do
   create_table "cohorts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.integer "year", null: false
-    t.integer "generation", null: false
+    t.integer "month", null: false
     t.integer "number", null: false
     t.string "piazza_course_number"
     t.datetime "created_at", null: false
