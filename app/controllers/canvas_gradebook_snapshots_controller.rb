@@ -17,35 +17,7 @@ class CanvasGradebookSnapshotsController < ApplicationController
   def show
     respond_to do |format|
       format.html
-      format.csv do
-        headers['Content-Disposition'] = "attachment; filename=\"canvas_gradebook_snapshot.csv\""
-        headers['Content-Type'] ||= 'text/csv'
-  
-        csv_data = CSV.generate do |csv|
-          canvas_assignments = @canvas_gradebook_snapshot.canvas_assignments.default_order
-  
-          headers = ['User', 'Role'] + canvas_assignments.unscope(:order).pluck(:name)
-          csv << headers
-  
-          points_possible_row = ['Points Possible', ''] + canvas_assignments.unscope(:order).pluck(:points_possible)
-          csv << points_possible_row
-  
-          @canvas_gradebook_snapshot.enrollments.each do |enrollment|
-            canvas_submissions = @canvas_gradebook_snapshot.canvas_submissions.where(enrollment: enrollment).index_by(&:canvas_assignment_id)
-            row = [
-              enrollment.user.to_s,
-              enrollment.role.to_s,
-            ]
-            canvas_assignments.each do |canvas_assignment|
-              points = canvas_submissions[canvas_assignment.id]&.points
-              row << points
-            end
-            csv << row
-          end
-        end
-  
-        render plain: csv_data
-      end
+      format.csv { send_data(CanvasGradebookSnapshot.to_csv(@canvas_gradebook_snapshot), filename: @canvas_gradebook_snapshot.csv_filename, type: "text/csv") }
     end
   end
   
