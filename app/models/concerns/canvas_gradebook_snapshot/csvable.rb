@@ -28,26 +28,30 @@ module CanvasGradebookSnapshot::Csvable
     def extract_downloaded_at(csv_filename)
       DateTime.strptime(csv_filename.split("_").at(0), "%Y-%m-%dT%H%M")
     end
+
     def to_csv(canvas_gradebook_snapshot)
       CSV.generate do |csv|
-        canvas_assignments = canvas_gradebook_snapshot.canvas_assignments.default_order
-    
-        headers = ['User', 'Role'] + canvas_assignments.unscope(:order).pluck(:name)
+        canvas_assignments = canvas_gradebook_snapshot.canvas_assignments.unscope(:order).to_a
+
+        headers = ['User', 'Role'] + canvas_assignments.map(&:name)
         csv << headers
-    
-        points_possible_row = ['Points Possible', ''] + canvas_assignments.unscope(:order).pluck(:points_possible)
+
+        points_possible_row = ['Points Possible', ''] + canvas_assignments.map(&:points_possible)
         csv << points_possible_row
-    
+
         canvas_gradebook_snapshot.enrollments.each do |enrollment|
           canvas_submissions = canvas_gradebook_snapshot.canvas_submissions.where(enrollment: enrollment).index_by(&:canvas_assignment_id)
+
           row = [
             enrollment.user.to_s,
             enrollment.role.to_s,
           ]
+
           canvas_assignments.each do |canvas_assignment|
-            points = canvas_submissions[canvas_assignment.id]&.points
+            points = canvas_submissions[canvas_assignment.id]&.points || ''
             row << points
           end
+
           csv << row
         end
       end
