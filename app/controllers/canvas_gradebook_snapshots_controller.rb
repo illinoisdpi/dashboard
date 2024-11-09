@@ -14,13 +14,13 @@ class CanvasGradebookSnapshotsController < ApplicationController
     @canvas_gradebook_snapshots = policy_scope(@cohort.canvas_gradebook_snapshots.default_order)
   end
 
+  # GET /canvas_gradebook_snapshots/1 or /canvas_gradebook_snapshots/1.json
   def show
     respond_to do |format|
       format.html
       format.csv { send_data(CanvasGradebookSnapshot.to_csv(@canvas_gradebook_snapshot), filename: @canvas_gradebook_snapshot.csv_filename, type: "text/csv") }
     end
   end
-  
 
   # GET /canvas_gradebook_snapshots/new
   def new
