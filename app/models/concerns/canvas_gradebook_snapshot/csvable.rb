@@ -30,17 +30,19 @@ module CanvasGradebookSnapshot::Csvable
     end
 
     def to_csv(canvas_gradebook_snapshot)
+      canvas_submissions_by_enrollment = canvas_gradebook_snapshot.canvas_submissions.group_by(&:enrollment_id)
+
       CSV.generate do |csv|
         canvas_assignments = canvas_gradebook_snapshot.canvas_assignments.unscope(:order).to_a
 
-        headers = ['User', 'Role'] + canvas_assignments.map(&:name)
+        headers = ["User", "Role"] + canvas_assignments.map(&:name)
         csv << headers
 
-        points_possible_row = ['Points Possible', ''] + canvas_assignments.map(&:points_possible)
+        points_possible_row = ["Points Possible", ""] + canvas_assignments.map(&:points_possible)
         csv << points_possible_row
 
         canvas_gradebook_snapshot.enrollments.each do |enrollment|
-          canvas_submissions = canvas_gradebook_snapshot.canvas_submissions.where(enrollment: enrollment).index_by(&:canvas_assignment_id)
+          canvas_submissions = canvas_submissions_by_enrollment[enrollment.id].index_by(&:canvas_assignment_id)
 
           row = [
             enrollment.user.to_s,
@@ -48,14 +50,14 @@ module CanvasGradebookSnapshot::Csvable
           ]
 
           canvas_assignments.each do |canvas_assignment|
-            points = canvas_submissions[canvas_assignment.id]&.points || ''
+            points = canvas_submissions[canvas_assignment.id]&.points || ""
             row << points
           end
 
           csv << row
         end
       end
-    end    
+    end
   end
 
   private
