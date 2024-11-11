@@ -12,9 +12,11 @@
                 <h5>
                   <strong><%= placement.job_description.title %></strong> - <%= placement.company.name %>
                 </h5>
-                  <% if placement.by_dpi? %>
+                <% if placement.by_dpi? %>
+                  <div class="col-auto">
                     <%= image_tag "logo.svg", class: "dpi-badge" %>
-                  <% end %>
+                  </div>
+                <% end %>
                 <div><%= placement.user %></div>
               </div>
             </div>
