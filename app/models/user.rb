@@ -60,9 +60,6 @@ class User < ApplicationRecord
     where("CONCAT(first_name, ' ', last_name) ILIKE ?", "%#{name}%")
   }
 
-  def name
-    to_s
-  end
   def to_s
     return full_name if full_name.present?
 
@@ -73,4 +70,7 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  def name
+    to_s
+  end
 end

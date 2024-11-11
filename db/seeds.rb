@@ -36,16 +36,6 @@ users = [
     email: "homar4@uillinois.edu",
     first_name: "Haneen",
     last_name: "Omar"
-  },
-  {
-    email: "jfoil@uillinois.edu",
-    first_name: "Jennifer",
-    last_name: "Foil"
-  },
-  {
-    email: "aparan3@uic.edu",
-    first_name: "Anantha",
-    last_name: "Parankusham"
   }
 ]
 
