@@ -9,6 +9,11 @@
                 <h5><strong><%= placement.job_description.title %></strong> - <%= placement.company.name %></h5>
                 <div><%= placement.user %></div>
               </div>
+              <% if placement.by_dpi? %>
+                <div class="col-auto">
+                  <%= image_tag "logo.svg", class: "dpi-badge" %>
+                </div>
+              <% end %>
               <div class="col-auto d-flex align-items-center">
                 <i class="fa-solid fa-chevron-down fa-fw"></i>
               </div>
@@ -29,4 +34,6 @@
     <% end %>
   <% end %>
 </div>
-</div> <!-- TODO: figure out why this extra div is needed to close card-mb-2 properly in index.html.erb -->
+</div>
+
+ <!-- TODO: figure out why this extra div is needed to close card-mb-2 properly in index.html.erb -->

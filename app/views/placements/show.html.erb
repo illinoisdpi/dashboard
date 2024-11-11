@@ -3,6 +3,11 @@
     <div class="card">
       <div class="card-header d-flex align-items-center">
         <div class="h6 mb-0 me-auto"><%= @placement.user %> - <%= @placement.company.name %></div>
+        <div class="col-auto">
+          <% if @placement.by_dpi? %>
+            <%= image_tag "logo.svg", class: "dpi-badge" %>
+          <% end %>
+        </div>
         <% if policy(@placement).edit? %>
           <%= link_to edit_placement_path(@placement), class: "ms-2 text-decoration-none", data: { turbo: false } do %>
             <i class="fa-solid fa-pen-to-square"></i>
