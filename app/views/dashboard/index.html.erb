@@ -104,7 +104,7 @@
         <div class="card-header d-flex align-items-center">
           <h2 class="h6 mb-0 me-auto">Recent Placements</h2>
           <div>
-            <%= link_to outcomes_root_url do %> <!-- Do you want this to link to outcomes.dpi.dev or dashboard#placements#index? -->
+            <%= link_to outcomes_root_url do %>
               See More
             <% end %>
           </div>
@@ -114,7 +114,7 @@
             <%= link_to placement, class: "list-group-item" do %>
               <div class="row align-items-center">
                 <div class="col-3 col-sm-2">
-                  <img class="img-thumbnail rounded-circle" src="<%= placement.user.headshot %>">
+                  <img class="headshot-bound-thumb" src="<%= placement.user.headshot %>">
                 </div>
                 <div class="col-8 col-sm-9 col-xxl-9">
                   <h5><%= placement.job_description.title %> - <%= placement.company.name %></h5>

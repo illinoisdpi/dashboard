@@ -23,14 +23,9 @@
     <div class="col-lg-6">
       <%= turbo_frame_tag "placement" do %>
         <% if @placement %>
-          <%= render "placements/placement", placement: @placement %>
+          <%= render "placements/placement", placement: placement %>
         <% end %>
       <% end %>
-      <div class="col-md-6">
-        <% if policy(@placements).new? %>
-          <%= link_to "Create new placement", new_placement_path, class: "btn btn-outline-secondary me-2" %>
-        <% end %>
-      </div>
     </div>
   </div>
 <% else %>

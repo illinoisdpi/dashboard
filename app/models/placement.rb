@@ -3,6 +3,7 @@
 # Table name: placements
 #
 #  id                 :uuid             not null, primary key
+#  by_dpi             :boolean          default(TRUE)
 #  end_date           :date
 #  salary             :string
 #  start_date         :date

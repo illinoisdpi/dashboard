@@ -188,7 +188,8 @@ namespace :dev do
           cohort: cohort,
           company: companies.sample,
           job_description: job_descriptions.sample,
-          user: users.sample
+          user: users.sample,
+          by_dpi: [ true, false ].sample
         )
 
         if placement.errors.any?
