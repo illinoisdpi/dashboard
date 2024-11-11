@@ -18,7 +18,7 @@ class CanvasGradebookSnapshotsController < ApplicationController
   def show
     respond_to do |format|
       format.html
-      format.csv { send_data(CanvasGradebookSnapshot.to_csv(@canvas_gradebook_snapshot), filename: @canvas_gradebook_snapshot.csv_filename, type: "text/csv") }
+      format.csv { send_data(@canvas_gradebook_snapshot.to_csv, filename: @canvas_gradebook_snapshot.csv_filename, type: "text/csv") }
     end
   end
 

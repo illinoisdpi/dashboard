@@ -28,34 +28,34 @@ module CanvasGradebookSnapshot::Csvable
     def extract_downloaded_at(csv_filename)
       DateTime.strptime(csv_filename.split("_").at(0), "%Y-%m-%dT%H%M")
     end
+  end
 
-    def to_csv(canvas_gradebook_snapshot)
-      canvas_submissions_by_enrollment = canvas_gradebook_snapshot.canvas_submissions.group_by(&:enrollment_id)
+  def to_csv
+    canvas_submissions_by_enrollment = self.canvas_submissions.group_by(&:enrollment_id)
 
-      CSV.generate do |csv|
-        canvas_assignments = canvas_gradebook_snapshot.canvas_assignments.unscope(:order).to_a
+    CSV.generate do |csv|
+      canvas_assignments = self.canvas_assignments.unscope(:order).to_a
 
-        headers = ["User", "Role"] + canvas_assignments.map(&:name)
-        csv << headers
+      headers = ["User", "Role"] + canvas_assignments.map(&:name)
+      csv << headers
 
-        points_possible_row = ["Points Possible", ""] + canvas_assignments.map(&:points_possible)
-        csv << points_possible_row
+      points_possible_row = ["Points Possible", ""] + canvas_assignments.map(&:points_possible)
+      csv << points_possible_row
 
-        canvas_gradebook_snapshot.enrollments.each do |enrollment|
-          canvas_submissions = canvas_submissions_by_enrollment[enrollment.id].index_by(&:canvas_assignment_id)
+      self.enrollments.each do |enrollment|
+        canvas_submissions = canvas_submissions_by_enrollment[enrollment.id].index_by(&:canvas_assignment_id)
 
-          row = [
-            enrollment.user.to_s,
-            enrollment.role.to_s,
-          ]
+        row = [
+          enrollment.user.to_s,
+          enrollment.role.to_s,
+        ]
 
-          canvas_assignments.each do |canvas_assignment|
-            points = canvas_submissions[canvas_assignment.id]&.points || ""
-            row << points
-          end
-
-          csv << row
+        canvas_assignments.each do |canvas_assignment|
+          points = canvas_submissions[canvas_assignment.id]&.points || ""
+          row << points
         end
+
+        csv << row
       end
     end
   end
