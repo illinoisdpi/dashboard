@@ -119,7 +119,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_08_190955) do
   create_table "cohorts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.integer "year", null: false
-    t.integer "generation", null: false
+    t.integer "month", null: false
     t.integer "number", null: false
     t.string "piazza_course_number"
     t.datetime "created_at", null: false
