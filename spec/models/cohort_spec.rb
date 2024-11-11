@@ -4,7 +4,7 @@
 #
 #  id                   :uuid             not null, primary key
 #  canvas_shortname     :string
-#  generation           :integer          not null
+#  month                :integer          not null
 #  name                 :string
 #  number               :integer          not null
 #  piazza_course_number :string

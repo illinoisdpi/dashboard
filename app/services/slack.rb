@@ -13,12 +13,12 @@ class Slack
 
     request = Net::HTTP::Post.new(uri.path)
     request["Content-Type"] = "application/json"
-    request.body = {text: text}.to_json
+    request.body = { text: text }.to_json
 
     response = http.request(request)
 
     if response.is_a?(Net::HTTPSuccess)
-      puts "Message sent successfully!"
+      Rails.logger.info "Message sent successfully!"
     else
       raise "Failed to send the message!"
     end

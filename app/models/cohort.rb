@@ -4,7 +4,7 @@
 #
 #  id                   :uuid             not null, primary key
 #  canvas_shortname     :string
-#  generation           :integer          not null
+#  month                :integer          not null
 #  name                 :string
 #  number               :integer          not null
 #  piazza_course_number :string
@@ -16,7 +16,7 @@
 class Cohort < ApplicationRecord
   include Adminable
 
-  has_paper_trail skip: [:created_at, :updated_at]
+  has_paper_trail skip: [ :created_at, :updated_at ]
 
   has_many :enrollments, dependent: :destroy
   has_many :piazza_activity_reports, dependent: :destroy
@@ -27,19 +27,19 @@ class Cohort < ApplicationRecord
   has_many :users, through: :enrollments, source: :user
 
   validates :year, presence: true
-  validates :generation, presence: true
+  validates :month, presence: true
   validates :number,
     presence: true,
-    uniqueness: {scope: ["generation", "year"]}
+    uniqueness: {scope: ["month", "year"]}
   validates :started_on, presence: true
 
-  scope :default_order, -> { order(:year, :generation, :number) }
+  scope :default_order, -> { order(:year, :month, :number) }
 
   def to_s
     "[#{code}] #{name}"
   end
 
   def code
-    "#{year}-#{generation}.#{number}"
+    "#{year}-#{month}.#{number}"
   end
 end

@@ -5,7 +5,7 @@ RSpec.describe "cohorts/new" do
     assign(:cohort, Cohort.new(
       name: "MyString",
       year: 1,
-      generation: 1,
+      month: 1,
       number: 1,
       piazza_course_number: "MyString"
     ))
@@ -19,7 +19,7 @@ RSpec.describe "cohorts/new" do
 
       assert_select "input[name=?]", "cohort[year]"
 
-      assert_select "input[name=?]", "cohort[generation]"
+      assert_select "input[name=?]", "cohort[month]"
 
       assert_select "input[name=?]", "cohort[number]"
 

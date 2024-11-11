@@ -31,17 +31,10 @@
     <div class="mb-3" data-controller="emoji-input">
       <%= form.label :emoji, class: "form-label" %>
       <%= form.text_field :emoji, class: "form-control", "aria-described-by": "emoji-help", "data-emoji-input-target": "textInput" %>
-      <div id="emoji-help" class="form-text">
-        Please select an emoji to best describe this impression. You can use the emoji keyboard to select an emoji.<br/>
-        macOS (control ⌃ + command ⌘ + spacebar)<br/>
-        Windows (Windows logo key + .)<br/>
-      </div>
-      <%# Positive & Negative Emoji Impression cards%>
+      <br/>
       <div class="row">
-        <%# Positive impression emoji buttons%>
-        <%= render 'impressions/emoji_button_card', card_header: 'Positive Impression', emoji_buttons: Impression::POSITIVE_EMOJIS, bs_border_class: "border-success", bs_text_class: "text-success" %>
-        <%# Negative impression emoji buttons%>
-        <%= render 'impressions/emoji_button_card', card_header: 'Negative Impression', emoji_buttons: Impression::NEGATIVE_EMOJIS, bs_border_class: "border-danger", bs_text_class: "text-danger"  %>
+        <%= render 'impressions/emoji_button_card', card_header: 'Positive Impression', emojis: Impression::Emojiable.positive_emojis, bs_border_class: "border-success", bs_text_class: "text-success" %>
+        <%= render 'impressions/emoji_button_card', card_header: 'Negative Impression', emojis: Impression::Emojiable.negative_emojis, bs_border_class: "border-danger", bs_text_class: "text-danger"  %>
       </div>
       <div class="mb-3">
         <%= form.label :content, class: "form-label" %>

@@ -5,7 +5,7 @@ class CohortsController < ApplicationController
   # GET /cohorts or /cohorts.json
   def index
     @breadcrumbs = [
-      {content: "Cohorts", href: cohorts_path}
+      { content: "Cohorts", href: cohorts_path }
     ]
 
     @cohorts = policy_scope(Cohort).all.default_order
@@ -14,8 +14,8 @@ class CohortsController < ApplicationController
   # GET /cohorts/1 or /cohorts/1.json
   def show
     @breadcrumbs = [
-      {content: "Cohorts", href: cohorts_path},
-      {content: @cohort.to_s, href: cohort_path(@cohort)}
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) }
     ]
   end
 
@@ -70,14 +70,14 @@ class CohortsController < ApplicationController
     render json: @cohort
       .canvas_assignments
       .group_by_highest_position_submission_count
-      .map { |canvas_assignment| [canvas_assignment.name, canvas_assignment.student_count] }
+      .map { |canvas_assignment| [ canvas_assignment.name, canvas_assignment.student_count ] }
   end
 
   def canvas_point_total_most_recent
     render json:  @cohort
       .enrollments
       .with_recent_canvas_points(@cohort)
-      .map { |enrollment| [enrollment.to_s, enrollment.total_points] }
+      .map { |enrollment| [ enrollment.to_s, enrollment.total_points ] }
   end
 
   private
@@ -89,6 +89,6 @@ class CohortsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def cohort_params
-    params.require(:cohort).permit(:name, :started_on, :year, :generation, :number, :piazza_course_number, :canvas_shortname)
+    params.require(:cohort).permit(:name, :started_on, :year, :month, :number, :piazza_course_number, :canvas_shortname)
   end
 end

@@ -225,6 +225,9 @@ GEM
     letter_opener (1.10.0)
       launchy (>= 2.2, < 4)
     lint_roller (1.1.0)
+    listen (3.9.0)
+      rb-fsevent (~> 0.10, >= 0.10.3)
+      rb-inotify (~> 0.9, >= 0.9.10)
     llhttp-ffi (0.5.0)
       ffi-compiler (~> 1.0)
       rake (~> 13.0)
@@ -341,6 +344,11 @@ GEM
       simple_form (>= 5.0.1)
       sprockets-rails
       terminal-table
+    rails_live_reload (0.3.6)
+      listen
+      nio4r
+      railties
+      websocket-driver
     railties (7.0.8.4)
       actionpack (= 7.0.8.4)
       activesupport (= 7.0.8.4)
@@ -354,6 +362,9 @@ GEM
       activerecord (>= 6.1.5)
       activesupport (>= 6.1.5)
       i18n
+    rb-fsevent (0.11.2)
+    rb-inotify (0.11.1)
+      ffi (~> 1.0)
     rdoc (6.7.0)
       psych (>= 4.0.0)
     redis (4.8.1)
@@ -551,6 +562,7 @@ DEPENDENCIES
   rails-erd
   rails_admin (~> 3.1)
   rails_db (>= 2.3.1)
+  rails_live_reload
   ransack
   redis (~> 4.0)
   rolify (~> 6.0)
