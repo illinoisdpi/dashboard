@@ -6,14 +6,14 @@ RSpec.describe "cohorts/index" do
       Cohort.create!(
         name: "Name",
         year: 2,
-        generation: 3,
+        month: 3,
         number: 4,
         piazza_course_number: "Piazza Course Number"
       ),
       Cohort.create!(
         name: "Name",
         year: 2,
-        generation: 3,
+        month: 3,
         number: 4,
         piazza_course_number: "Piazza Course Number"
       )
