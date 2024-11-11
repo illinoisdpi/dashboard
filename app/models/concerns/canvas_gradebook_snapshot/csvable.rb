@@ -34,7 +34,7 @@ module CanvasGradebookSnapshot::Csvable
     canvas_submissions_by_enrollment = self.canvas_submissions.group_by(&:enrollment_id)
 
     CSV.generate do |csv|
-      canvas_assignments = self.canvas_assignments.unscope(:order).to_a
+      canvas_assignments = self.canvas_assignments.unscope(:order).order(:position).to_a
 
       headers = ["User", "Role"] + canvas_assignments.map(&:name)
       csv << headers
