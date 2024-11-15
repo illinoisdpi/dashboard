@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_08_190955) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_10_181133) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -256,14 +256,18 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_08_190955) do
   create_table "placements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.date "start_date"
     t.date "end_date"
-    t.uuid "cohort_id"
-    t.uuid "job_description_id"
-    t.uuid "user_id"
-    t.uuid "company_id"
+    t.uuid "cohort_id", null: false
+    t.uuid "job_description_id", null: false
+    t.uuid "user_id", null: false
+    t.uuid "company_id", null: false
     t.string "salary"
+    t.boolean "by_dpi", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "by_dpi", default: true
+    t.index ["cohort_id"], name: "index_placements_on_cohort_id"
+    t.index ["company_id"], name: "index_placements_on_company_id"
+    t.index ["job_description_id"], name: "index_placements_on_job_description_id"
+    t.index ["user_id"], name: "index_placements_on_user_id"
   end
 
   create_table "rfp_idea_submissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -351,4 +355,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_08_190955) do
   add_foreign_key "piazza_activity_breakdowns", "piazza_activity_reports"
   add_foreign_key "piazza_activity_reports", "cohorts"
   add_foreign_key "piazza_activity_reports", "users"
+  add_foreign_key "placements", "cohorts"
+  add_foreign_key "placements", "companies"
+  add_foreign_key "placements", "job_descriptions"
+  add_foreign_key "placements", "users"
 end
