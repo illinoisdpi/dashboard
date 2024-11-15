@@ -95,6 +95,10 @@ class Enrollment < ApplicationRecord
     canvas_submissions.sum(:points)
   end
 
+  def update_canvas_full_points(snapshot)
+    update_column(:canvas_full_points, snapshot.full_points?(self))
+  end
+
   delegate :education,
     :github_username,
     :devto_username,
