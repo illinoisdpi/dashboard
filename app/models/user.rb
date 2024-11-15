@@ -57,6 +57,10 @@ class User < ApplicationRecord
 
   scope :default_order, -> { order(:first_name) }
 
+  scope :search_by_name, ->(name) {
+    where("CONCAT(first_name, ' ', last_name) ILIKE ?", "%#{name}%")
+  }
+
   def to_s
     return full_name if full_name.present?
 

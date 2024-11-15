@@ -15,10 +15,6 @@ class EnrollmentPolicy < ApplicationPolicy
     user.admin? || user.instructor?
   end
 
-  def edit_user?
-    user.admin? || user.instructor?
-  end
-
   def update?
     user.admin? || user.instructor? || record.user == user
   end
