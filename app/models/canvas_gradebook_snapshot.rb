@@ -40,4 +40,22 @@ class CanvasGradebookSnapshot < ApplicationRecord
   def downloaded_at_humanized
     downloaded_at.strftime("%Y-%m-%d")
   end
+
+  def total_points_for(enrollment)
+    canvas_submissions.where(enrollment: enrollment).sum(:points)
+  end
+
+  def total_points_possible_for(enrollment)
+    enrollment.cohort.canvas_assignments.included.sum(:points_possible)
+  end
+
+  def full_points?(enrollment)
+    total_points_for(enrollment) >= total_points_possible_for(enrollment)
+  end
+
+  after_create_commit { UpdateCanvasFullPointsForAllEnrollmentsJob.perform_later(self) }
+
+  def update_canvas_full_points
+    enrollments.each { |enrollment| enrollment.update_canvas_full_points(self) }
+  end
 end

@@ -3,6 +3,7 @@
 # Table name: enrollments
 #
 #  id                             :uuid             not null, primary key
+#  canvas_full_points             :boolean          default(FALSE), not null
 #  career_attendance              :integer          default(0)
 #  career_calendar_management     :integer          default(0)
 #  career_customer_service        :integer          default(0)
@@ -92,6 +93,10 @@ class Enrollment < ApplicationRecord
 
   def total_points
     canvas_submissions.sum(:points)
+  end
+
+  def update_canvas_full_points(snapshot)
+    update_column(:canvas_full_points, snapshot.full_points?(self))
   end
 
   delegate :education,

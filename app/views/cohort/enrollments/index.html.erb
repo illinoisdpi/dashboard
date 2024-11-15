@@ -18,6 +18,9 @@
             <div class="d-flex align-items-center" data-bs-toggle="collapse" data-bs-target="#enrollment-<%= enrollment.id %>-links" aria-expanded="false" aria-controls="enrollment-<%= enrollment.id %>-links">
               <div class="me-auto d-flex align-items-baseline font-monospace">
                 <%= enrollment.to_s %>
+                <% if enrollment.canvas_full_points? %>
+                  💯
+                <% end %>
               </div>
               <div>
               <% if enrollment.github_username.present? %>

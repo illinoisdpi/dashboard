@@ -175,6 +175,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_08_174316) do
     t.text "staff_areas_for_growth"
     t.text "skills_development"
     t.string "technical_rating"
+    t.boolean "canvas_full_points", default: false, null: false
     t.index ["cohort_id"], name: "index_enrollments_on_cohort_id"
     t.index ["id_from_canvas"], name: "index_enrollments_on_id_from_canvas"
     t.index ["user_id", "cohort_id"], name: "index_enrollments_on_user_id_and_cohort_id", unique: true

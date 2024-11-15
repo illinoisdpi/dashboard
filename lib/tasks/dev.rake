@@ -12,10 +12,11 @@ namespace :dev do
   desc "Hydrate the database with sample data"
   task prime: :environment do
     Time.use_zone("America/Chicago") do
+      puts "Creating initial users..."
       usernames = %w[alice bob carol]
 
       users = []
-
+      # not clear why these users are being created - the users that matter are being created in seeds.rb, right?
       usernames.each do |username|
         users << User.create(
           email: "#{username}@example.com",
@@ -25,7 +26,8 @@ namespace :dev do
           last_name: "Example"
         )
       end
-
+      puts "Initial users created!"
+      puts "Creating two sample cohorts..."
       cohort = Cohort.create(
         year: 2022,
         month: 1,
@@ -34,6 +36,7 @@ namespace :dev do
         canvas_shortname: "WE-2022-1.2-SDF",
         started_on: "September 19th, 2022"
       )
+      puts "Faker-based Sample Cohort created!"
 
       if cohort.errors.any?
         ap cohort.errors.full_messages
@@ -110,6 +113,7 @@ namespace :dev do
           published_at: Faker::Time.between(from: DateTime.now - 365, to: DateTime.now),
           social_image: Faker::Avatar.image(set: "set2", bgset: "bg1")
         )
+        puts "Generating Sample Cohort user data..."
 
         User.with_role(:admin).each do |admin|
           5.times do |i|
@@ -123,8 +127,11 @@ namespace :dev do
           end
         end
       end
+      puts "First Sample Cohort data populated"
 
       cohort_start_date = Date.parse("2023-01-30")
+
+      puts "Uploading Piazza files..."
 
       6.times do |i|
         uploaded_file = ActionDispatch::Http::UploadedFile.new(
@@ -139,8 +146,9 @@ namespace :dev do
           csv_file: uploaded_file,
           user: users.sample
         )
+        puts "Uploaded Piazza file #{i}"
       end
-
+      puts "Uploading gradebook snapshots for Sample Cohort..."
       1.upto(4) do |i|
         filename = "2022-0#{i}-01T1#{i}00_Grades-WE-2022-1.2-SDF.csv"
         csv_file = ActionDispatch::Http::UploadedFile.new(
@@ -154,7 +162,9 @@ namespace :dev do
           user: users.sample,
           csv_file:
         )
+        puts "Uploaded gradebook snapshot #{i}"
       end
     end
+    puts "Sample data task complete!!!"
   end
 end
