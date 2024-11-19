@@ -1,0 +1,51 @@
+<% form_html_options = { method: :put, multipart: true, novalidate: true, class: "row g-3 mb-3" } %>
+<% was_validated = resource.errors.any? %>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { id: "#{resource_name}_form", class: "needs-validation", novalidate: true }) do |f| %>
+  <div class="mb-3">
+    <%= f.label :email, class: "form-label" %>
+    <%= f.email_field :email, class: "form-control #{'is-invalid' if resource.errors.include?(:email)}", placeholder: "Enter your email" %>
+    <% if resource.errors.include?(:email) %>
+      <div class="invalid-feedback">
+        <%= resource.errors.full_messages_for(:email).join(", ") %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :password, class: "form-label" %>
+    <%= f.password_field :password, class: "form-control #{'is-invalid' if resource.errors.include?(:password)}", autocomplete: "off", placeholder: "Enter new password" %>
+    <% if resource.errors.include?(:password) %>
+      <div class="invalid-feedback">
+        <%= resource.errors.full_messages_for(:password).join(", ") %>
+      </div>
+    <% end %>
+    <small class="form-text text-muted">Leave blank if you don't want to change it.</small>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :password_confirmation, class: "form-label" %>
+    <%= f.password_field :password_confirmation, class: "form-control #{'is-invalid' if resource.errors.include?(:password_confirmation)}", autocomplete: "off", placeholder: "Confirm new password" %>
+    <% if resource.errors.include?(:password_confirmation) %>
+      <div class="invalid-feedback">
+        <%= resource.errors.full_messages_for(:password_confirmation).join(", ") %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :current_password, class: "form-label" %>
+    <%= f.password_field :current_password, class: "form-control #{'is-invalid' if resource.errors.include?(:current_password)}", autocomplete: "off", placeholder: "Enter current password" %>
+    <% if resource.errors.include?(:current_password) %>
+      <div class="invalid-feedback">
+        <%= resource.errors.full_messages_for(:current_password).join(", ") %>
+      </div>
+    <% end %>
+    <small class="form-text text-muted">We need your current password to confirm your changes.</small>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="d-grid gap-2">
+    <%= f.submit "Update Password", class: "btn btn-outline-primary" %>
+  </div>
+<% end %>
