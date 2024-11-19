@@ -70,6 +70,8 @@ namespace :dev do
           ap user
         end
 
+        users << user
+
         enrollment = cohort.enrollments.create(
           user:,
           id_from_canvas: row.fetch(:id_from_canvas),
@@ -154,6 +156,46 @@ namespace :dev do
           user: users.sample,
           csv_file:
         )
+      end
+
+      # Create sample companies
+      companies = []
+      5.times do
+        companies << Company.create(
+          name: Faker::Company.name,
+          about: Faker::Company.bs,
+          website: Faker::Internet.url
+        )
+      end
+
+      # Create sample job descriptions
+      job_descriptions = []
+      14.times do
+        job_descriptions << JobDescription.create(
+          title: Faker::Job.title,
+          description: Faker::Lorem.paragraph,
+          role_category: Faker::Job.field,
+          company: companies.sample
+        )
+      end
+
+      # Create sample placements
+      14.times do
+        placement = Placement.create(
+          start_date: Faker::Date.between(from: 1.year.ago, to: Date.today),
+          end_date: Faker::Date.between(from: Date.today, to: 1.year.from_now),
+          salary: Faker::Number.within(range: 30000..100000).to_s,
+          cohort: cohort,
+          company: companies.sample,
+          job_description: job_descriptions.sample,
+          user: users.sample,
+          by_dpi: [ true, false ].sample
+        )
+
+        if placement.errors.any?
+          ap placement.errors.full_messages
+          ap placement
+        end
       end
     end
   end

@@ -1,0 +1,35 @@
+<%= render "cohorts/tabs" %>
+
+<% if @cohort.placements.any? %>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header d-flex align-items-center">
+          <div class="h6 mb-0 me-auto">Placements</div>
+          <% if policy(Placement).create? %>
+            <%= link_to new_cohort_placement_path do %>
+              <i class="fa-solid fa-plus fa-fw"></i>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+      <%= turbo_frame_tag "placement_list" do %>
+        <%= render "cohort/placements/placement_list", placements: @placements %>
+        <div class="d-flex justify-content-center mt-3">
+          <%= paginate @placements, nav_class: "d-flex my-2", pagination_class: "flex-wrap",
+                         params: { turbo_frame: "placement_list" } %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="col-lg-6">
+      <%= turbo_frame_tag "placement" do %>
+        <% if @placement %>
+          <%= render "cohort/placements/placement", placement: @placement %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <h1>No placements for this cohort yet!</h1>
+<% end %>

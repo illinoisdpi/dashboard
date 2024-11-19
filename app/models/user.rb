@@ -50,6 +50,7 @@ class User < ApplicationRecord
   has_many :enrollments, dependent: :destroy
   has_many :cohorts, through: :enrollments, source: :cohort
   has_many :authored_impressions, class_name: "Impression", foreign_key: "author_id"
+  has_many :placements, dependent: :nullify
   has_many :impressions, through: :enrollments
 
   accepts_nested_attributes_for :enrollments

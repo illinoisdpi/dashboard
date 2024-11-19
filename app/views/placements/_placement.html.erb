@@ -1,0 +1,23 @@
+<div class="list-group list-group-flush ps-3 mt-3 mb-3">
+  <div class="row align-items-center">
+    <div class="col-md-6">
+      <div class="headshot-bound-mini">
+        <img src="<%= placement.user.headshot %>">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <% if policy(placement).show_salary? %>
+        <div><b>Salary:</b></div>
+        <div><%= number_to_currency(placement.salary) %></div>
+      <% end %>
+      <div><b>Role Category:</b></div>
+      <div><%= placement.job_description.role_category %></div>
+      <div><b>Start Date:</b></div>
+      <div><%= placement.start_date %></div>
+      <div><b>End Date:</b></div>
+      <div><%= placement.end_date %></div>
+      <div><b>Job Description:</b></div>
+      <div><%= placement.job_description.description %></div>
+    </div>
+  </div>
+</div>

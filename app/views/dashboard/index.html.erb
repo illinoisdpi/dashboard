@@ -1,5 +1,6 @@
 <div class="row my-2">
-  <div class="col-md-6">
+  <!-- Cohorts and Authored Impressions -->
+  <div class="col-lg-4">
     <div class="card mb-2">
       <div class="card-header d-flex align-items-center">
         <h2 class="h6 mb-0 me-auto">Cohorts</h2>
@@ -29,6 +30,7 @@
         </div>
       </div>
     <% end %>
+
     <% if policy(:dashboard).authored_impressions? %>
       <div class="card mb-2">
         <div class="card-header d-flex align-items-center">
@@ -59,9 +61,11 @@
       </div>
     <% end %>
   </div>
-  <% if policy(:dashboard).recent_articles? %>
-    <div class="col-md-6">
-      <div class="card">
+
+  <!-- Recent Articles -->
+  <div class="col-lg-4">
+    <% if policy(:dashboard).recent_articles? %>
+      <div class="card mb-2">
         <div class="card-header d-flex align-items-center">
           <h2 class="h6 mb-0 me-auto">Recent Articles</h2>
           <div>
@@ -74,22 +78,56 @@
           <% @articles.each do |article| %>
             <%= link_to article.url_with_utm, class: "list-group-item", target: "_blank" do %>
               <div class="row align-items-center">
-              <div class="col-3 col-sm-2 col-xxl-1">
-                <img class="img-thumbnail rounded-circle" src="<%= article.social_image %>">
+                <div class="col-3 col-sm-2">
+                  <img class="img-thumbnail rounded-circle" src="<%= article.social_image %>">
+                </div>
+                <div class="col-8 col-sm-9 col-xxl-9">
+                  <h5><%= article.title %></h5>
+                  <div>By <%= article.author %></div>
+                  <small class="text-secondary">Published on <%= article.published_at.strftime("%Y-%m-%d") %></small>
+                </div>
+                <div class="col-1">
+                  <i class="fa-solid fa-chevron-right fa-fw"></i>
+                </div>
               </div>
-              <div class="col-8 col-sm-9 col-xxl-10">
-                <h5><%= article.title %></h5>
-                <div>By <%= article.author %></div>
-                <small class="text-secondary">Published on <%= article.published_at.strftime("%Y-%m-%d") %></small>
-              </div>
-              <div class="col-1">
-                <i class="fa-solid fa-chevron-right fa-fw"></i>
-              </div>
-            </div>
+            <% end %>
           <% end %>
-        <% end %>
+        </div>
       </div>
-    </div>
+    <% end %>
   </div>
-<% end %>
+
+  <!-- Recent Placements -->
+  <div class="col-lg-4">
+    <% if policy(:dashboard).placements? %>
+      <div class="card mb-2">
+        <div class="card-header d-flex align-items-center">
+          <h2 class="h6 mb-0 me-auto">Recent Placements</h2>
+          <div>
+            <%= link_to outcomes_root_url do %>
+              See More
+            <% end %>
+          </div>
+        </div>
+        <div class="list-group list-group-flush">
+          <% @placements.each do |placement| %>
+            <%= link_to placement, class: "list-group-item" do %>
+              <div class="row align-items-center">
+                <div class="col-3 col-sm-2">
+                  <img class="headshot-bound-thumb" src="<%= placement.user.headshot %>">
+                </div>
+                <div class="col-8 col-sm-9 col-xxl-9">
+                  <h5><%= placement.job_description.title %> - <%= placement.company.name %></h5>
+                  <div><%= placement.user %></div>
+                </div>
+                <div class="col-1">
+                  <i class="fa-solid fa-chevron-right fa-fw"></i>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>

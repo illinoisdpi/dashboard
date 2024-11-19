@@ -23,6 +23,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :placements
+    
     resources :cohorts do
       member do
         get "canvas_highest_position_submission_count"
@@ -36,6 +38,7 @@ Rails.application.routes.draw do
           get "snapshot"
         end
       end
+      resources :placements, module: :cohort
       resources :impressions, module: :cohort do
         collection do
           get :search
@@ -51,13 +54,9 @@ Rails.application.routes.draw do
     root "dashboard#index", as: "dashboard_root"
   end
 
-  constraints subdomain: "news" do
-    root "news#index", as: "news_root"
-    get "/rss", to: "news#rss"
-  end
+  draw :news
 
-  constraints subdomain: "rfp" do
-    root "rfp#index", as: "rfp_root"
-    resources :rfp_idea_submissions, only: [ :new, :create ]
-  end
+  draw :rfp
+
+  draw :outcomes
 end

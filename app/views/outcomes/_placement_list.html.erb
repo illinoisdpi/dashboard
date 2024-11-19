@@ -1,0 +1,39 @@
+<div class="list-group list-group-flush">
+  <% @placements.each do |placement| %>
+    <%= turbo_frame_tag dom_id(placement) do %>
+      <div class="list-group-item">
+        <div class="d-flex align-items-center">
+          <div class="flex-grow-1 d-block text-decoration-none" data-bs-toggle="collapse" href="#collapse_<%= dom_id(placement) %>" role="button" aria-expanded="false" aria-controls="collapse_<%= dom_id(placement) %>">
+            <div class="row align-items-center">
+              <div class="col">
+                <h5><strong><%= placement.job_description.title %></strong> - <%= placement.company.name %></h5>
+                <div><%= placement.user %></div>
+              </div>
+              <% if placement.by_dpi? %>
+                <div class="col-auto">
+                  <%= image_tag "logo.svg", class: "dpi-badge" %>
+                </div>
+              <% end %>
+              <div class="col-auto d-flex align-items-center">
+                <i class="fa-solid fa-chevron-down fa-fw"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="collapse_<%= dom_id(placement) %>" class="collapse">
+          <div class="mt-3">
+            <%= turbo_frame_tag "placement" do %>
+              <% if placement %>
+                <%= render "outcomes/placement", placement: placement %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+</div>
+
+ <!-- TODO: figure out why this extra div is needed to close card-mb-2 properly in index.html.erb -->
