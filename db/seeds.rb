@@ -6,24 +6,43 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-emails = %w[
-  aparan3@uic.edu
-  diamondm@uillinois.edu
-  ian@biggreen.company
-  jfoil@uillinois.edu
-  raghu@firstdraft.com
-  schaud47@uic.edu
-  sfarzo@uillinois.edu
-  sjaime@uillinois.edu
-  tula@uillinois.edu
-  homar4@uillinois.edu
+users = [
+  {
+    email: "ian@biggreen.company",
+    first_name: "Ian",
+    last_name: "Heraty"
+  },
+  {
+    email: "diamondm@uillinois.edu",
+    first_name: "Morgan",
+    last_name: "Diamond"
+  },
+  {
+    email: "raghu@firstdraft.com",
+    first_name: "Raghu",
+    last_name: "Betina"
+  },
+  {
+    email: "sjaime@uillinois.edu",
+    first_name: "Sanjuana",
+    last_name: "Jaime-Nix"
+  },
+  {
+    email: "tula@uillinois.edu",
+    first_name: "Tula",
+    last_name: "Kuechenmeister"
+  },
+  {
+    email: "homar4@uillinois.edu",
+    first_name: "Haneen",
+    last_name: "Omar"
+  }
 ]
 
-user_info = emails.map { |email| { email: email, password: "password" } }
-
-users = User.create(user_info)
-
-users.each { |user| user.add_role :admin }
+users.each do |user_info|
+  user = User.create(user_info.merge(password: "password"))
+  user.add_role(:admin)
+end
 
 Rails.logger.debug Cohort.create(
   [

@@ -134,4 +134,8 @@ class Enrollment < ApplicationRecord
   def most_advanced_completed_project_for(skill)
     completed_assignments.max { |a, b| a.send(skill).to_i <=> b.send(skill).to_i }
   end
+
+  def to_s
+    "#{cohort} - #{user} (#{role})"
+  end
 end

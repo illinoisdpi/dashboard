@@ -45,8 +45,6 @@ class User < ApplicationRecord
   has_paper_trail skip: [ :created_at, :updated_at ]
 
   rolify
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :recoverable, :rememberable, :validatable, :registerable
 
   has_many :enrollments, dependent: :destroy
@@ -57,6 +55,10 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :enrollments
 
   scope :default_order, -> { order(:first_name) }
+
+  scope :search_by_name, ->(name) {
+    where("CONCAT(first_name, ' ', last_name) ILIKE ?", "%#{name}%")
+  }
 
   def to_s
     return full_name if full_name.present?
