@@ -174,7 +174,7 @@ module CanvasGradebookSnapshot::Csvable
           end
         end
 
-        CanvasSubmission.insert_all!(submissions) unless submissions.empty?
+        CanvasSubmission.create(submissions) unless submissions.empty?
 
       rescue => e
         Rails.logger.error "Transaction failed with error: #{e.message}"

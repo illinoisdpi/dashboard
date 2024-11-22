@@ -23,7 +23,7 @@
 FactoryBot.define do
   factory :canvas_gradebook_snapshot do
     cohort
-    user { create(:user) }
+    user
     csv_file { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/2022-01-01T1100_Grades-WE-2022-1.2-SDF.csv'), 'text/csv') }
   end
 end
