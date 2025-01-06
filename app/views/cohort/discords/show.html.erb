@@ -1,0 +1,19 @@
+<%= render "cohorts/tabs" %>
+
+<h2>Discord Channels for <%= @cohort.name %></h2>
+
+<% if @channels.any? %>
+  <ul>
+    <% @channels.each do |channel| %>
+      <li>
+        <strong><%= channel[:name] %></strong> (ID: <%= channel[:id] %>)
+
+        <%= link_to "Schedule Recurring",
+          new_cohort_recurring_message_path(@cohort, channel_id: channel[:id]),
+          class: "btn btn-sm btn-info" %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No channels found, or bot offline.</p>
+<% end %>

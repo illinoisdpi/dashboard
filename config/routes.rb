@@ -30,6 +30,7 @@ Rails.application.routes.draw do
         get "canvas_cumulative_points"
       end
       resources :canvas_gradebook_snapshots
+      resource :discord, only: [:show], module: :cohort
       resources :enrollments, module: :cohort do
         member do
           get "overview"
@@ -49,6 +50,8 @@ Rails.application.routes.draw do
     end
 
     root "dashboard#index", as: "dashboard_root"
+
+    resources :recurring_messages, only: [:index, :new, :create, :destroy]
   end
 
   constraints subdomain: "news" do
