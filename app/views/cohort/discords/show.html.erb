@@ -1,19 +1,28 @@
 <%= render "cohorts/tabs" %>
 
-<h2>Discord Channels for <%= @cohort.name %></h2>
+<div class="row mb-3">
+  <div class="col">
+    <div class="card">
+      <div class="card-header d-flex align-items-center">
+        <h1 class="h6 mb-0 me-auto">Discord Channels for <%= @cohort.name %></h1>
+        </div>
 
-<% if @channels.any? %>
-  <ul>
-    <% @channels.each do |channel| %>
-      <li>
-        <strong><%= channel[:name] %></strong> (ID: <%= channel[:id] %>)
+        <div class="list-group list-group-flush">
+          <% @channels.each do |channel| %>
+            <%= link_to "/", class: "list-group-item" do %>
+              <div class="d-flex">
+                <div class="me-auto d-flex align-items-baseline font-monospace">
+                  <%= channel[:name].to_s %>
+                </div>
 
-        <%= link_to "Schedule Recurring",
-          new_cohort_recurring_message_path(@cohort, channel_id: channel[:id]),
-          class: "btn btn-sm btn-info" %>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>No channels found, or bot offline.</p>
-<% end %>
+                <div>
+                  <i class="fa-solid fa-chevron-right fa-fw"></i>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
