@@ -19,7 +19,7 @@ class Cohort::DiscordController < ApplicationController
       { content: "Discord", href: cohort_discord_index_path(@cohort) },
       { content: "Channel" }
     ]
-    # @channel = DiscordService.new.fetch_channel(@cohort.discord_server_id, params[:channel_id])
+    @channel = DiscordService.new.fetch_channel(@cohort.discord_server_id, params[:id])
   end
 
   private
