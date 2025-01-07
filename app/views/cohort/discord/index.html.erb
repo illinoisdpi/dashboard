@@ -7,9 +7,9 @@
         <h1 class="h6 mb-0 me-auto">Discord Channels for <%= @cohort.name %></h1>
         </div>
 
-        <div class="list-group list-group-flush">
+    <div class="list-group list-group-flush">
           <% @channels.each do |channel| %>
-            <%= link_to "/", class: "list-group-item" do %>
+            <%= link_to cohort_discord_path(:id => channel[:id]), class: "list-group-item" do %>
               <div class="d-flex">
                 <div class="me-auto d-flex align-items-baseline font-monospace">
                   <%= channel[:name].to_s %>

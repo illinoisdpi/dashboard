@@ -30,7 +30,7 @@ Rails.application.routes.draw do
         get "canvas_cumulative_points"
       end
       resources :canvas_gradebook_snapshots
-      resource :discord, only: [:show], module: :cohort
+      resources :discord, only: [:index, :show], module: :cohort
       resources :enrollments, module: :cohort do
         member do
           get "overview"

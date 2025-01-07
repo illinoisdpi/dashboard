@@ -25,7 +25,7 @@
   </li> %>
   <% if policy(@cohort).discord? %>
     <li class="nav-item">
-      <%= simple_active_link_to "Discord", cohort_discord_path(@cohort), class: "nav-link" %>
+      <%= simple_active_link_to "Discord", cohort_discord_index_path(@cohort), class: "nav-link" %>
     </li>
   <% end %>
   <% if policy(@cohort).cohort_impressions? %>
