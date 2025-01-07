@@ -48,6 +48,21 @@ class Impression < ApplicationRecord
     where(emoji: Emojiable.emojis_for_category(category))
   }
 
+  scope :grouped_by_emoji, -> {
+    # grouping impressions by type of impression
+    group(:emoji).count.transform_keys do |emoji|
+      "#{emoji} #{Impression::Emojiable::EMOJIS[emoji.to_sym][:description]}"
+    end
+  }
+
+  scope :grouped_by_subject, -> {
+    # grouping impressions by amount per person, concatting names
+    joins(subject: :user) 
+      .group("users.first_name", "users.last_name")
+      .count
+      .transform_keys { |key| key.split(", ").reverse.join(" ") }
+  }
+
   def summary
     "#{author} authored a #{emoji_sentiment} #{emoji_category} impression (#{emoji_description}) for #{subject} #{emoji}"
   end
