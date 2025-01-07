@@ -5,7 +5,9 @@ class DiscordService
     server = DISCORD_BOT.server(discord_server_id.to_i)
     return [] unless server
 
-    server.channels.select { |ch| ch.type == 0 }.map { |ch| { id: ch.id.to_s, name: ch.name } }
+    server.channels
+          .select { |ch| ch.type == 0 }
+          .map { |ch| { id: ch.id.to_s, name: format_name(ch.name) } }
   rescue => e
     Rails.logger.error("[DiscordService#fetch_channels] Error: #{e.message}")
     []
@@ -17,12 +19,39 @@ class DiscordService
 
     {
       id: channel.id.to_s,
-      name: channel.name,
+      name: format_name(channel.name),
       topic: channel.topic,
     }
   rescue => e
     Rails.logger.error("[DiscordService#fetch_channel] Error: #{e.message}")
     nil
+  end
+
+  def fetch_recent_messages(channel_id, limit = 10)
+    channel = DISCORD_BOT.channel(channel_id.to_i)
+    return [] unless channel && channel.type == 0
+
+    channel.history(limit).map do |msg|
+      {
+        id: msg.id.to_s,
+        author_id: msg.author.id.to_s,
+        author_username: msg.author.username,
+        content: msg.content,
+        timestamp: msg.timestamp
+      }
+    end
+  end
+
+  def top_contributors(channel_id, limit = 50)
+    recent_msgs = fetch_recent_messages(channel_id, limit)
+    groups = recent_msgs.group_by { |m| m[:author_id] }
+    groups.map do |author_id, msgs|
+      {
+        author_id: author_id,
+        author_username: msgs.first[:author_username],
+        message_count: msgs.size
+      }
+    end.sort_by { |c| -c[:message_count] }
   end
 
   # def send_message(channel_id, content)
@@ -33,4 +62,10 @@ class DiscordService
   # rescue => e
   #   Rails.logger.error("[DiscordService#send_message] Error: #{e.message}")
   # end
+
+  private
+
+  def format_name(name)
+    name.downcase.gsub("-", " ").titleize
+  end
 end

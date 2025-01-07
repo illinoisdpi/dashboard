@@ -13,13 +13,20 @@ class Cohort::DiscordController < ApplicationController
   end
 
   def show
+    @cohort = Cohort.find(params[:cohort_id])
+
+    @channel = DiscordService.new.fetch_channel(@cohort.discord_server_id, params[:id])
+
+    @recent_messages = DiscordService.new.fetch_recent_messages(params[:id], 10)
+
+    @top_contributors = DiscordService.new.top_contributors(params[:id], 5)
+
     @breadcrumbs = [
       { content: "Cohorts", href: cohorts_path },
       { content: @cohort.to_s, href: cohort_path(@cohort) },
       { content: "Discord", href: cohort_discord_index_path(@cohort) },
-      { content: "Channel" }
+      { content: @channel[:name] },
     ]
-    @channel = DiscordService.new.fetch_channel(@cohort.discord_server_id, params[:id])
   end
 
   private
@@ -31,5 +38,4 @@ class Cohort::DiscordController < ApplicationController
   def authorize_cohort_discord
     authorize @cohort, :discord?
   end
-
 end

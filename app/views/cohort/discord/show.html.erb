@@ -1,11 +1,79 @@
 <%= render "cohorts/tabs" %>
 
-<div class="row mb-3">
-  <div class="col">
+<div class="row">
+  <div class="col-lg-6">
     <div class="card">
       <div class="card-header d-flex align-items-center">
-        <h1 class="h6 mb-0 me-auto"><%= @channel[:name].capitalize %> Discord Channel for <%= @cohort.name %></h1>
+        <h1 class="h6 mb-0 me-auto"><%= @channel[:name].to_s.capitalize %> Discord Channel for <%= @cohort.name %></h1>
       </div>
+      <p class="card-text mb-2">
+        <strong>Topic:</strong>
+        <%= @channel[:topic].presence || "No topic set" %>
+      </p>
+
+      <p class="card-text mb-3">
+        <strong>Channel ID:</strong> <%= @channel[:id] %>
+      </p>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header d-flex align-items-center">
+        <h1 class="h6 mb-0 me-auto">Top Contributors (Last 50 Messages)</h1>
+      </div>
+      <% if @top_contributors.blank? %>
+        <p class="text-muted">No contributors found.</p>
+      <% else %>
+        <div class="list-group mb-3">
+          <% @top_contributors.each do |contributor| %>
+            <%= link_to "#", class: "list-group-item list-group-item-action d-flex justify-content-between align-items-center" do %>
+              <div class="me-auto">
+                <strong>@<%= contributor[:author_username] %></strong>
+                <span class="badge bg-primary rounded-pill"><%= contributor[:message_count] %> messages</span>
+              </div>
+              <div>
+                <i class="fa-solid fa-chevron-right fa-fw"></i>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div class="card">
+      <div class="card-header d-flex align-items-center">
+        <h1 class="h6 mb-0 me-auto">Recent Messages</h1>
+      </div>
+      <% if @recent_messages.blank? %>
+        <p class="text-muted">No recent messages found.</p>
+      <% else %>
+        <div class="list-group mb-3">
+          <% @recent_messages.each do |msg| %>
+            <%= link_to "#", class: "list-group-item list-group-item-action d-flex justify-content-between align-items-center" do %>
+              <div class="me-auto">
+                <strong>@<%= msg[:author_username] %></strong>
+                <p class="mb-1"><%= msg[:content] %></p>
+                <small class="text-muted"><%= msg[:timestamp].strftime("%b %d, %Y %I:%M %p") %></small>
+              </div>
+              <div>
+                <i class="fa-solid fa-chevron-right fa-fw"></i>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+
     </div>
   </div>
 </div>
+
+<%#= link_to "Schedule Recurring Message",
+          new_cohort_recurring_message_path(@cohort, channel_id: @channel[:id]),
+          class: "btn btn-primary btn-sm me-2" %>
+
+<%#= link_to "View All Recurring Messages",
+          cohort_recurring_messages_path(@cohort),
+          class: "btn btn-secondary btn-sm me-2" %>
+
+<%#= link_to "Schedule One-Time Message",
+          new_cohort_scheduled_message_path(@cohort, channel_id: @channel[:id]),
+          class: "btn btn-info btn-sm" %>
