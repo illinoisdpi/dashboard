@@ -15,6 +15,35 @@
         <strong>Channel ID:</strong> <%= @channel[:id] %>
       </p>
     </div>
+    <div class="card mt-3">
+  <div class="card-header">
+    <h2 class="h6 mb-0">Schedule Recurring Message</h2>
+  </div>
+  <div class="card-body">
+    <%= form_with url: recurring_messages_cohort_discord_path(@cohort, id: @channel[:id]),
+                  method: :post, local: true do |f| %>
+
+      <div class="mb-3">
+        <%= f.label :message_content, "Message Content" %>
+        <%= f.text_area :message_content, class: "form-control", rows: 2 %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :recurrence_pattern, "Recurrence Pattern" %>
+        <%= f.select :recurrence_pattern, [["Daily", "daily"], ["Weekly", "weekly"], ["Custom Cron", "custom"]],
+                     {}, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :cron_expression, "Custom Cron Expression (if selected)" %>
+        <%= f.text_field :cron_expression, class: "form-control" %>
+      </div>
+
+      <%= f.submit "Schedule", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+
   </div>
   <div class="col-lg-6">
     <div class="card">
@@ -65,15 +94,3 @@
     </div>
   </div>
 </div>
-
-<%#= link_to "Schedule Recurring Message",
-          new_cohort_recurring_message_path(@cohort, channel_id: @channel[:id]),
-          class: "btn btn-primary btn-sm me-2" %>
-
-<%#= link_to "View All Recurring Messages",
-          cohort_recurring_messages_path(@cohort),
-          class: "btn btn-secondary btn-sm me-2" %>
-
-<%#= link_to "Schedule One-Time Message",
-          new_cohort_scheduled_message_path(@cohort, channel_id: @channel[:id]),
-          class: "btn btn-info btn-sm" %>
