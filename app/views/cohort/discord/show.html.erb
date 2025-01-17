@@ -1,96 +1,132 @@
 <%= render "cohorts/tabs" %>
 
 <div class="row">
+  <!-- Left Column -->
   <div class="col-lg-6">
-    <div class="card">
+    <!-- Channel Details Card -->
+    <div class="card shadow-sm mb-4">
       <div class="card-header d-flex align-items-center">
-        <h1 class="h6 mb-0 me-auto"><%= @channel[:name].to_s.capitalize %> Discord Channel for <%= @cohort.name %></h1>
+        <h1 class="h6 mb-0">
+          <%= @channel[:name].to_s.capitalize %> Discord Channel for <%= @cohort.name %>
+        </h1>
       </div>
-      <p class="card-text mb-2">
-        <strong>Topic:</strong>
-        <%= @channel[:topic].presence || "No topic set" %>
-      </p>
-
-      <p class="card-text mb-3">
-        <strong>Channel ID:</strong> <%= @channel[:id] %>
-      </p>
+      <div class="card-body">
+        <p class="mb-2">
+          <strong>Topic:</strong>
+          <%= @channel[:topic].presence || "No topic set" %>
+        </p>
+        <p>
+          <strong>Channel ID:</strong>
+          <%= @channel[:id] %>
+        </p>
+      </div>
     </div>
-    <div class="card mt-3">
-  <div class="card-header">
-    <h2 class="h6 mb-0">Schedule Recurring Message</h2>
-  </div>
-  <div class="card-body">
-    <%= form_with url: recurring_messages_cohort_discord_path(@cohort, id: @channel[:id]),
-                  method: :post, local: true do |f| %>
 
-      <div class="mb-3">
-        <%= f.label :message_content, "Message Content" %>
-        <%= f.text_area :message_content, class: "form-control", rows: 2 %>
+    <!-- Scheduled Messages Card -->
+    <div class="card shadow-sm mb-4">
+      <div class="card-header">
+        <h2 class="h6 mb-0">Scheduled Recurring Messages</h2>
       </div>
-
-      <div class="mb-3">
-        <%= f.label :recurrence_pattern, "Recurrence Pattern" %>
-        <%= f.select :recurrence_pattern, [["Daily", "daily"], ["Weekly", "weekly"], ["Custom Cron", "custom"]],
-                     {}, class: "form-control" %>
-      </div>
-
-      <div class="mb-3">
-        <%= f.label :cron_expression, "Custom Cron Expression (if selected)" %>
-        <%= f.text_field :cron_expression, class: "form-control" %>
-      </div>
-
-      <%= f.submit "Schedule", class: "btn btn-primary" %>
-    <% end %>
-  </div>
-</div>
-
-  </div>
-  <div class="col-lg-6">
-    <div class="card">
-      <div class="card-header d-flex align-items-center">
-        <h1 class="h6 mb-0 me-auto">Top Contributors (Last 50 Messages)</h1>
-      </div>
-      <% if @top_contributors.blank? %>
-        <p class="text-muted">No contributors found.</p>
-      <% else %>
-        <div class="list-group mb-3">
-          <% @top_contributors.each do |contributor| %>
-            <%= link_to "#", class: "list-group-item list-group-item-action d-flex justify-content-between align-items-center" do %>
-              <div class="me-auto">
-                <strong>@<%= contributor[:author_username] %></strong>
-                <span class="badge bg-primary rounded-pill"><%= contributor[:message_count] %> messages</span>
-              </div>
-              <div>
-                <i class="fa-solid fa-chevron-right fa-fw"></i>
-              </div>
+      <div class="card-body">
+        <% if @cohort.recurring_messages.any? %>
+          <ul class="list-group">
+            <% @cohort.recurring_messages.each do |message| %>
+              <li class="list-group-item">
+                <p class="mb-1"><%= message.message_content %></p>
+                <small class="text-muted">
+                  <%= message.recurrence_pattern.capitalize %>
+                  <% if message.cron_expression.present? %>
+                    - Cron: <%= message.cron_expression %>
+                  <% end %>
+                </small>
+              </li>
             <% end %>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-    <div class="card">
-      <div class="card-header d-flex align-items-center">
-        <h1 class="h6 mb-0 me-auto">Recent Messages</h1>
+          </ul>
+        <% else %>
+          <p class="text-muted">No recurring messages scheduled.</p>
+        <% end %>
       </div>
-      <% if @recent_messages.blank? %>
-        <p class="text-muted">No recent messages found.</p>
-      <% else %>
-        <div class="list-group mb-3">
-          <% @recent_messages.each do |msg| %>
-            <%= link_to "#", class: "list-group-item list-group-item-action d-flex justify-content-between align-items-center" do %>
-              <div class="me-auto">
-                <strong>@<%= msg[:author_username] %></strong>
-                <p class="mb-1"><%= msg[:content] %></p>
+    </div>
+
+    <!-- Schedule Recurring Message Form -->
+    <div class="card shadow-sm mb-4">
+      <div class="card-header">
+        <h2 class="h6 mb-0">Schedule Recurring Message</h2>
+      </div>
+      <div class="card-body">
+        <%= form_with url: recurring_messages_cohort_discord_path(@cohort, id: @channel[:id]),
+                      method: :post, local: true do |f| %>
+
+          <!-- Message Content -->
+          <div class="mb-3">
+            <%= f.label :message_content, "Message Content", class: "form-label" %>
+            <%= f.text_area :message_content, class: "form-control", rows: 3 %>
+          </div>
+
+          <!-- Recurrence Pattern -->
+          <div class="mb-3">
+            <%= f.label :recurrence_pattern, "Recurrence Pattern", class: "form-label" %>
+            <%= f.select :recurrence_pattern, [["Daily", "daily"], ["Weekly", "weekly"], ["Custom Cron", "custom"]],
+                         {}, class: "form-select" %>
+          </div>
+
+          <!-- Cron Expression -->
+          <div class="mb-3">
+            <%= f.label :cron_expression, "Custom Cron Expression (if selected)", class: "form-label" %>
+            <%= f.text_field :cron_expression, class: "form-control" %>
+          </div>
+
+          <!-- Submit Button -->
+          <%= f.submit "Schedule", class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Column -->
+  <div class="col-lg-6">
+    <!-- Top Contributors Card -->
+    <div class="card shadow-sm mb-4">
+      <div class="card-header">
+        <h2 class="h6 mb-0">Top Contributors (Last 50 Messages)</h2>
+      </div>
+      <div class="card-body">
+        <% if @top_contributors.any? %>
+          <ul class="list-group">
+            <% @top_contributors.each do |contributor| %>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span><strong>@<%= contributor[:author_username] %></strong></span>
+                <span class="badge bg-primary rounded-pill"><%= contributor[:message_count] %></span>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p class="text-muted">No contributors found.</p>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Recent Messages Card -->
+    <div class="card shadow-sm">
+      <div class="card-header">
+        <h2 class="h6 mb-0">Recent Messages</h2>
+      </div>
+      <div class="card-body">
+        <% if @recent_messages.any? %>
+          <ul class="list-group">
+            <% @recent_messages.each do |msg| %>
+              <li class="list-group-item">
+                <p class="mb-1">
+                  <strong>@<%= msg[:author_username] %>:</strong> <%= msg[:content] %>
+                </p>
                 <small class="text-muted"><%= msg[:timestamp].strftime("%b %d, %Y %I:%M %p") %></small>
-              </div>
-              <div>
-                <i class="fa-solid fa-chevron-right fa-fw"></i>
-              </div>
+              </li>
             <% end %>
-          <% end %>
-        </div>
-      <% end %>
-
+          </ul>
+        <% else %>
+          <p class="text-muted">No recent messages found.</p>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
