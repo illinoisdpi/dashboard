@@ -54,14 +54,14 @@ class DiscordService
     end.sort_by { |c| -c[:message_count] }
   end
 
-  # def send_message(channel_id, content)
-  #   return if channel_id.blank? || content.blank?
+  def send_message(channel_id, content)
+    return if channel_id.blank? || content.blank?
 
-  #   channel = DISCORD_BOT.channel(channel_id.to_i)
-  #   channel&.send_message(content)
-  # rescue => e
-  #   Rails.logger.error("[DiscordService#send_message] Error: #{e.message}")
-  # end
+    channel = DISCORD_BOT.channel(channel_id.to_i)
+    channel&.send_message(content)
+  rescue => e
+    Rails.logger.error("[DiscordService#send_message] Error: #{e.message}")
+  end
 
   private
 

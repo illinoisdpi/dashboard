@@ -1,9 +1,7 @@
 <%= render "cohorts/tabs" %>
 
 <div class="row">
-  <!-- Left Column -->
   <div class="col-lg-6">
-    <!-- Channel Details Card -->
     <div class="card shadow-sm mb-4">
       <div class="card-header d-flex align-items-center">
         <h1 class="h6 mb-0">
@@ -22,7 +20,6 @@
       </div>
     </div>
 
-    <!-- Scheduled Messages Card -->
     <div class="card shadow-sm mb-4">
       <div class="card-header">
         <h2 class="h6 mb-0">Scheduled Recurring Messages</h2>
@@ -48,7 +45,6 @@
       </div>
     </div>
 
-    <!-- Schedule Recurring Message Form -->
     <div class="card shadow-sm mb-4">
       <div class="card-header">
         <h2 class="h6 mb-0">Schedule Recurring Message</h2>
@@ -57,35 +53,29 @@
         <%= form_with url: recurring_messages_cohort_discord_path(@cohort, id: @channel[:id]),
                       method: :post, local: true do |f| %>
 
-          <!-- Message Content -->
           <div class="mb-3">
             <%= f.label :message_content, "Message Content", class: "form-label" %>
             <%= f.text_area :message_content, class: "form-control", rows: 3 %>
           </div>
 
-          <!-- Recurrence Pattern -->
           <div class="mb-3">
             <%= f.label :recurrence_pattern, "Recurrence Pattern", class: "form-label" %>
             <%= f.select :recurrence_pattern, [["Daily", "daily"], ["Weekly", "weekly"], ["Custom Cron", "custom"]],
                          {}, class: "form-select" %>
           </div>
 
-          <!-- Cron Expression -->
           <div class="mb-3">
             <%= f.label :cron_expression, "Custom Cron Expression (if selected)", class: "form-label" %>
             <%= f.text_field :cron_expression, class: "form-control" %>
           </div>
 
-          <!-- Submit Button -->
           <%= f.submit "Schedule", class: "btn btn-primary" %>
         <% end %>
       </div>
     </div>
   </div>
 
-  <!-- Right Column -->
   <div class="col-lg-6">
-    <!-- Top Contributors Card -->
     <div class="card shadow-sm mb-4">
       <div class="card-header">
         <h2 class="h6 mb-0">Top Contributors (Last 50 Messages)</h2>
@@ -106,7 +96,6 @@
       </div>
     </div>
 
-    <!-- Recent Messages Card -->
     <div class="card shadow-sm">
       <div class="card-header">
         <h2 class="h6 mb-0">Recent Messages</h2>
