@@ -16,26 +16,40 @@ RSpec.describe CanvasGradebookSnapshot, type: :model do
         expect(CanvasAssignment.count).to eq(assignment_count)
       end
 
-      it 'creates assignments with correct points possible' do
+      it 'creates submissions with correct points from CSV' do
         csv_data = CSV.read(valid_csv_path)
         headers = csv_data[0]
-        points_possible_row = csv_data[1]
-
-        # Identify read-only columns and filter them out
-        read_only_columns = headers.each_index.select { |i| headers[i]&.include?('(read only)') }
-        assignment_indices = headers.each_index.select do |i|
-          i >= 5 && !read_only_columns.include?(i) && headers[i].match(/\(\d+\)/)
+        student_rows = csv_data[2..-1]
+      
+        # Select 5 random submissions to test
+        submissions_to_test = CanvasSubmission.where(
+          canvas_gradebook_snapshot: snapshot
+        ).order("RANDOM()").limit(5)
+      
+        submissions_to_test.each do |submission|
+          # Get related records
+          enrollment = submission.enrollment
+          user = enrollment.user
+          assignment = submission.canvas_assignment
+      
+          # Find user's row
+          user_row = student_rows.find { |row| row[3] == user.email }
+          expect(user_row).to be_present, "No CSV row found for user #{user.email}"
+      
+          # Find assignment column in CSV
+          assignment_column = headers.find_index do |header|
+            header.match?(/\(#{assignment.id_from_canvas}\)/)
+          end
+          expect(assignment_column).to be_present, "No CSV column found for assignment #{assignment.id_from_canvas}"
+      
+          # Compare points
+          csv_points = user_row[assignment_column].to_f
+          csv_points = nil if user_row[assignment_column].blank?
+      
+          expect(submission.points).to eq(csv_points), 
+            "Mismatch for #{user.email} in #{headers[assignment_column]}. " \
+            "Expected: #{csv_points || 'nil'}, Got: #{submission.points}"
         end
-
-        # Find the Sign up for GitHub account (1233) column
-        target_index = assignment_indices.find do |i|
-          headers[i].include?('(1233)')
-        end
-
-        expected_points = points_possible_row[target_index].to_f
-        assignment = snapshot.canvas_assignments.find_by(id_from_canvas: '1233')
-        
-        expect(assignment.points_possible).to eq(expected_points)
       end
 
       it 'creates correct number of users' do
@@ -44,7 +58,7 @@ RSpec.describe CanvasGradebookSnapshot, type: :model do
       end
 
       it 'creates enrollments for all users' do
-        expect(Enrollment.count).to eq(User.count - 1) #Subtracting 1 since an extra user exists to create snapshot
+        expect(Enrollment.count).to eq(User.count - 1) # subtracting 1 since an extra user exists to create snapshot
         expect(Enrollment.pluck(:cohort_id).uniq).to eq([cohort.id])
       end
 
