@@ -12,15 +12,29 @@ RSpec.describe CanvasGradebookSnapshot, type: :model do
       before { snapshot.save! }
 
       it 'creates correct number of canvas assignments' do
-        #TODO: Fix this so that it also ignores columns with no submissions
-        # assignment_count = CSV.read(valid_csv_path)[0][5..-1].count { |h| h.match(/\(\d+\)/) } 
-        expect(snapshot.canvas_assignments.count).to eq(18)
+        assignment_count = CSV.read(valid_csv_path)[0][5..-1].count { |h| h.match(/\(\d+\)/) } 
+        expect(CanvasAssignment.count).to eq(assignment_count)
       end
 
       it 'creates assignments with correct points possible' do
-        points_possible_row = CSV.read(valid_csv_path)[1]
+        csv_data = CSV.read(valid_csv_path)
+        headers = csv_data[0]
+        points_possible_row = csv_data[1]
+
+        # Identify read-only columns and filter them out
+        read_only_columns = headers.each_index.select { |i| headers[i]&.include?('(read only)') }
+        assignment_indices = headers.each_index.select do |i|
+          i >= 5 && !read_only_columns.include?(i) && headers[i].match(/\(\d+\)/)
+        end
+
+        # Find the Sign up for GitHub account (1233) column
+        target_index = assignment_indices.find do |i|
+          headers[i].include?('(1233)')
+        end
+
+        expected_points = points_possible_row[target_index].to_f
         assignment = snapshot.canvas_assignments.find_by(id_from_canvas: '1233')
-        expected_points = points_possible_row[6].to_f
+        
         expect(assignment.points_possible).to eq(expected_points)
       end
 
