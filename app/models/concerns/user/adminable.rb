@@ -27,7 +27,8 @@ module User::Adminable
           :devto_username,
           :canvas_full,
           :discord_id,
-          :discord_username
+          :discord_username,
+          :salesforce_id
 
         field :roles do
           visible do
