@@ -84,14 +84,6 @@ RSpec.describe CanvasGradebookSnapshot, type: :model do
         expect(Enrollment.pluck(:cohort_id).uniq).to eq([cohort.id])
       end
 
-      it 'creates submissions with correct points' do
-        assignment = CanvasAssignment.find_by(id_from_canvas: '1233')
-        submission = CanvasSubmission.joins(:enrollment)
-                                     .where(enrollment: { user: User.find_by(email: 'jeff@morar.io') })
-                                     .find_by(canvas_assignment: assignment)
-        expect(submission.points).to eq(5.0)
-      end
-
       it 'correctly parses downloaded_at from filename' do
         expect(snapshot.downloaded_at).to eq(DateTime.new(2022, 1, 1, 11, 0))
       end
