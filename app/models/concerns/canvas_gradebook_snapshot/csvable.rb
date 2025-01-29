@@ -86,7 +86,7 @@ module CanvasGradebookSnapshot::Csvable
   def process_csv
     ActiveRecord::Base.transaction do
       begin
-        csv = SmarterCSV.process(csv_file)
+        csv = SmarterCSV.process(csv_file.path, file_encoding: "utf-8") #TODO: Ensure that this works on frontend
 
         existing_assignments = cohort.canvas_assignments.index_by(&:id_from_canvas)
         existing_users = User.where(email: csv.map { |row| row[:sis_login_id] }.compact.uniq).index_by(&:email)
