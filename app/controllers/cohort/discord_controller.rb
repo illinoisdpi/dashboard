@@ -7,10 +7,16 @@ class Cohort::DiscordController < ApplicationController
     @breadcrumbs = [
       { content: "Cohorts", href: cohorts_path },
       { content: @cohort.to_s, href: cohort_path(@cohort) },
-      { content: "Discord" },
+      { content: "Discord" }
     ]
+  
     @channels = DiscordService.new.fetch_channels(@cohort.discord_server_id)
+  
+    @server_top_contributors = DiscordService.new.top_server_contributors(@cohort.discord_server_id, 50)
+  
+    @server_recent_messages = DiscordService.new.fetch_server_recent_messages(@cohort.discord_server_id, 10)
   end
+  
 
   def show
     @channel = DiscordService.new.fetch_channel(@cohort.discord_server_id, params[:id])
