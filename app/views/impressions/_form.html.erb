@@ -42,7 +42,7 @@
       <%= form.text_area :content, class: "form-control", rows: "10", "aria-described-by": "content-help" %>
       <div id="content-help" class="form-text">
         This impression may be shared with the subject. Click here to keep it private.
-        <%= form.check_box :staff_only, { class: "form-check-input" }, "1", "0" %>
+        <%= form.check_box :staff_only, checked: false %>
       </div>
     </div>
     <div class="d-grid gap-2 mt-2">
