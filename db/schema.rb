@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_24_161446) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_30_213604) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -241,11 +241,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_24_161446) do
     t.string "channel_id"
     t.text "message_content"
     t.integer "recurrence_pattern", default: 0
-    t.string "cron_expression"
     t.datetime "next_run_at"
     t.boolean "enabled", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "timezone"
+    t.boolean "skip_weekends"
+    t.string "days_of_week", default: [], array: true
+    t.time "scheduled_time"
     t.index ["cohort_id"], name: "index_recurring_messages_on_cohort_id"
   end
 

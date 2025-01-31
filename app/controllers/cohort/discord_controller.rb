@@ -33,32 +33,45 @@ class Cohort::DiscordController < ApplicationController
 
   def recurring_messages
     @channel_id = params[:id]
+    
     @recurring_message = @cohort.recurring_messages.new(
-      channel_id: @channel_id,
-      message_content: params[:message_content],
-      recurrence_pattern: params[:recurrence_pattern]
+      recurring_message_params.merge(
+        channel_id: @channel_id,
+        timezone: @cohort.timezone || "UTC"  
+      )
     )
 
+    debugger
+
     if @recurring_message.save
-      next_run_at = RecurringMessageService.calculate_next_run(@recurring_message)
-      @recurring_message.update(next_run_at: next_run_at)
-      RecurringMessageService.schedule_next_job(@recurring_message)
+      SendRecurringMessageJob
+        .set(wait_until: @recurring_message.next_run_at)
+        .perform_later(@recurring_message.id)
 
       redirect_to cohort_discord_path(@cohort, id: @channel_id),
                   notice: "Recurring message scheduled successfully!"
     else
       redirect_to cohort_discord_path(@cohort, id: @channel_id),
-                  alert: @recurring_message.errors.full_messages.join(", ")
+                  alert: @recurring_message.errors.full_messages.join(", "),
+                  params: params.slice(:message_content, :scheduled_time, :days_of_week)
     end
   end
 
   private
-
+  
   def set_cohort
     @cohort = Cohort.find(params[:cohort_id])
   end
-
+  
   def authorize_cohort_discord
     authorize @cohort, :discord?
   end
+end
+
+def recurring_message_params
+  params.require(:recurring_message).permit(
+    :message_content,
+    :scheduled_time,
+    days_of_week: []
+  )
 end

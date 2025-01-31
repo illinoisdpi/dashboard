@@ -51,22 +51,41 @@
       </div>
       <div class="card-body">
         <%= form_with url: recurring_messages_cohort_discord_path(@cohort, id: @channel[:id]),
-                      method: :post, local: true do |f| %>
+                method: :post, local: true do |f| %>
+          <%= f.hidden_field :channel_id %>
 
           <div class="mb-3">
             <%= f.label :message_content, "Message Content", class: "form-label" %>
-            <%= f.text_area :message_content, class: "form-control", rows: 3 %>
+            <%= f.text_area :message_content, 
+            class: "form-control", 
+            rows: 3,
+            value: flash[:params]&.dig(:message_content) %>
           </div>
 
           <div class="mb-3">
-            <%= f.label :recurrence_pattern, "Recurrence Pattern", class: "form-label" %>
-            <%= f.select :recurrence_pattern, [["Daily", "daily"], ["Weekly", "weekly"], ["Custom Cron", "custom"]],
-                         {}, class: "form-select" %>
+            <%= f.label :scheduled_time, "Send Time", class: "form-label" %>
+            <%= f.time_field :scheduled_time,
+            value: flash[:params]&.dig(:scheduled_time) || @recurring_message&.scheduled_time,
+            class: "form-control" %>
           </div>
 
           <div class="mb-3">
-            <%= f.label :cron_expression, "Custom Cron Expression (if selected)", class: "form-label" %>
-            <%= f.text_field :cron_expression, class: "form-control" %>
+            <label class="form-label">Repeat On</label>
+            <div class="days-checkboxes">
+              <% RecurringMessage::DAYS.each do |day| %>
+                <div class="form-check form-check-inline">
+                  <%= f.check_box :days_of_week, 
+                  { multiple: true, 
+                    class: "form-check-input",
+                    checked: @recurring_message&.days_of_week&.include?(day) }, 
+                  day, 
+                  nil %>
+                  <%= f.label "days_of_week_#{day}", 
+                  day.titleize, 
+                  class: "form-check-label" %>
+                </div>
+              <% end %>
+            </div>
           </div>
 
           <%= f.submit "Schedule", class: "btn btn-primary" %>
