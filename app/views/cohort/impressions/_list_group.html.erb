@@ -10,7 +10,10 @@
             <div>
               <%= impression.subject %>
               <span class="text-secondary ms-1">
-                from <%= impression.author %> <%= time_ago_in_words(impression.created_at) %> ago
+                from <%= impression.author %> <%= time_ago_in_words(impression.created_at) %> ago 
+                <% if impression.staff_only? %>
+                  <i class="fa-solid fa-lock"></i>
+                <% end %>
               </span>
             </div>
             <div>
@@ -23,7 +26,7 @@
           <i class="fa-solid fa-chevron-right fa-fw"></i>
         </div>
       </div>
-      
+
     <% end %>
   <% end %>
 </div>
