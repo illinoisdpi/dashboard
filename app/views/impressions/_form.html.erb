@@ -17,8 +17,8 @@
     <%# TODO: add user photo  %>
     <div class="mb-3">
       <%= form.label :subject_id, class: "form-label" %>
-      <%= form.hidden_field :subject_id, 
-        value: @impression.subject_id.blank? ? "" : @impression.subject_id, 
+      <%= form.hidden_field :subject_id,
+        value: @impression.subject_id.blank? ? "" : @impression.subject_id,
         data: { search_subject_target: "hiddenField" } %>
       <input 
         type="search"  
@@ -41,7 +41,8 @@
       <%= form.label :content, class: "form-label" %>
       <%= form.text_area :content, class: "form-control", rows: "10", "aria-described-by": "content-help" %>
       <div id="content-help" class="form-text">
-        This impression may be shared with the subject.
+        This impression may be shared with the subject. Click here to keep it private.
+        <%= form.check_box :staff_only, { class: "form-check-input" }, "1", "0" %>
       </div>
     </div>
     <div class="d-grid gap-2 mt-2">
