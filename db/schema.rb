@@ -10,11 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_01_24_174951) do
+ActiveRecord::Schema[7.0].define(version: 2025_02_03_211855) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "attendances", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "title"
+    t.string "category"
+    t.uuid "roll_taker_id_id", null: false
+    t.uuid "cohort_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cohort_id"], name: "index_attendances_on_cohort_id"
+    t.index ["roll_taker_id_id"], name: "index_attendances_on_roll_taker_id_id"
+  end
+
+  create_table "attendees", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "attendance_id", null: false
+    t.uuid "enrollment_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["attendance_id"], name: "index_attendees_on_attendance_id"
+    t.index ["enrollment_id"], name: "index_attendees_on_enrollment_id"
+  end
 
   create_table "blazer_audits", force: :cascade do |t|
     t.uuid "user_id"
@@ -255,6 +275,9 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_24_174951) do
     t.index ["name"], name: "index_roles_on_name"
   end
 
+  create_table "untitled_table", id: :integer, default: nil, force: :cascade do |t|
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.citext "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -306,6 +329,10 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_24_174951) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "attendances", "cohorts"
+  add_foreign_key "attendances", "users", column: "roll_taker_id_id"
+  add_foreign_key "attendees", "attendances"
+  add_foreign_key "attendees", "enrollments"
   add_foreign_key "canvas_assignments", "cohorts"
   add_foreign_key "canvas_gradebook_snapshots", "cohorts"
   add_foreign_key "canvas_gradebook_snapshots", "users"
