@@ -19,12 +19,12 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_03_211855) do
   create_table "attendances", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "title"
     t.string "category"
-    t.uuid "roll_taker_id_id", null: false
+    t.uuid "roll_taker_id", null: false
     t.uuid "cohort_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cohort_id"], name: "index_attendances_on_cohort_id"
-    t.index ["roll_taker_id_id"], name: "index_attendances_on_roll_taker_id_id"
+    t.index ["roll_taker_id"], name: "index_attendances_on_roll_taker_id"
   end
 
   create_table "attendees", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -330,7 +330,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_03_211855) do
   end
 
   add_foreign_key "attendances", "cohorts"
-  add_foreign_key "attendances", "users", column: "roll_taker_id_id"
+  add_foreign_key "attendances", "users", column: "roll_taker_id"
   add_foreign_key "attendees", "attendances"
   add_foreign_key "attendees", "enrollments"
   add_foreign_key "canvas_assignments", "cohorts"
