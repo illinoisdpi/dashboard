@@ -4,10 +4,8 @@ class CreateRecurringMessages < ActiveRecord::Migration[7.0]
       t.references :cohort, foreign_key: true, type: :uuid
       t.string :channel_id
       t.text :message_content
-      t.integer :recurrence_pattern, default: 0
-      t.string :cron_expression
-      t.datetime :next_run_at
-      t.boolean :enabled, default: true
+      t.time :scheduled_time
+      t.text :days_of_week, array: true, default: []
 
       t.timestamps
     end
