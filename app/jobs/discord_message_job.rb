@@ -1,4 +1,4 @@
-class SendRecurringMessageJob < ApplicationJob
+class DiscordMessageJob < ApplicationJob
   queue_as :default
 
   def perform(message_id)

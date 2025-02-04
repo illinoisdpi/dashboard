@@ -31,10 +31,10 @@
               <li class="list-group-item">
                 <p class="mb-1"><%= message.message_content %></p>
                 <small class="text-muted">
-                  <%= message.recurrence_pattern.capitalize %>
-                  <% if message.cron_expression.present? %>
-                    - Cron: <%= message.cron_expression %>
+                  <% message.days_of_week.each do |day| %>
+                    <span><%= day.titleize %></span>
                   <% end %>
+                  at <%= message.scheduled_time.strftime("%I:%M %p") %>
                 </small>
               </li>
             <% end %>
@@ -50,8 +50,10 @@
         <h2 class="h6 mb-0">Schedule Recurring Message</h2>
       </div>
       <div class="card-body">
-        <%= form_with url: recurring_messages_cohort_discord_path(@cohort, id: @channel[:id]),
-                method: :post, local: true do |f| %>
+        <%= form_with model: @recurring_message,
+                url: recurring_messages_cohort_discord_path(@cohort, id: @channel[:id]),
+                method: :post,
+                local: true do |f| %>
           <%= f.hidden_field :channel_id %>
 
           <div class="mb-3">
@@ -80,9 +82,7 @@
                     checked: @recurring_message&.days_of_week&.include?(day) }, 
                   day, 
                   nil %>
-                  <%= f.label "days_of_week_#{day}", 
-                  day.titleize, 
-                  class: "form-check-label" %>
+                  <%= f.label "days_of_week_#{day}", day.titleize, class: "form-check-label" %>
                 </div>
               <% end %>
             </div>

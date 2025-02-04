@@ -24,10 +24,11 @@ class RecurringMessage < ApplicationRecord
 
   serialize :days, Array
 
+  belongs_to :cohort
+
   validates :message_content, presence: true
   validates :scheduled_time, presence: true
-  validates :days_of_week, presence: true, 
-    inclusion: { in: DAYS, message: "%{value} is not a valid day" },
-    length: { minimum: 1 }
-
+  validates :days_of_week, presence: true,
+                   inclusion: { in: DAYS, message: "%{value} is not a valid day" },
+                   length: { minimum: 1 }
 end

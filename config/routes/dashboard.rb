@@ -18,7 +18,7 @@ constraints subdomain: "dashboard" do
     resources :canvas_gradebook_snapshots
     resources :discord, only: [:index, :show], module: :cohort do
       member do
-        post "recurring_messages"
+        post 'recurring_messages', to: 'discord#create', as: :recurring_messages
       end
     end
     resources :enrollments, module: :cohort do
