@@ -4,7 +4,7 @@
 
 <div>
   <%= link_to "Edit this attendance", edit_cohort_attendance_path(@cohort, @attendance) %> |
-  <%= link_to "Back to attendances", cohort_attendances_path %>
+  <%= link_to "Back to attendances", cohort_attendances_path(@cohort) %>
 
-  <%= button_to "Destroy this attendance", @attendance, method: :delete %>
+  <%= button_to "Destroy this attendance", cohort_attendance_path(@cohort, @attendance), method: :delete %>
 </div>
