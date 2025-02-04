@@ -1,9 +1,18 @@
 class AttendancesController < ApplicationController
   before_action :set_attendance, only: %i[ show edit update destroy ]
+  before_action :set_cohort
+  after_action :verify_policy_scoped, only: :index
+  after_action :verify_authorized, only: [:show, :create, :update, :destroy]
 
   # GET /attendances or /attendances.json
   def index
-    @attendances = Attendance.all
+    @breadcrumbs = [
+      { content: "Dashboard", href: dashboard_root_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Attendance", href: cohort_attendances_path(@cohort) }
+    ]
+
+    @attendances = policy_scope(@cohort.attendances)
   end
 
   # GET /attendances/1 or /attendances/1.json
@@ -52,7 +61,7 @@ class AttendancesController < ApplicationController
     @attendance.destroy
 
     respond_to do |format|
-      format.html { redirect_to attendances_path, status: :see_other, notice: "Attendance was successfully destroyed." }
+      format.html { redirect_to cohort_attendance_path, status: :see_other, notice: "Attendance was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -61,6 +70,10 @@ class AttendancesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_attendance
       @attendance = Attendance.find(params[:id])
+    end
+
+    def set_cohort
+      @cohort = Cohort.find(params[:cohort_id])
     end
 
     # Only allow a list of trusted parameters through.
