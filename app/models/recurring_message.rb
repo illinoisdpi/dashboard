@@ -22,13 +22,11 @@
 class RecurringMessage < ApplicationRecord
   DAYS = %w[monday tuesday wednesday thursday friday saturday sunday].freeze
 
-  serialize :days, Array
-
   belongs_to :cohort
 
   validates :message_content, presence: true
   validates :scheduled_time, presence: true
   validates :days_of_week, presence: true,
-                   inclusion: { in: DAYS, message: "%{value} is not a valid day" },
-                   length: { minimum: 1 }
+                            inclusion: { in: DAYS, message: "%{value} is not a valid day" },
+                            length: { minimum: 1 }
 end

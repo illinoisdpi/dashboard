@@ -1,8 +1,8 @@
 class DiscordMessageJob < ApplicationJob
-  queue_as :default
+  queue_as :dashboard
 
   def perform(message_id)
-    message = Message.find_by(id: message_id)
+    message = RecurringMessage.find_by(id: message_id)
     return unless message
 
     DiscordService.new.send_message(message.channel_id, message.message_content)
@@ -19,11 +19,14 @@ class DiscordMessageJob < ApplicationJob
     now = Time.current
     target_seconds = message.scheduled_time.seconds_since_midnight
 
-    candidates = message.days.map do |weekday|
-      days_ahead = (weekday - now.wday) % 7
+    candidates = message.days_of_week.map do |day|
+      weekday_index = Date::DAYNAMES.index(day.capitalize)
+      next unless weekday_index
+
+      days_ahead = (weekday_index - now.wday) % 7
       candidate = now.beginning_of_day + days_ahead.days + target_seconds.seconds
       candidate <= now ? candidate + 1.week : candidate
-    end
+    end.compact
 
     candidates.min
   end
