@@ -20,7 +20,7 @@ class Cohort::EnrollmentsController < ApplicationController
       { content: "Cohorts", href: cohorts_path },
       { content: @cohort.to_s, href: cohort_path(@cohort) },
       { content: "Enrollments", href: cohort_enrollments_path(@cohort) },
-      { content: @enrollment.to_s }
+      { content: @enrollment.name }
     ]
   end
 
@@ -41,7 +41,7 @@ class Cohort::EnrollmentsController < ApplicationController
       {content: "Cohorts", href: cohorts_path},
       {content: @cohort.to_s, href: cohort_path(@cohort)},
       {content: "Enrollments", href: cohort_enrollments_path(@cohort)},
-      {content: @enrollment.to_s},
+      {content: @enrollment.name},
       {content: "Edit"}
     ]
   end
@@ -89,7 +89,7 @@ class Cohort::EnrollmentsController < ApplicationController
       { content: "Cohorts", href: cohorts_path },
       { content: @cohort.to_s, href: cohort_path(@cohort) },
       { content: "Enrollments", href: cohort_enrollments_path(@cohort) },
-      { content: @enrollment.to_s }
+      { content: @enrollment.name }
     ]
   end
 

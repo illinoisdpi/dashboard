@@ -1,7 +1,7 @@
 <div id="<%= dom_id enrollment %>", class="card">
   <div class="card-header">
     <div class="d-flex justify-content-between align-items-center">
-      <h1 class="me-auto mb-0 h6"><%= enrollment %></h1>
+      <h1 class="me-auto mb-0 h6"><%= enrollment.name %></h1>
       <% if policy(enrollment).edit? %>
         <%= link_to edit_cohort_enrollment_path(@cohort, enrollment), class: "me-2" do %>
           <i class="fa-solid fa-pen-to-square"></i>
