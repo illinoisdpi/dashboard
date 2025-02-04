@@ -1,8 +1,7 @@
 class AttendancesController < ApplicationController
   before_action :set_attendance, only: %i[ show edit update destroy ]
   before_action :set_cohort
-  after_action :verify_policy_scoped, only: :index
-  after_action :verify_authorized, only: [:show, :create, :update, :destroy]
+  before_action { authorize(@attendance || Attendance) }
 
   # GET /attendances or /attendances.json
   def index
@@ -12,7 +11,7 @@ class AttendancesController < ApplicationController
       { content: "Attendance", href: cohort_attendances_path(@cohort) }
     ]
 
-    @attendances = policy_scope(@cohort.attendances)
+    @attendances = policy_scope(@cohort.attendances).page(params[:page]).per(10) 
   end
 
   # GET /attendances/1 or /attendances/1.json
@@ -67,17 +66,16 @@ class AttendancesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_attendance
-      @attendance = Attendance.find(params[:id])
-    end
 
-    def set_cohort
-      @cohort = Cohort.find(params[:cohort_id])
-    end
+  def set_attendance
+    @attendance = Attendance.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def attendance_params
-      params.require(:attendance).permit(:title, :category, :roll_taker_id, :cohort_id)
-    end
+  def set_cohort
+    @cohort = Cohort.find(params[:cohort_id])
+  end
+
+  def attendance_params
+    params.require(:attendance).permit(:title, :category, :roll_taker_id, :cohort_id)
+  end
 end
