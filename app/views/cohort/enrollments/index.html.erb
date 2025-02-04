@@ -17,7 +17,7 @@
           <li class="list-group-item">
             <div class="d-flex align-items-center" data-bs-toggle="collapse" data-bs-target="#enrollment-<%= enrollment.id %>-links" aria-expanded="false" aria-controls="enrollment-<%= enrollment.id %>-links">
               <div class="me-auto d-flex align-items-baseline font-monospace">
-                <%= enrollment.to_s %>
+                <%= enrollment.name %>
               </div>
               <div>
               <% if enrollment.github_username.present? %>
@@ -86,7 +86,7 @@
             <%= link_to cohort_enrollment_path(@cohort, enrollment), class: "list-group-item" do %>
               <div class="d-flex">
                 <div class="me-auto d-flex align-items-center font-monospace gap-2">
-                  <%= enrollment.to_s %>
+                  <%= enrollment.name %>
                   <span class="badge bg-secondary"><%= enrollment.role.humanize %></span>
                 </div>
                 <div>
@@ -98,7 +98,7 @@
             <div class="list-group-item">
               <div class="d-flex">
                 <div class="me-auto d-flex align-items-center font-monospace gap-2">
-                  <%= enrollment.to_s %>
+                  <%= enrollment.name %>
                   <span class="badge bg-secondary"><%= enrollment.role.humanize %></span>
                 </div>
               </div>
