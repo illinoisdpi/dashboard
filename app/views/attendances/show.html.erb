@@ -3,8 +3,8 @@
 <%= render @attendance %>
 
 <div>
-  <%= link_to "Edit this attendance", edit_attendance_path(@attendance) %> |
-  <%= link_to "Back to attendances", attendances_path %>
+  <%= link_to "Edit this attendance", edit_cohort_attendance_path(@cohort, @attendance) %> |
+  <%= link_to "Back to attendances", cohort_attendances_path %>
 
   <%= button_to "Destroy this attendance", @attendance, method: :delete %>
 </div>

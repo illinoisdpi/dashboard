@@ -1,3 +1,5 @@
+<%= render "cohorts/tabs" %>
+
 <p style="color: green"><%= notice %></p>
 
 <h1>Attendances</h1>
@@ -6,9 +8,9 @@
   <% @attendances.each do |attendance| %>
     <%= render attendance %>
     <p>
-      <%= link_to "Show this attendance", attendance %>
+      <%= link_to "Show this attendance", cohort_attendance_path(@cohort, attendance) %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New attendance", new_attendance_path %>
+<%= link_to "New attendance", new_cohort_attendance_path(@cohort) %>
