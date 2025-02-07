@@ -8,7 +8,7 @@
         <% end %>
       </h1>
       <% if policy(impression).edit? %>
-        <%= link_to edit_cohort_impression_path(@cohort, @impression), class: "me-2" do %>
+        <%= link_to edit_impression_path(@impression), class: "me-2" do %>
           <i class="fa-solid fa-pen-to-square"></i>
         <% end %>
       <% end %>
