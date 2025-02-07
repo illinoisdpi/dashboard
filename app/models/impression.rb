@@ -34,6 +34,7 @@ class Impression < ApplicationRecord
 
   scope :positive, -> { where(emoji: Emojiable.positive_emojis) }
   scope :negative, -> { where(emoji: Emojiable.negative_emojis) }
+  scope :neutral, -> { where(emoji: Emojiable.neutral_emojis) }
 
   scope :last_week, -> { where(created_at: 1.week.ago.beginning_of_day..Time.current.end_of_day) }
   scope :last_month, -> { where(created_at: 1.month.ago.beginning_of_day..Time.current.end_of_day) }
