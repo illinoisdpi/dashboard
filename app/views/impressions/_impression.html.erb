@@ -4,7 +4,7 @@
       <h1 class="me-auto mb-0 h6">
         <%= impression.summary %>
         <% if impression.staff_only? %>
-          <i class="fa-solid fa-lock text-secondary" data-bs-toggle="tooltip" title="This impression is viewable only by staff members"></i>
+          <i class="fa-solid fa-lock text-secondary" data-controller="tooltip" data-bs-toggle="tooltip" title="This impression is viewable only by staff members"></i>
         <% end %>
       </h1>
       <% if policy(impression).edit? %>
