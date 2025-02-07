@@ -74,6 +74,6 @@ class ImpressionsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def impression_params
-    params.require(:impression).permit(:author_id, :subject_id, :content, :emoji)
+    params.require(:impression).permit(:author_id, :subject_id, :content, :emoji, :staff_only)
   end
 end

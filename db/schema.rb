@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_01_24_174951) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_31_173635) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -188,6 +188,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_24_174951) do
     t.text "emoji", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "staff_only", default: false
     t.index ["author_id"], name: "index_impressions_on_author_id"
     t.index ["subject_id"], name: "index_impressions_on_subject_id"
   end

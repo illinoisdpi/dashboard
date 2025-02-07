@@ -1,10 +1,14 @@
 <div id="<%= dom_id impression %>" class="card">
   <div class="card-header">
     <div class="d-flex justify-content-between align-items-center">
-      <h1 class="me-auto mb-0 h6"><%= impression.summary %></h1>
-        <p class="me-3 mb-0 h6"> Created: <%= impression.created_at.strftime("%c") %></p>
+      <h1 class="me-auto mb-0 h6">
+        <%= impression.summary %>
+        <% if impression.staff_only? %>
+          <i class="fa-solid fa-lock text-secondary" data-controller="tooltip" data-bs-toggle="tooltip" title="This impression is viewable only by staff members"></i>
+        <% end %>
+      </h1>
       <% if policy(impression).edit? %>
-        <%= link_to edit_impression_path(@impression), class: "me-2" do %>
+        <%= link_to edit_cohort_impression_path(@cohort, @impression), class: "me-2" do %>
           <i class="fa-solid fa-pen-to-square"></i>
         <% end %>
       <% end %>
@@ -19,4 +23,9 @@
   <div class="card-body">
     <p><%= impression.content %></p>
   </div>
+
+  <div class="card-footer">
+    <%= time_ago_in_words(impression.created_at) %> ago
+  </div>
+
 </div>

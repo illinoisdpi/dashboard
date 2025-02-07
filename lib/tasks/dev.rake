@@ -119,6 +119,7 @@ namespace :dev do
               subject_id: enrollment.id,
               content: Faker::Lorem.sentence,
               emoji: Impression::EMOJIS.keys.sample,
+              staff_only: [true, false].sample,
               created_at: rand(1..5).week.ago
             )
           end
