@@ -40,10 +40,12 @@
     <div class="mb-3">
       <%= form.label :content, class: "form-label" %>
       <%= form.text_area :content, class: "form-control", rows: "10", "aria-described-by": "content-help" %>
-      <div id="content-help" class="form-text">
-        This impression may be shared with the subject. Click here to keep it private.
-        <%= form.check_box :staff_only, checked: false %>
-      </div>
+    </div>
+    <div id="content-help" class="form-check mb-3 fs-5">
+      <%= form.check_box :staff_only, checked: false, id: "staff-only-checkbox" %>
+      <label class="form-check-label" for="staff-only-checkbox">
+        This impression may be shared with the subject. Click here to keep it reserved to staff only.
+      </label>
     </div>
     <div class="d-grid gap-2 mt-2">
       <%= form.submit class: "btn btn-secondary" %>
