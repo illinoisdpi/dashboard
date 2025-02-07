@@ -42,8 +42,9 @@
       </div>
       <div id="content-help" class="form-check mb-3 fs-5">
         <%= form.check_box :staff_only, checked: false, id: "staff-only-checkbox" %>
-        <label class="form-check-label" for="staff-only-checkbox">
-          This impression may be shared with the subject. Click here to keep it reserved to staff only.
+        <label class="form-check-label" for="staff-only-checkbox" data-controller="tooltip" data-bs-toggle="tooltip" title="This impression is only viewable by staff members" role="button">
+          <i class="fa-solid fa-lock"></i>
+          Staff only
         </label>
       </div>
       <div class="d-grid gap-2 mt-2">
