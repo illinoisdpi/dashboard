@@ -6,8 +6,21 @@
   </div>
 
   <div>
-    <%= form.label :category %>
-    <%= form.text_field :category %>
+    <%= form.label :category, "Select a Category" %>
+    <%= form.select :category, 
+        options_for_select([
+          ['Riverside'],
+          ['Durable Skills Session'],
+          ['Retro'],
+          ['Office Hours'],
+          ['In-Person Office Visit'],
+          ['Technical Lecture'],
+          ['Mock Interview'],
+          ['Staff 1-1'],
+          ['TA 1-1'],
+          ['Community/Alumni Event'],
+          ['Other']
+        ], selected: attendance.category), class: 'form-control' %>
   </div>
 
   <div>
