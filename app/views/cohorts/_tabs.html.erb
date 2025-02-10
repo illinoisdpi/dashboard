@@ -19,10 +19,6 @@
       <%= simple_active_link_to "Piazza", cohort_piazza_activity_reports_path(@cohort), class: "nav-link" %>
     </li>
   <% end %>
-  <%# TODO: start tracking attendance %>
-  <%# <li class="nav-item">
-    <a class="nav-link">Attendance</a>
-  </li> %>
   <% if policy(@cohort).cohort_impressions? %>
     <li class="nav-item">
       <%= simple_active_link_to "Attendance", cohort_attendances_path(@cohort), class: "nav-link" %>
