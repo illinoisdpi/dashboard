@@ -1,17 +1,17 @@
 <%= render "cohorts/tabs" %>
 
-<p style="color: green"><%= notice %></p>
-
-  <div id="attendances">
-    <% @attendances.each do |attendance| %>
-      <%= render attendance %>
-      <p>
-        <%= link_to "Show this attendance", cohort_attendance_path(@cohort, attendance) %>
-      </p>
-    <% end %>
+<div class="card">
+  <div class="card-header">
+    <div class="d-flex align-items-center justify-content-end">
+      <h1 class="h6 mb-0 me-auto">Attendances</h1>
+      <div>
+        <%= link_to new_cohort_attendance_path(@cohort), class: 'btn btn-outline-primary me-2' do %>
+          <i class="fa-solid fa-plus"></i>
+        <% end %>
+      </div>
+    </div>
   </div>
-
-  <%= paginate @attendances, theme: 'bootstrap-5', nav_class: "d-flex my-2", pagination_class: "flex-wrap" %>
+  <%= render "list_group", cohort: @cohort, attendances: @attendances %>
 </div>
 
-<%= link_to "New attendance", new_cohort_attendance_path(@cohort) %>
+<%= paginate @attendances, theme: 'bootstrap-5', nav_class: "d-flex my-2", pagination_class: "flex-wrap" %>
