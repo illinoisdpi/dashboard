@@ -19,4 +19,6 @@
 #  fk_rails_...  (enrollment_id => enrollments.id)
 #
 class Attendee < ApplicationRecord
+  belongs_to :attendance
+  belongs_to :enrollment
 end

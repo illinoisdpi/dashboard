@@ -21,6 +21,9 @@
 #  fk_rails_...  (roll_taker_id => users.id)
 #
 class Attendance < ApplicationRecord
-  has_many :enrollments, through: :attendees, source: :enrollments
-  belongs_to :cohorts
+  belongs_to :cohort
+  belongs_to :roll_taker, class_name: "User", optional: true
+
+  has_many :attendees, dependent: :destroy
+  has_many :enrollments, through: :attendees
 end
