@@ -1,37 +1,27 @@
-<%= form_with(model: @attendance, url: [@cohort, @attendance]) do |form| %>
-  <% if attendance.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(attendance.errors.count, "error") %> prohibited this attendance from being saved:</h2>
-
-      <ul>
-        <% attendance.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+<%= form_with model: @attendance, url: @attendance.new_record? ? cohort_attendances_path(@cohort) : cohort_attendance_path(@cohort, @attendance), method: @attendance.new_record? ? :post : :patch, local: true do |form| %>
+  
   <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_area :title %>
+    <%= form.label :title %>
+    <%= form.text_field :title %>
   </div>
 
   <div>
-    <%= form.label :category, style: "display: block" %>
+    <%= form.label :category %>
     <%= form.text_field :category %>
   </div>
 
   <div>
-    <%= form.label :roll_taker_id, style: "display: block" %>
-    <%= form.number_field :roll_taker_id %>
-  </div>
-
-  <div>
-    <%= form.label :cohort_id, style: "display: block" %>
-    <%= form.number_field :cohort_id %>
+    <h3>Select Students</h3>
+    <% @enrollments.each do |enrollment| %>
+      <div>
+        <%= check_box_tag "enrollment_ids[]", enrollment.id, @attendance.enrollments.include?(enrollment) %>
+        <%= enrollment.user.full_name %>
+      </div>
+    <% end %>
   </div>
 
   <div>
     <%= form.submit %>
   </div>
+
 <% end %>
