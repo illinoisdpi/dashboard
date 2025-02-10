@@ -6,7 +6,7 @@ class AttendancesController < ApplicationController
   # GET /attendances or /attendances.json
   def index
     @breadcrumbs = [
-      { content: "Dashboard", href: dashboard_root_path },
+      { content: "Cohorts", href: cohorts_path },
       { content: @cohort.to_s, href: cohort_path(@cohort) },
       { content: "Attendance", href: cohort_attendances_path(@cohort) }
     ]
@@ -16,26 +16,57 @@ class AttendancesController < ApplicationController
 
   # GET /attendances/1 or /attendances/1.json
   def show
+    @breadcrumbs = [
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Attendance", href: cohort_attendances_path(@cohort) }, 
+      {content: @attendance.title}
+    ]
   end
 
   # GET /attendances/new
   def new
-    @attendance = Attendance.new
+    @breadcrumbs = [
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Attendance", href: cohort_attendances_path(@cohort) }, 
+      {content: "New"}
+    ]
+
+    @attendance = @cohort.attendances.new
+    @enrollments = @cohort.enrollments.includes(:user)
   end
 
   # GET /attendances/1/edit
   def edit
+    @breadcrumbs = [
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Attendance", href: cohort_attendances_path(@cohort) }, 
+      {content: "Edit"}
+    ]
+
+    @attendance = Attendance.find(params[:id])
+    @cohort = @attendance.cohort
+    @enrollments = @cohort.enrollments.includes(:user)
   end
 
   # POST /attendances or /attendances.json
   def create
-    @attendance = Attendance.new(attendance_params)
+    @attendance = @cohort.attendances.new(attendance_params)
+    @attendance.roll_taker_id = current_user.id
 
     respond_to do |format|
       if @attendance.save
-        format.html { redirect_to @attendance, notice: "Attendance was successfully created." }
+        # THIS EACH LOOP IS ATTACHING THE SELECTED ATTENDEES LINIKING ENROLLMENTS TO AN ATTENDANCE
+        (params[:enrollment_ids] || []).each do |enrollment_id|
+          @attendance.attendees.create(enrollment_id: enrollment_id)
+        end
+  
+        format.html { redirect_to cohort_attendances_url(@cohort, @attendance), notice: "Attendance was successfully created." }
         format.json { render :show, status: :created, location: @attendance }
       else
+        @enrollments = @cohort.enrollments.includes(:user)
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @attendance.errors, status: :unprocessable_entity }
       end
@@ -46,9 +77,16 @@ class AttendancesController < ApplicationController
   def update
     respond_to do |format|
       if @attendance.update(attendance_params)
-        format.html { redirect_to @attendance, notice: "Attendance was successfully updated." }
+        @attendance.attendees.where.not(enrollment_id: params[:enrollment_ids]).destroy_all
+        # SAME THIS THATS HAPPENING IN CREATE IS HAPPENING HERE
+        (params[:enrollment_ids] || []).each do |enrollment_id|
+          @attendance.attendees.find_or_create_by(enrollment_id: enrollment_id)
+        end
+  
+        format.html { redirect_to cohort_attendance_url(@cohort, @attendance), notice: "Attendance was successfully updated." }
         format.json { render :show, status: :ok, location: @attendance }
       else
+        @enrollments = @cohort.enrollments.includes(:user)
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @attendance.errors, status: :unprocessable_entity }
       end
@@ -60,7 +98,7 @@ class AttendancesController < ApplicationController
     @attendance.destroy
 
     respond_to do |format|
-      format.html { redirect_to cohort_attendance_path, status: :see_other, notice: "Attendance was successfully destroyed." }
+      format.html { redirect_to cohort_attendances_path(@cohort), notice: "Attendance was successfully destroyed." }
       format.json { head :no_content }
     end
   end
