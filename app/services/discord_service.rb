@@ -73,7 +73,7 @@ class DiscordService
   #     end
   #   end
 
-  #   all_messages.sort_by { |m| m[:timestamp] }.reverse 
+  #   all_messages.sort_by { |m| m[:timestamp] }.reverse
   # end
 
   def top_contributors(channel_id, limit = 50)
