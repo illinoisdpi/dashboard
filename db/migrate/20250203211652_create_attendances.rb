@@ -2,7 +2,7 @@ class CreateAttendances < ActiveRecord::Migration[7.0]
   def change
     create_table :attendances, id: :uuid do |t|
       t.text :title
-      t.string :category
+      t.string :category, null: false
       t.references :roll_taker, null: false, foreign_key: { to_table: :users }, type: :uuid
       t.references :cohort, null: :false, foreign_key: true, type: :uuid
 
