@@ -1,40 +1,36 @@
-<%= form_with model: @attendance, url: @attendance.new_record? ? cohort_attendances_path(@cohort) : cohort_attendance_path(@cohort, @attendance), method: @attendance.new_record? ? :post : :patch, local: true do |form| %>
-  
-  <div>
-    <%= form.label :title %>
-    <%= form.text_field :title %>
+<%= form_with model: attendance, url: attendance.new_record? ? cohort_attendances_path(@cohort) : cohort_attendance_path(@cohort, attendance), method: attendance.new_record? ? :post : :patch, local: true, class: "p-4" do |form| %>
+  <% if attendance.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(attendance.errors.count, "error") %> prohibited this attendance from being saved:</h2>
+      <ul>
+        <% attendance.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <%= form.label :title, class: "form-label fw-bold" %>
+    <%= form.text_field :title, class: "form-control" %>
   </div>
-
-  <div>
-    <%= form.label :category, "Select a Category" %>
-    <%= form.select :category, 
-        options_for_select([
-          ['Riverside'],
-          ['Durable Skills Session'],
-          ['Retro'],
-          ['Office Hours'],
-          ['In-Person Office Visit'],
-          ['Technical Lecture'],
-          ['Mock Interview'],
-          ['Staff 1-1'],
-          ['TA 1-1'],
-          ['Community/Alumni Event'],
-          ['Other']
-        ], selected: attendance.category), class: 'form-control' %>
+  <div class="mb-3">
+    <%= form.label :category, "Select a Category", class: "form-label fw-bold" %>
+    <%= form.select :category, options_for_select(Attendance.categories.keys.map { |category_key| [category_key.titleize, category_key] }, selected: attendance.category), { include_blank: true  }, { class: 'form-select' } %>
   </div>
-
-  <div>
-    <h3>Select Students</h3>
-    <% @enrollments.each do |enrollment| %>
-      <div>
-        <%= check_box_tag "enrollment_ids[]", enrollment.id, @attendance.enrollments.include?(enrollment) %>
-        <%= enrollment.user.full_name %>
+  <div class="mb-3">
+    <h3 class="h6 fw-bold">Select Students</h3>
+    <div class="form-check">
+      <%= check_box_tag "select_all", "selected_all", false, class: "form-check-input", id: "select_all" %>
+      <%= label_tag "select_all", "Select All", class: "form-check-label" %>
+    </div>
+    <% attendance.cohort.enrollments.each do |enrollment| %>
+      <div class="form-check">
+        <%= check_box_tag "enrollment_ids[]", enrollment.id, attendance.enrollments.include?(enrollment), class: "form-check-input", id: "enrollment_#{enrollment.id}" %>
+        <%= label_tag "enrollment_#{enrollment.id}", enrollment.user.full_name, class: "form-check-label" %>
       </div>
     <% end %>
   </div>
-
-  <div>
-    <%= form.submit %>
+  <div class="d-flex justify-content-end">
+    <%= form.submit class: "btn btn-primary" %>
   </div>
-
 <% end %>

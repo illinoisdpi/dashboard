@@ -1,5 +1,4 @@
 <%= render "cohorts/tabs" %>
-
 <div class="card">
   <div class="card-header">
     <div class="d-flex align-items-center justify-content-end">
@@ -13,5 +12,4 @@
   </div>
   <%= render "list_group", cohort: @cohort, attendances: @attendances %>
 </div>
-
 <%= paginate @attendances, theme: 'bootstrap-5', nav_class: "d-flex my-2", pagination_class: "flex-wrap" %>

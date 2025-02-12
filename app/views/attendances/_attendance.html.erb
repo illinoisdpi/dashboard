@@ -1,22 +1,22 @@
-<div id="<%= dom_id attendance %>">
-  <p>
-    <strong>Title:</strong>
-    <%= attendance.title %>
-  </p>
-
-  <p>
-    <strong>Category:</strong>
-    <%= attendance.category %>
-  </p>
-
-  <p>
-    <strong>Roll taker:</strong>
-    <%= attendance.roll_taker_id %>
-  </p>
-
-  <p>
-    <strong>Cohort:</strong>
-    <%= attendance.cohort_id %>
-  </p>
-
+<div class="card">
+  <div class="card-header">
+    <div class="d-flex justify-content-between align-items-center">
+      <h1 class="me-auto mb-0 h6">
+        <%= Attendance.categories.fetch(attendance.category, "Unknown").titleize %>
+      </h1>
+      <%= link_to edit_cohort_attendance_path(@cohort, attendance), class: "me-2" do %>
+        <i class="fa-solid fa-pen-to-square"></i>
+      <% end %>
+      <%= button_to cohort_attendance_path(@cohort, attendance), method: :delete, class: "btn btn-link" do %>
+        <i class="fa-solid fa-trash text-danger"></i>
+      <% end %>
+    </div>
+  </div>
+  <div class="card-body">
+    <p><%= attendance.title %></p>
+    <!--<p><%#= attendance. %></p>-->
+  </div>
+  <div class="card-footer">
+    <%= time_ago_in_words(attendance.created_at) %> ago by <%= attendance.roll_taker.name %>
+  </div>
 </div>
