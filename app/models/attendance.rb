@@ -3,7 +3,7 @@
 # Table name: attendances
 #
 #  id            :uuid             not null, primary key
-#  category      :string
+#  category      :string           not null
 #  title         :text
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
@@ -21,9 +21,27 @@
 #  fk_rails_...  (roll_taker_id => users.id)
 #
 class Attendance < ApplicationRecord
+  validates :category, presence: true
+
   belongs_to :cohort
-  belongs_to :roll_taker, class_name: "User", optional: true
+  belongs_to :roll_taker, class_name: "User"
 
   has_many :attendees, dependent: :destroy
   has_many :enrollments, through: :attendees
+
+  enum :category, {
+    riverside: "riverside",
+    durable_skills_session: "durable skills session",
+    retro: "retro",
+    office_hours: "office hours",
+    in_person_office_visit: "in person office visit",
+    technical_lecture: "technical lecture",
+    mock_interview: "mock interview",
+    staff_1_1: "staff 1 on 1",
+    TA_1_1: "T.A. 1 on 1",
+    community_alumni_event: "community or alumni event",
+    other: "other"
+  }
+
+  scope :default_order, -> { order(created_at: :desc) }
 end

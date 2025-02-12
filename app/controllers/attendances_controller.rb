@@ -11,7 +11,7 @@ class AttendancesController < ApplicationController
       { content: "Attendance", href: cohort_attendances_path(@cohort) }
     ]
 
-    @attendances = policy_scope(@cohort.attendances).page(params[:page]).per(10) 
+    @attendances = policy_scope(@cohort.attendances.default_order).page(params[:page]).per(10)
   end
 
   # GET /attendances/1 or /attendances/1.json
@@ -19,31 +19,8 @@ class AttendancesController < ApplicationController
     @breadcrumbs = [
       { content: "Cohorts", href: cohorts_path },
       { content: @cohort.to_s, href: cohort_path(@cohort) },
-      { content: "Attendance", href: cohort_attendances_path(@cohort) }, 
-      {content: @attendance.title}
-    ]
-  end
-
-  # GET /attendances/new
-  def new
-    @breadcrumbs = [
-      { content: "Cohorts", href: cohorts_path },
-      { content: @cohort.to_s, href: cohort_path(@cohort) },
-      { content: "Attendance", href: cohort_attendances_path(@cohort) }, 
-      {content: "New"}
-    ]
-
-    @attendance = @cohort.attendances.new
-    @enrollments = @cohort.enrollments.includes(:user)
-  end
-
-  # GET /attendances/1/edit
-  def edit
-    @breadcrumbs = [
-      { content: "Cohorts", href: cohorts_path },
-      { content: @cohort.to_s, href: cohort_path(@cohort) },
-      { content: "Attendance", href: cohort_attendances_path(@cohort) }, 
-      {content: "Edit"}
+      { content: "Attendance", href: cohort_attendances_path(@cohort) },
+      { content: @attendance.title }
     ]
 
     @attendance = Attendance.find(params[:id])
@@ -51,22 +28,51 @@ class AttendancesController < ApplicationController
     @enrollments = @cohort.enrollments.includes(:user)
   end
 
+  # GET /attendances/new
+  def new
+    @breadcrumbs = [
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Attendance", href: cohort_attendances_path(@cohort) },
+      { content: "New" }
+    ]
+
+    @attendance = @cohort.attendances.new
+  end
+
+  # GET /attendances/1/edit
+  def edit
+    @breadcrumbs = [
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Attendance", href: cohort_attendances_path(@cohort) },
+      { content: "Edit" }
+    ]
+
+    @attendance = Attendance.find(params[:id])
+  end
+
   # POST /attendances or /attendances.json
   def create
-    @attendance = @cohort.attendances.new(attendance_params)
-    @attendance.roll_taker_id = current_user.id
+    @attendance = @cohort.attendances.new(attendance_params.merge(roll_taker: current_user))
 
     respond_to do |format|
+      if params[:select_all] == "selected_all"
+        # IF "SELECET ALL STUDENTS BOX IS CLICKED, MATCH ALL ENROLLMENTS IN TO ALL ATTENDANCE ENROLLMENTS
+        @attendance.enrollments = @attendance.cohort.enrollments
+      else
+        @attendance.enrollments = Enrollment.where(id: params[:enrollment_ids])
+      end
+
       if @attendance.save
         # THIS EACH LOOP IS ATTACHING THE SELECTED ATTENDEES LINIKING ENROLLMENTS TO AN ATTENDANCE
         (params[:enrollment_ids] || []).each do |enrollment_id|
           @attendance.attendees.create(enrollment_id: enrollment_id)
         end
-  
+
         format.html { redirect_to cohort_attendances_url(@cohort, @attendance), notice: "Attendance was successfully created." }
         format.json { render :show, status: :created, location: @attendance }
       else
-        @enrollments = @cohort.enrollments.includes(:user)
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @attendance.errors, status: :unprocessable_entity }
       end
@@ -82,11 +88,10 @@ class AttendancesController < ApplicationController
         (params[:enrollment_ids] || []).each do |enrollment_id|
           @attendance.attendees.find_or_create_by(enrollment_id: enrollment_id)
         end
-  
+
         format.html { redirect_to cohort_attendance_url(@cohort, @attendance), notice: "Attendance was successfully updated." }
         format.json { render :show, status: :ok, location: @attendance }
       else
-        @enrollments = @cohort.enrollments.includes(:user)
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @attendance.errors, status: :unprocessable_entity }
       end
