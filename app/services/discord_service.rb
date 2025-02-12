@@ -45,45 +45,47 @@ class DiscordService
     []
   end
 
-  def fetch_server_recent_messages(discord_server_id, per_channel_limit = 5)
-    return [] if discord_server_id.blank?
+  # TODO: Find a way to optimize this to reduce O(N)^2 before implementing
+  # def fetch_server_recent_messages(discord_server_id, per_channel_limit = 5)
+  #   return [] if discord_server_id.blank?
 
-    server = DISCORD_BOT.server(discord_server_id.to_i)
-    return [] unless server
+  #   server = DISCORD_BOT.server(discord_server_id.to_i)
+  #   return [] unless server
 
-    all_messages = []
+  #   all_messages = []
 
-    server.channels.select { |ch| ch.type == 0 }.each do |ch|
-      begin
-        recent_msgs = ch.history(per_channel_limit).map do |msg|
-          {
-            channel_id: ch.id.to_s,
-            channel_name: format_name(ch.name),
-            id: msg.id.to_s,
-            author_id: msg.author.id.to_s,
-            author_username: msg.author.username,
-            content: msg.content,
-            timestamp: msg.timestamp
-          }
-        end
-        all_messages.concat(recent_msgs)
-      rescue => e
-        Rails.logger.error("[DiscordService#fetch_server_recent_messages] Error in channel #{ch.id}: #{e.message}")
-      end
-    end
+  #   server.channels.select { |ch| ch.type == 0 }.each do |ch|
+  #     begin
+  #       recent_msgs = ch.history(per_channel_limit).map do |msg|
+  #         {
+  #           channel_id: ch.id.to_s,
+  #           channel_name: format_name(ch.name),
+  #           id: msg.id.to_s,
+  #           author_id: msg.author.id.to_s,
+  #           author_username: msg.author.username,
+  #           content: msg.content,
+  #           timestamp: msg.timestamp
+  #         }
+  #       end
+  #       all_messages.concat(recent_msgs)
+  #     rescue => e
+  #       Rails.logger.error("[DiscordService#fetch_server_recent_messages] Error in channel #{ch.id}: #{e.message}")
+  #     end
+  #   end
 
-    all_messages.sort_by { |m| m[:timestamp] }.reverse 
-  end
+  #   all_messages.sort_by { |m| m[:timestamp] }.reverse 
+  # end
 
   def top_contributors(channel_id, limit = 50)
     recent_msgs = fetch_recent_messages(channel_id, limit)
     group_and_sort_contributors(recent_msgs)
   end
 
-  def top_server_contributors(discord_server_id, per_channel_limit = 20) # We can reduce this number so it can be faster
-    all_msgs = fetch_server_recent_messages(discord_server_id, per_channel_limit)
-    group_and_sort_contributors(all_msgs)
-  end
+  # TODO: Find a way to optimize this to reduce O(N)^2 before implementing
+  # def top_server_contributors(discord_server_id, per_channel_limit = 20) # We can reduce this number so it can be faster
+  #   all_msgs = fetch_server_recent_messages(discord_server_id, per_channel_limit)
+  #   group_and_sort_contributors(all_msgs)
+  # end
 
   def send_message(channel_id, content)
     return if channel_id.blank? || content.blank?

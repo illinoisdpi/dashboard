@@ -11,8 +11,9 @@ class Cohort::DiscordController < ApplicationController
     ]
 
     @channels = DiscordService.new.fetch_channels(@cohort.discord_server_id)
-    @server_top_contributors = DiscordService.new.top_server_contributors(@cohort.discord_server_id, 50)
-    @server_recent_messages = DiscordService.new.fetch_server_recent_messages(@cohort.discord_server_id, 10)
+    # TODO: Find a way to optimize this to reduce O(N)^2 before implementing
+    # @server_top_contributors = DiscordService.new.top_server_contributors(@cohort.discord_server_id, 50)
+    # @server_recent_messages = DiscordService.new.fetch_server_recent_messages(@cohort.discord_server_id, 10)
   end
 
   def show
