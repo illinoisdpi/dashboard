@@ -28,7 +28,6 @@ class DiscordChannelsController < ApplicationController
       { content: @channel[:name] }
     ]
 
-    # You might want to show existing recurring messages, or a link to create a new one.
     @recurring_messages = @cohort.recurring_messages.where(channel_id: @channel[:id])
   end
 
