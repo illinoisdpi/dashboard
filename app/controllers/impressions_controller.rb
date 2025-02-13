@@ -24,7 +24,6 @@ class ImpressionsController < ApplicationController
   def new
     @breadcrumbs << { content: "New" }
 
-    # TODO: set cohort through subject_id?
     @impression = current_user.authored_impressions.new
   end
 
