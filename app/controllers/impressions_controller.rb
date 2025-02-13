@@ -1,22 +1,36 @@
 class ImpressionsController < ApplicationController
   before_action :set_impression, only: %i[show edit update destroy]
+  before_action :set_cohort
+  before_action :set_breadcrumbs
   before_action { authorize(@impression || Impression) }
+
+  # GET /impressions or /impressions.json
+  def index
+    @q = policy_scope(@cohort.impressions.includes(subject: :user)).ransack(params[:q])
+    @impressions = @q.result.default_order
+
+    respond_to do |format|
+      format.html { @impressions = @impressions.page(params[:page]).per(params.fetch(:per_page, 10))}
+      format.csv { send_data(Impression.to_csv(@impressions), filename: csv_filename, type: "text/csv") }
+    end
+  end
 
   # GET /impressions/1 or /impressions/1.json
   def show
-    @breadcrumbs = [
-      { content: "Dashboard", href: dashboard_root_path },
-      { content: @impression.to_s, href: impression_path(@impression) }
-    ]
+    @breadcrumbs << { content: @impression }
   end
 
   # GET /impressions/new
   def new
+    @breadcrumbs << { content: "New" }
+
+    # TODO: set cohort through subject_id?
     @impression = current_user.authored_impressions.new
   end
 
   # GET /impressions/1/edit
   def edit
+    @breadcrumbs <<  { content: "Edit" }
   end
 
   # POST /impressions or /impressions.json
@@ -58,7 +72,7 @@ class ImpressionsController < ApplicationController
   end
 
   def search
-    @subjects = Enrollment.filter_by_name(params[:subject_search])
+    @subjects = Enrollment.by_cohort(@cohort.id).filter_by_name(params[:subject_search])
 
     respond_to do |format|
       format.turbo_stream
@@ -67,13 +81,36 @@ class ImpressionsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_impression
     @impression = policy_scope(Impression).find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
+  def set_cohort
+    if @impression.present?
+      @cohort = @impression.cohort
+    elsif params.has_key?(:cohort_id)
+      @cohort = Cohort.find(params.fetch(:cohort_id))
+    end
+  end
+
+  def set_breadcrumbs
+    @breadcrumbs = []
+    if @cohort.present?
+      @breadcrumbs << { content: "Cohorts", href: cohorts_path }
+      @breadcrumbs << { content: @cohort.to_s, href: cohort_path(@cohort) }
+      @breadcrumbs << { content: "Impressions", href: impressions_path(cohort_id: @cohort.id) }
+    end
+  end
+
   def impression_params
     params.require(:impression).permit(:author_id, :subject_id, :content, :emoji, :staff_only)
+  end
+
+  def csv_filename
+    return "#{Time.zone.today}-impressions.csv" if params[:q].blank?
+
+    formatted_query_params = params[:q].values.compact_blank.join("-")
+
+    "#{Time.zone.today}-impressions-#{formatted_query_params}.csv"
   end
 end

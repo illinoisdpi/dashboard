@@ -28,6 +28,7 @@ class Impression < ApplicationRecord
 
   belongs_to :author, class_name: "User"
   belongs_to :subject, class_name: "Enrollment"
+  has_one :cohort, through: :subject
 
   validates :content, presence: true
 

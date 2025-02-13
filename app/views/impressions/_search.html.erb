@@ -1,4 +1,4 @@
-<%= search_form_for(q, url: cohort_impressions_path) do |f| %>
+<%= search_form_for(q, url: impressions_path) do |f| %>
   <div class="row">
     <div class="mb-3 col-md-6">
       <%= f.label :subject_user_first_name_cont, class: "form-label" %>
@@ -22,5 +22,5 @@
 
   <%= f.submit class: "btn btn-primary" %>
 
-  <%= link_to "Clear", cohort_impressions_path(@cohort), class: "btn btn-outline-secondary ms-2" %>
+  <%= link_to "Clear", impressions_path(@cohort), class: "btn btn-outline-secondary ms-2" %>
 <% end %>

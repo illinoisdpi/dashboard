@@ -16,22 +16,19 @@ constraints subdomain: "dashboard" do
       get "canvas_cumulative_points"
     end
     resources :canvas_gradebook_snapshots
-    resources :enrollments, module: :cohort do
+    resources :enrollments do
       member do
         get "overview"
         get "snapshot"
-      end
-    end
-    resources :impressions, module: :cohort do
-      collection do
-        get :search
       end
     end
     resources :piazza_activity_reports
   end
 
   resources :impressions do
-    get :search, to: "impressions#search", on: :collection
+    collection do
+      get :search
+    end
   end
 
   root "dashboard#index", as: "dashboard_root"

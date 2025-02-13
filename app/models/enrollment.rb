@@ -89,6 +89,7 @@ class Enrollment < ApplicationRecord
       .group("enrollments.id, users.id, users.first_name, users.last_name")
       .order("total_points DESC")
   }
+  scope :by_cohort, ->(cohort_id) { where(cohort_id:) if cohort_id.present? }
 
   def total_points
     canvas_submissions.sum(:points)
