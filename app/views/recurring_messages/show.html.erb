@@ -1,0 +1,19 @@
+<%= render "cohorts/tabs" %>
+<div class="row mb-3">
+  <div class="col-lg-12 mb-3">
+    <div class="d-flex justify-content-between">
+      <%= render @canvas_gradebook_snapshot %>
+      <div>
+        <%= link_to cohort_canvas_gradebook_snapshot_url(@canvas_gradebook_snapshot.cohort, @canvas_gradebook_snapshot, format: :csv), class: "btn btn-outline-primary me-2" do %>
+          <i class="fa-solid fa-file-csv"></i>
+        <% end %>
+        <% if policy(@canvas_gradebook_snapshot).destroy? %>
+          <%= link_to cohort_canvas_gradebook_snapshot_url(@canvas_gradebook_snapshot.cohort, @canvas_gradebook_snapshot), data: { "turbo-method": :delete, "turbo-confirm": "Are you sure? This is NOT reversible" }, class: "btn btn-outline-danger" do %>
+            <i class="fa-solid fa-trash"></i>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render "table", canvas_gradebook_snapshot: @canvas_gradebook_snapshot %>

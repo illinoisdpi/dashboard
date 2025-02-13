@@ -1,17 +1,19 @@
 class RecurringMessagesController < ApplicationController
   before_action :set_cohort
   before_action :set_channel
+  before_action :set_recurring_message
   before_action :authorize_cohort_discord
 
-  def new
-    @recurring_message = @cohort.recurring_messages.new(channel_id: @channel[:id])
+  def edit
+    @breadcrumbs = [
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Discord Channels", href: cohort_discord_channels_path(@cohort) },
+      { content: "Edit" }
+    ]
   end
 
-  def edit
-    @recurring_message = @cohort.recurring_messages.find(params[:id])
-  end
   def create
-    @recurring_message = @cohort.recurring_messages.new(recurring_message_params)
     @recurring_message.channel_id = @channel[:id]
     if @recurring_message.save
       schedule_discord_message(@recurring_message)
@@ -23,9 +25,7 @@ class RecurringMessagesController < ApplicationController
     end
   end
 
-
   def update
-    @recurring_message = @cohort.recurring_messages.find(params[:id])
     if @recurring_message.update(recurring_message_params)
       schedule_discord_message(@recurring_message)
       flash[:notice] = "Recurring message updated successfully."
@@ -37,7 +37,6 @@ class RecurringMessagesController < ApplicationController
   end
 
   def destroy
-    @recurring_message = @cohort.recurring_messages.find(params[:id])
     @recurring_message.destroy
     flash[:notice] = "Recurring message deleted."
     redirect_to cohort_discord_channel_path(@cohort, @channel[:id])
@@ -49,8 +48,12 @@ class RecurringMessagesController < ApplicationController
     @cohort = Cohort.find(params[:cohort_id])
   end
 
+  def set_recurring_message
+    @cohort.recurring_messages.find(params[:id])
+  end
+
   def set_channel
-    @channel = DiscordService.new.fetch_channel(@cohort.discord_server_id, params[:discord_channel_id])
+    @channel = DiscordService.new.fetch_channel(@cohort.discord_server_id, params.fetch(:discord_channel_id))
   end
 
   def authorize_cohort_discord
