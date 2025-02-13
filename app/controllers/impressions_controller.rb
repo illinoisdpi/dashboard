@@ -72,7 +72,7 @@ class ImpressionsController < ApplicationController
   end
 
   def search
-    @subjects = Enrollment.by_cohort(@cohort.id).filter_by_name(params[:subject_search])
+    @subjects = Enrollment.by_cohort(@cohort).filter_by_name(params[:subject_search])
 
     respond_to do |format|
       format.turbo_stream
