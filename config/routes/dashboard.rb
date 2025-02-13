@@ -16,10 +16,8 @@ constraints subdomain: "dashboard" do
       get "canvas_cumulative_points"
     end
     resources :canvas_gradebook_snapshots
-    resources :discord, only: [:index, :show], module: :cohort do
-      member do
-        post 'recurring_messages', to: 'discord#create', as: :recurring_messages
-      end
+    resources :discord_channels, only: %i[index show] do
+      resources :recurring_messages, only: %i[new create edit update destroy]
     end
     resources :enrollments, module: :cohort do
       member do
@@ -33,7 +31,6 @@ constraints subdomain: "dashboard" do
       end
     end
     resources :piazza_activity_reports
-    resources :recurring_messages, only: [:index, :new, :create, :destroy], module: :cohort
   end
 
   resources :impressions do
