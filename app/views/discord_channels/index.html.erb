@@ -1,0 +1,86 @@
+<%= render "cohorts/tabs" %>
+
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card shadow-sm mb-4">
+      <div class="card-header d-flex align-items-center">
+        <h2 class="h6 mb-0">Discord Channels for <%= @cohort.name %></h2>
+      </div>
+      <% if @channels.any? %>
+        <div class="list-group list-group-flush">
+          <% @channels.each do |channel| %>
+            <%= link_to cohort_discord_channel_path(id: channel[:id]),
+                        class: "list-group-item list-group-item-action" do %>
+              <div class="d-flex justify-content-between align-items-center">
+                <span><%= channel[:name].to_s %></span>
+                <i class="fa-solid fa-chevron-right fa-fw"></i>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="card-body">
+          <p class="text-muted mb-0">No channels found.</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="card shadow-sm mb-4">
+      <div class="card-header">
+        <h2 class="h6 mb-0">Top Contributors (Across All Channels)</h2>
+      </div>
+      <div class="card-body">
+        <% if @server_top_contributors.present? %>
+          <ul class="list-group">
+            <% @server_top_contributors.each do |contributor| %>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <strong>@<%= contributor[:author_username] %></strong>
+                <span class="badge bg-primary rounded-pill">
+                  <%= contributor[:message_count] %>
+                </span>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <%# TODO: Replace with this line once we optimize server top contributors and recent messages %>
+          <%# <p class="text-muted">No contributors found.</p> %>
+          <p class="text-muted">Coming Soon.</p>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="card shadow-sm">
+      <div class="card-header">
+        <h2 class="h6 mb-0">Recent Messages (All Channels)</h2>
+      </div>
+      <div class="card-body">
+        <% if @server_recent_messages.present? %>
+          <ul class="list-group">
+            <% @server_recent_messages.each do |msg| %>
+              <li class="list-group-item">
+                <% if msg[:channel_name].present? %>
+                  <p class="mb-1">
+                    <strong>Channel: <%= msg[:channel_name] %></strong>
+                  </p>
+                <% end %>
+
+                <p class="mb-1">
+                  <strong>@<%= msg[:author_username] %>:</strong> <%= msg[:content] %>
+                </p>
+                <small class="text-muted">
+                  <%= msg[:timestamp].strftime("%b %d, %Y %I:%M %p") %>
+                </small>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <%# TODO: Replace with this line once we optimize server top contributors and recent messages %>
+          <%# <p class="text-muted mb-0">No recent messages found.</p> %>
+          <p class="text-muted">Coming Soon.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
