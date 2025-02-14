@@ -10,12 +10,12 @@
         </button>
         <% if policy(Impression).download_csv? %>
           <%# Using `to_unsafe_h` so we can handle ransack params %>
-          <%= link_to impressions_path(cohort_id: @cohort.id, format: :csv, q: params[:q]&.to_unsafe_h), class: 'btn btn-outline-primary me-2' do %>
+          <%= link_to cohort_impressions_path(@cohort, format: :csv, q: params[:q]&.to_unsafe_h), class: 'btn btn-outline-primary me-2' do %>
             <i class="fa-solid fa-file-csv"></i>
           <% end %>
         <% end %>
         <% if policy(Impression).new? %>
-          <%= link_to new_impression_path(cohort_id: @cohort.id), class: 'btn btn-outline-primary me-2' do %>
+          <%= link_to new_cohort_impression_path(@cohort), class: 'btn btn-outline-primary me-2' do %>
             <i class="fa-solid fa-plus"></i>
           <% end %>
         <% end %>
