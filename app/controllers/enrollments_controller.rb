@@ -1,49 +1,29 @@
 class EnrollmentsController < ApplicationController
-  before_action :set_cohort
   before_action :set_enrollment, only: %i[show overview snapshot edit update destroy]
+  before_action :set_cohort
+  before_action :set_breadcrumbs
   before_action { authorize(@enrollment || Enrollment) }
 
   # GET /enrollments or /enrollments.json
   def index
-    @breadcrumbs = [
-      { content: "Cohorts", href: cohorts_path },
-      { content: @cohort.to_s, href: cohort_path(@cohort) },
-      { content: "Enrollments", href: cohort_enrollments_path(@cohort) }
-    ]
-
-    @enrollments = policy_scope(@cohort.enrollments)
+    @enrollments = policy_scope(@cohort.enrollments.includes(:user))
   end
 
   # GET /enrollments/1 or /enrollments/1.json
   def show
-    @breadcrumbs = [
-      { content: "Cohorts", href: cohorts_path },
-      { content: @cohort.to_s, href: cohort_path(@cohort) },
-      { content: "Enrollments", href: cohort_enrollments_path(@cohort) },
-      { content: @enrollment.name }
-    ]
+    @breadcrumbs << { content: @enrollment.name }
   end
 
   # GET /enrollments/new
   def new
-    @breadcrumbs = [
-      {content: "Cohorts", href: cohorts_path},
-      {content: @cohort.to_s, href: cohort_path(@cohort)},
-      {content: "Enrollments", href: cohort_enrollments_path(@cohort)},
-      {content: "New"}
-    ]
+    @breadcrumbs << { content: "New" }
     @enrollment = @cohort.enrollments.new
   end
 
   # GET /enrollments/1/edit
   def edit
-    @breadcrumbs = [
-      {content: "Cohorts", href: cohorts_path},
-      {content: @cohort.to_s, href: cohort_path(@cohort)},
-      {content: "Enrollments", href: cohort_enrollments_path(@cohort)},
-      {content: @enrollment.name},
-      {content: "Edit"}
-    ]
+    @breadcrumbs << { content: @enrollment.name }
+    @breadcrumbs << { content: "Edit" }
   end
 
   # POST /enrollments or /enrollments.json
@@ -85,12 +65,7 @@ class EnrollmentsController < ApplicationController
   end
 
   def overview
-    @breadcrumbs = [
-      { content: "Cohorts", href: cohorts_path },
-      { content: @cohort.to_s, href: cohort_path(@cohort) },
-      { content: "Enrollments", href: cohort_enrollments_path(@cohort) },
-      { content: @enrollment.name }
-    ]
+    @breadcrumbs <<  { content: @enrollment.name }
   end
 
   def snapshot
@@ -99,16 +74,28 @@ class EnrollmentsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_cohort
-    @cohort = Cohort.find(params.fetch(:cohort_id))
+    if @enrollment.present?
+      @cohort = @enrollment.cohort
+    elsif params.has_key?(:cohort_id)
+      @cohort = Cohort.find(params.fetch(:cohort_id))
+    end
   end
 
   def set_enrollment
-    @enrollment = policy_scope(@cohort.enrollments).find(params[:id])
+    @enrollment = policy_scope(Enrollment).find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
+  def set_breadcrumbs
+    @breadcrumbs = []
+
+    if @cohort.present?
+      @breadcrumbs << { content: "Cohorts", href: cohorts_path }
+      @breadcrumbs << { content: @cohort.to_s, href: cohort_path(@cohort) }
+      @breadcrumbs << { content: "Enrollments", href: enrollments_path(cohort_id: @cohort.id) }
+    end
+  end
+
   def enrollment_params
     params.require(:enrollment).permit(:role, :user_id, :cohort_id, :skills_development)
   end

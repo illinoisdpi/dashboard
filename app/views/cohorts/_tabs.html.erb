@@ -6,17 +6,17 @@
   <% end %>
   <% if policy(@cohort).cohort_enrollments? %>
     <li class="nav-item">
-      <%= simple_active_link_to "Enrollments", cohort_enrollments_path(@cohort), class: "nav-link" %>
+      <%= simple_active_link_to "Enrollments", enrollments_path(cohort_id: @cohort.id), class: "nav-link" %>
     </li>
   <% end %>
   <% if policy(@cohort).cohort_canvas_gradebook_snapshots? %>
     <li class="nav-item">
-      <%= simple_active_link_to "Canvas", cohort_canvas_gradebook_snapshots_path(@cohort), class: "nav-link" %>
+      <%= simple_active_link_to "Canvas", canvas_gradebook_snapshots_path(cohort_id: @cohort.id), class: "nav-link" %>
     </li>
   <% end %>
   <% if policy(@cohort).cohort_piazza_activity_reports? %>
     <li class="nav-item">
-      <%= simple_active_link_to "Piazza", cohort_piazza_activity_reports_path(@cohort), class: "nav-link" %>
+      <%= simple_active_link_to "Piazza", piazza_activity_reports_path(cohort_id: @cohort.id), class: "nav-link" %>
     </li>
   <% end %>
   <%# TODO: start tracking attendance %>
