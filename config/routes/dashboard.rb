@@ -9,6 +9,7 @@ constraints subdomain: "dashboard" do
     end
   end
 
+  # TODO: refactor this block?
   resources :cohorts do
     member do
       get "canvas_highest_position_submission_count"
