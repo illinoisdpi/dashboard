@@ -11,7 +11,7 @@ class Cohort::EnrollmentsController < ApplicationController
       { content: "Enrollments", href: cohort_enrollments_path(@cohort) }
     ]
 
-    @enrollments = policy_scope(@cohort.enrollments)
+    @enrollments = policy_scope(@cohort.enrollments.includes(:user))
   end
 
   # GET /enrollments/1 or /enrollments/1.json
