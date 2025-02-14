@@ -75,11 +75,7 @@ class EnrollmentsController < ApplicationController
   private
 
   def set_cohort
-    if @enrollment.present?
-      @cohort = @enrollment.cohort
-    elsif params.has_key?(:cohort_id)
-      @cohort = Cohort.find(params.fetch(:cohort_id))
-    end
+    @cohort = Cohort.find(params.fetch(:cohort_id))
   end
 
   def set_enrollment
@@ -92,7 +88,7 @@ class EnrollmentsController < ApplicationController
     if @cohort.present?
       @breadcrumbs << { content: "Cohorts", href: cohorts_path }
       @breadcrumbs << { content: @cohort.to_s, href: cohort_path(@cohort) }
-      @breadcrumbs << { content: "Enrollments", href: enrollments_path(cohort_id: @cohort.id) }
+      @breadcrumbs << { content: "Enrollments", href: cohort_enrollments_path(@cohort) }
     end
   end
 

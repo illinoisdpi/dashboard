@@ -1,6 +1,6 @@
 <h1>Editing enrollment</h1>
 
-<%= render "form", enrollment: @enrollment %>
+<%= render "form", cohort: @cohort, enrollment: @enrollment %>
 
 <br>
 
@@ -9,6 +9,6 @@
     <%= link_to "Show this enrollment", enrollment_path(@enrollment) %> |
   <% end %>
   <% if policy(@enrollment).index? %>
-    <%= link_to "Back to enrollments", enrollments_path(cohort_id: @cohort.id) %>
+    <%= link_to "Back to enrollments", cohort_enrollments_path(@cohort) %>
   <% end %>
 </div>

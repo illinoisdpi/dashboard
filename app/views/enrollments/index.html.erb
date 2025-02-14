@@ -6,7 +6,7 @@
       <div class="card-header d-flex align-items-center">
         <h1 class="h6 mb-0 me-auto">Students</h1>
         <% if policy(Enrollment).create? %>
-          <%= link_to new_enrollment_path(cohort_id: @cohort.id) do %>
+          <%= link_to new_cohort_enrollment_path(@cohort) do %>
             <i class="fa-solid fa-plus fa-fw"></i>
           <% end %>
         <% end %>
@@ -43,22 +43,22 @@
               <ul class="list-unstyled my-2 ms-2">
                 <% if policy(enrollment).overview? %>
                   <li>
-                    <%= link_to "Overview", overview_enrollment_path(enrollment), class: "text-black" %>
+                    <%= link_to "Overview", overview_cohort_enrollment_path(@cohort, enrollment), class: "text-black" %>
                   </li>
                 <% end %>
                 <% if policy(enrollment).snapshot? %>
                   <li>
-                    <%= link_to "Snapshot", snapshot_enrollment_path(enrollment), class: "text-black" %>
+                    <%= link_to "Snapshot", snapshot_cohort_enrollment_path(@cohort, enrollment), class: "text-black" %>
                   </li>
                 <% end %>
                 <% if policy(enrollment).show? %>
                   <li>
-                    <%= link_to "Show", enrollment_path(enrollment), class: "text-black" %>
+                    <%= link_to "Show", cohort_enrollment_path(@cohort, enrollment), class: "text-black" %>
                   </li>
                 <% end %>
                 <% if policy(enrollment).edit_role? %>
                   <li>
-                    <%= link_to "Edit", edit_enrollment_path(enrollment), class: "text-black" %>
+                    <%= link_to "Edit", edit_cohort_enrollment_path(@cohort, enrollment), class: "text-black" %>
                   </li>
                 <% end %>
               </ul>
@@ -74,7 +74,7 @@
       <div class="card-header d-flex align-items-center">
         <h1 class="h6 mb-0 me-auto">Staff</h1>
         <% if policy(Enrollment).create? %>
-          <%= link_to new_enrollment_path(cohort_id: @cohort.id) do %>
+          <%= link_to new_cohort_enrollment_path(@cohort) do %>
             <i class="fa-solid fa-plus fa-fw"></i>
           <% end %>
         <% end %>

@@ -30,6 +30,7 @@ constraints subdomain: "dashboard" do
     resources :piazza_activity_reports
   end
 
+  resources :enrollments
   resources :impressions do
     collection do
       get :search
