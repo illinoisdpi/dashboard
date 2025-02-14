@@ -1,5 +1,5 @@
 class ImpressionsController < ApplicationController
-  before_action :set_cohort, unless %i[ new create ]
+  before_action :set_cohort, except: %i[new create]
   before_action :set_impression, only: %i[show edit update destroy]
   before_action :set_breadcrumbs
   before_action { authorize(@impression || Impression) }
@@ -93,7 +93,7 @@ class ImpressionsController < ApplicationController
     if @cohort.present?
       @breadcrumbs << { content: "Cohorts", href: cohorts_path }
       @breadcrumbs << { content: @cohort.to_s, href: cohort_path(@cohort) }
-      @breadcrumbs << { content: "Impressions", href: impressions_path(cohort_id: @cohort.id) }
+      @breadcrumbs << { content: "Impressions", href: cohort_impressions_path(cohort: @cohort) }
     end
   end
 
