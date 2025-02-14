@@ -16,18 +16,20 @@ constraints subdomain: "dashboard" do
       get "canvas_cumulative_points"
     end
     resources :canvas_gradebook_snapshots
-    resources :piazza_activity_reports
     resources :enrollments do
       member do
         get "overview"
         get "snapshot"
       end
+    end
     resources :impressions do
       collection do
         get :search
       end
     end
+    resources :piazza_activity_reports
   end
+
   resources :impressions do
     collection do
       get :search
