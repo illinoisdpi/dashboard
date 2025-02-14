@@ -77,7 +77,7 @@ class CohortsController < ApplicationController
     render json:  @cohort
       .enrollments
       .with_recent_canvas_points(@cohort)
-      .map { |enrollment| [ enrollment.to_s, enrollment.total_points ] }
+      .map { |enrollment| [ enrollment.name, enrollment.total_points ] }
   end
 
   private
