@@ -1,6 +1,6 @@
 class EnrollmentsController < ApplicationController
-  before_action :set_enrollment, only: %i[show overview snapshot edit update destroy]
   before_action :set_cohort
+  before_action :set_enrollment, only: %i[show overview snapshot edit update destroy]
   before_action :set_breadcrumbs
   before_action { authorize(@enrollment || Enrollment) }
 
