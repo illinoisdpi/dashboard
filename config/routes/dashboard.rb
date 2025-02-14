@@ -9,21 +9,23 @@ constraints subdomain: "dashboard" do
     end
   end
 
-  # TODO: refactor this block?
   resources :cohorts do
     member do
       get "canvas_highest_position_submission_count"
       get "canvas_point_total_most_recent"
       get "canvas_cumulative_points"
     end
-  end
-
-  resources :canvas_gradebook_snapshots
-  resources :piazza_activity_reports
-  resources :enrollments do
-    member do
-      get "overview"
-      get "snapshot"
+    resources :canvas_gradebook_snapshots
+    resources :piazza_activity_reports
+    resources :enrollments do
+      member do
+        get "overview"
+        get "snapshot"
+      end
+    resources :impressions do
+      collection do
+        get :search
+      end
     end
   end
   resources :impressions do
