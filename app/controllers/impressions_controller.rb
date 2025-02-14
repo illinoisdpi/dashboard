@@ -1,6 +1,6 @@
 class ImpressionsController < ApplicationController
+  before_action :set_cohort, unless %i[ new create ]
   before_action :set_impression, only: %i[show edit update destroy]
-  before_action :set_cohort
   before_action :set_breadcrumbs
   before_action { authorize(@impression || Impression) }
 
@@ -85,11 +85,7 @@ class ImpressionsController < ApplicationController
   end
 
   def set_cohort
-    if @impression.present?
-      @cohort = @impression.cohort
-    elsif params.has_key?(:cohort_id)
-      @cohort = Cohort.find(params.fetch(:cohort_id))
-    end
+    @cohort = Cohort.find(params.fetch(:cohort_id))
   end
 
   def set_breadcrumbs
