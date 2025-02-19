@@ -63,7 +63,7 @@ class RecurringMessagesController < ApplicationController
   end
 
   def recurring_message_params
-    params.require(:recurring_message).permit(:message_content, :scheduled_time, days_of_week: [])
+    params.require(:recurring_message).permit(:message_content, :scheduled_time, :frequency, days_of_week: [])
   end
 
   def schedule_discord_message(recurring_message)

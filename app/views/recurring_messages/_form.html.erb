@@ -36,5 +36,13 @@
     </div>
   </div>
 
+  <div class="mb-3">
+    <%= f.label :frequency, "Frequency", class: "form-label" %>
+    <%= f.select :frequency,
+                 RecurringMessage::FREQUENCIES.map { |freq| [freq.titleize, freq] },
+                 {}, # options hash for prompt, etc.
+                 class: "form-select" %>
+  </div>
+
   <%= f.submit(@recurring_message.persisted? ? "Update" : "Schedule", class: "btn btn-primary") %>
 <% end %>
