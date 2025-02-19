@@ -38,3 +38,4 @@
 
 # ignore redis database file
 dump.rdb
+.env
