@@ -16,6 +16,7 @@ class RecurringMessagesController < ApplicationController
   def create
     @recurring_message = @cohort.recurring_messages.new(recurring_message_params)
     @recurring_message.channel_id = @channel[:id]
+
     if @recurring_message.save
       schedule_discord_message(@recurring_message)
       flash[:notice] = "Recurring message scheduled successfully."
@@ -49,12 +50,12 @@ class RecurringMessagesController < ApplicationController
     @cohort = Cohort.find(params[:cohort_id])
   end
 
-  def set_recurring_message
-    @recurring_message = @cohort.recurring_messages.find(params[:id])
+  def set_channel
+    @channel = DiscordService.new.fetch_channel(@cohort.discord_server_id, params[:discord_channel_id])
   end
 
-  def set_channel
-    @channel = DiscordService.new.fetch_channel(@cohort.discord_server_id, params.fetch(:discord_channel_id))
+  def set_recurring_message
+    @recurring_message = @cohort.recurring_messages.find(params[:id])
   end
 
   def authorize_cohort_discord

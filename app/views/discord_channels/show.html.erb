@@ -18,6 +18,7 @@
         </p>
       </div>
     </div>
+
     <div class="card shadow-sm mb-4">
       <div class="card-header">
         <h2 class="h6 mb-0">Scheduled Recurring Messages</h2>
@@ -27,15 +28,19 @@
           <ul class="list-group">
             <% @recurring_messages.each do |message| %>
               <li class="list-group-item">
-                <p class="mb-1"><%= message.message_content %></p>
+                <p class="mb-1">
+                  <%= message.message_content %>
+                </p>
                 <small class="text-muted">
                   <% message.days_of_week.each do |day| %>
                     <span><%= day.titleize %></span>
                   <% end %>
                   at <%= message.scheduled_time.strftime("%I:%M %p") %>
                 </small>
-                <%= link_to edit_cohort_discord_channel_recurring_message_path(@cohort, @channel, message), class: "me-2" do %>
-                  <i class="fa-solid fa-pen-to-square"></i>
+                <!-- Fixed the edit path to pass the channel's ID, not the entire hash -->
+                <%= link_to edit_cohort_discord_channel_recurring_message_path(@cohort, @channel[:id], message),
+                            class: "ms-3" do %>
+                  <i class="fa-solid fa-pen-to-square"></i> Edit
                 <% end %>
               </li>
             <% end %>
@@ -45,6 +50,7 @@
         <% end %>
       </div>
     </div>
+
     <div class="card shadow-sm mb-4">
       <div class="card-header">
         <h2 class="h6 mb-0">Schedule Recurring Message</h2>
@@ -54,6 +60,7 @@
       </div>
     </div>
   </div>
+
   <div class="col-lg-6">
     <div class="card shadow-sm mb-4">
       <div class="card-header">
@@ -74,6 +81,7 @@
         <% end %>
       </div>
     </div>
+
     <div class="card shadow-sm">
       <div class="card-header">
         <h2 class="h6 mb-0">Recent Messages</h2>
@@ -84,9 +92,12 @@
             <% @recent_messages.each do |msg| %>
               <li class="list-group-item">
                 <p class="mb-1">
-                  <strong>@<%= msg[:author_username] %>:</strong> <%= msg[:content] %>
+                  <strong>@<%= msg[:author_username] %>:</strong>
+                  <%= msg[:content] %>
                 </p>
-                <small class="text-muted"><%= msg[:timestamp].strftime("%b %d, %Y %I:%M %p") %></small>
+                <small class="text-muted">
+                  <%= msg[:timestamp].strftime("%b %d, %Y %I:%M %p") %>
+                </small>
               </li>
             <% end %>
           </ul>
