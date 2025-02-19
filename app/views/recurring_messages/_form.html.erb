@@ -1,4 +1,9 @@
-<%= form_with(model: @recurring_message, local: true) do |f| %>
+<%= form_with(
+      model: @recurring_message,
+      url: cohort_discord_channel_recurring_messages_path(@cohort, @channel[:id]),
+      local: true
+    ) do |f| %>
+
   <%= f.hidden_field :channel_id %>
   <div class="mb-3">
     <%= f.label :message_content, "Message Content", class: "form-label" %>

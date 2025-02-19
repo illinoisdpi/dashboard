@@ -23,9 +23,9 @@
         <h2 class="h6 mb-0">Scheduled Recurring Messages</h2>
       </div>
       <div class="card-body">
-        <% if @cohort.recurring_messages.any? %>
+        <% if @recurring_messages.any? %>
           <ul class="list-group">
-            <% @cohort.recurring_messages.each do |message| %>
+            <% @recurring_messages.each do |message| %>
               <li class="list-group-item">
                 <p class="mb-1"><%= message.message_content %></p>
                 <small class="text-muted">

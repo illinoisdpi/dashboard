@@ -1,7 +1,7 @@
 class RecurringMessagesController < ApplicationController
   before_action :set_cohort
   before_action :set_channel
-  before_action :set_recurring_message
+  before_action :set_recurring_message, only: %i[edit update destroy]
   before_action :authorize_cohort_discord
 
   def edit
@@ -14,6 +14,7 @@ class RecurringMessagesController < ApplicationController
   end
 
   def create
+    @recurring_message = @cohort.recurring_messages.new(recurring_message_params)
     @recurring_message.channel_id = @channel[:id]
     if @recurring_message.save
       schedule_discord_message(@recurring_message)
@@ -49,7 +50,7 @@ class RecurringMessagesController < ApplicationController
   end
 
   def set_recurring_message
-    @cohort.recurring_messages.find(params[:id])
+    @recurring_message = @cohort.recurring_messages.find(params[:id])
   end
 
   def set_channel

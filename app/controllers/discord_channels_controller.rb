@@ -29,6 +29,7 @@ class DiscordChannelsController < ApplicationController
     ]
 
     @recurring_messages = @cohort.recurring_messages.where(channel_id: @channel[:id])
+    @recurring_message = @cohort.recurring_messages.new(channel_id: @channel[:id])
   end
 
   private
