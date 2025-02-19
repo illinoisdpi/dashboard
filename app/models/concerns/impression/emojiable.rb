@@ -29,7 +29,8 @@ module Impression::Emojiable
     "😯": { sentiment: :negative, category: "character", description: "lacking self-awareness" },
     "👿": { sentiment: :negative, category: "character", description: "negative attitude" },
     "🙊": { sentiment: :negative, category: "communication", description: "poor communication skills" },
-    "💢": { sentiment: :negative, category: "communication", description: "negative response to supervision" }
+    "💢": { sentiment: :negative, category: "communication", description: "negative response to supervision" },
+    "📝": { sentiment: :neutral, category: "note", description: "general note" }
   }.freeze
 
   CATEGORIES = EMOJIS.values.pluck(:category).uniq.freeze
@@ -40,7 +41,7 @@ module Impression::Emojiable
     end
   end
 
-  %i[positive negative].each do |sentiment|
+  %i[positive negative neutral].each do |sentiment|
     define_singleton_method("#{sentiment}_emojis") do
       EMOJIS.keys.filter do |emoji|
         EMOJIS[emoji][:sentiment] == sentiment

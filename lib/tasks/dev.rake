@@ -62,7 +62,8 @@ namespace :dev do
           first_name: row.fetch(:name).split(" ").at(0),
           last_name: row.fetch(:name).split(" ").at(1),
           one_liner: "Passionate professional with expertise in #{Faker::Job.title}.",
-          skills_and_projects: Array.new(3) { Faker::ProgrammingLanguage.unique.name }.to_sentence
+          skills_and_projects: Array.new(3) { Faker::ProgrammingLanguage.unique.name }.to_sentence,
+          salesforce_id: SecureRandom.uuid
         )
 
         if user.errors.any?
@@ -118,6 +119,7 @@ namespace :dev do
               subject_id: enrollment.id,
               content: Faker::Lorem.sentence,
               emoji: Impression::EMOJIS.keys.sample,
+              staff_only: [true, false].sample,
               created_at: rand(1..5).week.ago
             )
           end

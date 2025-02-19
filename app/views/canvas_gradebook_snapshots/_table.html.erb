@@ -7,12 +7,14 @@
           <tr>
             <th>User</th>
             <th>Role</th>
+            <th>Salesforce ID</th>
             <% canvas_assignments.each do |canvas_assignment| %>
               <th><%= canvas_assignment.name %></th>
             <% end %>
           </tr>
           <tr>
             <th>Points Possible</th>
+            <th></th>
             <th></th>
             <% canvas_assignments.each do |canvas_assignment| %>
               <th><%= canvas_assignment.points_possible %></th>
@@ -26,6 +28,7 @@
             <tr>
               <td><%= enrollment.user %></td>
               <td><%= enrollment.role %></td>
+              <td><%= enrollment.user.salesforce_id %></td>
               <% canvas_assignments.map(&:id).each do |canvas_assignment_id| %>
                 <td><%= canvas_submissions[canvas_assignment_id]&.points %></td>
               <% end %>
