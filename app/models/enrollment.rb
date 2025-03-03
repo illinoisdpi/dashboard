@@ -110,6 +110,7 @@ class Enrollment < ApplicationRecord
     :last_name,
     :email,
     :to_s,
+    :full_name,
     to: :user
 
   enum :role, {

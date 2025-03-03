@@ -29,6 +29,8 @@ class Attendance < ApplicationRecord
   has_many :attendees, dependent: :destroy
   has_many :enrollments, through: :attendees
 
+  accepts_nested_attributes_for :attendees, allow_destroy: true
+
   enum :category, {
     riverside: "riverside",
     durable_skills_session: "durable skills session",
@@ -44,4 +46,8 @@ class Attendance < ApplicationRecord
   }
 
   scope :default_order, -> { order(created_at: :desc) }
+
+  # def update_attendees
+
+  # end
 end

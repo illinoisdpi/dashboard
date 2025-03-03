@@ -21,4 +21,8 @@
 class Attendee < ApplicationRecord
   belongs_to :attendance
   belongs_to :enrollment
+
+  has_one :cohort, through: :attendance
+  
+  validates :enrollment_id, presence: true
 end
