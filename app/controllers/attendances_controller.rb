@@ -52,7 +52,7 @@ class AttendancesController < ApplicationController
       { content: "Edit" }
     ]
 
-    @@attendance = Attendance.find(params[:id])
+    @attendance = Attendance.find(params[:id])
     @attendance.attendees.each do |attendee|
       attendee._destroy ||= "0"
     end
