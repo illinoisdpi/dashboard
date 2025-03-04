@@ -32,6 +32,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_03_211855) do
     t.uuid "enrollment_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["attendance_id", "enrollment_id"], name: "index_attendees_on_attendance_id_and_enrollment_id", unique: true
     t.index ["attendance_id"], name: "index_attendees_on_attendance_id"
     t.index ["enrollment_id"], name: "index_attendees_on_enrollment_id"
   end

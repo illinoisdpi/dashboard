@@ -10,8 +10,9 @@
 #
 # Indexes
 #
-#  index_attendees_on_attendance_id  (attendance_id)
-#  index_attendees_on_enrollment_id  (enrollment_id)
+#  index_attendees_on_attendance_id                    (attendance_id)
+#  index_attendees_on_attendance_id_and_enrollment_id  (attendance_id,enrollment_id) UNIQUE
+#  index_attendees_on_enrollment_id                    (enrollment_id)
 #
 # Foreign Keys
 #
@@ -20,11 +21,11 @@
 #
 class Attendee < ApplicationRecord
   attr_accessor :_destroy
-  
+
   belongs_to :attendance
   belongs_to :enrollment
 
   has_one :cohort, through: :attendance
-  
-  validates :enrollment_id, presence: true
+
+  validates :enrollment_id, uniqueness: { scope: :attendance_id }
 end

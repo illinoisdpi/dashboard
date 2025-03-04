@@ -61,7 +61,7 @@ class AttendancesController < ApplicationController
   # POST /attendances or /attendances.json
   def create
     @attendance = @cohort.attendances.new(attendance_params.merge(roll_taker: current_user))
-  
+
     respond_to do |format|
       if @attendance.save
         format.html { redirect_to cohort_attendance_url(@cohort, @attendance), notice: "Attendance was successfully created." }
