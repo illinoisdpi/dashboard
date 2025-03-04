@@ -46,8 +46,4 @@ class Attendance < ApplicationRecord
   }
 
   scope :default_order, -> { order(created_at: :desc) }
-
-  # def update_attendees
-
-  # end
 end
