@@ -23,7 +23,6 @@ class AttendancesController < ApplicationController
       { content: @attendance.title }
     ]
 
-    @attendance = Attendance.find(params[:id])
     @cohort = @attendance.cohort
     @enrollments = @cohort.enrollments.includes(:user)
   end
@@ -37,7 +36,7 @@ class AttendancesController < ApplicationController
       { content: "New" }
     ]
 
-    @attendance = @cohort.attendances.new
+    @attendance = policy_scope(@cohort.attendances).new
     @cohort.enrollments.each do |enrollment|
       @attendance.attendees.build(enrollment: enrollment)
     end
@@ -52,7 +51,6 @@ class AttendancesController < ApplicationController
       { content: "Edit" }
     ]
 
-    @attendance = Attendance.find(params[:id])
     @attendance.attendees.each do |attendee|
       attendee._destroy ||= "0"
     end
@@ -99,7 +97,7 @@ class AttendancesController < ApplicationController
   private
 
   def set_attendance
-    @attendance = Attendance.find(params[:id])
+    @attendance = policy_scope(Attendance).find(params[:id])
   end
 
   def set_cohort

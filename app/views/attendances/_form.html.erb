@@ -32,8 +32,16 @@
       <%= form.fields_for :attendees, attendee do |attendee_fields| %>
         <div class="form-check">
           <%= attendee_fields.hidden_field :enrollment_id, value: enrollment.id %>
-          <%= attendee_fields.check_box :_destroy, { id: "enrollment_#{enrollment.id}", class: "form-check-input", data: { action: "change->select-all#toggleCheckbox", "select-all-target": "checkbox" } }, "0", "1" %>
-          <%= label_tag "enrollment_#{enrollment.id}", enrollment.user.full_name, class: "form-check-label" %>
+          <%= attendee_fields.check_box :_destroy,
+            {
+              id: dom_id(enrollment),
+              class: "form-check-input",
+              data: { action: "change->select-all#toggleCheckbox", "select-all-target": "checkbox" }
+            },
+              "0", # value if checked
+              "1"  # value if unchecked
+          %>
+          <%= label_tag dom_id(enrollment), enrollment.user.full_name, class: "form-check-label" %>
         </div>
       <% end %>
     <% end %>
