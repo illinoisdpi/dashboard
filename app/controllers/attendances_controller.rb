@@ -38,6 +38,9 @@ class AttendancesController < ApplicationController
     ]
 
     @attendance = @cohort.attendances.new
+    @cohort.enrollments.each do |enrollment|
+      @attendance.attendees.build(enrollment: enrollment)
+    end
   end
 
   # GET /attendances/1/edit
@@ -49,7 +52,10 @@ class AttendancesController < ApplicationController
       { content: "Edit" }
     ]
 
-    @attendance = Attendance.find(params[:id])
+    @@attendance = Attendance.find(params[:id])
+    @attendance.attendees.each do |attendee|
+      attendee._destroy ||= "0"
+    end
   end
 
   # POST /attendances or /attendances.json
@@ -102,6 +108,6 @@ class AttendancesController < ApplicationController
   end
 
   def attendance_params
-    params.require(:attendance).permit(:title, :category, :roll_taker_id, :cohort_id, attendees_attributes: [:id, :enrollment_id, :_destroy])
+    params.require(:attendance).permit(:title, :category, :roll_taker_id, :cohort_id, attendees_attributes: [ :id, :enrollment_id, :_destroy ])
   end
 end
