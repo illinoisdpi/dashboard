@@ -19,6 +19,8 @@
 #  fk_rails_...  (enrollment_id => enrollments.id)
 #
 class Attendee < ApplicationRecord
+  attr_accessor :_destroy
+  
   belongs_to :attendance
   belongs_to :enrollment
 
