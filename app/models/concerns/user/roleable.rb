@@ -1,8 +1,13 @@
 module User::Roleable
   extend ActiveSupport::Concern
 
+  included do
+    rolify
+  end
+
   def admin?
-    has_role? :admin
+    # Instead of querying the database every time admin? is called, cache (memoize) the result
+    @is_admin ||= has_role? :admin
   end
 
   def cohort_staff?(cohort)
@@ -22,18 +27,18 @@ module User::Roleable
   end
 
   def staff?
-    enrollments.exists?(role: :staff)
+    @is_staff ||= enrollments.exists?(role: :staff)
   end
 
   def student?
-    enrollments.exists?(role: :student)
+    @is_student ||= enrollments.exists?(role: :student)
   end
 
   def instructor?
-    enrollments.exists?(role: :instructor)
+    @is_instructor ||= enrollments.exists?(role: :instructor)
   end
 
   def teaching_assistant?
-    enrollments.exists?(role: :teaching_assistant)
+    @is_teaching_assistant ||= enrollments.exists?(role: :teaching_assistant)
   end
 end

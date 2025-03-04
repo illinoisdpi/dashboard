@@ -209,6 +209,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_03_211855) do
     t.text "emoji", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "staff_only", default: false
     t.index ["author_id"], name: "index_impressions_on_author_id"
     t.index ["subject_id"], name: "index_impressions_on_subject_id"
   end
