@@ -275,9 +275,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_03_211855) do
     t.index ["name"], name: "index_roles_on_name"
   end
 
-  create_table "untitled_table", id: :integer, default: nil, force: :cascade do |t|
-  end
-
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.citext "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
