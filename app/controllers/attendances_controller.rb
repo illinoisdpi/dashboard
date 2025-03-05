@@ -11,7 +11,7 @@ class AttendancesController < ApplicationController
       { content: "Attendance", href: cohort_attendances_path(@cohort) }
     ]
 
-    @attendances = policy_scope(@cohort.attendances.default_order).page(params[:page]).per(10)
+    @attendances = policy_scope(@cohort.attendances).default_order.page(params[:page]).per(10)
   end
 
   # GET /attendances/1 or /attendances/1.json
