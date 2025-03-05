@@ -34,13 +34,9 @@ class Attendance < ApplicationRecord
   enum :category, {
     riverside: "riverside",
     durable_skills_session: "durable skills session",
-    retro: "retro",
     office_hours: "office hours",
-    in_person_office_visit: "in person office visit",
     technical_lecture: "technical lecture",
     mock_interview: "mock interview",
-    staff_1_1: "staff 1 on 1",
-    TA_1_1: "T.A. 1 on 1",
     community_alumni_event: "community or alumni event",
     other: "other"
   }
