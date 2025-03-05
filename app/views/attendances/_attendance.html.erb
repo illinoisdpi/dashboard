@@ -14,7 +14,7 @@
     </div>
   </div>
   <div class="card-body">
-    <p><strong>Created At:</strong> <%= attendance.created_at.strftime("%-m/%-d/%Y") %></p>
+    <p><strong>Occurred At:</strong> <%= attendance.occurred_at.strftime("%A, %B %e, %Y at %I:%M %p") %></p>
     <div class="attendees-list">
       <strong>Attendees:</strong>
       <ul>

@@ -4,6 +4,7 @@
 #
 #  id            :uuid             not null, primary key
 #  category      :string           not null
+#  occurred_at   :datetime         not null
 #  title         :text
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null

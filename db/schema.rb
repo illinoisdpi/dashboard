@@ -19,6 +19,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_03_211855) do
   create_table "attendances", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "title"
     t.string "category", null: false
+    t.datetime "occurred_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.uuid "roll_taker_id", null: false
     t.uuid "cohort_id"
     t.datetime "created_at", null: false

@@ -106,6 +106,6 @@ class AttendancesController < ApplicationController
   end
 
   def attendance_params
-    params.require(:attendance).permit(:title, :category, :roll_taker_id, :cohort_id, attendees_attributes: [ :id, :enrollment_id, :_destroy ])
+    params.require(:attendance).permit(:title, :category, :occurred_at, :cohort_id, attendees_attributes: [ :id, :enrollment_id, :_destroy ])
   end
 end

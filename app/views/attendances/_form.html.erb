@@ -20,6 +20,14 @@
     <%= form.select :category, options_for_select(Attendance.categories.keys.map { |k| [k.titleize, k] }, selected: @attendance.category), { include_blank: true }, { class: 'form-select' } %>
   </div>
 
+  <div class="mb-3">
+    <%= form.label :occurred_at, class: "form-label fw-bold" %>
+    <%# TODO: add include_seconds: false when upgrading to rails >=7.1 %>
+    <%# NOTE: "%Y-%m-%dT%H:%M" ensures the occurred_at datetime fits the inputs expected format %>
+    <%= form.datetime_field :occurred_at, value: (@attendance.occurred_at || Time.current).strftime("%Y-%m-%dT%H:%M"), class: "form-control", aria: { describedby: 'occurredAtHelp' } %>
+    <div id="occurredAtHelp" class="form-text">Timezone <%= Time.zone %></div>
+  </div>
+
   <div class="mb-3" data-controller="select-all">
     <h3 class="h6 fw-bold">Select Students</h3>
     <div class="form-check">
