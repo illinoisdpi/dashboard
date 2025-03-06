@@ -42,5 +42,5 @@ class Attendance < ApplicationRecord
     other: "other"
   }
 
-  scope :default_order, -> { order(created_at: :desc) }
+  scope :default_order, -> { order(occurred_at: :desc) }
 end

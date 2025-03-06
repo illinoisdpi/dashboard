@@ -10,8 +10,7 @@
             <div>
               <%= attendance.title %>
               <span class="text-secondary ms-1">
-                from <%= attendance.roll_taker.name %>
-                <%= time_ago_in_words(attendance.created_at) %> ago
+                <%= attendance.occurred_at.strftime("%A, %B %e") %>
               </span>
             </div>
           </div>

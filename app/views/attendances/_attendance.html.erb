@@ -18,8 +18,13 @@
     <div class="attendees-list">
       <strong>Attendees:</strong>
       <ul>
-        <% attendance.enrollments.each do |enrollment| %>
-          <li><%= enrollment.user.full_name %></li>
+        <% attendance.enrollments.default_order.each do |enrollment| %>
+          <li>
+            <%= enrollment.name %>
+            <span class="badge bg-secondary">
+              <%= enrollment.role.humanize %>
+            </span>
+          </li>
         <% end %>
       </ul>
     </div>
