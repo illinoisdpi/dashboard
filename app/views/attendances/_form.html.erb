@@ -1,0 +1,61 @@
+<%= form_with model: [@cohort, @attendance], local: true, class: "p-4" do |form| %>
+  <% if @attendance.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@attendance.errors.count, "error") %> prohibited this attendance from being saved:</h2>
+      <ul>
+        <% @attendance.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :title, class: "form-label fw-bold" %>
+    <%= form.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :category, "Select a Category", class: "form-label fw-bold" %>
+    <%= form.select :category, options_for_select(Attendance.categories.keys.map { |k| [k.titleize, k] }, selected: @attendance.category), { include_blank: true }, { class: 'form-select' } %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :occurred_at, class: "form-label fw-bold" %>
+    <%# TODO: add include_seconds: false when upgrading to rails >=7.1 %>
+    <%# NOTE: "%Y-%m-%dT%H:%M" ensures the occurred_at datetime fits the inputs expected format %>
+    <%= form.datetime_field :occurred_at, value: (@attendance.occurred_at || Time.current).strftime("%Y-%m-%dT%H:%M"), class: "form-control", aria: { describedby: 'occurredAtHelp' } %>
+    <div id="occurredAtHelp" class="form-text">Timezone <%= Time.zone %></div>
+  </div>
+
+  <div class="mb-3" data-controller="select-all">
+    <h3 class="h6 fw-bold">Select Students</h3>
+    <div class="form-check">
+      <%= check_box_tag "select_all", "selected_all", false, class: "form-check-input", id: "select_all", data: { action: "change->select-all#toggleAll", "select-all-target": "selectAll" } %>
+      <%= label_tag "select_all", "Select All", class: "form-check-label" %>
+    </div>
+
+    <% @cohort.enrollments.each do |enrollment| %>
+      <% attendee = @attendance.attendees.find { |a| a.enrollment_id == enrollment.id } || @attendance.attendees.build(enrollment: enrollment) %>
+      <%= form.fields_for :attendees, attendee do |attendee_fields| %>
+        <div class="form-check">
+          <%= attendee_fields.hidden_field :enrollment_id, value: enrollment.id %>
+          <%= attendee_fields.check_box :_destroy,
+            {
+              id: dom_id(enrollment),
+              class: "form-check-input",
+              data: { action: "change->select-all#toggleCheckbox", "select-all-target": "checkbox" }
+            },
+              "0", # value if checked
+              "1"  # value if unchecked
+          %>
+          <%= label_tag dom_id(enrollment), enrollment.user.full_name, class: "form-check-label" %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="d-flex justify-content-end">
+    <%= form.submit class: "btn btn-primary" %>
+  </div>
+<% end %>

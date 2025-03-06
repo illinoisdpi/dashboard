@@ -1,0 +1,25 @@
+<div class="list-group list-group-flush">
+  <% attendances.each do |attendance| %>
+    <%= link_to cohort_attendance_path(cohort, attendance), class: "list-group-item" do %>
+      <div class="d-flex">
+        <div class="me-auto d-flex align-items-baseline">
+          <span class="badge bg-secondary font-monospace me-2">
+            <%= Attendance.categories.fetch(attendance.category, "unknown").titleize %>
+          </span>
+          <div>
+            <div>
+              <%= attendance.title %>
+              <span class="text-secondary ms-1">
+                from <%= attendance.roll_taker.name %>
+                <%= time_ago_in_words(attendance.created_at) %> ago
+              </span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <i class="fa-solid fa-chevron-right fa-fw"></i>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
