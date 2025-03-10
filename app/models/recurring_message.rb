@@ -11,6 +11,7 @@
 #  updated_at      :datetime         not null
 #  channel_id      :string
 #  cohort_id       :uuid
+#  job_id          :string
 #
 # Indexes
 #
