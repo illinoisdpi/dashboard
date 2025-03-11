@@ -1,0 +1,35 @@
+<div class="card">
+  <div class="card-header">
+    <div class="d-flex justify-content-between align-items-center">
+      <h1 class="me-auto d-flex align-items-center h6 mb-0">
+        <%= attendance.title %>
+        <span class="badge text-bg-secondary ms-2"><%= Attendance.categories.fetch(attendance.category, "Unknown").titleize %></span>
+      </h1>
+      <%= link_to edit_cohort_attendance_path(@cohort, attendance), class: "me-2" do %>
+        <i class="fa-solid fa-pen-to-square"></i>
+      <% end %>
+      <%= button_to cohort_attendance_path(@cohort, attendance), method: :delete, class: "btn btn-link" do %>
+        <i class="fa-solid fa-trash text-danger"></i>
+      <% end %>
+    </div>
+  </div>
+  <div class="card-body">
+    <p><strong>Occurred At:</strong> <%= attendance.occurred_at.strftime("%A, %B %e, %Y at %I:%M %p") %></p>
+    <div class="attendees-list">
+      <strong>Attendees:</strong>
+      <ul>
+        <% attendance.enrollments.default_order.each do |enrollment| %>
+          <li>
+            <%= enrollment.name %>
+            <span class="badge bg-secondary">
+              <%= enrollment.role.humanize %>
+            </span>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <div class="card-footer">
+    <strong>Roll Taker: </strong><%= attendance.roll_taker.name %>
+  </div>
+</div>

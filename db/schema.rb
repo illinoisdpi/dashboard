@@ -16,6 +16,28 @@ ActiveRecord::Schema[7.0].define(version: 2025_03_10_192353) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
+  create_table "attendances", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "title"
+    t.string "category", null: false
+    t.datetime "occurred_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.uuid "roll_taker_id", null: false
+    t.uuid "cohort_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cohort_id"], name: "index_attendances_on_cohort_id"
+    t.index ["roll_taker_id"], name: "index_attendances_on_roll_taker_id"
+  end
+
+  create_table "attendees", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "attendance_id", null: false
+    t.uuid "enrollment_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["attendance_id", "enrollment_id"], name: "index_attendees_on_attendance_id_and_enrollment_id", unique: true
+    t.index ["attendance_id"], name: "index_attendees_on_attendance_id"
+    t.index ["enrollment_id"], name: "index_attendees_on_enrollment_id"
+  end
+
   create_table "blazer_audits", force: :cascade do |t|
     t.uuid "user_id"
     t.bigint "query_id"
@@ -321,6 +343,10 @@ ActiveRecord::Schema[7.0].define(version: 2025_03_10_192353) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "attendances", "cohorts"
+  add_foreign_key "attendances", "users", column: "roll_taker_id"
+  add_foreign_key "attendees", "attendances"
+  add_foreign_key "attendees", "enrollments"
   add_foreign_key "canvas_assignments", "cohorts"
   add_foreign_key "canvas_gradebook_snapshots", "cohorts"
   add_foreign_key "canvas_gradebook_snapshots", "users"
