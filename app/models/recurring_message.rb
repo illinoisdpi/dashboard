@@ -54,17 +54,32 @@ class RecurringMessage < ApplicationRecord
 
   def calculate_next_occurrence
     debugger
-    now = Time.current
-    target_seconds = Time.parse(scheduled_time.to_s).seconds_since_midnight
 
-    weekdays = days_of_week.map do |day|
-      Date::DAYNAMES.index(day.capitalize)
-    end.compact
+    now = Time.current
+    target_seconds = scheduled_time.seconds_since_midnight
+
+    weekdays = days_of_week.map { |day| Date::DAYNAMES.index(day.capitalize) }.compact
+
+    period = case frequency
+    when "weekly"
+               1.week
+    when "biweekly"
+               2.weeks
+    else
+               nil
+    end
 
     candidates = weekdays.map do |weekday|
       days_ahead = (weekday - now.wday) % 7
       candidate = now.beginning_of_day + days_ahead.days + target_seconds.seconds
-      candidate <= now ? candidate + 1.week : candidate
+
+      if frequency == "monthly"
+        candidate = candidate < now ? candidate.next_month : candidate
+      else
+        candidate = candidate <= now ? candidate + period : candidate
+      end
+
+      candidate
     end
 
     candidates.min
