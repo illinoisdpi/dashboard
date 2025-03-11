@@ -18,7 +18,7 @@ class RecurringMessagesController < ApplicationController
     @recurring_message.channel_id = @channel[:id]
 
     if @recurring_message.save
-      schedule_discord_message(@recurring_message)
+      @recurring_message.schedule_discord_message
       flash[:notice] = "Recurring message scheduled successfully."
       redirect_to cohort_discord_channel_path(@cohort, @channel[:id])
     else
@@ -29,8 +29,7 @@ class RecurringMessagesController < ApplicationController
 
   def update
     if @recurring_message.update(recurring_message_params)
-      cancel_previous_job(@recurring_message)
-      schedule_discord_message(@recurring_message)
+      @recurring_message.schedule_discord_message
       flash[:notice] = "Recurring message updated successfully."
       redirect_to cohort_discord_channel_path(@cohort, @channel[:id])
     else
@@ -65,43 +64,5 @@ class RecurringMessagesController < ApplicationController
 
   def recurring_message_params
     params.require(:recurring_message).permit(:message_content, :scheduled_time, :frequency, days_of_week: [])
-  end
-
-  def schedule_discord_message(recurring_message)
-    next_occurrence = calculate_next_occurrence(recurring_message)
-    if next_occurrence
-      job = DiscordMessageJob
-              .set(wait_until: next_occurrence)
-              .perform_later(recurring_message.id)
-      if job.respond_to?(:provider_job_id)
-        recurring_message.update_column(:job_id, job.provider_job_id)
-      end
-    end
-  end
-
-  def cancel_previous_job(recurring_message)
-    return unless recurring_message.job_id.present?
-
-    scheduled_set = Sidekiq::ScheduledSet.new
-    if (job = scheduled_set.find_job(recurring_message.job_id))
-      job.delete
-    end
-  end
-
-  def calculate_next_occurrence(recurring_message)
-    now = Time.current
-    target_seconds = Time.parse(recurring_message.scheduled_time.to_s).seconds_since_midnight
-
-    weekdays = recurring_message.days_of_week.map do |day|
-      Date::DAYNAMES.index(day.capitalize)
-    end.compact
-
-    candidates = weekdays.map do |weekday|
-      days_ahead = (weekday - now.wday) % 7
-      candidate = now.beginning_of_day + days_ahead.days + target_seconds.seconds
-      candidate <= now ? candidate + 1.week : candidate
-    end
-
-    candidates.min
   end
 end
