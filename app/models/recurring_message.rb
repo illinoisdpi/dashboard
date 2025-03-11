@@ -53,8 +53,6 @@ class RecurringMessage < ApplicationRecord
   end
 
   def calculate_next_occurrence
-    debugger
-
     now = Time.current
     target_seconds = scheduled_time.seconds_since_midnight
 
