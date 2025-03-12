@@ -21,21 +21,32 @@
               </div>
               <div>
               <% if enrollment.github_username.present? %>
-                  <span class="badge bg-black text-bg-black ms-2" title="GitHub Connected"><i class="fa-brands fa-github"></i></span>
-                <% end %>
-                <% if enrollment.devto_username.present? %>
-                  <span class="badge bg-black text-bg-black ms-2" title="Dev.to Connected"><i class="fa-brands fa-dev"></i></span>
-                <% end %>
-                <% if enrollment.discord_id.present? || enrollment.discord_username.present? %>
-                  <span class="badge bg-black ms-2" title="Discord ID and Username Connected"><i class="fa-brands fa-discord"></i></span>
-                  <% else %>
-                  <% if enrollment.discord_id.present? %>
-                    <span class="badge bg-black ms-2" title="Discord ID Connected"><i class="fa-brands fa-discord"></i></span>
-                  <% end %>
-                  <% if enrollment.discord_username.present? %>
-                    <span class="badge bg-black ms-2" title="Discord Username Connected"><i class="fa-brands fa-discord"></i></span>
-                  <% end %>
-                <% end %>
+                <span class="badge bg-black text-bg-black ms-2" title="GitHub Connected">
+                  <i class="fa-brands fa-github"></i>
+                </span>
+              <% else %>
+                <span class="badge bg-danger text-bg-danger ms-2" title="GitHub Not Connected">
+                  <i class="fa-brands fa-github"></i>
+                </span>
+              <% end %>
+              <% if enrollment.devto_username.present? %>
+                <span class="badge bg-black text-bg-black ms-2" title="Dev.to Connected">
+                  <i class="fa-brands fa-dev"></i>
+                </span>
+              <% else %>
+                <span class="badge bg-danger text-bg-danger ms-2" title="Dev.to Not Connected">
+                  <i class="fa-brands fa-dev"></i>
+                </span>
+              <% end %>
+              <% if enrollment.discord_id.present? || enrollment.discord_username.present? %>
+                <span class="badge bg-black ms-2" title="Discord Connected">
+                  <i class="fa-brands fa-discord"></i>
+                </span>
+              <% else %>
+                <span class="badge bg-danger ms-2" title="Discord Not Connected">
+                  <i class="fa-brands fa-discord"></i>
+                </span>
+              <% end %>
                 <i class="fa-solid fa-chevron-right fa-fw"></i>
               </div>
             </div>
