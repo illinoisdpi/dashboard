@@ -1,23 +1,25 @@
-<%= form_with(model: @enrollment, url: [@cohort, @enrollment]) do |form| %>
-  <% if @enrollment.errors.any? %>
+<%= form_with(model: enrollment, url: [cohort, enrollment]) do |form| %>
+  <% if enrollment.errors.any? %>
     <div class="text-danger">
-      <h2><%= pluralize(@enrollment.errors.count, "error") %> prohibited this enrollment from being saved:</h2>
+      <h2><%= pluralize(enrollment.errors.count, "error") %> prohibited this enrollment from being saved:</h2>
       <ul>
-        <% @enrollment.errors.each do |error| %>
+        <% enrollment.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <% if policy(@enrollment).edit_role? %>
+  <%= form.hidden_field :cohort_id %>
+
+  <% if policy(enrollment).edit_role? %>
     <div class="mb-3">
       <%= form.label :role %>
       <%= form.collection_select :role, Enrollment.roles.keys, :to_s, :humanize, {}, class: "form-select" %>
     </div>
   <% end %>
 
-  <% if @enrollment.new_record? %>
+  <% if enrollment.new_record? %>
     <div data-controller="search-user">
       <div data-search-user-target="overlay" 
          data-action="touchstart->search-user#toggleListVisibility click->search-user#toggleListVisibility" 
@@ -26,7 +28,7 @@
       <div class="mb-3">
         <%= form.label :user_id, class: "form-label" %>
         <%= form.hidden_field :user_id, 
-        value: @enrollment.user_id.blank? ? "" : @enrollment.user_id, 
+        value: enrollment.user_id.blank? ? "" : enrollment.user_id, 
         data: { search_user_target: "hiddenField" } %>
         <input 
         type="search"  
@@ -34,7 +36,7 @@
         data-action="input->search-user#search_by_name click->search-user#search_by_name" 
         class="form-control"
         placeholder="Search for a user by name..."
-        value="<%= @enrollment.user_id.present? ? User.find(@enrollment.user_id).full_name : "" %>">
+        value="<%= enrollment.user_id.present? ? User.find(enrollment.user_id).full_name : "" %>">
         <div id="search_by_name" data-search-user-target="optionsList" style="display: none" class="options-list"></div>
       </div>
     </div>

@@ -11,16 +11,19 @@ export default class extends Controller {
     if (this.inputFieldTarget.value === "") {
       this.hiddenFieldTarget.value = ""
     }
-    
-    // conditionally set the search url based on the current route
-    var url = ""
-    const inputFieldValue = this.inputFieldTarget.value
-    if (window.location.pathname.includes('cohorts')) {
-      url = `/cohorts/${this.cohortValue}/impressions/search?subject_search=${encodeURIComponent(inputFieldValue)}`
+
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const cohortId = urlSearchParams.get("cohort_id");
+
+    const queryStringObject = {
+      subject_search: this.inputFieldTarget.value,
+    };
+
+    if (cohortId !== null) {
+      queryStringObject.cohort_id = cohortId;
     }
-    else {
-      url = `/impressions/search?subject_search=${encodeURIComponent(inputFieldValue)}`
-    }
+    const queryString = new URLSearchParams(queryStringObject).toString();
+    const url = `/impressions/search?${queryString}`
 
     clearTimeout(this.timeout)
     this.timeout = setTimeout(() => {

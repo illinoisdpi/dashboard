@@ -1,0 +1,9 @@
+<h1>New enrollment</h1>
+
+<%= render "form", cohort: @cohort, enrollment: @enrollment %>
+
+<br>
+
+<div>
+  <%= link_to "Back to enrollments", cohort_enrollments_path(cohort) %>
+</div>

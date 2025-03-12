@@ -1,0 +1,3 @@
+<%= render @enrollment %>
+
+<%= render "impressions/list_group", cohort: @enrollment.cohort, impressions: @enrollment.impressions.default_order %>
