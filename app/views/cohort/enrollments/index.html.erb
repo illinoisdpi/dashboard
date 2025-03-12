@@ -1,5 +1,4 @@
 <%= render "cohorts/tabs" %>
-
 <div class="row">
   <div class="col-lg-6">
     <div class="card">
@@ -11,7 +10,6 @@
           <% end %>
         <% end %>
       </div>
-
       <div class="list-group list-group-flush">
         <% @enrollments.student.default_order.each do |enrollment| %>
           <li class="list-group-item">
@@ -20,33 +18,39 @@
                 <%= enrollment.name %>
               </div>
               <div>
-              <% if enrollment.github_username.present? %>
-                <span class="badge bg-black text-bg-black ms-2" title="GitHub Connected">
-                  <i class="fa-brands fa-github"></i>
-                </span>
-              <% else %>
-                <span class="badge bg-danger text-bg-danger ms-2" title="GitHub Not Connected">
-                  <i class="fa-brands fa-github"></i>
-                </span>
-              <% end %>
-              <% if enrollment.devto_username.present? %>
-                <span class="badge bg-black text-bg-black ms-2" title="Dev.to Connected">
-                  <i class="fa-brands fa-dev"></i>
-                </span>
-              <% else %>
-                <span class="badge bg-danger text-bg-danger ms-2" title="Dev.to Not Connected">
-                  <i class="fa-brands fa-dev"></i>
-                </span>
-              <% end %>
-              <% if enrollment.discord_id.present? || enrollment.discord_username.present? %>
-                <span class="badge bg-black ms-2" title="Discord Connected">
-                  <i class="fa-brands fa-discord"></i>
-                </span>
-              <% else %>
-                <span class="badge bg-danger ms-2" title="Discord Not Connected">
-                  <i class="fa-brands fa-discord"></i>
-                </span>
-              <% end %>
+                <% if enrollment.github_username.present? %>
+                  <%= link_to "https://github.com/#{enrollment.github_username}", target: "_blank", class: "text-decoration-none" do %>
+                    <span class="badge bg-black text-bg-black ms-2" title="GitHub Connected">
+                      <i class="fa-brands fa-github"></i>
+                    </span>
+                  <% end %>
+                <% else %>
+                  <span class="badge bg-danger text-bg-danger ms-2" title="GitHub Not Connected">
+                    <i class="fa-brands fa-github"></i>
+                  </span>
+                <% end %>
+                <% if enrollment.devto_username.present? %>
+                  <%= link_to "https://dev.to/#{enrollment.devto_username}", target: "_blank", class: "text-decoration-none" do %>
+                    <span class="badge bg-black text-bg-black ms-2" title="Dev.to Connected">
+                      <i class="fa-brands fa-dev"></i>
+                    </span>
+                  <% end %>
+                <% else %>
+                  <span class="badge bg-danger text-bg-danger ms-2" title="Dev.to Not Connected">
+                    <i class="fa-brands fa-dev"></i>
+                  </span>
+                <% end %>
+                <% if enrollment.discord_id.present? && enrollment.discord_username.present? %>
+                  <%= link_to "https://discord.com/users/#{enrollment.discord_id}", target: "_blank", class: "text-decoration-none" do %>
+                    <span class="badge bg-black ms-2" title="Discord Connected">
+                      <i class="fa-brands fa-discord"></i>
+                    </span>
+                  <% end %>
+                <% else %>
+                  <span class="badge bg-danger ms-2" title="Discord Not Connected">
+                    <i class="fa-brands fa-discord"></i>
+                  </span>
+                <% end %>
                 <i class="fa-solid fa-chevron-right fa-fw"></i>
               </div>
             </div>
@@ -79,7 +83,6 @@
       </div>
     </div>
   </div>
-
   <div class="col-lg-6">
     <div class="card">
       <div class="card-header d-flex align-items-center">
@@ -90,7 +93,6 @@
           <% end %>
         <% end %>
       </div>
-
       <div class="list-group list-group-flush">
         <% @enrollments.not_student.default_order.each do |enrollment| %>
           <% if policy(enrollment).show? %>
