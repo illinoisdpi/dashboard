@@ -12,6 +12,9 @@
               <span class="text-secondary ms-1">
                 <%= attendance.occurred_at.strftime("%A, %B %e") %>
               </span>
+              <span class="badge bg-info ms-2">
+                Attended: <%= attendance.attendees_count %>
+              </span>
             </div>
           </div>
         </div>
