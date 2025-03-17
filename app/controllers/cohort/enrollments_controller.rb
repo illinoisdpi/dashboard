@@ -27,10 +27,10 @@ class Cohort::EnrollmentsController < ApplicationController
   # GET /enrollments/new
   def new
     @breadcrumbs = [
-      {content: "Cohorts", href: cohorts_path},
-      {content: @cohort.to_s, href: cohort_path(@cohort)},
-      {content: "Enrollments", href: cohort_enrollments_path(@cohort)},
-      {content: "New"}
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Enrollments", href: cohort_enrollments_path(@cohort) },
+      { content: "New" }
     ]
     @enrollment = @cohort.enrollments.new
   end
@@ -38,11 +38,11 @@ class Cohort::EnrollmentsController < ApplicationController
   # GET /enrollments/1/edit
   def edit
     @breadcrumbs = [
-      {content: "Cohorts", href: cohorts_path},
-      {content: @cohort.to_s, href: cohort_path(@cohort)},
-      {content: "Enrollments", href: cohort_enrollments_path(@cohort)},
-      {content: @enrollment.name},
-      {content: "Edit"}
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Enrollments", href: cohort_enrollments_path(@cohort) },
+      { content: @enrollment.name },
+      { content: "Edit" }
     ]
   end
 
@@ -110,6 +110,17 @@ class Cohort::EnrollmentsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def enrollment_params
-    params.require(:enrollment).permit(:role, :user_id, :cohort_id, :skills_development)
+    params.require(:enrollment).permit(
+      :id, :role, :user_id, :cohort_id,
+      user_attributes: [
+        :id,
+        :email,
+        :salesforce_id,
+        :discord_id,
+        :discord_username,
+        :github_username,
+        :devto_username
+      ]
+    )
   end
 end

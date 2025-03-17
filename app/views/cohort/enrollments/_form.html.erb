@@ -9,14 +9,35 @@
       </ul>
     </div>
   <% end %>
-
   <% if policy(@enrollment).edit_role? %>
     <div class="mb-3">
       <%= form.label :role %>
       <%= form.collection_select :role, Enrollment.roles.keys, :to_s, :humanize, {}, class: "form-select" %>
     </div>
+    <%= form.fields_for :user do |user| %>
+      <%= user.hidden_field :id %>
+      <div class="mb-3">
+        <%= user.label :salesforce_id, "Salesforce ID", class: "form-label" %>
+        <%= user.text_field :salesforce_id, value: @enrollment.salesforce_id %>
+      </div>
+      <div class="mb-3">
+        <%= user.label :github_username, class: "form-label" %>
+        <%= user.text_field :github_username, value: @enrollment.github_username %>
+      </div>
+      <div class="mb-3">
+        <%= user.label :devto_username, class: "form-label" %>
+        <%= user.text_field :devto_username, value: @enrollment.devto_username %>
+      </div>
+      <div class="mb-3">
+        <%= user.label :discord_id, "Discord ID", class: "form-label" %>
+        <%= user.text_field :discord_id, value: @enrollment.discord_id %>
+      </div>
+      <div class="mb-3">
+        <%= user.label :discord_username, class: "form-label" %>
+        <%= user.text_field :discord_username, value: @enrollment.discord_username %>
+      </div>
+    <% end %>
   <% end %>
-
   <% if @enrollment.new_record? %>
     <div data-controller="search-user">
       <div data-search-user-target="overlay" 
@@ -39,7 +60,6 @@
       </div>
     </div>
   <% end %>
-
   <div>
     <%= form.submit class: "btn btn-primary" %>
   </div>
