@@ -16,7 +16,7 @@
     <div class="mb-3">
       <%= form.label :role, class: "form-label" %>
       <div class="input-group">
-        <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+        <span class="input-group-text"><i class="fa-solid fa-briefcase"></i></span>
         <%= form.collection_select :role, Enrollment.roles.keys, :to_s, :humanize, {}, class: "form-select" %>
       </div>
     </div>
@@ -71,7 +71,7 @@
           value: @enrollment.user_id.blank? ? "" : @enrollment.user_id, 
           data: { search_user_target: "hiddenField" } %>
         <div class="input-group">
-          <span class="input-group-text"><i class="fa-brands fa-search"></i></span>
+          <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
           <input 
             type="search"  
             data-search-user-target="inputField"
