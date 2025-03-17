@@ -12,11 +12,11 @@ class EnrollmentPolicy < ApplicationPolicy
   end
 
   def edit_role?
-    user.admin? || user.instructor?
+    user.admin? || user.instructor? || user.teaching_assistant?
   end
 
   def update?
-    user.admin? || user.instructor? || record.user == user
+    user.admin? || user.instructor? || record.user == user || user.teaching_assistant?
   end
 
   def create?
