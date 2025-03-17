@@ -101,6 +101,7 @@ class Enrollment < ApplicationRecord
     :devto_username,
     :discord_id,
     :discord_username,
+    :salesforce_id,
     :languages,
     :most_recent_role,
     :personal_website,
