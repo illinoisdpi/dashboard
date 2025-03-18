@@ -22,7 +22,6 @@
       </div>
     <% end %>
     <%= form.fields_for :user do |user| %>
-      <%= user.hidden_field :id %>
       <% if policy(@enrollment).permitted_user_attributes.include?(:salesforce_id) %>
       <div class="mb-3">
         <%= user.label :salesforce_id, "Salesforce ID", class: "form-label" %>
