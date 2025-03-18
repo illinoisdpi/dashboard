@@ -11,12 +11,8 @@ class EnrollmentPolicy < ApplicationPolicy
     update?
   end
 
-  def edit_role?
-    user.admin? || user.instructor? || user.teaching_assistant?
-  end
-
   def update?
-    user.admin? || user.instructor? || user.teaching_assistant?
+    user.admin? || user.instructor? || user.teaching_assistant? || record.user == user
   end
 
   def create?
@@ -49,8 +45,24 @@ class EnrollmentPolicy < ApplicationPolicy
   def permitted_attributes
     if user.admin? || user.instructor?
       [
-      :id, :role, :user_id, :cohort_id,
-      user_attributes: [
+        :id,
+        :role,
+        :user_id,
+        :cohort_id,
+        user_attributes: permitted_user_attributes
+      ]
+    elsif user.teaching_assistant?
+      [
+        user_attributes: permitted_user_attributes
+      ]
+    else
+      []
+    end
+  end
+
+  def permitted_user_attributes
+    if user.admin? || user.instructor?
+      [
         :id,
         :email,
         :salesforce_id,
@@ -58,18 +70,15 @@ class EnrollmentPolicy < ApplicationPolicy
         :discord_username,
         :github_username,
         :devto_username
-        ]
       ]
     elsif user.teaching_assistant?
       [
-        user_attributes: [
-          :id,
-          :salesforce_id,
-          :discord_id,
-          :discord_username,
-          :github_username,
-          :devto_username
-          ]
+        :id,
+        :salesforce_id,
+        :discord_id,
+        :discord_username,
+        :github_username,
+        :devto_username
         ]
     else
       []

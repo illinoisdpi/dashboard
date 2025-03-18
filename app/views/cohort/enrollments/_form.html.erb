@@ -12,16 +12,18 @@
     </div>
   <% end %>
 
-  <% if policy(@enrollment).edit_role? %>
-    <div class="mb-3">
-      <%= form.label :role, class: "form-label" %>
-      <div class="input-group">
-        <span class="input-group-text"><i class="fa-solid fa-briefcase"></i></span>
-        <%= form.collection_select :role, Enrollment.roles.keys, :to_s, :humanize, {}, class: "form-select" %>
+    <% if policy(@enrollment).permitted_attributes.include?(:role) %>
+      <div class="mb-3">
+        <%= form.label :role, class: "form-label" %>
+        <div class="input-group">
+          <span class="input-group-text"><i class="fa-solid fa-briefcase"></i></span>
+          <%= form.collection_select :role, Enrollment.roles.keys, :to_s, :humanize, {}, class: "form-select" %>
+        </div>
       </div>
-    </div>
+    <% end %>
     <%= form.fields_for :user do |user| %>
       <%= user.hidden_field :id %>
+      <% if policy(@enrollment).permitted_user_attributes.include?(:salesforce_id) %>
       <div class="mb-3">
         <%= user.label :salesforce_id, "Salesforce ID", class: "form-label" %>
         <div class="input-group">
@@ -29,6 +31,8 @@
           <%= user.text_field :salesforce_id, value: @enrollment.salesforce_id, class: "form-control" %>
         </div>
       </div>
+      <% end %>
+      <% if policy(@enrollment).permitted_user_attributes.include?(:github_username) %>
       <div class="mb-3">
         <%= user.label :github_username, class: "form-label" %>
         <div class="input-group">
@@ -36,6 +40,8 @@
           <%= user.text_field :github_username, value: @enrollment.github_username, class: "form-control" %>
         </div>
       </div>
+      <% end %>
+      <% if policy(@enrollment).permitted_user_attributes.include?(:devto_username) %>
       <div class="mb-3">
         <%= user.label :devto_username, class: "form-label" %>
         <div class="input-group">
@@ -43,6 +49,8 @@
           <%= user.text_field :devto_username, value: @enrollment.devto_username, class: "form-control" %>
         </div>
       </div>
+      <% end %>
+      <% if policy(@enrollment).permitted_user_attributes.include?(:discord_id) %>
       <div class="mb-3">
         <%= user.label :discord_id, "Discord ID", class: "form-label" %>
         <div class="input-group">
@@ -50,6 +58,8 @@
           <%= user.text_field :discord_id, value: @enrollment.discord_id, class: "form-control" %>
         </div>
       </div>
+      <% end %>
+      <% if policy(@enrollment).permitted_user_attributes.include?(:discord_username) %>
       <div class="mb-3">
         <%= user.label :discord_username, class: "form-label" %>
         <div class="input-group">
@@ -57,8 +67,8 @@
           <%= user.text_field :discord_username, value: @enrollment.discord_username, class: "form-control" %>
         </div>
       </div>
+      <% end %>
     <% end %>
-  <% end %>
 
   <% if @enrollment.new_record? %>
     <div data-controller="search-user">
