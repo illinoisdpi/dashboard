@@ -29,14 +29,14 @@ module CanvasGradebookSnapshot::Csvable
       DateTime.strptime(csv_filename.split("_").at(0), "%Y-%m-%dT%H%M")
     end
 
-    def build_existing_users(csv_data)
+    def build_users_by_email(csv_data)
       emails = csv_data.map { |row| row[:sis_login_id] }.compact.uniq
       User.where(email: emails).index_by(&:email)
     end
 
-    def find_or_create_user(row, existing_users)
+    def find_or_create_user(row, users_by_email)
       email = row[:sis_login_id]
-      return existing_users[email] if existing_users[email]
+      return users_by_email[email] if users_by_email[email]
 
       canvas_full = row[:student] || "Unknown"
       last_name, first_name = canvas_full.split(", ")
@@ -47,7 +47,7 @@ module CanvasGradebookSnapshot::Csvable
         last_name: last_name
       )
       if new_user.save
-        existing_users[email] = new_user
+        users_by_email[email] = new_user
         new_user
       else
         Rails.logger.error "Failed to create User: #{new_user.errors.full_messages.join(", ")} - Data: #{row.inspect}"
@@ -138,14 +138,14 @@ module CanvasGradebookSnapshot::Csvable
       snapshot_id = id
 
       existing_assignments = cohort.canvas_assignments.index_by(&:id_from_canvas)
-      existing_users = self.class.build_existing_users(csv_data)
-      existing_enrollments = cohort.enrollments.index_by(&:user_id)
+      users_by_email = self.class.build_users_by_email(csv_data)
+      enrollments_by_user_id = cohort.enrollments.index_by(&:user_id)
 
       process_assignment_headers(csv_data.first, existing_assignments)
 
       submissions = csv_data.each_with_index.flat_map do |row, index|
         next if index.zero?
-        process_csv_row(row, existing_users, existing_assignments, existing_enrollments, snapshot_id)
+        process_csv_row(row, users_by_email, existing_assignments, enrollments_by_user_id, snapshot_id)
       end.compact
 
       CanvasSubmission.create!(submissions) if submissions.present?
@@ -179,18 +179,18 @@ module CanvasGradebookSnapshot::Csvable
     end
   end
 
-  def process_csv_row(row, existing_users, existing_assignments, existing_enrollments, snapshot_id)
-    user = self.class.find_or_create_user(row, existing_users)
+  def process_csv_row(row, users_by_email, existing_assignments, enrollments_by_user_id, snapshot_id)
+    user = self.class.find_or_create_user(row, users_by_email)
     return unless user
 
-    enrollment = find_or_create_enrollment(row, user, existing_enrollments)
+    enrollment = find_or_create_enrollment(row, user, enrollments_by_user_id)
     return unless enrollment
 
     self.class.extract_submissions_from_row(row, enrollment, existing_assignments, snapshot_id)
   end
 
-  def find_or_create_enrollment(row, user, existing_enrollments)
-    return existing_enrollments[user.id] if existing_enrollments[user.id]
+  def find_or_create_enrollment(row, user, enrollments_by_user_id)
+    return enrollments_by_user_id[user.id] if enrollments_by_user_id[user.id]
 
     new_enrollment = cohort.enrollments.new(
       user: user,
@@ -198,7 +198,7 @@ module CanvasGradebookSnapshot::Csvable
       id_from_canvas: row[:id]
     )
     if new_enrollment.save
-      existing_enrollments[user.id] = new_enrollment
+      enrollments_by_user_id[user.id] = new_enrollment
       new_enrollment
     else
       Rails.logger.error "Failed to create Enrollment: #{new_enrollment.errors.full_messages.join(", ")} - User ID: #{user.id}, Cohort ID: #{cohort.id}"
