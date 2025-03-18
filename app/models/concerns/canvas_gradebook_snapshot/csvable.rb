@@ -28,6 +28,53 @@ module CanvasGradebookSnapshot::Csvable
     def extract_downloaded_at(csv_filename)
       DateTime.strptime(csv_filename.split("_").at(0), "%Y-%m-%dT%H%M")
     end
+
+    def build_existing_users(csv_data)
+      emails = csv_data.map { |row| row[:sis_login_id] }.compact.uniq
+      User.where(email: emails).index_by(&:email)
+    end
+
+    def find_or_create_user(row, existing_users)
+      email = row[:sis_login_id]
+      return existing_users[email] if existing_users[email]
+
+      canvas_full = row[:student] || "Unknown"
+      last_name, first_name = canvas_full.split(", ")
+      new_user = User.new(
+        email: email,
+        password: SecureRandom.hex(16),
+        first_name: first_name,
+        last_name: last_name
+      )
+      if new_user.save
+        existing_users[email] = new_user
+        new_user
+      else
+        Rails.logger.error "Failed to create User: #{new_user.errors.full_messages.join(", ")} - Data: #{row.inspect}"
+        nil
+      end
+    end
+
+    def extract_submissions_from_row(row, enrollment, existing_assignments, snapshot_id)
+      submissions = []
+      row.each do |assignment_name_raw, points|
+        next if [ :id, :student, :sis_login_id, :sis_user_id, :section ].include?(assignment_name_raw)
+
+        assignment_id = extract_id_from_canvas(assignment_name_raw)
+        canvas_assignment = existing_assignments[assignment_id]
+        next unless canvas_assignment
+
+        submissions << {
+          enrollment_id: enrollment.id,
+          canvas_assignment_id: canvas_assignment.id,
+          points: points,
+          canvas_gradebook_snapshot_id: snapshot_id,
+          created_at: Time.current,
+          updated_at: Time.current
+        }
+      end
+      submissions
+    end
   end
 
   def to_csv
@@ -64,7 +111,7 @@ module CanvasGradebookSnapshot::Csvable
   def process_csv_filename
     raise MissingCsvFileError.new("Please select a CSV file") if csv_file.blank?
     self.csv_filename = csv_file.original_filename
-    self.downloaded_at = CanvasGradebookSnapshot.extract_downloaded_at(csv_filename)
+    self.downloaded_at = self.class.extract_downloaded_at(csv_filename)
     validate_canvas_shortname
   rescue InvalidCanvasShortnameError => e
     errors.add(:csv_filename, e.message)
@@ -91,7 +138,7 @@ module CanvasGradebookSnapshot::Csvable
       snapshot_id = id
 
       existing_assignments = cohort.canvas_assignments.index_by(&:id_from_canvas)
-      existing_users = build_existing_users(csv_data)
+      existing_users = self.class.build_existing_users(csv_data)
       existing_enrollments = cohort.enrollments.index_by(&:user_id)
 
       process_assignment_headers(csv_data.first, existing_assignments)
@@ -111,17 +158,12 @@ module CanvasGradebookSnapshot::Csvable
     SmarterCSV.process(csv_file.path, file_encoding: "utf-8")
   end
 
-  def build_existing_users(csv_data)
-    emails = csv_data.map { |row| row[:sis_login_id] }.compact.uniq
-    User.where(email: emails).index_by(&:email)
-  end
-
   def process_assignment_headers(header_row, existing_assignments)
     header_row.each do |assignment_name_raw, points_possible|
       next unless points_possible.is_a?(Numeric)
 
-      id_from_canvas = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw)
-      name = CanvasGradebookSnapshot.extract_assignment_name(assignment_name_raw)
+      id_from_canvas = self.class.extract_id_from_canvas(assignment_name_raw)
+      name = self.class.extract_assignment_name(assignment_name_raw)
       unless existing_assignments.key?(id_from_canvas)
         new_assignment = cohort.canvas_assignments.new(
           id_from_canvas: id_from_canvas,
@@ -138,34 +180,13 @@ module CanvasGradebookSnapshot::Csvable
   end
 
   def process_csv_row(row, existing_users, existing_assignments, existing_enrollments, snapshot_id)
-    user = find_or_create_user(row, existing_users)
+    user = self.class.find_or_create_user(row, existing_users)
     return unless user
 
     enrollment = find_or_create_enrollment(row, user, existing_enrollments)
     return unless enrollment
 
-    extract_submissions_from_row(row, enrollment, existing_assignments, snapshot_id)
-  end
-
-  def find_or_create_user(row, existing_users)
-    email = row[:sis_login_id]
-    return existing_users[email] if existing_users[email]
-
-    canvas_full = row[:student] || "Unknown"
-    last_name, first_name = canvas_full.split(", ")
-    new_user = User.new(
-      email: email,
-      password: SecureRandom.hex(16),
-      first_name: first_name,
-      last_name: last_name
-    )
-    if new_user.save
-      existing_users[email] = new_user
-      new_user
-    else
-      Rails.logger.error "Failed to create User: #{new_user.errors.full_messages.join(", ")} - Data: #{row.inspect}"
-      nil
-    end
+    self.class.extract_submissions_from_row(row, enrollment, existing_assignments, snapshot_id)
   end
 
   def find_or_create_enrollment(row, user, existing_enrollments)
@@ -183,26 +204,5 @@ module CanvasGradebookSnapshot::Csvable
       Rails.logger.error "Failed to create Enrollment: #{new_enrollment.errors.full_messages.join(", ")} - User ID: #{user.id}, Cohort ID: #{cohort.id}"
       nil
     end
-  end
-
-  def extract_submissions_from_row(row, enrollment, existing_assignments, snapshot_id)
-    submissions = []
-    row.each do |assignment_name_raw, points|
-      next if [ :id, :student, :sis_login_id, :sis_user_id, :section ].include?(assignment_name_raw)
-
-      assignment_id = CanvasGradebookSnapshot.extract_id_from_canvas(assignment_name_raw)
-      canvas_assignment = existing_assignments[assignment_id]
-      next unless canvas_assignment
-
-      submissions << {
-        enrollment_id: enrollment.id,
-        canvas_assignment_id: canvas_assignment.id,
-        points: points,
-        canvas_gradebook_snapshot_id: snapshot_id,
-        created_at: Time.current,
-        updated_at: Time.current
-      }
-    end
-    submissions
   end
 end
