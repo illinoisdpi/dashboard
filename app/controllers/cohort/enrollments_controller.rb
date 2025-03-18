@@ -110,17 +110,6 @@ class Cohort::EnrollmentsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def enrollment_params
-    params.require(:enrollment).permit(
-      :id, :role, :user_id, :cohort_id,
-      user_attributes: [
-        :id,
-        :email,
-        :salesforce_id,
-        :discord_id,
-        :discord_username,
-        :github_username,
-        :devto_username
-      ]
-    )
+    params.require(:enrollment).permit(policy(@enrollment).permitted_attributes)
   end
 end
