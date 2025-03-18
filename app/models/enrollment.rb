@@ -59,6 +59,8 @@ class Enrollment < ApplicationRecord
   has_many :piazza_activity_breakdowns, dependent: :destroy
   has_many :canvas_submissions, dependent: :destroy
   has_many :impressions, foreign_key: "subject_id", dependent: :destroy
+  has_many :attendees, dependent: :destroy
+  has_many :attendances, through: :attendees
 
   scope :default_order, -> { joins(:user).order(User.arel_table[:first_name].asc) }
   scope :student, -> { where(role: "student") }
@@ -108,6 +110,8 @@ class Enrollment < ApplicationRecord
     :last_name,
     :email,
     :to_s,
+    :full_name,
+    :name,
     to: :user
 
   enum :role, {

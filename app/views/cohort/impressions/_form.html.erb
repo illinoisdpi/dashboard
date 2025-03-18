@@ -24,8 +24,8 @@
         type="search"  
         data-search-subject-target="inputField"
         data-action="input->search-subject#search click->search-subject#search" 
-        class="form-control"
-        value="<%= @impression.subject_id.blank? ? "" : Enrollment.find(@impression.subject_id).user.full_name %>">
+      class="form-control"
+      value="<%= @impression.subject_id.blank? ? "" : Enrollment.find(@impression.subject_id).user.full_name %>">
       <div id="search" data-search-subject-target="optionsList" style="display: none" class="options-list"></div>
     </div>
     <div class="mb-3" data-controller="emoji-input">
@@ -33,15 +33,20 @@
       <%= form.text_field :emoji, class: "form-control", "aria-described-by": "emoji-help", "data-emoji-input-target": "textInput" %>
       <br/>
       <div class="row">
-        <%= render 'impressions/emoji_button_card', card_header: 'Positive Impression', emojis: Impression::Emojiable.positive_emojis, bs_border_class: "border-success", bs_text_class: "text-success" %>
-        <%= render 'impressions/emoji_button_card', card_header: 'Negative Impression', emojis: Impression::Emojiable.negative_emojis, bs_border_class: "border-danger", bs_text_class: "text-danger"  %>
+        <%= render 'impressions/emoji_button_card', card_header: 'Positive Impression', emojis: Impression::Emojiable.positive_emojis, bs_border_class: "border-success", bs_text_class: "text-success", bs_col_size: "col-md-5" %>
+        <%= render 'impressions/emoji_button_card', card_header: 'Neutral', emojis: Impression::Emojiable.neutral_emojis, bs_border_class: "border-secondary", bs_text_class: "text-secondary", bs_col_size: "col-md-2" %>
+        <%= render 'impressions/emoji_button_card', card_header: 'Negative Impression', emojis: Impression::Emojiable.negative_emojis, bs_border_class: "border-danger", bs_text_class: "text-danger", bs_col_size: "col-md-5" %>
       </div>
       <div class="mb-3">
         <%= form.label :content, class: "form-label" %>
         <%= form.text_area :content, class: "form-control", rows: "10", "aria-described-by": "content-help" %>
-        <div id="content-help" class="form-text">
-          This impression may be shared with the subject.
-        </div>
+      </div>
+      <div id="content-help" class="form-check mb-3 fs-5">
+        <%= form.check_box :staff_only, id: "staff-only-checkbox" %>
+        <label class="form-check-label" for="staff-only-checkbox" data-controller="tooltip" data-bs-toggle="tooltip" title="This impression is only viewable by staff members" role="button">
+          <i class="fa-solid fa-lock"></i>
+          Staff only
+        </label>
       </div>
       <div class="d-grid gap-2 mt-2">
         <%= form.submit class: "btn btn-secondary" %>
