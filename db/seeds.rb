@@ -6,9 +6,9 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-users = [
+admins = [
   {
-    email: "ian@biggreen.company",
+    email: "ihera2@uillinois.edu",
     first_name: "Ian",
     last_name: "Heraty"
   },
@@ -39,36 +39,113 @@ users = [
   }
 ]
 
-users.each do |user_info|
+# Create Users
+admins.each do |user_info|
   user = User.create(user_info.merge(password: "password"))
   user.add_role(:admin)
 end
 
-Rails.logger.debug Cohort.create(
-  [
-    {
-      year: 2022,
-      month: 1,
-      number: 1,
-      name: "The Pioneers",
-      canvas_shortname: "WE-2022-1.1-SDF",
-      started_on: "September 19th, 2022"
-    },
-    {
-      year: 2023,
-      month: 1,
-      number: 1,
-      name: "Hash Rockets",
-      canvas_shortname: "WE-2023-1.1-SDF",
-      started_on: "January 30th, 2023"
-    },
-    {
-      year: 2023,
-      month: 2,
-      number: 1,
-      name: "Fullstack Pancakes",
-      canvas_shortname: "WE-2023-2.1-SDF",
-      started_on: "February 27th, 2023"
-    }
-  ]
-)
+
+teaching_assistants = [
+  {
+    email: "mary@dpi.dev",
+    first_name: "Mary",
+    last_name: "Webby"
+  },
+  {
+    email: "calvin@dpi.dev",
+    first_name: "Calvin",
+    last_name: "Armstrong"
+  },
+  {
+    email: "aldo@dpi.dev",
+    first_name: "Aldo",
+    last_name: "Portillo"
+  },
+  {
+    email: "margo@dpi.dev",
+    first_name: "Margo",
+    last_name: "Potylitsyna"
+  },
+  {
+    email: "benny@dpi.dev",
+    first_name: "Benny",
+    last_name: "Jorman"
+  },
+  {
+    email: "jose@dpi.dev",
+    first_name: "Jose",
+    last_name: "De Oca Morfin"
+  },
+  {
+    email: "annie@dpi.dev",
+    first_name: "Annie",
+    last_name: "Huynh"
+  },
+  {
+    email: "carlos@dpi.dev",
+    first_name: "Carlos",
+    last_name: "Castaneda"
+  },
+  {
+    email: "alex@dpi.dev",
+    first_name: "Alex",
+    last_name: "Mompremier"
+  },
+  {
+    email: "thierry@dpi.dev",
+    first_name: "Thierry",
+    last_name: "Chau"
+  },
+  {
+    email: "alex@dpi.dev",
+    first_name: "Alex",
+    last_name: "Mompremier"
+  }, 
+  {
+    email: "jorge@dpi.dev",
+    first_name: "Jorge",
+    last_name: "Gomez"
+  },
+  {
+    email: "fidel@dpi.dev",
+    first_name: "Fidel",
+    last_name: "Leal"
+  },
+  {
+    email: "alex@dpi.dev",
+    first_name: "Alex",
+    last_name: "Mompremier"
+  },
+  {
+    email: "darryl@dpi.dev",
+    first_name: "Darryl",
+    last_name: "Williams"
+  },
+  {
+    email: "ximena@dpi.dev",
+    first_name: "Ximena",
+    last_name: "Castillo"
+  },
+  {
+    email: "ximena@dpi.dev",
+    first_name: "Ximena",
+    last_name: "Castillo"
+  },
+  {
+    email: "dustin@dpi.dev",
+    first_name: "Dustin",
+    last_name: "Doyle"
+  },
+  {
+    email: "jazmine@dpi.dev",
+    first_name: "Jazmine",
+    last_name: "Tran"
+  }, 
+  {
+    email: "john@dpi.dev",
+    first_name: "John",
+    last_name: "Leavell"
+  }
+]
+
