@@ -32,7 +32,8 @@ namespace :dev do
         number: 2,
         name: "Sample Cohort",
         canvas_shortname: "WE-2022-1.2-SDF",
-        started_on: "September 19th, 2022"
+        started_on: "September 19th, 2022",
+        discord_server_id: "1352007014330662962"
       )
 
       if cohort.errors.any?
@@ -119,7 +120,7 @@ namespace :dev do
               subject_id: enrollment.id,
               content: Faker::Lorem.sentence,
               emoji: Impression::EMOJIS.keys.sample,
-              staff_only: [true, false].sample,
+              staff_only: [ true, false ].sample,
               created_at: rand(1..5).week.ago
             )
           end
