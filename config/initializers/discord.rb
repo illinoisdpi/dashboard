@@ -1,6 +1,7 @@
-require 'discordrb'
+require "discordrb"
 
-DISCORD_BOT = Discordrb::Bot.new(token: ENV['DISCORD_BOT_TOKEN'])
+bot_token = Rails.application.credentials.dig(:discord, :bot_token)
+DISCORD_BOT = Discordrb::Bot.new(token: bot_token)
 
 DISCORD_BOT.run(true)
 
