@@ -6,6 +6,8 @@ class CreateRecurringMessages < ActiveRecord::Migration[7.0]
       t.text :message_content
       t.time :scheduled_time
       t.text :days_of_week, array: true, default: []
+      t.string :frequency, null: false, default: "weekly"
+      t.string :job_id
 
       t.timestamps
     end
