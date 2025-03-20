@@ -32,6 +32,15 @@ class RecurringMessage < ApplicationRecord
   validates :frequency, inclusion: { in: FREQUENCIES }
   validates :days_of_week, presence: true, inclusion: { in: DAYS, message: "%{value} is not a valid day" }, length: { minimum: 1 }
 
+  def devliver_message
+    DiscordService.new.send_message(channel_id, message_content)
+
+    next_occurrence = calculate_next_occurrence
+    if next_occurrence
+      DiscordMessageJob.set(wait_until: next_occurrence).perform_later(id)
+    end
+  end
+
   def schedule_discord_message
     cancel_previous_job
     next_occurrence = calculate_next_occurrence
@@ -42,6 +51,8 @@ class RecurringMessage < ApplicationRecord
           .perform_later(id)
     update_column(:job_id, job.provider_job_id) if job.respond_to?(:provider_job_id)
   end
+
+  private
 
   def cancel_previous_job
     return if job_id.blank?
