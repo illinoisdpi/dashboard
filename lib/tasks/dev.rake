@@ -46,7 +46,8 @@ unless Rails.env.production?
           { email: "admin@dpi.dev", role: :admin },
           { email: "instructor@dpi.dev", role: :instructor },
           { email: "ta@dpi.dev", role: :teaching_assistant },
-          { email: "staff@dpi.dev", role: :staff }
+          { email: "staff@dpi.dev", role: :staff },
+          { email: "student@dpi.dev"}
         ]
 
         test_users.each do |user_info|
