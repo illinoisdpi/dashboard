@@ -101,6 +101,18 @@ class AttendancesController < ApplicationController
     end
   end
 
+  # GET /cohorts/:cohort_id/attendances/search_attendee
+  def search_attendee
+    @students = @cohort.enrollments.includes(:user)
+                        .where("CONCAT(users.first_name, ' ', users.last_name) ILIKE ?", "%#{params[:name]}%")
+                        .references(:user)
+                        .limit(10)
+
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
+
   private
 
   def set_attendance

@@ -26,4 +26,8 @@ class AttendancePolicy < ApplicationPolicy
   def destroy?
     user.admin? || user.instructor?
   end
+
+  def search_attendee?
+    user.admin? || user.instructor? || user.teaching_assistant?
+  end
 end
