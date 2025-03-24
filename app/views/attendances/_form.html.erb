@@ -28,12 +28,14 @@
     <div id="occurredAtHelp" class="form-text">Timezone <%= Time.zone %></div>
   </div>
 
-  <div class="mb-3" data-controller="select-all">
+  <div class="mb-3" data-controller="select-all student-filter">
     <h3 class="h6 fw-bold">Select Students</h3>
     
     <div class="mb-3">
-      <label class="form-label">Search for a student</label>
-      <input type="text" class="form-control" id="student-search" placeholder="Type to search students...">
+      <input type="text" class="form-control" 
+             data-student-filter-target="input" 
+             data-action="input->student-filter#filter"
+             placeholder="Type to search students...">
     </div>
     
     <div class="form-check">
@@ -45,7 +47,7 @@
       <% @cohort.enrollments.default_order.each do |enrollment| %>
         <% attendee = @attendance.attendees.find { |a| a.enrollment_id == enrollment.id } || @attendance.attendees.build(enrollment: enrollment) %>
         <%= form.fields_for :attendees, attendee do |attendee_fields| %>
-          <div class="form-check student-entry">
+          <div class="form-check student-entry" data-student-filter-target="entry">
             <%= attendee_fields.hidden_field :enrollment_id, value: enrollment.id %>
             <%= attendee_fields.check_box :_destroy,
               {
@@ -70,24 +72,3 @@
     <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>
-
-<script>
-  document.addEventListener('turbo:load', function() {
-    const searchInput = document.getElementById('student-search');
-    if (searchInput) {
-      searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-        const studentEntries = document.querySelectorAll('.student-entry');
-        
-        studentEntries.forEach(function(entry) {
-          const studentName = entry.querySelector('.student-name').textContent.toLowerCase();
-          if (studentName.includes(searchTerm)) {
-            entry.style.display = 'block';
-          } else {
-            entry.style.display = 'none';
-          }
-        });
-      });
-    }
-  });
-</script>
