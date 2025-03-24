@@ -56,23 +56,3 @@
     <%= link_to "Clear", cohort_attendances_path(@cohort), class: "btn btn-outline-secondary ms-2" %>
   </div>
 <% end %>
-
-<style>
-  .options-list-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 998;
-  }
-  
-  #attendee-search-results .option {
-    cursor: pointer;
-  }
-  
-  #attendee-search-results .option:hover {
-    background-color: #f8f9fa;
-  }
-</style>
