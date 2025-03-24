@@ -16,7 +16,7 @@
   <div class="card-body">
     <p><strong>Occurred At:</strong> <%= attendance.occurred_at.strftime("%A, %B %e, %Y at %I:%M %p") %></p>
     <div class="attendees-list">
-      <strong>Attendees:</strong>
+      <strong>Attendees: <%= attendance.attendees_count %></strong>
       <ul>
         <% attendance.enrollments.default_order.each do |enrollment| %>
           <li>
