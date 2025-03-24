@@ -23,7 +23,7 @@
 #  fk_rails_...  (roll_taker_id => users.id)
 #
 class Attendance < ApplicationRecord
-  include Csvable
+  include Csvable, Ransackable
 
   validates :category, presence: true
 

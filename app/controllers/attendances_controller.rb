@@ -11,7 +11,9 @@ class AttendancesController < ApplicationController
       { content: "Attendance", href: cohort_attendances_path(@cohort) }
     ]
 
-    @attendances = policy_scope(@cohort.attendances).default_order.page(params[:page]).per(10)
+    @q = policy_scope(@cohort.attendances).ransack(params[:q])
+    @q.sorts = "occurred_at desc" if @q.sorts.empty?
+    @attendances = @q.result(distinct: true)
 
     respond_to do |format|
       format.html { @attendances = @attendances.page(params[:page]).per(params.fetch(:per_page, 10)) }

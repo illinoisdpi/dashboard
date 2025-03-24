@@ -1,0 +1,26 @@
+<%= search_form_for(q, url: cohort_attendances_path(@cohort)) do |f| %>
+  <div class="row">
+    <div class="mb-3 col-md-6">
+      <%= f.label :attendees_enrollment_user_first_name_cont, "First Name", class: "form-label" %>
+      <%= f.search_field :attendees_enrollment_user_first_name_cont, class: "form-control" %>
+    </div>
+    <div class="mb-3 col-md-6">
+      <%= f.label :attendees_enrollment_user_last_name_cont, "Last Name", class: "form-label" %>
+      <%= f.search_field :attendees_enrollment_user_last_name_cont, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :category_eq, "Category", class: "form-label" %>
+    <%= f.select :category_eq, options_for_select([['All Categories', '']] + Attendance.categories.map { |k, v| [v.titleize, v] }, params.dig(:q, :category_eq)), {}, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :title, "Title", class: "form-label" %>
+    <%= f.search_field :title_cont, class: "form-control" %>
+  </div>
+
+  <%= f.submit class: "btn btn-primary" %>
+
+  <%= link_to "Clear", cohort_attendances_path(@cohort), class: "btn btn-outline-secondary ms-2" %>
+<% end %>

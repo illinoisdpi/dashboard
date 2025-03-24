@@ -20,6 +20,8 @@
 #  fk_rails_...  (enrollment_id => enrollments.id)
 #
 class Attendee < ApplicationRecord
+  include Ransackable
+
   attr_accessor :_destroy
 
   belongs_to :attendance, counter_cache: true
