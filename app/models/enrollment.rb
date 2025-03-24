@@ -143,4 +143,12 @@ class Enrollment < ApplicationRecord
   def to_s
     "#{cohort} - #{user} (#{role})"
   end
+
+  def total_attendances
+    attendances.count
+  end
+
+  def attendance_by_category
+    attendances.group(:category).count
+  end
 end
