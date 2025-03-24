@@ -14,9 +14,11 @@
       <i class="fa-solid fa-pen-to-square"></i>
     <% end %>
     <%= button_to cohort_discord_channel_recurring_message_path(@cohort, @channel[:id], message),
-              data: {
-                "turbo-method": :delete,
-                "turbo-confirm": "Are you sure you want to delete this message?"
+              method: :delete,
+              form: {
+                data: {
+                  turbo_confirm: "Are you sure you want to delete this recurring message?",
+                }
               },
               class: "btn btn-outline-danger btn-sm",
               title: "Delete" do %>

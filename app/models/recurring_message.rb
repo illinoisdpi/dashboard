@@ -32,6 +32,8 @@ class RecurringMessage < ApplicationRecord
   validates :frequency, inclusion: { in: FREQUENCIES }
   validates :days_of_week, presence: true, inclusion: { in: DAYS, message: "%{value} is not a valid day" }, length: { minimum: 1 }
 
+  before_destroy :cancel_previous_job
+
   def devliver_message
     DiscordService.new.send_message(channel_id, message_content)
 
