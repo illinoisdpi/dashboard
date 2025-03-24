@@ -30,35 +30,64 @@
 
   <div class="mb-3" data-controller="select-all">
     <h3 class="h6 fw-bold">Select Students</h3>
+    
+    <div class="mb-3">
+      <label class="form-label">Search for a student</label>
+      <input type="text" class="form-control" id="student-search" placeholder="Type to search students...">
+    </div>
+    
     <div class="form-check">
       <%= check_box_tag "select_all", "selected_all", false, class: "form-check-input", id: "select_all", data: { action: "change->select-all#toggleAll", "select-all-target": "selectAll" } %>
       <%= label_tag "select_all", "Select All", class: "form-check-label" %>
     </div>
 
-    <% @cohort.enrollments.default_order.each do |enrollment| %>
-      <% attendee = @attendance.attendees.find { |a| a.enrollment_id == enrollment.id } || @attendance.attendees.build(enrollment: enrollment) %>
-      <%= form.fields_for :attendees, attendee do |attendee_fields| %>
-        <div class="form-check">
-          <%= attendee_fields.hidden_field :enrollment_id, value: enrollment.id %>
-          <%= attendee_fields.check_box :_destroy,
-            {
-              id: dom_id(enrollment),
-              class: "form-check-input",
-              data: { action: "change->select-all#toggleCheckbox", "select-all-target": "checkbox" }
-            },
-              "0", # value if checked
-              "1"  # value if unchecked
-          %>
-          <%= label_tag dom_id(enrollment), class: "form-check-label" do %>
-            <%= enrollment.name %>
-            <span class="badge bg-secondary"><%= enrollment.role.humanize %></span>
-          <% end %>
-        </div>
+    <div style="max-height: 400px; overflow-y: auto;">
+      <% @cohort.enrollments.default_order.each do |enrollment| %>
+        <% attendee = @attendance.attendees.find { |a| a.enrollment_id == enrollment.id } || @attendance.attendees.build(enrollment: enrollment) %>
+        <%= form.fields_for :attendees, attendee do |attendee_fields| %>
+          <div class="form-check student-entry">
+            <%= attendee_fields.hidden_field :enrollment_id, value: enrollment.id %>
+            <%= attendee_fields.check_box :_destroy,
+              {
+                id: dom_id(enrollment),
+                class: "form-check-input",
+                data: { action: "change->select-all#toggleCheckbox", "select-all-target": "checkbox" }
+              },
+                "0", # value if checked
+                "1"  # value if unchecked
+            %>
+            <%= label_tag dom_id(enrollment), class: "form-check-label" do %>
+              <span class="student-name"><%= enrollment.name %></span>
+              <span class="badge bg-secondary"><%= enrollment.role.humanize %></span>
+            <% end %>
+          </div>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
 
   <div class="d-flex justify-content-end">
     <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>
+
+<script>
+  document.addEventListener('turbo:load', function() {
+    const searchInput = document.getElementById('student-search');
+    if (searchInput) {
+      searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        const studentEntries = document.querySelectorAll('.student-entry');
+        
+        studentEntries.forEach(function(entry) {
+          const studentName = entry.querySelector('.student-name').textContent.toLowerCase();
+          if (studentName.includes(searchTerm)) {
+            entry.style.display = 'block';
+          } else {
+            entry.style.display = 'none';
+          }
+        });
+      });
+    }
+  });
+</script>
