@@ -4,6 +4,12 @@
     <div class="d-flex align-items-center justify-content-end">
       <h1 class="h6 mb-0 me-auto">Attendances</h1>
       <div>
+        <% if policy(Impression).download_csv? %>
+          <%# Using `to_unsafe_h` so we can handle ransack params %>
+          <%= link_to cohort_attendances_path(@cohort, format: :csv, q: params[:q]&.to_unsafe_h), class: 'btn btn-outline-primary me-2' do %>
+            <i class="fa-solid fa-file-csv"></i>
+          <% end %>
+        <% end %>
         <%= link_to new_cohort_attendance_path(@cohort), class: 'btn btn-outline-primary me-2' do %>
           <i class="fa-solid fa-plus"></i>
         <% end %>

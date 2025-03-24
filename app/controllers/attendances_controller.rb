@@ -12,6 +12,11 @@ class AttendancesController < ApplicationController
     ]
 
     @attendances = policy_scope(@cohort.attendances).default_order.page(params[:page]).per(10)
+
+    respond_to do |format|
+      format.html { @attendances = @attendances.page(params[:page]).per(params.fetch(:per_page, 10)) }
+      format.csv { send_data(Attendance.to_csv(@attendances), filename: csv_filename, type: "text/csv") }
+    end
   end
 
   # GET /attendances/1 or /attendances/1.json
@@ -107,5 +112,13 @@ class AttendancesController < ApplicationController
 
   def attendance_params
     params.require(:attendance).permit(:title, :category, :occurred_at, :cohort_id, attendees_attributes: [ :id, :enrollment_id, :_destroy ])
+  end
+
+  def csv_filename
+    return "#{Time.zone.today}-attendances.csv" if params[:q].blank?
+
+    formatted_query_params = params[:q].values.compact_blank.join("-")
+
+    "#{Time.zone.today}-attendances-#{formatted_query_params}.csv"
   end
 end
