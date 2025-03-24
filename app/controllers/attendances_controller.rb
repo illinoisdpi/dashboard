@@ -117,10 +117,13 @@ class AttendancesController < ApplicationController
   end
 
   def csv_filename
-    return "#{Time.zone.today}-attendances.csv" if params[:q].blank?
+    base_name = "#{Time.zone.today}-attendance-records"
+
+    if params[:q].blank?
+      return "#{base_name}.csv"
+    end
 
     formatted_query_params = params[:q].values.compact_blank.join("-")
-
-    "#{Time.zone.today}-attendances-#{formatted_query_params}.csv"
+    "#{base_name}-#{formatted_query_params}.csv"
   end
 end
