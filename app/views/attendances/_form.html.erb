@@ -28,13 +28,13 @@
     <div id="occurredAtHelp" class="form-text">Timezone <%= Time.zone %></div>
   </div>
 
-  <div class="mb-3" data-controller="select-all student-filter">
+  <div class="mb-3" data-controller="select-all filter-attendee">
     <h3 class="h6 fw-bold">Select Students</h3>
     
     <div class="mb-3">
       <input type="text" class="form-control" 
-             data-student-filter-target="input" 
-             data-action="input->student-filter#filter"
+             data-filter-attendee-target="input" 
+             data-action="input->filter-attendee#filter"
              placeholder="Type to search students...">
     </div>
     
@@ -47,7 +47,7 @@
       <% @cohort.enrollments.default_order.each do |enrollment| %>
         <% attendee = @attendance.attendees.find { |a| a.enrollment_id == enrollment.id } || @attendance.attendees.build(enrollment: enrollment) %>
         <%= form.fields_for :attendees, attendee do |attendee_fields| %>
-          <div class="form-check student-entry" data-student-filter-target="entry">
+          <div class="form-check student-entry" data-filter-attendee-target="entry">
             <%= attendee_fields.hidden_field :enrollment_id, value: enrollment.id %>
             <%= attendee_fields.check_box :_destroy,
               {

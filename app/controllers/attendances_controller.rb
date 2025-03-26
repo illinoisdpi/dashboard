@@ -12,8 +12,7 @@ class AttendancesController < ApplicationController
     ]
 
     @q = policy_scope(@cohort.attendances).ransack(params[:q])
-    @q.sorts = "occurred_at desc" if @q.sorts.empty?
-    @attendances = @q.result(distinct: true)
+    @attendances = @q.result.default_order
 
     respond_to do |format|
       format.html { @attendances = @attendances.page(params[:page]).per(params.fetch(:per_page, 10)) }

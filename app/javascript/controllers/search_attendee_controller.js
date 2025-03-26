@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 
+// This is used for the attendance#index to search for a attendee by name
 // Connects to data-controller="search-attendee"
 export default class extends Controller {
   static targets = ["inputField", "optionsList", "firstNameField", "lastNameField", "overlay"]

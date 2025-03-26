@@ -1,6 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Connects to data-controller="student-filter"
+//This is used for the attendance#_form.html.erb to filter the students by name
+// Connects to data-controller="filter-attendee"
 export default class extends Controller {
   static targets = ["input", "entry"]
 
