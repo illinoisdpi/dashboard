@@ -61,14 +61,15 @@ Add this to your `/etc/hosts` file so you can access subdomains in your dev envi
 
 ## PostgreSQL
 
-Here's what you'll need to do to install PostgresQL.
-
-1. Install PostgreSQL using Homebrew: `brew install postgresql`
-2. Start PostgreSQL service: `brew services start postgresql`
+1. Download PostgresApp Installer from [Postgres.app](https://postgresapp.com/downloads.html)
+2. Install PostgresApp by dragging it to your Applications folder
+3. Open PostgresApp and click "Initialize" to create a new PostgreSQL cluster
+4. Download the Postico app from [Postico](https://eggerapps.at/postico/v1.php)
+5. Open Postico and connect to your PostgreSQL server by clicking "Connect" in the top left corner
 
 _Note - Mac users may need to run this command before starting the PostgreSQL service:_
 
-`bundle config build.pg --with-pg-config=/opt/homebrew/opt/libpq/bin/pg_config`
+`gem install pg -- --with-pg-config=/Applications/Postgres.app/Contents/Versions/latest/bin/pg_config`
 
 Some options for GUI PostgreSQL clients on Mac:
 
