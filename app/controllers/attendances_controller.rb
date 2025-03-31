@@ -102,14 +102,8 @@ class AttendancesController < ApplicationController
 
   # GET /cohorts/:cohort_id/attendances/search_attendee
   def search_attendee
-    @students = @cohort.enrollments.includes(:user)
-                        .where("CONCAT(users.first_name, ' ', users.last_name) ILIKE ?", "%#{params[:name]}%")
-                        .references(:user)
-                        .limit(10)
-
-    respond_to do |format|
-      format.turbo_stream
-    end
+    @students = @cohort.enrollments.search_by_name(params[:name]).limit(10)
+    render json: @students.map { |enrollment| { id: enrollment.id, name: enrollment.user.to_s } }
   end
 
   private

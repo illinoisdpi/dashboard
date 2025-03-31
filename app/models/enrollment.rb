@@ -91,6 +91,11 @@ class Enrollment < ApplicationRecord
       .group("enrollments.id, users.id, users.first_name, users.last_name")
       .order("total_points DESC")
   }
+  scope :search_by_name, ->(name) {
+    includes(:user)
+      .where("CONCAT(users.first_name, ' ', users.last_name) ILIKE ?", "%#{name}%")
+      .references(:user)
+  }
 
   def total_points
     canvas_submissions.sum(:points)
