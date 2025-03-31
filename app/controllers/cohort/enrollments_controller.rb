@@ -27,10 +27,10 @@ class Cohort::EnrollmentsController < ApplicationController
   # GET /enrollments/new
   def new
     @breadcrumbs = [
-      {content: "Cohorts", href: cohorts_path},
-      {content: @cohort.to_s, href: cohort_path(@cohort)},
-      {content: "Enrollments", href: cohort_enrollments_path(@cohort)},
-      {content: "New"}
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Enrollments", href: cohort_enrollments_path(@cohort) },
+      { content: "New" }
     ]
     @enrollment = @cohort.enrollments.new
   end
@@ -38,11 +38,11 @@ class Cohort::EnrollmentsController < ApplicationController
   # GET /enrollments/1/edit
   def edit
     @breadcrumbs = [
-      {content: "Cohorts", href: cohorts_path},
-      {content: @cohort.to_s, href: cohort_path(@cohort)},
-      {content: "Enrollments", href: cohort_enrollments_path(@cohort)},
-      {content: @enrollment.name},
-      {content: "Edit"}
+      { content: "Cohorts", href: cohorts_path },
+      { content: @cohort.to_s, href: cohort_path(@cohort) },
+      { content: "Enrollments", href: cohort_enrollments_path(@cohort) },
+      { content: @enrollment.name },
+      { content: "Edit" }
     ]
   end
 
@@ -95,6 +95,16 @@ class Cohort::EnrollmentsController < ApplicationController
 
   def snapshot
     render layout: "navbarless"
+  end
+
+  # GET /cohorts/:cohort_id/enrollments/search
+  def search
+    @students = @cohort.enrollments.search_by_name(params[:name]).limit(10)
+
+    respond_to do |format|
+      format.json { render json: @students.map { |enrollment| { id: enrollment.id, name: enrollment.user.to_s, first_name: enrollment.user.first_name, last_name: enrollment.user.last_name, role: enrollment.role } } }
+      format.turbo_stream
+    end
   end
 
   private

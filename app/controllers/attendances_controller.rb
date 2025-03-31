@@ -100,16 +100,6 @@ class AttendancesController < ApplicationController
     end
   end
 
-  # GET /cohorts/:cohort_id/attendances/search_attendee
-  def search_attendee
-    @students = @cohort.enrollments.search_by_name(params[:name]).limit(10)
-
-    respond_to do |format|
-      format.json { render json: @students.map { |enrollment| { id: enrollment.id, name: enrollment.user.to_s } } }
-      format.turbo_stream
-    end
-  end
-
   private
 
   def set_attendance

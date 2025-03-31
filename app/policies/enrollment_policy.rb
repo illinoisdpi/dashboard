@@ -45,4 +45,8 @@ class EnrollmentPolicy < ApplicationPolicy
   def snapshot?
     true
   end
+
+  def search?
+    true
+  end
 end
