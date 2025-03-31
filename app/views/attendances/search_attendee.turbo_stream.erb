@@ -6,7 +6,7 @@
       <div>
         <% @students.each do |enrollment| %>
           <div class="option d-flex align-items-center p-2 border-bottom" 
-               data-action="click->search-attendee#select" 
+               data-action="click->attendee--search#select" 
                data-student-name="<%= enrollment.user.full_name %>"
                data-first-name="<%= enrollment.user.first_name %>"
                data-last-name="<%= enrollment.user.last_name %>">

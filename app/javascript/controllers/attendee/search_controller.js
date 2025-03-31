@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 // This is used for the attendance#index to search for a attendee by name
-// Connects to data-controller="search-attendee"
+// Connects to data-controller="attendee--search"
 export default class extends Controller {
   static targets = ["inputField", "optionsList", "firstNameField", "lastNameField", "overlay"]
   static values = { cohort: String }
@@ -37,7 +37,8 @@ export default class extends Controller {
       
       fetch(url, {
         headers: {
-          'Accept': 'text/vnd.turbo-stream.html'
+          'Accept': 'text/vnd.turbo-stream.html',
+          'X-Requested-With': 'XMLHttpRequest'
         }
       }).then(response => {
         if (!response.ok) {
@@ -46,11 +47,17 @@ export default class extends Controller {
         return response.text();
       }).then(html => {
         try {
-          Turbo.renderStreamMessage(html);
+          // Check if we received Turbo Stream content
+          if (html.includes('<turbo-stream')) {
+            Turbo.renderStreamMessage(html);
+          } else {
+            // Fallback for non-Turbo responses
+            this.optionsListTarget.innerHTML = html;
+          }
           this.optionsListTarget.style.display = "block";
           this.overlayTarget.style.display = "block";
         } catch (error) {
-          console.error('Error rendering Turbo Stream:', error);
+          console.error('Error rendering results:', error);
           this.optionsListTarget.innerHTML = '<div class="p-2">Error rendering results. Please try again.</div>';
         }
       })
@@ -93,4 +100,4 @@ export default class extends Controller {
       this.overlayTarget.style.display = "none";
     }
   }
-} 
+}

@@ -1,29 +1,29 @@
 <%= search_form_for(q, url: cohort_attendances_path(@cohort)) do |f| %>
   <div class="row">
-    <div class="mb-3" data-controller="search-attendee" data-search-attendee-cohort-value="<%= @cohort.id %>">
+    <div class="mb-3" data-controller="attendee--search" data-attendee--search-cohort-value="<%= @cohort.id %>">
       <%= f.label :attendee_search, "Find Attendee", class: "form-label" %>
       
       <div class="position-relative">
-        <div data-search-attendee-target="overlay" 
-             data-action="touchstart->search-attendee#toggleListVisibility click->search-attendee#toggleListVisibility" 
+        <div data-attendee--search-target="overlay" 
+             data-action="touchstart->attendee--search#toggleListVisibility click->attendee--search#toggleListVisibility" 
              class="options-list-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 998;"></div>
         
         <input type="search" 
                class="form-control mb-1"
                placeholder="Type student name..."
-               data-search-attendee-target="inputField"
-               data-action="input->search-attendee#search">
+               data-attendee--search-target="inputField"
+               data-action="input->attendee--search#search">
         
         <div id="attendee-search-results" 
-             data-search-attendee-target="optionsList" 
+             data-attendee--search-target="optionsList" 
              style="display: none; position: absolute; top: 100%; left: 0; width: 100%; background: white; border: 1px solid #ccc; border-radius: 4px; z-index: 999; max-height: 300px; overflow-y: auto;"></div>
         
         <%= f.search_field :attendees_enrollment_user_first_name_cont, 
                         class: "d-none", 
-                        data: { search_attendee_target: "firstNameField" } %>
+                        data: { "attendee--search-target": "firstNameField" } %>
         <%= f.search_field :attendees_enrollment_user_last_name_cont, 
                         class: "d-none", 
-                        data: { search_attendee_target: "lastNameField" } %>
+                        data: { "attendee--search-target": "lastNameField" } %>
       </div>
     </div>
   </div>
