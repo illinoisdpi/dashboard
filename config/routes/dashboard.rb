@@ -21,6 +21,9 @@ constraints subdomain: "dashboard" do
         get "overview"
         get "snapshot"
       end
+      collection do
+        get "search"
+      end
     end
     resources :impressions, module: :cohort do
       collection do
@@ -28,12 +31,7 @@ constraints subdomain: "dashboard" do
       end
     end
     resources :piazza_activity_reports
-    resources :attendances do
-      collection do
-        get :search
-        get :search_attendee
-      end
-    end
+    resources :attendances
   end
 
   resources :impressions do

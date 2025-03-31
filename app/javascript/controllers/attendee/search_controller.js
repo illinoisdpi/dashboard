@@ -28,7 +28,7 @@ export default class extends Controller {
     }
     
     const inputFieldValue = this.inputFieldTarget.value;
-    const url = `/cohorts/${this.cohortValue}/attendances/search_attendee?name=${encodeURIComponent(inputFieldValue)}`;
+    const url = `/cohorts/${this.cohortValue}/enrollments/search?name=${encodeURIComponent(inputFieldValue)}`;
 
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
