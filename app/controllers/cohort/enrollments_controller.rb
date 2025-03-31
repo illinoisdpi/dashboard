@@ -120,6 +120,6 @@ class Cohort::EnrollmentsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def enrollment_params
-    params.require(:enrollment).permit(:role, :user_id, :cohort_id, :skills_development)
+    params.require(:enrollment).permit(policy(@enrollment || Enrollment).permitted_attributes)
   end
 end

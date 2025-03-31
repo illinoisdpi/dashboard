@@ -80,7 +80,7 @@
                     <%= link_to "Show", cohort_enrollment_path(@cohort, enrollment), class: "text-black" %>
                   </li>
                 <% end %>
-                <% if policy(enrollment).edit_role? %>
+                <% if policy(enrollment).edit? %>
                   <li>
                     <%= link_to "Edit", edit_cohort_enrollment_path(@cohort, enrollment), class: "text-black" %>
                   </li>
