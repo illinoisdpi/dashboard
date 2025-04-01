@@ -28,4 +28,27 @@ class Attendee < ApplicationRecord
   has_one :cohort, through: :attendance
 
   validates :enrollment_id, uniqueness: { scope: :attendance_id }
+
+  after_create :increment_counter
+  after_destroy :decrement_counter
+
+  private
+
+  def increment_counter
+    if role == "student"
+      attendance.increment!(:student_attendees_count)
+    elsif role == "instructor"
+      attendance.increment!(:instructor_attendees_count)
+    end
+    attendance.increment!(:attendees_count)
+  end
+
+  def decrement_counter
+    if role == "student"
+      attendance.decrement!(:student_attendees_count)
+    elsif role == "instructor"
+      attendance.decrement!(:instructor_attendees_count)
+    end
+    attendance.decrement!(:attendees_count)
+  end
 end

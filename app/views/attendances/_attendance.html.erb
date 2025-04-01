@@ -5,6 +5,11 @@
         <%= attendance.title %>
         <span class="badge text-bg-secondary ms-2"><%= Attendance.categories.fetch(attendance.category, "Unknown").titleize %></span>
       </h1>
+      <span class="badge bg-info me-3">
+        <span class="me-3">Total attended: <%= attendance.attendees_count %></span>
+        <span class="me-3">Students: <%= attendance.student_attendees_count %></span>
+        <span>Instructors: <%= attendance.instructor_attendees_count %></span>
+      </span>
       <%= link_to edit_cohort_attendance_path(@cohort, attendance), class: "me-2" do %>
         <i class="fa-solid fa-pen-to-square"></i>
       <% end %>

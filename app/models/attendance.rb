@@ -2,15 +2,17 @@
 #
 # Table name: attendances
 #
-#  id              :uuid             not null, primary key
-#  attendees_count :integer          default(0), not null
-#  category        :string           not null
-#  occurred_at     :datetime         not null
-#  title           :text
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  cohort_id       :uuid
-#  roll_taker_id   :uuid             not null
+#  id                         :uuid             not null, primary key
+#  attendees_count            :integer          default(0), not null
+#  category                   :string           not null
+#  instructor_attendees_count :integer          default(0), not null
+#  occurred_at                :datetime         not null
+#  student_attendees_count    :integer          default(0), not null
+#  title                      :text
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
+#  cohort_id                  :uuid
+#  roll_taker_id              :uuid             not null
 #
 # Indexes
 #
