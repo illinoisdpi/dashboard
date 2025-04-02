@@ -13,8 +13,12 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #
-require "rails_helper"
-
-RSpec.describe Cohort do
-  pending "add some examples to (or delete) #{__FILE__}"
+FactoryBot.define do
+  factory :cohort do
+    canvas_shortname { "WE-2022-1.2-SDF" }
+    year { 2022 }
+    month { 1 }
+    number { 2 }
+    started_on { Date.today }
+  end
 end

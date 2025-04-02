@@ -49,11 +49,11 @@ group :development, :test do
   gem "binding_of_caller"
   gem "debug", platforms: %i[mri mingw x64_mingw]
   gem "dotenv-rails"
+  gem "factory_bot_rails"
   gem "pry-rails"
   gem "rack-mini-profiler"
   gem "rspec-rails"
   gem "standard", require: false
-  gem "web-console"
   gem "rubocop-rails-omakase", require: false
 end
 
@@ -64,4 +64,5 @@ group :development do
   gem "rails_db", ">= 2.3.1"
   gem "rails-erd"
   gem "rails_live_reload"
+  gem "web-console"
 end
