@@ -101,7 +101,7 @@ teaching_assistants = [
     email: "alex@dpi.dev",
     first_name: "Alex",
     last_name: "Mompremier"
-  }, 
+  },
   {
     email: "jorge@dpi.dev",
     first_name: "Jorge",
@@ -128,11 +128,6 @@ teaching_assistants = [
     last_name: "Castillo"
   },
   {
-    email: "ximena@dpi.dev",
-    first_name: "Ximena",
-    last_name: "Castillo"
-  },
-  {
     email: "dustin@dpi.dev",
     first_name: "Dustin",
     last_name: "Doyle"
@@ -141,11 +136,10 @@ teaching_assistants = [
     email: "jazmine@dpi.dev",
     first_name: "Jazmine",
     last_name: "Tran"
-  }, 
+  },
   {
     email: "john@dpi.dev",
     first_name: "John",
     last_name: "Leavell"
   }
 ]
-
