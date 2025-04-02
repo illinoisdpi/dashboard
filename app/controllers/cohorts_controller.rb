@@ -17,6 +17,9 @@ class CohortsController < ApplicationController
       { content: "Cohorts", href: cohorts_path },
       { content: @cohort.to_s, href: cohort_path(@cohort) }
     ]
+
+    @impressions_by_emoji = @cohort.impressions.grouped_by_emoji
+    @impressions_by_person = @cohort.impressions.grouped_by_subject
   end
 
   # GET /cohorts/new
