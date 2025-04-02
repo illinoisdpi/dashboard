@@ -98,11 +98,6 @@ teaching_assistants = [
     last_name: "Chau"
   },
   {
-    email: "alex@dpi.dev",
-    first_name: "Alex",
-    last_name: "Mompremier"
-  },
-  {
     email: "jorge@dpi.dev",
     first_name: "Jorge",
     last_name: "Gomez"
@@ -111,11 +106,6 @@ teaching_assistants = [
     email: "fidel@dpi.dev",
     first_name: "Fidel",
     last_name: "Leal"
-  },
-  {
-    email: "alex@dpi.dev",
-    first_name: "Alex",
-    last_name: "Mompremier"
   },
   {
     email: "darryl@dpi.dev",
