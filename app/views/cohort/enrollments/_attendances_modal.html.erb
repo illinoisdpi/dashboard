@@ -1,0 +1,40 @@
+<div class="modal fade" id="attendancesModal" tabindex="-1" aria-labelledby="attendancesModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="attendancesModalLabel">Attendance for <%= enrollment.full_name %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <% if enrollment.attendances.any? %>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% enrollment.attendance_by_category.each do |category, count| %>
+                  <tr>
+                    <td><%= category.titleize %></td>
+                    <td><%= count %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% else %>
+          <div class="alert alert-warning">
+            No attendance records found for this student.
+          </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <%= link_to "View All Attendance", cohort_attendances_path(enrollment.cohort, q: { attendees_enrollment_user_first_name_cont: enrollment.first_name, attendees_enrollment_user_last_name_cont: enrollment.last_name }), class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+</div> 

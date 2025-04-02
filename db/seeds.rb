@@ -98,11 +98,6 @@ teaching_assistants = [
     last_name: "Chau"
   },
   {
-    email: "alex@dpi.dev",
-    first_name: "Alex",
-    last_name: "Mompremier"
-  }, 
-  {
     email: "jorge@dpi.dev",
     first_name: "Jorge",
     last_name: "Gomez"
@@ -113,19 +108,9 @@ teaching_assistants = [
     last_name: "Leal"
   },
   {
-    email: "alex@dpi.dev",
-    first_name: "Alex",
-    last_name: "Mompremier"
-  },
-  {
     email: "darryl@dpi.dev",
     first_name: "Darryl",
     last_name: "Williams"
-  },
-  {
-    email: "ximena@dpi.dev",
-    first_name: "Ximena",
-    last_name: "Castillo"
   },
   {
     email: "ximena@dpi.dev",
@@ -141,11 +126,10 @@ teaching_assistants = [
     email: "jazmine@dpi.dev",
     first_name: "Jazmine",
     last_name: "Tran"
-  }, 
+  },
   {
     email: "john@dpi.dev",
     first_name: "John",
     last_name: "Leavell"
   }
 ]
-
