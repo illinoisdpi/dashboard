@@ -3,6 +3,6 @@ class DiscordMessageJob < ApplicationJob
 
   def perform(message_id)
     message = RecurringMessage.find_by(id: message_id)
-    message.devliver_message
+    message.deliver_message
   end
 end

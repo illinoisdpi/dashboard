@@ -34,7 +34,7 @@ class RecurringMessage < ApplicationRecord
 
   before_destroy :cancel_previous_job
 
-  def devliver_message
+  def deliver_message
     DiscordService.new.send_message(channel_id, message_content)
 
     next_occurrence = calculate_next_occurrence
