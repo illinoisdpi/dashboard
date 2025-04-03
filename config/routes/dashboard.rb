@@ -15,7 +15,11 @@ constraints subdomain: "dashboard" do
       get "canvas_point_total_most_recent"
       get "canvas_cumulative_points"
     end
-    resources :canvas_gradebook_snapshots
+    resources :canvas_gradebook_snapshots do
+      member do
+        post :send_biweekly_reports
+      end
+    end
     resources :discord_channels, only: [ :index, :show ] do
       resources :recurring_messages, only: [ :create, :edit, :update, :destroy ]
     end
