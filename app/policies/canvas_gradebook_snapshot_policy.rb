@@ -26,4 +26,8 @@ class CanvasGradebookSnapshotPolicy < ApplicationPolicy
   def destroy?
     user.admin? || user.instructor?
   end
+
+  def send_biweekly_reports?
+    user.admin? || user.instructor? || user.teaching_assistant?
+  end
 end

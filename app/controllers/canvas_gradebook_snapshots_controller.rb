@@ -69,15 +69,22 @@ class CanvasGradebookSnapshotsController < ApplicationController
       begin
         discord_service = DiscordService.new(@cohort)
 
+        # Get all assignments for the selected IDs (this is because if a assigment is nil. It does not get saved)
+        selected_assignments = @canvas_gradebook_snapshot.canvas_assignments
+          .where(id: assignment_ids)
+          .index_by(&:id)
+
         @cohort.enrollments.student.each do |enrollment|
           next unless enrollment.user.discord_id
 
-          missing_assignments = @canvas_gradebook_snapshot.canvas_submissions
+          user_submissions = @canvas_gradebook_snapshot.canvas_submissions
             .where(enrollment: enrollment)
-            .where(points: nil)
             .where(canvas_assignment_id: assignment_ids)
-            .includes(:canvas_assignment)
-            .map(&:canvas_assignment)
+            .index_by(&:canvas_assignment_id)
+
+          missing_assignments = selected_assignments.values.reject do |assignment|
+            user_submissions.key?(assignment.id)
+          end
 
           impressions = enrollment.impressions
             .where(created_at: start_date.beginning_of_day..end_date.end_of_day)
@@ -103,7 +110,6 @@ class CanvasGradebookSnapshotsController < ApplicationController
             #{attendances.empty? ? "No attendance records for this period." : attendances.map { |a| "- #{a.title} (#{a.category.titleize})" }.join("\n")}
           MESSAGE
 
-          # Send the message via Discord
           discord_service.send_dm(
             enrollment.user.discord_id,
             message
