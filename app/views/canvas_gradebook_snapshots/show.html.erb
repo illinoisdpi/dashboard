@@ -4,9 +4,6 @@
     <div class="d-flex justify-content-between">
       <%= render @canvas_gradebook_snapshot %>
       <div>
-        <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#biweeklyReportModal">
-          <i class="fa-solid fa-chart-line me-2"></i>Send Biweekly Reports
-        </button>
         <%= link_to cohort_canvas_gradebook_snapshot_url(@canvas_gradebook_snapshot.cohort, @canvas_gradebook_snapshot, format: :csv), class: "btn btn-outline-primary me-2" do %>
           <i class="fa-solid fa-file-csv"></i>
         <% end %>
@@ -20,54 +17,3 @@
   </div>
 </div>
 <%= render "table", canvas_gradebook_snapshot: @canvas_gradebook_snapshot %>
-
-<div class="modal fade" id="biweeklyReportModal" tabindex="-1" aria-labelledby="biweeklyReportModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="biweeklyReportModalLabel">Send Biweekly Reports</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <%= form_with url: cohort_canvas_gradebook_snapshot_feedback_reports_path(@cohort, @canvas_gradebook_snapshot), method: :post, data: { turbo: false } do |f| %>
-        <div class="modal-body">
-          <div class="mb-3">
-            <%= f.label :start_date, "Start Date", class: "form-label" %>
-            <%= f.date_field :start_date, class: "form-control", required: true %>
-          </div>
-          <div class="mb-3">
-            <%= f.label :end_date, "End Date", class: "form-label" %>
-            <%= f.date_field :end_date, class: "form-control", required: true %>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Assignments</label>
-            <div class="form-check">
-              <% @canvas_gradebook_snapshot.canvas_assignments.each do |assignment| %>
-                <div class="form-check">
-                  <%= check_box_tag "assignments[]", assignment.id, true, class: "form-check-input" %>
-                  <%= label_tag "assignments_#{assignment.id}", assignment.name, class: "form-check-label" %>
-                </div>
-              <% end %>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <%= f.submit "Send Feedback Reports", class: "btn btn-primary" %>
-        </div>
-      <% end %>
-    </div>
-  </div>
-</div>
-
-<% content_for :javascript do %>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const today = new Date();
-      const twoWeeksAgo = new Date(today);
-      twoWeeksAgo.setDate(today.getDate() - 14);
-
-      document.getElementById('canvas_gradebook_snapshot_start_date').value = twoWeeksAgo.toISOString().split('T')[0];
-      document.getElementById('canvas_gradebook_snapshot_end_date').value = today.toISOString().split('T')[0];
-    });
-  </script>
-<% end %>
