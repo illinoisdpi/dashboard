@@ -7,6 +7,10 @@ class FeedbackReportPolicy < ApplicationPolicy
     user.present? && (user.admin? || user.instructor?)
   end
 
+  def batch_create?
+    user.present? && (user.admin? || user.instructor?)
+  end
+
   class Scope < Scope
     def resolve
       if user.admin?
