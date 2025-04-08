@@ -31,6 +31,13 @@ class AttendancesController < ApplicationController
 
     @cohort = @attendance.cohort
     @enrollments = @cohort.enrollments.includes(:user)
+
+    @role_counts = Attendee
+    .joins(:enrollment)
+    .where(attendance_id: @attendance.id)
+    .group("enrollments.role")
+    .count
+
   end
 
   # GET /attendances/new
