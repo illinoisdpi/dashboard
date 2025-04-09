@@ -17,7 +17,7 @@ module ApplicationHelper
     when :student
       "bg-dpi-primary"
     when :instructor, :staff, :teaching_assistant
-      "bg-dpi-secondary"
+      "bg-dpi-secondary text-black"
     else
       "bg-secondary"
     end
