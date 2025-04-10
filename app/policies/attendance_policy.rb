@@ -16,14 +16,14 @@ class AttendancePolicy < ApplicationPolicy
   end
 
   def update?
-    user.admin? || user.instructor?
+    user.admin? || user.instructor? || user.teaching_assistant?
   end
 
   def edit?
-    user.admin? || user.instructor?
+    user.admin? || user.instructor? || user.teaching_assistant?
   end
 
   def destroy?
-    user.admin? || user.instructor?
+    user.admin? || user.instructor? || user.teaching_assistant?
   end
 end

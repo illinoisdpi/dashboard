@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_02_03_211855) do
+ActiveRecord::Schema[7.0].define(version: 2025_03_13_182249) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -24,6 +24,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_03_211855) do
     t.uuid "cohort_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "attendees_count", default: 0, null: false
     t.index ["cohort_id"], name: "index_attendances_on_cohort_id"
     t.index ["roll_taker_id"], name: "index_attendances_on_roll_taker_id"
   end
