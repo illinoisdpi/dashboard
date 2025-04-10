@@ -55,6 +55,7 @@ class Enrollment < ApplicationRecord
   has_paper_trail skip: [ :created_at, :updated_at ]
 
   belongs_to :user
+  accepts_nested_attributes_for :user, update_only: true
   belongs_to :cohort
   has_many :piazza_activity_breakdowns, dependent: :destroy
   has_many :canvas_submissions, dependent: :destroy
@@ -102,6 +103,7 @@ class Enrollment < ApplicationRecord
     :devto_username,
     :discord_id,
     :discord_username,
+    :salesforce_id,
     :languages,
     :most_recent_role,
     :personal_website,

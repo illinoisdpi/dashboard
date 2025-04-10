@@ -22,7 +22,7 @@
 class Attendee < ApplicationRecord
   attr_accessor :_destroy
 
-  belongs_to :attendance
+  belongs_to :attendance, counter_cache: true
   belongs_to :enrollment
 
   has_one :cohort, through: :attendance
