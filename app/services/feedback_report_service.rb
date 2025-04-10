@@ -8,6 +8,36 @@ class FeedbackReportService
     @discord_service = DiscordService.new(@cohort)
   end
 
+  def generate_and_send_report_for_enrollment(enrollment)
+    # First generate the report
+    report = generate_report_for_enrollment(enrollment)
+
+    # Then send it via Discord
+    send_report(report, enrollment)
+
+    report
+  end
+
+  def write_report(enrollment, missing_assignments, impressions, attendances) # Can we move this to the enrollment model?
+    <<~MESSAGE
+      Hello #{enrollment.user},
+
+      **Feedback Report**
+      Period: #{@start_date.strftime("%B %d")} - #{@end_date.strftime("%B %d")}
+
+      **Missing Assignments:**
+      #{missing_assignments.empty? ? "No missing assignments! 🎉" : missing_assignments.map { |a| "- #{a.name}" }.join("\n")}
+
+      **Impressions:**
+      #{impressions.empty? ? "No impressions recorded for this period." : impressions.map { |i| "- #{i.emoji} #{i.content}" }.join("\n")}
+
+      **Attendance:**
+      #{attendances.empty? ? "No attendance records for this period." : attendances.map { |a| "- #{a.title} (#{a.category.titleize})" }.join("\n")}
+    MESSAGE
+  end
+
+  private
+
   def generate_report_for_enrollment(enrollment)
     Rails.logger.info("FeedbackReportService: Generating report for enrollment #{enrollment.id} (#{enrollment.user})")
 
@@ -20,31 +50,6 @@ class FeedbackReportService
 
     generate_report(enrollment, selected_assignments)
   end
-
-  def generate_and_send_reports
-    selected_assignments = @canvas_gradebook_snapshot.canvas_assignments
-      .where(id: @assignment_ids)
-      .index_by(&:id)
-
-    @cohort.enrollments.student.each do |enrollment|
-      next unless enrollment.user.discord_id
-
-      report = generate_report(enrollment, selected_assignments)
-      send_report(report, enrollment)
-    end
-  end
-
-  def generate_and_send_report_for_enrollment(enrollment)
-    # First generate the report
-    report = generate_report_for_enrollment(enrollment)
-
-    # Then send it via Discord
-    send_report(report, enrollment)
-
-    report
-  end
-
-  private
 
   def generate_report(enrollment, selected_assignments)
     Rails.logger.info("FeedbackReportService: Processing report for #{enrollment.user} with #{selected_assignments.size} assignments")
@@ -76,19 +81,7 @@ class FeedbackReportService
 
     Rails.logger.info("FeedbackReportService: Found #{attendances.size} attendances for date range")
 
-    message = <<~MESSAGE
-      **Progress Feedback Report**
-      Period: #{@start_date.strftime("%B %d")} - #{@end_date.strftime("%B %d")}
-
-      **Missing Assignments:**
-      #{missing_assignments.empty? ? "No missing assignments! 🎉" : missing_assignments.map { |a| "- #{a.name}" }.join("\n")}
-
-      **Impressions:**
-      #{impressions.empty? ? "No impressions recorded for this period." : impressions.map { |i| "- #{i.emoji} #{i.content}" }.join("\n")}
-
-      **Attendance:**
-      #{attendances.empty? ? "No attendance records for this period." : attendances.map { |a| "- #{a.title} (#{a.category.titleize})" }.join("\n")}
-    MESSAGE
+    message = write_report(enrollment, missing_assignments, impressions, attendances)
 
     Rails.logger.info("FeedbackReportService: Creating feedback report record for #{enrollment.user}")
 
@@ -101,7 +94,7 @@ class FeedbackReportService
     )
   end
 
-  def send_report(report, enrollment)
+  def send_report(report, enrollment) # can we encapsulate this in a job?
     @discord_service.send_dm(enrollment.user.discord_id, report.message)
     report.mark_as_sent!
   rescue => e
