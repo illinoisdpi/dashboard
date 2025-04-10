@@ -28,7 +28,7 @@ class Cohort::FeedbackReportsController < ApplicationController
       )
 
       # Generate the report using the service's public method and send it via Discord
-      service.generate_and_send_report_for_enrollment(@enrollment)
+      service.process_feedback_report(@enrollment)
 
       redirect_to cohort_enrollment_path(@cohort, @enrollment),
                   notice: "Feedback report generated and sent via Discord successfully!"
@@ -101,7 +101,7 @@ class Cohort::FeedbackReportsController < ApplicationController
         begin
           # Generate the report using the service's public method and send it via Discord
           Rails.logger.info("Generating and sending report for #{enrollment.user}")
-          service.generate_and_send_report_for_enrollment(enrollment)
+          service.process_feedback_report(enrollment)
           success_count += 1
           Rails.logger.info("Successfully generated and sent report for #{enrollment.user}")
         rescue => e

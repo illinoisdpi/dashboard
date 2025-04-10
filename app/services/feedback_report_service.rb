@@ -8,17 +8,77 @@ class FeedbackReportService
     @discord_service = DiscordService.new(@cohort)
   end
 
-  def generate_and_send_report_for_enrollment(enrollment)
-    # First generate the report
-    report = generate_report_for_enrollment(enrollment)
-
-    # Then send it via Discord
-    send_report(report, enrollment)
-
+  def process_feedback_report(enrollment)
+    report = create_feedback_report(enrollment)
+    deliver_report(report, enrollment)
     report
   end
 
-  def write_report(enrollment, missing_assignments, impressions, attendances) # Can we move this to the enrollment model?
+  private
+
+  def create_feedback_report(enrollment)
+    Rails.logger.info("FeedbackReportService: Generating report for enrollment #{enrollment.id} (#{enrollment.user})")
+
+    selected_assignments = fetch_selected_assignments
+    user_submissions = fetch_user_submissions(enrollment)
+    missing_assignments = identify_missing_assignments(selected_assignments, user_submissions)
+    impressions = fetch_student_impressions(enrollment)
+    attendances = fetch_attendances(enrollment)
+
+    message = format_feedback_message(enrollment, missing_assignments, impressions, attendances)
+
+    create_report_record(enrollment, message)
+  end
+
+  def fetch_selected_assignments
+    assignments = @canvas_gradebook_snapshot.canvas_assignments
+      .where(id: @assignment_ids)
+      .index_by(&:id)
+
+    Rails.logger.info("FeedbackReportService: Found #{assignments.size} assignments")
+    assignments
+  end
+
+  def fetch_user_submissions(enrollment)
+    submissions = @canvas_gradebook_snapshot.canvas_submissions
+      .where(enrollment: enrollment)
+      .where(canvas_assignment_id: @assignment_ids)
+      .index_by(&:canvas_assignment_id)
+
+    Rails.logger.info("FeedbackReportService: Found #{submissions.size} submissions")
+    submissions
+  end
+
+  def identify_missing_assignments(selected_assignments, user_submissions)
+    missing = selected_assignments.values.reject do |assignment|
+      user_submissions.key?(assignment.id)
+    end
+
+    Rails.logger.info("FeedbackReportService: Found #{missing.size} missing assignments")
+    missing
+  end
+
+  def fetch_student_impressions(enrollment)
+    impressions = enrollment.impressions
+      .where(created_at: @start_date.beginning_of_day..@end_date.end_of_day)
+      .where(staff_only: false)
+      .order(created_at: :desc)
+
+    Rails.logger.info("FeedbackReportService: Found #{impressions.size} impressions for date range #{@start_date} to #{@end_date}")
+    impressions
+  end
+
+  def fetch_attendances(enrollment)
+    attendances = enrollment.attendances
+      .where(occurred_at: @start_date.beginning_of_day..@end_date.end_of_day)
+      .includes(:attendees)
+      .order(occurred_at: :desc)
+
+    Rails.logger.info("FeedbackReportService: Found #{attendances.size} attendances for date range")
+    attendances
+  end
+
+  def format_feedback_message(enrollment, missing_assignments, impressions, attendances)
     <<~MESSAGE
       Hello #{enrollment.user},
 
@@ -36,53 +96,7 @@ class FeedbackReportService
     MESSAGE
   end
 
-  private
-
-  def generate_report_for_enrollment(enrollment)
-    Rails.logger.info("FeedbackReportService: Generating report for enrollment #{enrollment.id} (#{enrollment.user})")
-
-    # Get the selected assignments for the report
-    selected_assignments = @canvas_gradebook_snapshot.canvas_assignments
-      .where(id: @assignment_ids)
-      .index_by(&:id)
-
-    Rails.logger.info("FeedbackReportService: Found #{selected_assignments.size} assignments")
-
-    generate_report(enrollment, selected_assignments)
-  end
-
-  def generate_report(enrollment, selected_assignments)
-    Rails.logger.info("FeedbackReportService: Processing report for #{enrollment.user} with #{selected_assignments.size} assignments")
-
-    user_submissions = @canvas_gradebook_snapshot.canvas_submissions
-      .where(enrollment: enrollment)
-      .where(canvas_assignment_id: @assignment_ids)
-      .index_by(&:canvas_assignment_id)
-
-    Rails.logger.info("FeedbackReportService: Found #{user_submissions.size} submissions")
-
-    missing_assignments = selected_assignments.values.reject do |assignment|
-      user_submissions.key?(assignment.id)
-    end
-
-    Rails.logger.info("FeedbackReportService: Found #{missing_assignments.size} missing assignments")
-
-    impressions = enrollment.impressions
-      .where(created_at: @start_date.beginning_of_day..@end_date.end_of_day)
-      .where(staff_only: false)
-      .order(created_at: :desc)
-
-    Rails.logger.info("FeedbackReportService: Found #{impressions.size} impressions for date range #{@start_date} to #{@end_date}")
-
-    attendances = enrollment.attendances
-      .where(occurred_at: @start_date.beginning_of_day..@end_date.end_of_day)
-      .includes(:attendees)
-      .order(occurred_at: :desc)
-
-    Rails.logger.info("FeedbackReportService: Found #{attendances.size} attendances for date range")
-
-    message = write_report(enrollment, missing_assignments, impressions, attendances)
-
+  def create_report_record(enrollment, message)
     Rails.logger.info("FeedbackReportService: Creating feedback report record for #{enrollment.user}")
 
     FeedbackReport.create!(
@@ -94,7 +108,7 @@ class FeedbackReportService
     )
   end
 
-  def send_report(report, enrollment) # can we encapsulate this in a job?
+  def deliver_report(report, enrollment)
     @discord_service.send_dm(enrollment.user.discord_id, report.message)
     report.mark_as_sent!
   rescue => e
