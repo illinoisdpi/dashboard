@@ -149,6 +149,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_03_13_182249) do
     t.datetime "updated_at", null: false
     t.string "canvas_shortname"
     t.date "started_on"
+    t.string "discord_server_id"
   end
 
   create_table "devto_articles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -259,6 +260,19 @@ ActiveRecord::Schema[7.0].define(version: 2025_03_13_182249) do
     t.index ["user_id"], name: "index_piazza_activity_reports_on_user_id"
   end
 
+  create_table "recurring_messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "cohort_id"
+    t.string "channel_id"
+    t.text "message_content"
+    t.time "scheduled_time"
+    t.text "days_of_week", default: [], array: true
+    t.string "frequency", default: "weekly", null: false
+    t.string "job_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cohort_id"], name: "index_recurring_messages_on_cohort_id"
+  end
+
   create_table "rfp_idea_submissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.text "details"
@@ -349,4 +363,5 @@ ActiveRecord::Schema[7.0].define(version: 2025_03_13_182249) do
   add_foreign_key "piazza_activity_breakdowns", "piazza_activity_reports"
   add_foreign_key "piazza_activity_reports", "cohorts"
   add_foreign_key "piazza_activity_reports", "users"
+  add_foreign_key "recurring_messages", "cohorts"
 end

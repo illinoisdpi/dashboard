@@ -16,6 +16,9 @@ constraints subdomain: "dashboard" do
       get "canvas_cumulative_points"
     end
     resources :canvas_gradebook_snapshots
+    resources :discord_channels, only: [ :index, :show ] do
+      resources :recurring_messages, only: [ :create, :edit, :update, :destroy ]
+    end
     resources :enrollments, module: :cohort do
       member do
         get "overview"

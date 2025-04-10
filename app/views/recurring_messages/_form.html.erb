@@ -1,0 +1,48 @@
+<% if @recurring_message.persisted? %>
+  <% form_url = cohort_discord_channel_recurring_message_path(@cohort, @channel[:id], @recurring_message) %>
+  <% form_method = :patch %>
+<% else %>
+  <% form_url = cohort_discord_channel_recurring_messages_path(@cohort, @channel[:id]) %>
+  <% form_method = :post %>
+<% end %>
+
+<%= form_with(model: @recurring_message, url: form_url, method: form_method, local: true) do |f| %>
+  <%= f.hidden_field :channel_id %>
+
+  <div class="mb-3">
+    <%= f.label :message_content, "Message Content", class: "form-label" %>
+    <%= f.text_area :message_content, class: "form-control", rows: 3 %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :scheduled_time, "Send Time", class: "form-label" %>
+    <%= f.time_field :scheduled_time, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Repeat On</label>
+    <div class="days-checkboxes">
+      <% RecurringMessage::DAYS.each do |day| %>
+        <div class="form-check form-check-inline">
+          <%= f.check_box(
+                :days_of_week,
+                { multiple: true, class: "form-check-input" },
+                day,
+                nil
+              ) %>
+          <%= f.label "days_of_week_#{day}", day.titleize, class: "form-check-label" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :frequency, "Frequency", class: "form-label" %>
+    <%= f.select :frequency,
+                 RecurringMessage::FREQUENCIES.map { |freq| [freq.titleize, freq] },
+                 {}, # options hash for prompt, etc.
+                 class: "form-select" %>
+  </div>
+
+  <%= f.submit(@recurring_message.persisted? ? "Update" : "Schedule", class: "btn btn-primary") %>
+<% end %>

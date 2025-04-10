@@ -33,6 +33,7 @@ unless Rails.env.production?
           c.number = 2
           c.canvas_shortname = "WE-2022-1.2-SDF"
           c.started_on = "September 19th, 2022"
+          c.discord_server_id = "1352007014330662962"
         end
 
         if cohort.errors.any?
@@ -137,52 +138,52 @@ unless Rails.env.production?
             social_image: Faker::Avatar.image(set: "set2", bgset: "bg1")
           )
 
-        User.with_role(:admin).each do |admin|
-          5.times do |i|
-            Impression.create(
-              author_id: admin.id,
-              subject_id: enrollment.id,
-              content: Faker::Lorem.sentence,
-              emoji: Impression::EMOJIS.keys.sample,
-              staff_only: [ true, false ].sample,
-              created_at: rand(1..5).week.ago
-            )
+          User.with_role(:admin).each do |admin|
+            5.times do |i|
+              Impression.create(
+                author_id: admin.id,
+                subject_id: enrollment.id,
+                content: Faker::Lorem.sentence,
+                emoji: Impression::EMOJIS.keys.sample,
+                staff_only: [ true, false ].sample,
+                created_at: rand(1..5).week.ago
+              )
+            end
           end
         end
       end
 
-        cohort_start_date = Date.parse("2023-01-30")
+      cohort_start_date = Date.parse("2023-01-30")
 
-        6.times do |i|
-          uploaded_file = ActionDispatch::Http::UploadedFile.new(
-            tempfile: Rails.root.join("lib", "sample_data", "piazza-activity-#{i}.csv").open,
-            filename: "piazza-activity-#{i}.csv",
-            type: "text/plain"
-          )
+      6.times do |i|
+        uploaded_file = ActionDispatch::Http::UploadedFile.new(
+          tempfile: Rails.root.join("lib", "sample_data", "piazza-activity-#{i}.csv").open,
+          filename: "piazza-activity-#{i}.csv",
+          type: "text/plain"
+        )
 
-          cohort.piazza_activity_reports.create(
-            activity_from: cohort_start_date + i.weeks,
-            activity_until: cohort_start_date + (i + 1).weeks,
-            csv_file: uploaded_file,
-            user: users.sample
-          )
-        end
+        cohort.piazza_activity_reports.create(
+          activity_from: cohort_start_date + i.weeks,
+          activity_until: cohort_start_date + (i + 1).weeks,
+          csv_file: uploaded_file,
+          user: users.sample
+        )
+      end
 
-        1.upto(4) do |i|
-          filename = "2022-0#{i}-01T1#{i}00_Grades-WE-2022-1.2-SDF.csv"
-          csv_file = ActionDispatch::Http::UploadedFile.new(
-            tempfile: Rails.root.join("lib", "sample_data", filename).open,
-            type: "text/plain",
-            filename:
-          )
+      1.upto(4) do |i|
+        filename = "2022-0#{i}-01T1#{i}00_Grades-WE-2022-1.2-SDF.csv"
+        csv_file = ActionDispatch::Http::UploadedFile.new(
+          tempfile: Rails.root.join("lib", "sample_data", filename).open,
+          type: "text/plain",
+          filename:
+        )
 
-          cohort.canvas_gradebook_snapshots.create(
-            downloaded_at: cohort_start_date + (i + 1).weeks,
-            user: users.sample,
-            csv_file:
-          )
-        end
-
+        cohort.canvas_gradebook_snapshots.create(
+          downloaded_at: cohort_start_date + (i + 1).weeks,
+          user: users.sample,
+          csv_file:
+        )
+      end
 
       attendance_categories = Attendance.categories.keys
 
@@ -221,7 +222,6 @@ unless Rails.env.production?
             attendance.attendees.create!(enrollment: enrollment)
           end
         end
-      end
       end
     end
   end

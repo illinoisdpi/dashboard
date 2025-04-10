@@ -12,6 +12,7 @@
 #  year                 :integer          not null
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
+#  discord_server_id    :string
 #
 require "rails_helper"
 

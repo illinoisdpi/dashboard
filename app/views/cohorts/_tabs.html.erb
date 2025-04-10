@@ -24,6 +24,11 @@
       <%= simple_active_link_to "Attendance", cohort_attendances_path(@cohort), class: "nav-link" %>
     </li>
   <% end %>
+  <% if policy(@cohort).discord? %>
+    <li class="nav-item">
+      <%= simple_active_link_to "Discord", cohort_discord_channels_path(@cohort), class: "nav-link" %>
+    </li>
+  <% end %>
   <% if policy(@cohort).cohort_impressions? %>
     <li class="nav-item">
       <%= simple_active_link_to "Impressions", cohort_impressions_path(@cohort), class: "nav-link" %>

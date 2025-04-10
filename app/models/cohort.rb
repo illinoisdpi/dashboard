@@ -12,6 +12,7 @@
 #  year                 :integer          not null
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
+#  discord_server_id    :string
 #
 class Cohort < ApplicationRecord
   include Adminable
@@ -26,12 +27,13 @@ class Cohort < ApplicationRecord
   has_many :impressions, through: :enrollments, source: :impressions
   has_many :users, through: :enrollments, source: :user
   has_many :attendances
+  has_many :recurring_messages, dependent: :destroy
 
   validates :year, presence: true
   validates :month, presence: true
   validates :number,
     presence: true,
-    uniqueness: {scope: ["month", "year"]}
+    uniqueness: { scope: [ "month", "year" ] }
   validates :started_on, presence: true
 
   scope :default_order, -> { order(:year, :month, :number) }

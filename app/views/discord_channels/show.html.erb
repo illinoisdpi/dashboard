@@ -1,0 +1,95 @@
+<%= render "cohorts/tabs" %>
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card shadow-sm mb-4">
+      <div class="card-header d-flex align-items-center">
+        <h1 class="h6 mb-0">
+          <%= @channel[:name].to_s.capitalize %> Discord Channel for <%= @cohort.name %>
+        </h1>
+      </div>
+      <div class="card-body">
+        <p class="mb-2">
+          <strong>Topic:</strong>
+          <%= @channel[:topic].presence || "No topic set" %>
+        </p>
+        <p>
+          <strong>Channel ID:</strong>
+          <%= @channel[:id] %>
+        </p>
+      </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+      <div class="card-header">
+        <h2 class="h6 mb-0">Scheduled Recurring Messages</h2>
+      </div>
+      <div class="card-body">
+        <% if @recurring_messages.any? %>
+          <ul class="list-group">
+            <% @recurring_messages.each do |message| %>
+              <%= render "recurring_messages/recurring_message", message: message %>
+            <% end %>
+          </ul>
+        <% else %>
+          <p class="text-muted">No recurring messages scheduled.</p>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+      <div class="card-header">
+        <h2 class="h6 mb-0">Schedule Recurring Message</h2>
+      </div>
+      <div class="card-body">
+        <%= render "recurring_messages/form" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="card shadow-sm mb-4">
+      <div class="card-header">
+        <h2 class="h6 mb-0">Top Contributors (Last 50 Messages)</h2>
+      </div>
+      <div class="card-body">
+        <% if @top_contributors.any? %>
+          <ul class="list-group">
+            <% @top_contributors.each do |contributor| %>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span><strong>@<%= contributor[:author_username] %></strong></span>
+                <span class="badge bg-primary rounded-pill"><%= contributor[:message_count] %></span>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p class="text-muted">No contributors found.</p>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="card shadow-sm">
+      <div class="card-header">
+        <h2 class="h6 mb-0">Recent Messages</h2>
+      </div>
+      <div class="card-body">
+        <% if @recent_messages.any? %>
+          <ul class="list-group">
+            <% @recent_messages.each do |msg| %>
+              <li class="list-group-item">
+                <p class="mb-1">
+                  <strong>@<%= msg[:author_username] %>:</strong>
+                  <%= msg[:content] %>
+                </p>
+                <small class="text-muted">
+                  <%= msg[:timestamp].strftime("%b %d, %Y %I:%M %p") %>
+                </small>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p class="text-muted">No recent messages found.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
