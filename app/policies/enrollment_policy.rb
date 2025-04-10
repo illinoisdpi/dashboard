@@ -42,6 +42,10 @@ class EnrollmentPolicy < ApplicationPolicy
     true
   end
 
+  def search?
+    true
+  end
+
   def permitted_attributes
     if user.admin? || user.instructor?
       [

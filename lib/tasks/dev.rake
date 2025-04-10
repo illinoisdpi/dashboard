@@ -48,7 +48,7 @@ unless Rails.env.production?
           { email: "instructor@dpi.dev", role: :instructor },
           { email: "ta@dpi.dev", role: :teaching_assistant },
           { email: "staff@dpi.dev", role: :staff },
-          { email: "student@dpi.dev" }
+          { email: "student@dpi.dev", role: :student }
         ]
 
         test_users.each do |user_info|
@@ -151,6 +151,7 @@ unless Rails.env.production?
             end
           end
         end
+      end
 
         cohort_start_date = Date.parse("2023-01-30")
 
@@ -183,6 +184,46 @@ unless Rails.env.production?
             csv_file:
           )
         end
+
+
+      attendance_categories = Attendance.categories.keys
+
+      start_date = 8.weeks.ago.beginning_of_week
+
+      (0..7).each do |week_offset|
+        current_week = start_date + week_offset.weeks
+
+        3.times do |event_index|
+          event_day = rand(1..5)
+          event_time = rand(9..16)
+
+          occurred_at = current_week + event_day.days + event_time.hours
+
+          attendance = cohort.attendances.create!(
+            title: [
+              "#{Faker::Educator.course_name}",
+              "#{Faker::Hacker.adjective.titleize} #{Faker::Hacker.noun.titleize} Workshop",
+              "#{Faker::ProgrammingLanguage.name} Deep Dive",
+              "Team Building: #{Faker::Team.name}",
+              "#{Faker::Job.field} Career Session"
+            ].sample,
+            category: attendance_categories.sample,
+            occurred_at: occurred_at,
+            roll_taker: users.sample
+          )
+
+          attendance_rate = rand(70..100) / 100.0
+
+          student_enrollments = cohort.enrollments.student
+          attending_students = student_enrollments.sample(
+            (student_enrollments.count * attendance_rate).round
+          )
+
+          attending_students.each do |enrollment|
+            attendance.attendees.create!(enrollment: enrollment)
+          end
+        end
+      end
       end
     end
   end

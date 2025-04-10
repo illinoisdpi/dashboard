@@ -97,6 +97,16 @@ class Cohort::EnrollmentsController < ApplicationController
     render layout: "navbarless"
   end
 
+  # GET /cohorts/:cohort_id/enrollments/search
+  def search
+    @students = @cohort.enrollments.search_by_name(params[:name]).limit(10)
+
+    respond_to do |format|
+      format.json { render json: @students.map { |enrollment| { id: enrollment.id, name: enrollment.user.to_s, first_name: enrollment.user.first_name, last_name: enrollment.user.last_name, role: enrollment.role } } }
+      format.turbo_stream
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

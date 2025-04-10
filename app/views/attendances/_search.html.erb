@@ -1,0 +1,58 @@
+<%= search_form_for(q, url: cohort_attendances_path(@cohort)) do |f| %>
+  <div class="row">
+    <div class="mb-3" data-controller="attendee--search" data-attendee--search-cohort-value="<%= @cohort.id %>">
+      <%= f.label :attendee_search, "Find Attendee", class: "form-label" %>
+      
+      <div class="position-relative">
+        <div data-attendee--search-target="overlay" 
+             data-action="touchstart->attendee--search#toggleListVisibility click->attendee--search#toggleListVisibility" 
+             class="options-list-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 998;"></div>
+        
+        <input type="search" 
+               class="form-control mb-1"
+               placeholder="Type student name..."
+               data-attendee--search-target="inputField"
+               data-action="input->attendee--search#search">
+        
+        <div id="attendee-search-results" 
+             data-attendee--search-target="optionsList" 
+             style="display: none; position: absolute; top: 100%; left: 0; width: 100%; background: white; border: 1px solid #ccc; border-radius: 4px; z-index: 999; max-height: 300px; overflow-y: auto;"></div>
+        
+        <%= f.search_field :attendees_enrollment_user_first_name_cont, 
+                        class: "d-none", 
+                        data: { "attendee--search-target": "firstNameField" } %>
+        <%= f.search_field :attendees_enrollment_user_last_name_cont, 
+                        class: "d-none", 
+                        data: { "attendee--search-target": "lastNameField" } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="mb-3 col-md-6">
+      <%= f.label :category_eq, "Category", class: "form-label" %>
+      <%= f.select :category_eq, options_for_select([['All Categories', '']] + Attendance.categories.map { |k, v| [v.titleize, v] }, params.dig(:q, :category_eq)), {}, class: "form-control" %>
+    </div>
+
+    <div class="mb-3 col-md-6">
+      <%= f.label :title_cont, "Title", class: "form-label" %>
+      <%= f.search_field :title_cont, class: "form-control" %>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="mb-3 col-md-6">
+      <%= f.label :occurred_at_gteq, "From Date", class: "form-label" %>
+      <%= f.date_field :occurred_at_gteq, class: "form-control" %>
+    </div>
+    <div class="mb-3 col-md-6">
+      <%= f.label :occurred_at_lteq, "To Date", class: "form-label" %>
+      <%= f.date_field :occurred_at_lteq, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="d-flex">
+    <%= f.submit "Search", class: "btn btn-primary" %>
+    <%= link_to "Clear", cohort_attendances_path(@cohort), class: "btn btn-outline-secondary ms-2" %>
+  </div>
+<% end %>
