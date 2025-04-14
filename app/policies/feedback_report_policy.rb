@@ -19,6 +19,18 @@ class FeedbackReportPolicy < ApplicationPolicy
     user.present? && (user.admin? || user.instructor? || user.teaching_assistant?)
   end
 
+  def destroy?
+    user.present? && (user.admin? || user.instructor? || user.teaching_assistant?)
+  end
+
+  def edit?
+    user.present? && (user.admin? || user.instructor? || user.teaching_assistant?)
+  end
+
+  def update?
+    edit?
+  end
+
   class Scope < Scope
     def resolve
       if user.admin?

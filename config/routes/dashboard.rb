@@ -26,7 +26,7 @@ constraints subdomain: "dashboard" do
         get "snapshot"
       end
     end
-    resources :feedback_reports, module: :cohort, only: [ :new, :create, :show, :index ] do
+    resources :feedback_reports, module: :cohort do
       member do
         post :send_report
       end
