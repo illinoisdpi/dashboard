@@ -13,10 +13,13 @@ class FeedbackReportService
     generate_feedback_report(enrollment)
   end
 
-  def send_feedback_report(report, enrollment)
-    Rails.logger.info("[FeedbackReportService] Sending report for #{enrollment.user}")
-    deliver_report(report, enrollment)
-    report
+  def send_feedback_report(feedback_report, enrollment)
+    Rails.logger.info("[FeedbackReportService] Sending feedback report for #{enrollment.user}")
+    deliver_report(feedback_report, enrollment)
+  rescue => e
+    Rails.logger.error("[FeedbackReportService] Failed to send feedback report: #{e.message}")
+    Rails.logger.error(e.backtrace.join("\n"))
+    raise
   end
 
   private
@@ -115,7 +118,10 @@ class FeedbackReportService
     Rails.logger.info("[FeedbackReportService] Attempting to send report to #{enrollment.user} (Discord ID: #{enrollment.user.discord_id})")
 
     if enrollment.user.discord_id.blank?
-      raise "User #{enrollment.user} does not have a Discord ID"
+      error_message = "User #{enrollment.user} does not have a Discord ID set. Please set their Discord ID in the admin interface."
+      Rails.logger.error("[FeedbackReportService] #{error_message}")
+      report.mark_as_failed!(StandardError.new(error_message))
+      return
     end
 
     @discord_service.send_dm(enrollment.user.discord_id, report.message)
@@ -125,6 +131,6 @@ class FeedbackReportService
     Rails.logger.error("[FeedbackReportService] Failed to send report to #{enrollment.user}: #{e.message}")
     Rails.logger.error(e.backtrace.join("\n"))
     report.mark_as_failed!(e)
-    raise e
+    raise
   end
 end

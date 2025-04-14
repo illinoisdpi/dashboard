@@ -3,14 +3,8 @@
 <div class="card mb-4">
   <div class="card-header d-flex justify-content-between align-items-center">
     <h1 class="h5 mb-0">Feedback Reports</h1>
-          <div>
+    <div>
       <div class="d-flex flex-row gap-2 align-items-center">
-        <% if @feedback_reports.any? { |report| !report.sent? } %>
-          <%= button_to "Send All Pending Reports", send_all_cohort_feedback_reports_path(@cohort),
-              method: :post,
-              class: "btn btn-success",
-              form: { data: { turbo_confirm: "Are you sure you want to send all pending feedback reports?" } } %>
-        <% end %>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackReportModal">
           <i class="fa-solid fa-chart-line me-2"></i>Generate Feedback Reports
         </button>

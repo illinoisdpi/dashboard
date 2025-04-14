@@ -30,9 +30,6 @@ constraints subdomain: "dashboard" do
       member do
         post :send_report
       end
-      collection do
-        post :send_all
-      end
     end
     resources :impressions, module: :cohort do
       collection do

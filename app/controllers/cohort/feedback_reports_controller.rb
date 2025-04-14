@@ -4,7 +4,9 @@ class Cohort::FeedbackReportsController < ApplicationController
   before_action { authorize(FeedbackReport) }
 
   def index
-    @feedback_reports = policy_scope(@cohort.feedback_reports).order(created_at: :desc)
+    @feedback_reports = policy_scope(@cohort.feedback_reports)
+      .order(created_at: :desc)
+      .includes(enrollment: :user)
   end
 
   def show
@@ -178,59 +180,11 @@ class Cohort::FeedbackReportsController < ApplicationController
     )
     service.send_feedback_report(@feedback_report, @feedback_report.enrollment)
 
-    Rails.logger.info("[FeedbackReportsController] Successfully sent report #{@feedback_report.id}")
     redirect_to cohort_feedback_report_path(@cohort, @feedback_report), notice: "Feedback report was successfully sent."
   rescue => e
     Rails.logger.error("[FeedbackReportsController] Failed to send report #{@feedback_report.id}: #{e.message}")
     Rails.logger.error(e.backtrace.join("\n"))
     redirect_to cohort_feedback_report_path(@cohort, @feedback_report), alert: "Failed to send feedback report: #{e.message}"
-  end
-
-  def send_all
-    unsent_reports = @cohort.feedback_reports.unsent
-    Rails.logger.info("[FeedbackReportsController] Attempting to send #{unsent_reports.count} unsent reports")
-
-    if unsent_reports.any?
-      success_count = 0
-      error_count = 0
-      error_messages = []
-
-      unsent_reports.each do |report|
-        begin
-          Rails.logger.info("[FeedbackReportsController] Sending report #{report.id} for #{report.enrollment.user}")
-          service = FeedbackReportService.new(
-            report.canvas_gradebook_snapshot,
-            report.start_date,
-            report.end_date,
-            report.canvas_gradebook_snapshot.canvas_assignments.pluck(:id)
-          )
-          service.send_feedback_report(report, report.enrollment)
-          success_count += 1
-          Rails.logger.info("[FeedbackReportsController] Successfully sent report #{report.id}")
-        rescue => e
-          error_count += 1
-          error_message = "Failed to send report for #{report.enrollment.user}: #{e.message}"
-          error_messages << error_message
-          Rails.logger.error("[FeedbackReportsController] #{error_message}")
-          Rails.logger.error(e.backtrace.join("\n"))
-        end
-      end
-
-      message = "Sent #{success_count} feedback reports"
-      if error_count > 0
-        message += " with #{error_count} errors:\n#{error_messages.join("\n")}"
-      end
-
-      Rails.logger.info("[FeedbackReportsController] #{message}")
-      redirect_to cohort_feedback_reports_path(@cohort), notice: message
-    else
-      Rails.logger.info("[FeedbackReportsController] No pending reports to send")
-      redirect_to cohort_feedback_reports_path(@cohort), notice: "No pending feedback reports to send."
-    end
-  rescue => e
-    Rails.logger.error("[FeedbackReportsController] Fatal error in send_all: #{e.message}")
-    Rails.logger.error(e.backtrace.join("\n"))
-    redirect_to cohort_feedback_reports_path(@cohort), alert: "Failed to send some feedback reports: #{e.message}"
   end
 
   private
