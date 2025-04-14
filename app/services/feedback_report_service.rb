@@ -8,16 +8,21 @@ class FeedbackReportService
     @discord_service = DiscordService.new(@cohort)
   end
 
-  def process_feedback_report(enrollment)
-    report = create_feedback_report(enrollment)
+  def create_feedback_report(enrollment)
+    Rails.logger.info("[FeedbackReportService] Creating report for #{enrollment.user}")
+    generate_feedback_report(enrollment)
+  end
+
+  def send_feedback_report(report, enrollment)
+    Rails.logger.info("[FeedbackReportService] Sending report for #{enrollment.user}")
     deliver_report(report, enrollment)
     report
   end
 
   private
 
-  def create_feedback_report(enrollment)
-    Rails.logger.info("FeedbackReportService: Generating report for enrollment #{enrollment.id} (#{enrollment.user})")
+  def generate_feedback_report(enrollment)
+    Rails.logger.info("[FeedbackReportService] Generating report for enrollment #{enrollment.id} (#{enrollment.user})")
 
     selected_assignments = fetch_selected_assignments
     user_submissions = fetch_user_submissions(enrollment)
@@ -26,7 +31,6 @@ class FeedbackReportService
     attendances = fetch_attendances(enrollment)
 
     message = format_feedback_message(enrollment, missing_assignments, impressions, attendances)
-
     create_report_record(enrollment, message)
   end
 
@@ -35,7 +39,7 @@ class FeedbackReportService
       .where(id: @assignment_ids)
       .index_by(&:id)
 
-    Rails.logger.info("FeedbackReportService: Found #{assignments.size} assignments")
+    Rails.logger.info("[FeedbackReportService] Found #{assignments.size} assignments")
     assignments
   end
 
@@ -45,7 +49,7 @@ class FeedbackReportService
       .where(canvas_assignment_id: @assignment_ids)
       .index_by(&:canvas_assignment_id)
 
-    Rails.logger.info("FeedbackReportService: Found #{submissions.size} submissions")
+    Rails.logger.info("[FeedbackReportService] Found #{submissions.size} submissions")
     submissions
   end
 
@@ -54,7 +58,7 @@ class FeedbackReportService
       user_submissions.key?(assignment.id)
     end
 
-    Rails.logger.info("FeedbackReportService: Found #{missing.size} missing assignments")
+    Rails.logger.info("[FeedbackReportService] Found #{missing.size} missing assignments")
     missing
   end
 
@@ -64,17 +68,16 @@ class FeedbackReportService
       .where(staff_only: false)
       .order(created_at: :desc)
 
-    Rails.logger.info("FeedbackReportService: Found #{impressions.size} impressions for date range #{@start_date} to #{@end_date}")
+    Rails.logger.info("[FeedbackReportService] Found #{impressions.size} impressions for date range #{@start_date} to #{@end_date}")
     impressions
   end
 
   def fetch_attendances(enrollment)
     attendances = enrollment.attendances
       .where(occurred_at: @start_date.beginning_of_day..@end_date.end_of_day)
-      .includes(:attendees)
       .order(occurred_at: :desc)
 
-    Rails.logger.info("FeedbackReportService: Found #{attendances.size} attendances for date range")
+    Rails.logger.info("[FeedbackReportService] Found #{attendances.size} attendances for date range")
     attendances
   end
 
@@ -97,7 +100,7 @@ class FeedbackReportService
   end
 
   def create_report_record(enrollment, message)
-    Rails.logger.info("FeedbackReportService: Creating feedback report record for #{enrollment.user}")
+    Rails.logger.info("[FeedbackReportService] Creating feedback report record for #{enrollment.user}")
 
     FeedbackReport.create!(
       enrollment: enrollment,
@@ -109,9 +112,18 @@ class FeedbackReportService
   end
 
   def deliver_report(report, enrollment)
+    Rails.logger.info("[FeedbackReportService] Attempting to send report to #{enrollment.user} (Discord ID: #{enrollment.user.discord_id})")
+
+    if enrollment.user.discord_id.blank?
+      raise "User #{enrollment.user} does not have a Discord ID"
+    end
+
     @discord_service.send_dm(enrollment.user.discord_id, report.message)
     report.mark_as_sent!
+    Rails.logger.info("[FeedbackReportService] Successfully sent report to #{enrollment.user}")
   rescue => e
+    Rails.logger.error("[FeedbackReportService] Failed to send report to #{enrollment.user}: #{e.message}")
+    Rails.logger.error(e.backtrace.join("\n"))
     report.mark_as_failed!(e)
     raise e
   end
