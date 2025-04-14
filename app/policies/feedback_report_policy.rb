@@ -4,11 +4,23 @@ class FeedbackReportPolicy < ApplicationPolicy
   end
 
   def show?
-    user.present? && (user.admin? || user.instructor?)
+    user.present? && (user.admin? || user.instructor? || user.teaching_assistant?)
+  end
+
+  def index?
+    user.present? && (user.admin? || user.instructor? || user.teaching_assistant?)
   end
 
   def batch_create?
-    user.present? && (user.admin? || user.instructor?)
+    user.present? && (user.admin? || user.instructor? || user.teaching_assistant?)
+  end
+
+  def send_report?
+    user.present? && (user.admin? || user.instructor? || user.teaching_assistant?)
+  end
+
+  def send_all?
+    user.present? && (user.admin? || user.instructor? || user.teaching_assistant?)
   end
 
   class Scope < Scope
