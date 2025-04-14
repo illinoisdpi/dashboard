@@ -1,0 +1,41 @@
+<%= form_with(model: [@cohort, @feedback_report], local: true) do |form| %>
+  <% if @feedback_report.errors.any? %>
+    <div class="alert alert-danger">
+      <h4 class="alert-heading"><%= pluralize(@feedback_report.errors.count, "error") %> prohibited this feedback report from being saved:</h4>
+      <ul>
+        <% @feedback_report.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :canvas_gradebook_snapshot_id, "Canvas Gradebook Snapshot", class: "form-label" %>
+    <%= form.collection_select :canvas_gradebook_snapshot_id, 
+                             @cohort.canvas_gradebook_snapshots.default_order, 
+                             :id, 
+                             :to_s, 
+                             { prompt: "Select a snapshot" }, 
+                             class: "form-select" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :start_date, "Start Date", class: "form-label" %>
+    <%= form.date_field :start_date, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :end_date, "End Date", class: "form-label" %>
+    <%= form.date_field :end_date, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :assignments, "Assignments (comma-separated)", class: "form-label" %>
+    <%= form.text_field :assignments, class: "form-control", placeholder: "e.g. Assignment 1, Assignment 2" %>
+  </div>
+
+  <div class="text-end">
+    <%= form.submit "Create Reports", class: "btn btn-primary" %>
+  </div>
+<% end %> 
