@@ -18,7 +18,7 @@
             <% @enrollment.feedback_reports.order(created_at: :desc).each do |feedback_report| %>
               <tr>
                 <td><%= feedback_report.created_at.strftime("%B %d, %Y") %></td>
-                <td><%= feedback_report.message %></td>
+                <td><%= feedback_report.message.truncate(100) %></td>
                 <td class="text-end">
                   <%= link_to "View Report", cohort_feedback_report_path(@cohort, feedback_report), class: "btn btn-sm btn-primary" %>
                 </td>

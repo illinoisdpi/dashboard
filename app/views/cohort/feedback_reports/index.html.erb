@@ -58,10 +58,6 @@
                           class: "btn btn-sm btn-outline-success",
                           form: { data: { turbo_confirm: "Are you sure you want to send this feedback report?" } } %>
                     <% end %>
-                    <%= button_to "Delete", cohort_feedback_report_path(@cohort, report),
-                        method: :delete,
-                        class: "btn btn-sm btn-outline-danger",
-                        form: { data: { turbo_confirm: "Are you sure you want to delete this feedback report?" } } %>
                   </div>
                 </td>
               </tr>
