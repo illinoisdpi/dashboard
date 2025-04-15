@@ -6,7 +6,7 @@ module FeedbackReportDelivery
 
     # Pre-check: Validate that the user has a Discord ID
     if enrollment.user.discord_id.blank?
-      error_message = "User #{enrollment.user.name} does not have a Discord ID set. Please set their Discord ID in the admin interface."
+      error_message = "User #{enrollment.user.name} does not have a Discord ID set. Please set their Discord ID in the cohort enrollment edit page."
       mark_as_failed!(StandardError.new(error_message))
       return [ false, error_message ]
     end
