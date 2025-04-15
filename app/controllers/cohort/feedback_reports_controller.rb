@@ -15,10 +15,6 @@ class Cohort::FeedbackReportsController < ApplicationController
     authorize @feedback_report
   end
 
-  def new
-    @feedback_report = FeedbackReport.new
-  end
-
   def batch_create
     if policy(FeedbackReport).create?
       begin
@@ -100,76 +96,6 @@ class Cohort::FeedbackReportsController < ApplicationController
 
   def edit
   end
-  def create
-    if policy(FeedbackReport).create?
-      canvas_gradebook_snapshot = @cohort.canvas_gradebook_snapshots.find(params[:feedback_report][:canvas_gradebook_snapshot_id])
-      start_date = Date.parse(params[:feedback_report][:start_date])
-      end_date = Date.parse(params[:feedback_report][:end_date])
-      assignments = params[:feedback_report][:assignments].split(",").map(&:strip)
-
-      Rails.logger.info("Starting batch feedback report generation")
-      Rails.logger.info("Parameters: start_date=#{start_date}, end_date=#{end_date}, assignments=#{assignments.inspect}")
-
-      deleted_count = 0
-      @cohort.enrollments.student.each do |enrollment|
-        existing_reports = FeedbackReport.where(
-          enrollment: enrollment,
-          canvas_gradebook_snapshot: canvas_gradebook_snapshot,
-          start_date: start_date,
-          end_date: end_date
-        )
-
-        if existing_reports.any?
-          deleted_count += existing_reports.count
-          existing_reports.destroy_all
-          Rails.logger.info("Deleted #{existing_reports.count} existing reports for #{enrollment.user}")
-        end
-      end
-
-      Rails.logger.info("Deleted #{deleted_count} existing reports to avoid uniqueness constraints")
-
-      service = FeedbackReportService.new(
-        canvas_gradebook_snapshot,
-        start_date,
-        end_date,
-        assignments
-      )
-      success_count = 0
-      error_count = 0
-
-      student_enrollments = @cohort.enrollments.student
-      total_students = student_enrollments.count
-      Rails.logger.info("Processing #{total_students} student enrollments")
-
-      student_enrollments.each do |enrollment|
-        Rails.logger.info("Processing student: #{enrollment.user} (#{enrollment.id})")
-
-        begin
-          Rails.logger.info("Generating report for #{enrollment.user}")
-          service.process_feedback_report(enrollment, send_to_discord: false)
-          success_count += 1
-          Rails.logger.info("Successfully generated report for #{enrollment.user}")
-        rescue => e
-          error_count += 1
-          Rails.logger.error("Error generating report for #{enrollment.user}: #{e.message}")
-          Rails.logger.error(e.backtrace.join("\n"))
-        end
-      end
-
-      message = "Generated #{success_count} feedback reports"
-      message += " with #{error_count} errors" if error_count > 0
-
-      Rails.logger.info(message)
-
-      redirect_to cohort_feedback_reports_path(@cohort), notice: message
-    else
-      redirect_to cohort_feedback_reports_path(@cohort), alert: "You are not authorized to generate feedback reports."
-    end
-  rescue => e
-    Rails.logger.error("Fatal error in create: #{e.message}")
-    Rails.logger.error(e.backtrace.join("\n"))
-    redirect_to cohort_feedback_reports_path(@cohort), alert: "Error generating reports: #{e.message}"
-  end
 
   def send_report
     @feedback_report = @cohort.feedback_reports.find(params[:id])
@@ -197,6 +123,7 @@ class Cohort::FeedbackReportsController < ApplicationController
       render :edit, status: :unprocessable_entity
     end
   end
+
   def destroy
     @feedback_report.destroy
 
@@ -212,8 +139,6 @@ class Cohort::FeedbackReportsController < ApplicationController
       format.json { render json: { error: e.message }, status: :unprocessable_entity }
     end
   end
-
-
 
   private
 
