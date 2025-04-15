@@ -25,6 +25,9 @@ constraints subdomain: "dashboard" do
         get "overview"
         get "snapshot"
       end
+      collection do
+        get "search"
+      end
     end
     resources :feedback_reports, module: :cohort do
       member do

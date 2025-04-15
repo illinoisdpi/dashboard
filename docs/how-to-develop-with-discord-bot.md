@@ -10,6 +10,11 @@ The discord bot has been created for both development and production environment
 
 I have stored both the development bot and production bot's keys in Rails Credentials, so this requires no setup on your end.
 
+## Setting up the Development Environment
+
+- Ensure you have redis installed and running on your machine. Reference [How to Contribute](how-to-contribute.md) for more information.
+- Start sidekiq by running `bundle exec sidekiq`
+
 ## Working in Development
 
 Since the bot credentials are already set, you just need to connect to the Development Discord Server, so we are not overloading the production server with test messages. [Click Here for the Invite](https://discord.gg/zkQcG3ydDt).

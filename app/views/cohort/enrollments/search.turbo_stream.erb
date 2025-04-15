@@ -1,0 +1,21 @@
+<turbo-stream action="update" target="attendee-search-results">
+  <template>
+    <% if @students.empty? %>
+      <div class="p-2">No students found</div>
+    <% else %>
+      <div>
+        <% @students.each do |enrollment| %>
+          <div class="option d-flex align-items-center p-2 border-bottom" 
+               data-action="click->attendee--search#select" 
+               data-student-name="<%= enrollment.user.full_name %>"
+               data-first-name="<%= enrollment.user.first_name %>"
+               data-last-name="<%= enrollment.user.last_name %>">
+            <i class="fa-regular fa-user me-2"></i>
+            <%= highlight(enrollment.user.full_name, params[:name]) %>
+            <span class="badge bg-secondary ms-2"><%= enrollment.role.humanize %></span>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </template>
+</turbo-stream> 

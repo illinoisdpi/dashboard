@@ -28,34 +28,44 @@
     <div id="occurredAtHelp" class="form-text">Timezone <%= Time.zone %></div>
   </div>
 
-  <div class="mb-3" data-controller="select-all">
+  <div class="mb-3" data-controller="select-all attendee--filter">
     <h3 class="h6 fw-bold">Select Students</h3>
+    
+    <div class="mb-3">
+      <input type="text" class="form-control" 
+             data-attendee--filter-target="filterInput" 
+             data-action="input->attendee--filter#filter"
+             placeholder="Type to search students...">
+    </div>
+    
     <div class="form-check">
       <%= check_box_tag "select_all", "selected_all", false, class: "form-check-input", id: "select_all", data: { action: "change->select-all#toggleAll", "select-all-target": "selectAll" } %>
       <%= label_tag "select_all", "Select All", class: "form-check-label" %>
     </div>
 
-    <% @cohort.enrollments.default_order.each do |enrollment| %>
-      <% attendee = @attendance.attendees.find { |a| a.enrollment_id == enrollment.id } || @attendance.attendees.build(enrollment: enrollment) %>
-      <%= form.fields_for :attendees, attendee do |attendee_fields| %>
-        <div class="form-check">
-          <%= attendee_fields.hidden_field :enrollment_id, value: enrollment.id %>
-          <%= attendee_fields.check_box :_destroy,
-            {
-              id: dom_id(enrollment),
-              class: "form-check-input",
-              data: { action: "change->select-all#toggleCheckbox", "select-all-target": "checkbox" }
-            },
-              "0", # value if checked
-              "1"  # value if unchecked
-          %>
-          <%= label_tag dom_id(enrollment), class: "form-check-label" do %>
-            <%= enrollment.name %>
-            <span class="badge bg-secondary"><%= enrollment.role.humanize %></span>
-          <% end %>
-        </div>
+    <div style="max-height: 400px; overflow-y: auto;" data-attendee--filter-target="filterList">
+      <% @cohort.enrollments.default_order.each do |enrollment| %>
+        <% attendee = @attendance.attendees.find { |a| a.enrollment_id == enrollment.id } || @attendance.attendees.build(enrollment: enrollment) %>
+        <%= form.fields_for :attendees, attendee do |attendee_fields| %>
+          <div class="form-check student-entry">
+            <%= attendee_fields.hidden_field :enrollment_id, value: enrollment.id %>
+            <%= attendee_fields.check_box :_destroy,
+              {
+                id: dom_id(enrollment),
+                class: "form-check-input",
+                data: { action: "change->select-all#toggleCheckbox", "select-all-target": "checkbox" }
+              },
+                "0", # value if checked
+                "1"  # value if unchecked
+            %>
+            <%= label_tag dom_id(enrollment), class: "form-check-label" do %>
+              <span class="student-name"><%= enrollment.name %></span>
+              <span class="badge bg-secondary"><%= enrollment.role.humanize %></span>
+            <% end %>
+          </div>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
 
   <div class="d-flex justify-content-end">

@@ -165,7 +165,7 @@ unless Rails.env.production?
             activity_from: cohort_start_date + i.weeks,
             activity_until: cohort_start_date + (i + 1).weeks,
             csv_file: uploaded_file,
-            user: users.sample
+            user: User.with_role(:admin).first
           )
         end
 
@@ -179,7 +179,7 @@ unless Rails.env.production?
 
           cohort.canvas_gradebook_snapshots.create(
             downloaded_at: cohort_start_date + (i + 1).weeks,
-            user: users.sample,
+            user: User.with_role(:admin).first,
             csv_file:
           )
         end
@@ -207,7 +207,7 @@ unless Rails.env.production?
               ].sample,
               category: attendance_categories.sample,
               occurred_at: occurred_at,
-              roll_taker: users.sample
+              roll_taker: User.with_role(:admin).first
             )
 
             attendance_rate = rand(70..100) / 100.0
