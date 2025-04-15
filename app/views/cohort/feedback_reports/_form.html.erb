@@ -1,6 +1,6 @@
 <%= render "modal" do %>
   <% if @cohort.canvas_gradebook_snapshots.any? %>
-    <%= form_tag cohort_feedback_reports_batch_path(@cohort), method: :post, id: "feedback-report-form", 
+    <%= form_tag batch_cohort_feedback_reports_path(@cohort), method: :post, id: "feedback-report-form", 
         data: { controller: "feedback-reports", feedback_reports_cohort_id_value: @cohort.id } do %>
       <div class="modal-body">
         <div class="alert alert-info">

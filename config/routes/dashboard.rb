@@ -15,8 +15,7 @@ constraints subdomain: "dashboard" do
       get "canvas_point_total_most_recent"
       get "canvas_cumulative_points"
     end
-    resources :canvas_gradebook_snapshots do
-    end
+    resources :canvas_gradebook_snapshots
     resources :discord_channels, only: [ :index, :show ] do
       resources :recurring_messages, only: [ :create, :edit, :update, :destroy ]
     end
@@ -33,6 +32,9 @@ constraints subdomain: "dashboard" do
       member do
         post :send_report
       end
+      collection do
+        post :batch, action: :batch_create
+      end
     end
     resources :impressions, module: :cohort do
       collection do
@@ -41,9 +43,6 @@ constraints subdomain: "dashboard" do
     end
     resources :piazza_activity_reports
     resources :attendances
-
-    # Batch create feedback reports
-    post "feedback_reports/batch", to: "cohort/feedback_reports#batch_create", as: :feedback_reports_batch
   end
 
   resources :impressions do
