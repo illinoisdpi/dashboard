@@ -12,7 +12,6 @@ class Cohort::FeedbackReportsController < ApplicationController
 
   def show
     @feedback_report = @cohort.feedback_reports.find(params[:id])
-    authorize @feedback_report
   end
 
   def batch_create
