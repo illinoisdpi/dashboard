@@ -4,6 +4,13 @@ module FeedbackReportDelivery
   def send_report
     Rails.logger.info("[FeedbackReportDelivery] Sending report #{id} for #{enrollment.user}")
 
+    if enrollment.user.discord_id.blank?
+      error_message = "User #{enrollment.user.name} does not have a Discord ID set. Please set their Discord ID in the admin interface."
+      Rails.logger.error("[FeedbackReportDelivery] #{error_message}")
+      mark_as_failed!(StandardError.new(error_message))
+      raise StandardError.new(error_message)
+    end
+
     service = FeedbackReportService.new(
       canvas_gradebook_snapshot,
       start_date,

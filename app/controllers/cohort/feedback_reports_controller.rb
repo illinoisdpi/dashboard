@@ -48,9 +48,9 @@ class Cohort::FeedbackReportsController < ApplicationController
   def send_report
     begin
       @feedback_report.send_report
-      redirect_to cohort_feedback_report_path(@cohort, @feedback_report), notice: "Feedback report was successfully sent."
+      redirect_to cohort_feedback_reports_path(@cohort), notice: "Feedback report was successfully sent."
     rescue => e
-      redirect_to cohort_feedback_report_path(@cohort, @feedback_report), alert: "Failed to send feedback report: #{e.message}"
+      redirect_to cohort_feedback_reports_path(@cohort), alert: "Failed to send feedback report: #{e.message}"
     end
   end
 

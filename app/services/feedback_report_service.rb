@@ -117,13 +117,6 @@ class FeedbackReportService
   def deliver_report(report, enrollment)
     Rails.logger.info("[FeedbackReportService] Attempting to send report to #{enrollment.user} (Discord ID: #{enrollment.user.discord_id})")
 
-    if enrollment.user.discord_id.blank?
-      error_message = "User #{enrollment.user} does not have a Discord ID set. Please set their Discord ID in the admin interface."
-      Rails.logger.error("[FeedbackReportService] #{error_message}")
-      report.mark_as_failed!(StandardError.new(error_message))
-      return
-    end
-
     @discord_service.send_dm(enrollment.user.discord_id, report.message)
     report.mark_as_sent!
     Rails.logger.info("[FeedbackReportService] Successfully sent report to #{enrollment.user}")
