@@ -17,25 +17,23 @@ class Cohort::FeedbackReportsController < ApplicationController
 
   def batch_create
     if policy(FeedbackReport).create?
-      begin
-        canvas_gradebook_snapshot = @cohort.canvas_gradebook_snapshots.find(params[:canvas_gradebook_snapshot_id])
-        start_date = Date.parse(params[:start_date])
-        end_date = Date.parse(params[:end_date])
-        assignments = params[:assignments]
+      canvas_gradebook_snapshot = @cohort.canvas_gradebook_snapshots.find(params[:canvas_gradebook_snapshot_id])
+      start_date = Date.parse(params[:start_date])
+      end_date = Date.parse(params[:end_date])
+      assignments = params[:assignments]
 
-        result = FeedbackReport.batch_create(
-          @cohort,
-          canvas_gradebook_snapshot,
-          start_date,
-          end_date,
-          assignments
-        )
+      success, result = FeedbackReport.batch_create(
+        @cohort,
+        canvas_gradebook_snapshot,
+        start_date,
+        end_date,
+        assignments
+      )
 
+      if success
         redirect_to cohort_feedback_reports_path(@cohort), notice: result[:message]
-      rescue => e
-        Rails.logger.error("Fatal error in batch_create: #{e.message}")
-        Rails.logger.error(e.backtrace.join("\n"))
-        redirect_to cohort_feedback_reports_path(@cohort), alert: "Error generating reports: #{e.message}\n#{e.backtrace.first}"
+      else
+        redirect_to cohort_feedback_reports_path(@cohort), alert: "Error generating reports: #{result[:error]}\n#{result[:backtrace]}"
       end
     else
       redirect_to cohort_feedback_reports_path(@cohort), alert: "You are not authorized to generate feedback reports."
@@ -46,11 +44,12 @@ class Cohort::FeedbackReportsController < ApplicationController
   end
 
   def send_report
-    begin
-      @feedback_report.send_report
-      redirect_to cohort_feedback_reports_path(@cohort), notice: "Feedback report was successfully sent."
-    rescue => e
-      redirect_to cohort_feedback_reports_path(@cohort), alert: "Failed to send feedback report: #{e.message}"
+    success, message = @feedback_report.send_report
+
+    if success
+      redirect_to cohort_feedback_reports_path(@cohort), notice: message
+    else
+      redirect_to cohort_feedback_reports_path(@cohort), alert: "Failed to send feedback report: #{message}"
     end
   end
 
