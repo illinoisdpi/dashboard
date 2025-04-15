@@ -69,8 +69,6 @@ class Cohort::FeedbackReportsController < ApplicationController
       format.json { head :no_content }
     end
   rescue => e
-    Rails.logger.error("[FeedbackReportsController] Failed to delete report #{@feedback_report.id}: #{e.message}")
-    Rails.logger.error(e.backtrace.join("\n"))
     respond_to do |format|
       format.html { redirect_to cohort_feedback_report_path(@cohort, @feedback_report), alert: "Failed to delete feedback report: #{e.message}" }
       format.json { render json: { error: e.message }, status: :unprocessable_entity }
