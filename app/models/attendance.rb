@@ -46,4 +46,12 @@ class Attendance < ApplicationRecord
   }
 
   scope :default_order, -> { order(occurred_at: :desc) }
+
+  def role_counts
+    Attendee
+      .joins(:enrollment)
+      .where(attendance_id: id)
+      .group("enrollments.role")
+      .count
+  end
 end
