@@ -25,8 +25,7 @@
 #  fk_rails_...  (enrollment_id => enrollments.id)
 #
 class FeedbackReport < ApplicationRecord
-  include FeedbackReportCreation
-  include FeedbackReportDelivery
+  include Creation, Delivery
 
   belongs_to :enrollment
   belongs_to :canvas_gradebook_snapshot
