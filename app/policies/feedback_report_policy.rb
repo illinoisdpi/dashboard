@@ -20,11 +20,11 @@ class FeedbackReportPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.present? && (user.admin? || user.instructor? || user.teaching_assistant?)
+    user.present? && (user.admin? || user.instructor? || user.teaching_assistant?) && !record.sent?
   end
 
   def edit?
-    user.present? && (user.admin? || user.instructor? || user.teaching_assistant?)
+    user.present? && (user.admin? || user.instructor? || user.teaching_assistant?) && !record.sent?
   end
 
   def update?

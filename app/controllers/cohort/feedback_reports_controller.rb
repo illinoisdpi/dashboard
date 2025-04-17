@@ -40,6 +40,10 @@ class Cohort::FeedbackReportsController < ApplicationController
   end
 
   def edit
+    if @feedback_report.sent?
+      redirect_to cohort_feedback_report_path(@cohort, @feedback_report), alert: "This report has been sent and cannot be edited."
+      nil
+    end
   end
 
   def send_report
@@ -53,6 +57,11 @@ class Cohort::FeedbackReportsController < ApplicationController
   end
 
   def update
+    if @feedback_report.sent?
+      redirect_to cohort_feedback_report_path(@cohort, @feedback_report), alert: "This report has been sent and cannot be updated."
+      return
+    end
+
     if @feedback_report.update(feedback_report_params)
       redirect_to cohort_feedback_report_path(@cohort, @feedback_report), notice: "Feedback report was successfully updated."
     else
@@ -61,6 +70,11 @@ class Cohort::FeedbackReportsController < ApplicationController
   end
 
   def destroy
+    if @feedback_report.sent?
+      redirect_to cohort_feedback_reports_path(@cohort), alert: "This report has been sent and cannot be deleted."
+      return
+    end
+
     @feedback_report.destroy
 
     respond_to do |format|
