@@ -1,4 +1,4 @@
-module FeedbackReport::Creation
+module FeedbackReport::Processable
   extend ActiveSupport::Concern
 
   class_methods do

@@ -1,4 +1,4 @@
-module FeedbackReport::Delivery
+module FeedbackReport::Deliverable
   extend ActiveSupport::Concern
 
   def send_report
