@@ -4,6 +4,7 @@ module Enrollment::Adminable
   included do
     rails_admin do
       list do
+        field :created_at
         field :role
 
         rating_fields = [
