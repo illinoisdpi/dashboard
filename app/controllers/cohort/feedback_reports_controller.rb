@@ -1,7 +1,7 @@
 class Cohort::FeedbackReportsController < ApplicationController
   before_action :set_cohort
-  before_action :set_feedback_report, only: [ :show, :send_report, :destroy, :edit, :update ]
-  before_action :set_enrollment, except: [ :batch_create, :index, :show, :new, :create, :send_report, :destroy, :edit, :update ]
+  before_action :set_feedback_report, only: [:show, :send_report, :destroy, :edit, :update]
+  before_action :set_enrollment, except: [:batch_create, :index, :show, :new, :create, :send_report, :destroy, :edit, :update]
   before_action { authorize(@feedback_report || FeedbackReport) }
 
   def index
@@ -15,27 +15,21 @@ class Cohort::FeedbackReportsController < ApplicationController
   end
 
   def batch_create
-    if policy(FeedbackReport).create?
-      canvas_gradebook_snapshot = @cohort.canvas_gradebook_snapshots.find(params[:canvas_gradebook_snapshot_id])
-      start_date = Date.parse(params[:start_date])
-      end_date = Date.parse(params[:end_date])
-      assignments = params[:assignments]
+    canvas_gradebook_snapshot = @cohort.canvas_gradebook_snapshots.find(params[:canvas_gradebook_snapshot_id])
+    start_date = Date.parse(params[:start_date])
+    end_date = Date.parse(params[:end_date])
+    assignments = params[:assignments]
 
-      success, result = FeedbackReport.batch_create(
-        @cohort,
-        canvas_gradebook_snapshot,
-        start_date,
-        end_date,
-        assignments
-      )
+    success, result = canvas_gradebook_snapshot.create_feedback_reports(
+      start_date,
+      end_date,
+      assignments
+    )
 
-      if success
-        redirect_to cohort_feedback_reports_path(@cohort), notice: result[:message]
-      else
-        redirect_to cohort_feedback_reports_path(@cohort), alert: "Error generating reports: #{result[:error]}\n#{result[:backtrace]}"
-      end
+    if success
+      redirect_to cohort_feedback_reports_path(@cohort), notice: result[:message]
     else
-      redirect_to cohort_feedback_reports_path(@cohort), alert: "You are not authorized to generate feedback reports."
+      redirect_to cohort_feedback_reports_path(@cohort), alert: "Error generating reports: #{result[:error]}\n#{result[:backtrace]}"
     end
   end
 
