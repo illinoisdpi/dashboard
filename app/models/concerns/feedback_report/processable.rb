@@ -11,7 +11,7 @@ module FeedbackReport::Processable
 
       process_student_enrollments(cohort) do |enrollment|
         begin
-          _generate_and_save_feedback_report(
+          generate_and_save_feedback_report(
             enrollment,
             canvas_gradebook_snapshot,
             start_date,
@@ -56,49 +56,49 @@ module FeedbackReport::Processable
 
     private
 
-    def _generate_and_save_feedback_report(enrollment, canvas_gradebook_snapshot, start_date, end_date, assignment_ids)
-      selected_assignments = _fetch_selected_assignments(canvas_gradebook_snapshot, assignment_ids)
-      user_submissions = _fetch_user_submissions(enrollment, canvas_gradebook_snapshot, assignment_ids)
-      missing_assignments = _identify_missing_assignments(selected_assignments, user_submissions)
-      impressions = _fetch_student_impressions(enrollment, start_date, end_date)
-      attendances = _fetch_attendances(enrollment, start_date, end_date)
-      message_content = _format_feedback_message(enrollment, missing_assignments, impressions, attendances, start_date, end_date)
-      _create_report_record(enrollment, message_content, canvas_gradebook_snapshot, start_date, end_date)
+    def generate_and_save_feedback_report(enrollment, canvas_gradebook_snapshot, start_date, end_date, assignment_ids)
+      selected_assignments = fetch_selected_assignments(canvas_gradebook_snapshot, assignment_ids)
+      user_submissions = fetch_user_submissions(enrollment, canvas_gradebook_snapshot, assignment_ids)
+      missing_assignments = identify_missing_assignments(selected_assignments, user_submissions)
+      impressions = fetch_student_impressions(enrollment, start_date, end_date)
+      attendances = fetch_attendances(enrollment, start_date, end_date)
+      message_content = format_feedback_message(enrollment, missing_assignments, impressions, attendances, start_date, end_date)
+      create_report_record(enrollment, message_content, canvas_gradebook_snapshot, start_date, end_date)
     end
 
-    def _fetch_selected_assignments(canvas_gradebook_snapshot, assignment_ids)
+    def fetch_selected_assignments(canvas_gradebook_snapshot, assignment_ids)
       canvas_gradebook_snapshot.canvas_assignments
         .where(id: assignment_ids)
         .index_by(&:id)
     end
 
-    def _fetch_user_submissions(enrollment, canvas_gradebook_snapshot, assignment_ids)
+    def fetch_user_submissions(enrollment, canvas_gradebook_snapshot, assignment_ids)
       canvas_gradebook_snapshot.canvas_submissions
         .where(enrollment: enrollment)
         .where(canvas_assignment_id: assignment_ids)
         .index_by(&:canvas_assignment_id)
     end
 
-    def _identify_missing_assignments(selected_assignments, user_submissions)
+    def identify_missing_assignments(selected_assignments, user_submissions)
       selected_assignments.values.reject do |assignment|
         user_submissions.key?(assignment.id)
       end
     end
 
-    def _fetch_student_impressions(enrollment, start_date, end_date)
+    def fetch_student_impressions(enrollment, start_date, end_date)
       enrollment.impressions
         .where(created_at: start_date.beginning_of_day..end_date.end_of_day)
         .where(staff_only: false)
         .order(created_at: :desc)
     end
 
-    def _fetch_attendances(enrollment, start_date, end_date)
+    def fetch_attendances(enrollment, start_date, end_date)
       enrollment.attendances
         .where(occurred_at: start_date.beginning_of_day..end_date.end_of_day)
         .order(occurred_at: :desc)
     end
 
-    def _format_feedback_message(enrollment, missing_assignments, impressions, attendances, start_date, end_date)
+    def format_feedback_message(enrollment, missing_assignments, impressions, attendances, start_date, end_date)
       <<~MESSAGE
         Hello #{enrollment.user.name},
 
@@ -116,7 +116,7 @@ module FeedbackReport::Processable
       MESSAGE
     end
 
-    def _create_report_record(enrollment, message_content, canvas_gradebook_snapshot, start_date, end_date)
+    def create_report_record(enrollment, message_content, canvas_gradebook_snapshot, start_date, end_date)
       create!(
         enrollment: enrollment,
         canvas_gradebook_snapshot: canvas_gradebook_snapshot,
