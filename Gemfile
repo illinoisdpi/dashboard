@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.2.1"
+ruby file: ".ruby-version"
 
 gem "awesome_print"
 gem "blazer"
@@ -22,10 +22,10 @@ gem "jbuilder"
 gem "kaminari", "~> 1.2"
 gem "paper_trail"
 gem "pg", "~> 1.1"
-gem "puma", "~> 5.0"
+gem "puma", "~> 6.0"
 gem "pundit"
 gem "ransack"
-gem "rails", "~> 7.0.4", ">= 7.0.4.2"
+gem "rails", "~> 7.1"
 gem "rails_admin", "~> 3.1"
 gem "redis", "~> 4.0"
 gem "rolify", "~> 6.0"
