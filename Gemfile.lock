@@ -419,7 +419,6 @@ GEM
       ffi (~> 1.0)
     rdoc (6.13.1)
       psych (>= 4.0.0)
-    redis (4.8.1)
     regexp_parser (2.9.2)
     reline (0.6.1)
       io-console (~> 0.5)
@@ -625,7 +624,6 @@ DEPENDENCIES
   rails_db (>= 2.3.1)
   rails_live_reload
   ransack
-  redis (~> 4.0)
   rolify (~> 6.0)
   rollbar (~> 3.4)
   rspec-rails
