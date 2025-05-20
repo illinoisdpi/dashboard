@@ -92,12 +92,8 @@ test:
 production:
   primary:
     <<: *default
-    database: dashboard_production
-    username: dashboard
-    password: <%= ENV["DASHBOARD_DATABASE_PASSWORD"] %>
+    url: <%= ENV['DATABASE_URL'] %>
   queue:
     <<: *default
-    database: dashboard_production_queue
-    username: dashboard
-    password: <%= ENV["DASHBOARD_DATABASE_PASSWORD"] %>
+    url: <%= ENV['QUEUE_DATABASE_URL'] %>
     migrations_paths: db/queue_migrate
