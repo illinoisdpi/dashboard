@@ -1,4 +1,8 @@
-# production:
+production:
+  fetch_devto_articles:
+    class: FetchDevtoArticlesJob
+    schedule: "*/30 * * * *"
+    queue: news
 #   periodic_cleanup:
 #     class: CleanSoftDeletedRecordsJob
 #     queue: background
