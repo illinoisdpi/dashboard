@@ -95,5 +95,5 @@ production:
     url: <%= ENV['DATABASE_URL'] %>
   queue:
     <<: *default
-    url: <%= ENV['QUEUE_DATABASE_URL'] %>
+    url: <%= ENV['QUEUE_URL'] %>
     migrations_paths: db/queue_migrate
