@@ -6,7 +6,7 @@ name: Build and deploy container app to Azure Web App - tech-talent-accelerator-
 on:
   push:
     branches:
-      - 432-deploy-app-on-azure-app-service
+      - main
   workflow_dispatch:
 
 jobs:
